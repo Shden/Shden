@@ -36,7 +36,7 @@ const char* heaterSensor 	= "28.0AB28D020000"; /* датчик ТЭН */
 const char* inputSensor 	= "28.EDEA6D020000"; /* жидкость на входе */
 const char* outputSensor 	= "28.18DB6D020000"; /* жидкость на выходе */
 const char* externalSensor 	= "28.0FF26D020000"; /* улица */
-const char* amSensor 		= "28.4BC66D020000"; /* комната алиной мамы */
+const char* amSensor 		= "28.4BC66D020000"; /* комната для гостей (АМ) */
 const char* bedroomSensor 	= "28.99C68D020000"; /* спальня */
 const char* cabinetSensor 	= "28.B5DE8D020000"; /* кабинет */
 
@@ -74,7 +74,7 @@ void changeSwitch(char* addr, int ison)
 	fp = fopen(addr, "w");
 	if (NULL == fp)
 	{
-		printf("Cannot open switch %s changing state.\n\r", addr);
+		printf("Cannot open switch %s for state changing.\n\r", addr);
 		exit(EXIT_FAIL);
 	}
 	fprintf(fp,"%d", ison);
@@ -88,7 +88,7 @@ int getSwitchState(char* addr)
 	fp = fopen(addr, "r");
 	if (NULL == fp)
 	{
-		printf("Cannot open switch %s for reading state.\n\r", addr);
+		printf("Cannot open switch %s for state reading.\n\r", addr);
 		exit(EXIT_FAIL);
 	}
 	int state = OFF;

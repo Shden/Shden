@@ -2,3 +2,10 @@ Notes:
 
 controller.ini should be chmod 777 to allow web access. It will be 
 eventually modified over web.
+
+How to build
+
+make controller 
+	to rebuild.
+make clean 
+	to cleanup.

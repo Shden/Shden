@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <glib.h>
 
 const int OneWirePathLen = 100;
 

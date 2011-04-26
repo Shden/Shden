@@ -1,0 +1,4 @@
+Notes:
+
+controller.ini should be chmod 777 to allow web access. It will be 
+eventually modified over web.

@@ -5,6 +5,7 @@
  *			- overheating control implemented.
  *	28-NOV-2010:	- simple standby energy saving algorithm based on weekday added.
  *	10-APR-2011:	- standby temperature change from 10.0 to 8.0.
+ *	26-APR-2011:	- configuration goes to .ini file.
  */
 #include <stdio.h>
 #include <time.h>
@@ -19,10 +20,17 @@ enum ExitStatus
 	EXIT_FAIL = 1
 };
 
-const float presenceTargetTemp	= 20.5;		/* Target temp when we are here */
-const float standbyTargetTemp	=  8.0;		/* Target temp when nobody is here */
-const float tempDelta		= 0.25;
-const float fluidPumpOffTemp	= 40.0;		/* Fluid temperature on heater out when to stop pump */
+/* Configuration data lives here */
+struct ConfigT
+{
+	struct tm	arrive;
+	struct tm	dep;
+	float		presenceTargetTemp;	/* Target temp when we are at home */
+	float		standbyTargetTemp;	/* Target temp when nobody at home */
+	float		tempDelta;		/* Histeresis */
+	float 		fluidPumpOffTemp;	/* Fluid temperature on heater out when to stop pump */
+} configuration;
+
 const float heaterCutOffTemp	= 95.0;		/* Heater problem temperature */
 
 enum SwitchStatus
@@ -51,6 +59,49 @@ const char* PRECENCE_MODE_FILE	= "/home/den/shc/precence.flag";
 //echo 1 > /mnt/1wire/3A.3E9403000000/PIO.A сам ТЭН
 //echo 1 > /mnt/1wire/3A.3E9403000000/PIO.B насос
 
+
+void loadSettings()
+{
+	GKeyFile* iniFile;
+	GKeyFileFlags flags = 0;
+	GError* error = NULL;
+
+	// -- Create a new GKeyFile and prepare flags
+	iniFile = g_key_file_new();
+
+	if (!g_key_file_load_from_file(iniFile, "controller.ini", flags, &error))
+	{
+		g_error(error->message);
+		printf(error->message);
+		exit(EXIT_FAIL);
+	}
+
+	// -- arrival date & hour	
+	configuration.arrive.tm_sec = configuration.arrive.tm_min = 0;
+	sscanf(g_key_file_get_string(iniFile, "schedule", "arrive_hour", NULL), "\"%d\"", &configuration.arrive.tm_hour);
+	sscanf(g_key_file_get_string(iniFile, "schedule", "arrive_date", NULL), "\"%d.%d.%d\"",
+		&configuration.arrive.tm_mday, &configuration.arrive.tm_mon, &configuration.arrive.tm_year);
+	configuration.arrive.tm_year -= 1900;
+	configuration.arrive.tm_mon -= 1;
+	configuration.arrive.tm_hour -= 1;
+	mktime(&configuration.arrive);
+
+	// -- departure date & hour
+	configuration.dep.tm_sec = configuration.dep.tm_min = 0;
+	sscanf(g_key_file_get_string(iniFile, "schedule", "dep_hour", NULL), "\"%d\"", &configuration.dep.tm_hour);
+	sscanf(g_key_file_get_string(iniFile, "schedule", "dep_date", NULL), "\"%d.%d.%d\"",
+		&configuration.dep.tm_mday, &configuration.dep.tm_mon, &configuration.dep.tm_year);
+	configuration.dep.tm_year -= 1900;
+	configuration.dep.tm_mon -= 1;
+	configuration.dep.tm_hour -= 1;
+	mktime(&configuration.dep);
+
+	// -- presenceTargetTemp && standbyTargetTemp
+	sscanf(g_key_file_get_string(iniFile, "heating", "presence", NULL), "\"%f\"", &configuration.presenceTargetTemp);
+	sscanf(g_key_file_get_string(iniFile, "heating", "standby", NULL), "\"%f\"", &configuration.standbyTargetTemp);
+	sscanf(g_key_file_get_string(iniFile, "heating", "tempDelta", NULL), "\"%f\"", &configuration.tempDelta);
+	sscanf(g_key_file_get_string(iniFile, "heating", "fluidPumpOffTemp", NULL), "\"%f\"", & configuration.fluidPumpOffTemp);
+}
 
 float getT(char* sensor)
 {
@@ -118,51 +169,40 @@ int getPumpState()
 	return getSwitchState(pumpSwitch);
 }
 
-/** Stub code, to be replaced with something to get status 
- *	1 = standby
- *	0 = living mode */
-int isStandby()
-{
-	FILE *fp;
-	fp = fopen(PRECENCE_MODE_FILE, "r");
-	if (NULL != fp)
-	{
-		fclose(fp);
-		return 0; // living
-	}
-	return 1; // standby
-}
-
-/** Current target temperature, depending on conditions */
-float getTargetTemp()
-{
-	if (!isStandby())
-	{
-		return presenceTargetTemp;
-	}
-	else
-	{
-		// -- Check weekday etc to see how to heat house
-		time_t now = time(NULL);
-		struct tm *ti = localtime(&now);
-
-		// tm_wday	days since Sunday	0-6
-		// i.e. sun 0, mon 1, tue 2, wed 3, thu 4, fri 5, sat 6
-		int wday = ti->tm_wday;
-
-		if (5 == wday || 6 == wday)
-		{
-			// -- Starting heating up at 0.00 Fri till 23:59 Sat
-			return presenceTargetTemp;
-		}
-		return standbyTargetTemp;
-	}		
-}
-
 /** Returnes combined avergage temperature to control */
 float getControlTemperature()
 {
 	return getT(bedroomSensor);
+}
+
+
+/** This returns time required to heat up the house for presence mode, in hours */
+float getHeatingTimeForPresence()
+{
+	const float heatUpSpeed = 0.5;	// speed of heating up, C/hour.
+	float current = getControlTemperature();
+	return (configuration.presenceTargetTemp - current) / heatUpSpeed; // hours
+}
+
+//** This will return the time when to start heating so that it will all ok when we there */
+time_t getHeatingStartTime()
+{	
+	return mktime(&configuration.arrive) - getHeatingTimeForPresence() * 60 * 60;
+}
+
+/** Current target temperature, controlled by configuration */
+float getTargetTemp()
+{
+	// -- Check weekday etc to see how to heat house
+	time_t now = time(NULL);
+	time_t start = getHeatingStartTime();
+	time_t finish = mktime(&configuration.dep);
+
+	if (now >= start && now <= finish)
+	{
+		return configuration.presenceTargetTemp;
+	}
+	return configuration.standbyTargetTemp;
 }
 
 /** Heater control routine.
@@ -175,8 +215,7 @@ int controlHeater(float controlTemp, float heaterTemp)
 	if (heaterTemp > heaterCutOffTemp)
 	{
 		// -- Current date and time
-		char timeStamp[100];
-		getDateTimeStr(timeStamp, 100);
+		time_t now = time(NULL);
 
 		// -- Persist failure info		
 		FILE *fp;
@@ -184,9 +223,9 @@ int controlHeater(float controlTemp, float heaterTemp)
 		if (NULL != fp)
 		{
 			const char* formatStr = "%s: Heater failure detected t=%4.2f.\r\n";
-			fprintf(fp, formatStr, timeStamp, heaterTemp);
+			fprintf(fp, formatStr, ctime(&now), heaterTemp);
 			fclose(fp);
-			printf(formatStr, timeStamp, heaterTemp);
+			printf(formatStr, ctime(&now), heaterTemp);
 		}
 		else
 			printf("Cannot write heater failure status file.\n\r");
@@ -200,7 +239,7 @@ int controlHeater(float controlTemp, float heaterTemp)
 		setPump(ON);
 		return ON;
 	}
-	else if (controlTemp > getTargetTemp() + tempDelta)
+	else if (controlTemp > getTargetTemp() + configuration.tempDelta)
 	{
 		setHeater(OFF);
 		// Dont stop pump until fluid temp will go down
@@ -213,12 +252,12 @@ int controlHeater(float controlTemp, float heaterTemp)
 
 int controlPump(float currentFluidTemp)
 {
-	if (OFF == getHeaterState() && currentFluidTemp < fluidPumpOffTemp)
+	if (OFF == getHeaterState() && currentFluidTemp < configuration.fluidPumpOffTemp)
 	{
 		setPump(OFF);
 		return OFF;
 	}
-	if (currentFluidTemp >= fluidPumpOffTemp)
+	if (currentFluidTemp >= configuration.fluidPumpOffTemp)
 	{
 		setPump(ON);
 		return ON;
@@ -238,16 +277,6 @@ int wasOverheated()
 	return 0;
 }
 
-void getDateTimeStr(char *str, int length)
-{
-	// -- Current date and time
-	time_t now = time(NULL);
-	struct tm *ti = localtime(&now);
-	
-	// TODO : buffer overrun control!
-	sprintf(str, "%02d/%02d/%4d %02d:%02d:%02d", ti->tm_mday, ti->tm_mon+1, ti->tm_year+1900, ti->tm_hour, ti->tm_min, ti->tm_sec);
-}
-
 int main()
 {
 	// -- Check for previous fatal errors
@@ -256,19 +285,32 @@ int main()
 		printf("Previous heater failure detected. Cannot run.\n\r");
 		return EXIT_FAIL;
 	}
-				
-	// -- Current date and time
-	char timeStamp[100];
-	getDateTimeStr(timeStamp, 100);
+
+	// -- Load settings from .ini file
+	loadSettings();
+
+//	debug stuff
+//	printf("%s", asctime(&configuration.arrive));
+//	printf("%s", asctime(&configuration.dep));
+//	time_t tt = getHeatingStartTime();
+//
+//	printf("%s", ctime(&tt));
+//	printf("%f\n", getTargetTemp());
+//
+//	printf("%f\n", configuration.tempDelta);
+//	printf("%f\n", configuration.fluidPumpOffTemp);
+//	return; 
+// 	end of debug stuff
 
 	// -- Temperatures
 	float controlTemp = getControlTemperature();
 	float outgoingFluidTemp = getT(outputSensor);
 	float heaterTemp = getT(heaterSensor);
+	time_t heatingStartTime = getHeatingStartTime();
+	time_t now = time(NULL);
 
-	printf("%s %d|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%4.1f|\r\n", 
-		timeStamp,
-		isStandby(),		
+	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%4.1f|%s|\r\n", 
+		ctime(&now),
 		heaterTemp,
 		getT(inputSensor),
 		outgoingFluidTemp,
@@ -279,7 +321,9 @@ int main()
 		controlTemp,
 		controlHeater(controlTemp, heaterTemp),
 		controlPump(outgoingFluidTemp),
-		getTargetTemp());
+		getTargetTemp(),
+		ctime(&heatingStartTime)
+	);
 
 	return EXIT_OK;
 }

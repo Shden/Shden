@@ -1,5 +1,6 @@
 <html>
 <body>
+<?include 'menu.php';?>
 <form action="heating.php">
 	Show me last: 
 	<a href="?n=10">10 lines</a> |

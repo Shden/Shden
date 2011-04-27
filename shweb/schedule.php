@@ -45,6 +45,28 @@
    </script>                                                               
 </head> 
 <body>
+    <?php
+    include 'include/ini.php';
+   
+    $controller_config = parse_ini_file($controller_ini, true);
+    
+    //print_r($controller_config);
+    
+    if (isset($_REQUEST[arrive_date]) && isset($_REQUEST[arrive_hour]) &&
+        isset($_REQUEST[dep_date]) && isset($_REQUEST[dep_hour]))
+    {
+        $controller_config[schedule][arrive_date] = $_REQUEST[arrive_date];
+        $controller_config[schedule][arrive_hour] = $_REQUEST[arrive_hour];
+        $controller_config[schedule][dep_date] = $_REQUEST[dep_date];
+        $controller_config[schedule][dep_hour] = $_REQUEST[dep_hour];
+        
+        //print_r($controller_config);
+        
+        write_ini_file($controller_ini, $controller_config);
+    }
+    ?>
+<?include 'menu.php';?>
+<h2>Управление режимами</h2>
 <form onsubmit="return programValidation()">
 <table>
 	<tr>
@@ -81,7 +103,10 @@
         </tr>
 </table>
 </form>
-<input type="button" value="Перевести в ждущий режим прямо сейчас"/>
-<input type="button" value="Перевести в режим присутствия прямо сейчас"/>
+<input type="button" value="Перевести в ждущий режим прямо сейчас" 
+       onclick="alert('пока не работает')"/>
+<input type="button" value="Перевести в режим присутствия прямо сейчас"
+       onclick="alert('пока не работает')"/>
+
 </body>
 </html>

@@ -52,12 +52,9 @@ const char* cabinetSensor 	= "28.B5DE8D020000"; /* кабинет */
 const char* heaterSwitch	= "/mnt/1wire/3A.3E9403000000/PIO.A";
 const char* pumpSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.B";
 
+/* Absolute paths! Unfortunately still need them to run under cron, but have to be refactored */
+const char* iniFilePath		= "/home/den/shc/controller.ini";
 const char* HEATER_FAILURE_FILE	= "/home/den/shc/HeaterFailure";
-const char* PRECENCE_MODE_FILE	= "/home/den/shc/precence.flag";
-
-//3A.3E9403000000 - коммутатор ТЭН
-//echo 1 > /mnt/1wire/3A.3E9403000000/PIO.A сам ТЭН
-//echo 1 > /mnt/1wire/3A.3E9403000000/PIO.B насос
 
 
 void loadSettings()
@@ -69,10 +66,10 @@ void loadSettings()
 	// -- Create a new GKeyFile and prepare flags
 	iniFile = g_key_file_new();
 
-	if (!g_key_file_load_from_file(iniFile, "controller.ini", flags, &error))
+	if (!g_key_file_load_from_file(iniFile, iniFilePath, flags, &error))
 	{
-		g_error(error->message);
 		printf(error->message);
+		g_error(error->message);
 		exit(EXIT_FAIL);
 	}
 

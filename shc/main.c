@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <glib.h>
 
-#define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
+//#define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
 
 const int OneWirePathLen = 100;
 
@@ -55,7 +55,7 @@ const char* heaterSwitch	= "/mnt/1wire/3A.3E9403000000/PIO.A";
 const char* pumpSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.B";
 
 /* Absolute paths! Unfortunately still need them to run under cron, but have to be refactored */
-const char* iniFilePath		= "/home/den/Shden/shc/controller.ini";
+const char* iniFilePath		= "/home/den/shc/controller.ini";
 const char* HEATER_FAILURE_FILE	= "/home/den/shc/HeaterFailure";
 
 
@@ -286,6 +286,14 @@ int wasOverheated()
 	return 0;
 }
 
+void getDateTimeStr(char *str, int length, time_t time)
+{
+	struct tm *ti = localtime(&time);
+
+	// TODO : buffer overrun control!
+	sprintf(str, "%02d/%02d/%4d %02d:%02d:%02d", ti->tm_mday, ti->tm_mon+1, ti->tm_year+1900, ti->tm_hour, ti->tm_min, ti->tm_sec);
+}
+
 int main()
 {
 	// -- Check for previous fatal errors
@@ -315,11 +323,13 @@ int main()
 	float controlTemp = getControlTemperature();
 	float outgoingFluidTemp = getT(outputSensor);
 	float heaterTemp = getT(heaterSensor);
-	time_t heatingStartTime = getHeatingStartTime();
-	time_t now = time(NULL);
+	
+	char nowStr[60], onStr[60];
+	getDateTimeStr(nowStr, 60, time(NULL));
+	getDateTimeStr(onStr, 60, getHeatingStartTime());
 
 	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%4.1f|%s|\r\n", 
-		ctime(&now),
+		nowStr,
 		heaterTemp,
 		getT(inputSensor),
 		outgoingFluidTemp,
@@ -331,7 +341,7 @@ int main()
 		controlHeater(controlTemp, heaterTemp),
 		controlPump(outgoingFluidTemp),
 		getTargetTemp(),
-		ctime(&heatingStartTime)
+		onStr
 	);
 
 	return EXIT_OK;

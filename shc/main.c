@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <glib.h>
 
+#define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
+
 const int OneWirePathLen = 100;
 
 enum ExitStatus
@@ -53,7 +55,7 @@ const char* heaterSwitch	= "/mnt/1wire/3A.3E9403000000/PIO.A";
 const char* pumpSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.B";
 
 /* Absolute paths! Unfortunately still need them to run under cron, but have to be refactored */
-const char* iniFilePath		= "/home/den/shc/controller.ini";
+const char* iniFilePath		= "/home/den/Shden/shc/controller.ini";
 const char* HEATER_FAILURE_FILE	= "/home/den/shc/HeaterFailure";
 
 
@@ -102,6 +104,9 @@ void loadSettings()
 
 float getT(char* sensor)
 {
+	#ifdef DEBUG_NO_1WIRE
+	return 20.0;
+	#else
 	FILE *fp;
 	float temperature;
 	char* sensorPath[OneWirePathLen];
@@ -115,10 +120,12 @@ float getT(char* sensor)
 	fscanf(fp, "%f", &temperature);
 	fclose(fp); 
 	return temperature;
+	#endif
 }
 
 void changeSwitch(char* addr, int ison)
 {
+	#ifndef DEBUG_NO_1WIRE
 	FILE *fp;
 	fp = fopen(addr, "w");
 	if (NULL == fp)
@@ -128,11 +135,13 @@ void changeSwitch(char* addr, int ison)
 	}
 	fprintf(fp,"%d", ison);
 	fclose(fp);
+	#endif
 	return;
 }
 
 int getSwitchState(char* addr)
 {
+	#ifndef DEBUG_NO_1WIRE
 	FILE *fp;
 	fp = fopen(addr, "r");
 	if (NULL == fp)
@@ -144,6 +153,9 @@ int getSwitchState(char* addr)
 	fscanf(fp, "%d", &state);
 	fclose(fp);
 	return state;
+	#else
+	return 0;
+	#endif
 }
 
 void setHeater(int ison)

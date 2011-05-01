@@ -6,6 +6,7 @@
  *	28-NOV-2010:	- simple standby energy saving algorithm based on weekday added.
  *	10-APR-2011:	- standby temperature change from 10.0 to 8.0.
  *	26-APR-2011:	- configuration goes to .ini file.
+ *	01-MAY-2011:	- turn off heater logic added to work with external heater.
  */
 #include <stdio.h>
 #include <time.h>
@@ -27,13 +28,14 @@ struct ConfigT
 {
 	struct tm	arrive;
 	struct tm	dep;
-	float		presenceTargetTemp;	/* Target temp when we are at home */
-	float		standbyTargetTemp;	/* Target temp when nobody at home */
-	float		tempDelta;		/* Histeresis */
-	float 		fluidPumpOffTemp;	/* Fluid temperature on heater out when to stop pump */
+	float		presenceTargetTemp;		/* Target temp when we are at home */
+	float		standbyTargetTemp;		/* Target temp when nobody at home */
+	float		tempDelta;			/* Histeresis */
+	float 		fluidPumpOffTemp;		/* Fluid temperature on heater out when to stop pump */
+	float		fluidElectroHeaterOffTemp	/* Fluid temperature when electic heater is off, only coal will work */
 } configuration;
 
-const float heaterCutOffTemp	= 95.0;		/* Heater problem temperature */
+const float heaterCutOffTemp	= 95.0;			/* Heater problem temperature */
 
 enum SwitchStatus
 {
@@ -99,7 +101,8 @@ void loadSettings()
 	sscanf(g_key_file_get_string(iniFile, "heating", "presence", NULL), "\"%f\"", &configuration.presenceTargetTemp);
 	sscanf(g_key_file_get_string(iniFile, "heating", "standby", NULL), "\"%f\"", &configuration.standbyTargetTemp);
 	sscanf(g_key_file_get_string(iniFile, "heating", "tempDelta", NULL), "\"%f\"", &configuration.tempDelta);
-	sscanf(g_key_file_get_string(iniFile, "heating", "fluidPumpOffTemp", NULL), "\"%f\"", & configuration.fluidPumpOffTemp);
+	sscanf(g_key_file_get_string(iniFile, "heating", "fluidPumpOffTemp", NULL), "\"%f\"", &configuration.fluidPumpOffTemp);
+	sscanf(g_key_file_get_string(iniFile, "heating", "fluidElectroHeaterOffTemp", NULL), "\"%f\"", &configuration.fluidElectroHeaterOffTemp);
 }
 
 float getT(char* sensor)
@@ -217,8 +220,9 @@ float getTargetTemp()
 /** Heater control routine.
  *	controlTemp - current control temperature (room or composite of rooms)
  *	heaterTemp - current heater temperature to control
+ *	currentFluidTemp - current temperature of the fluid
  */
-int controlHeater(float controlTemp, float heaterTemp)
+int controlHeater(float controlTemp, float heaterTemp, float currentFluidTemp)
 {
 	/* First chech heater is OK */
 	if (heaterTemp > heaterCutOffTemp)
@@ -242,7 +246,13 @@ int controlHeater(float controlTemp, float heaterTemp)
 		exit(EXIT_FAIL);
 	}
 
-	if (controlTemp < getTargetTemp())
+	if (currentFluidTemp > configuration.fluidElectroHeaterOffTemp)
+	{
+		// Other heater has created enough temperature, no need to run electricity
+		setHeater(OFF);
+		return OFF;
+	}
+	else if (controlTemp < getTargetTemp())
 	{
 		setHeater(ON);
 		setPump(ON);
@@ -338,7 +348,7 @@ int main()
 		getT(bedroomSensor),
 		getT(cabinetSensor),
 		controlTemp,
-		controlHeater(controlTemp, heaterTemp),
+		controlHeater(controlTemp, heaterTemp, outgoingFluidTemp),
 		controlPump(outgoingFluidTemp),
 		getTargetTemp(),
 		onStr

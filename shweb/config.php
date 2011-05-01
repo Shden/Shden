@@ -17,6 +17,7 @@
         $controller_config[heating][presence] = $_REQUEST[presenсe];
         $controller_config[heating][tempDelta] = $_REQUEST[tempDelta];
         $controller_config[heating][fluidPumpOffTemp] = $_REQUEST[fluidPumpOffTemp];
+	$controller_config[heating][fluidElectroHeaterOffTemp] = $_REQUEST[fluidElectroHeaterOffTemp];
         
         //print_r($controller_config);
         
@@ -45,6 +46,10 @@
                 <td><input type="text" name="fluidPumpOffTemp" value="<?=$controller_config[heating][fluidPumpOffTemp]?>"/><sup>o</sup>С
             </tr>
             <tr>
+                <td>Отключаем ТЭН если котел нагревает воду до:</td>
+                <td><input type="text" name="fluidElectroHeaterOffTemp" value="<?=$controller_config[heating][fluidElectroHeaterOffTemp]?>"/><sup>o</sup>С
+            </tr>
+            <tr>
                 <td colspan="2">
                     <input type="submit" value="Сохранить настройки"/>
                 </td>
@@ -52,7 +57,7 @@
         </table>
     </form>
     <?
-    $output = `cat /home/den/Shden/shc/controller.ini`;
+    $output = `cat /home/den/shc/controller.ini`;
     print "<pre>$output</pre>";
     ?>
 </body>

@@ -7,6 +7,7 @@
  *	10-APR-2011:	- standby temperature change from 10.0 to 8.0.
  *	26-APR-2011:	- configuration goes to .ini file.
  *	01-MAY-2011:	- turn off heater logic added to work with external heater.
+ *	11-SEP-2011:	- kitchen sensor added.
  */
 #include <stdio.h>
 #include <time.h>
@@ -52,6 +53,7 @@ const char* externalSensor 	= "28.0FF26D020000"; /* улица */
 const char* amSensor 		= "28.4BC66D020000"; /* комната для гостей (АМ) */
 const char* bedroomSensor 	= "28.99C68D020000"; /* спальня */
 const char* cabinetSensor 	= "28.B5DE8D020000"; /* кабинет */
+const char* kitchenSensor	= "28.AAC56D020000"; /* кухня */
 
 const char* heaterSwitch	= "/mnt/1wire/3A.3E9403000000/PIO.A";
 const char* pumpSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.B";
@@ -338,7 +340,7 @@ int main()
 	getDateTimeStr(nowStr, 60, time(NULL));
 	getDateTimeStr(onStr, 60, getHeatingStartTime());
 
-	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%4.1f|%s|\r\n", 
+	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%4.1f|%s|\r\n", 
 		nowStr,
 		heaterTemp,
 		getT(inputSensor),
@@ -347,6 +349,7 @@ int main()
 		getT(amSensor),
 		getT(bedroomSensor),
 		getT(cabinetSensor),
+		getT(kitchenSensor),
 		controlTemp,
 		controlHeater(controlTemp, heaterTemp, outgoingFluidTemp),
 		controlPump(outgoingFluidTemp),

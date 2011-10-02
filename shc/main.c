@@ -33,10 +33,10 @@ struct ConfigT
 	float		standbyTargetTemp;		/* Target temp when nobody at home */
 	float		tempDelta;			/* Histeresis */
 	float 		fluidPumpOffTemp;		/* Fluid temperature on heater out when to stop pump */
-	float		fluidElectroHeaterOffTemp	/* Fluid temperature when electic heater is off, only coal will work */
+	float		fluidElectroHeaterOffTemp;	/* Fluid temperature when electic heater is off, only coal will work */
 } configuration;
 
-const float heaterCutOffTemp	= 95.0;			/* Heater problem temperature */
+const float heaterCutOffTemp	= 95.0;			/* Heater failure temperature */
 
 enum SwitchStatus
 {
@@ -54,14 +54,55 @@ const char* amSensor 		= "28.4BC66D020000"; /* комната для госте�
 const char* bedroomSensor 	= "28.99C68D020000"; /* спальня */
 const char* cabinetSensor 	= "28.B5DE8D020000"; /* кабинет */
 const char* kitchenSensor	= "28.AAC56D020000"; /* кухня */
+const char* childrenSmallSensor	= "28.EDEA6D020000"; /* детская (Ал) */
 
 const char* heaterSwitch	= "/mnt/1wire/3A.3E9403000000/PIO.A";
 const char* pumpSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.B";
+
+const char* childrenSmallSwitch	= "/mnt/1wire/3A.CB9703000000/PIO.A"; /* heating switch in the small children room */
 
 /* Absolute paths! Unfortunately still need them to run under cron, but have to be refactored */
 const char* iniFilePath		= "/home/den/shc/controller.ini";
 const char* HEATER_FAILURE_FILE	= "/home/den/shc/HeaterFailure";
 
+#define 	ROOMS_COUNT 	5
+
+/* Room control descriptor */
+struct RoomControlDescriptor
+{
+	char*		sensorAddress;			/* Address of temperature sensor of the room */
+	float		temperatureCorrection;		/* Temperature correction, 0 if no correction needed, >0 if sensor returns less that actually <0 otherwise */
+	char*		switchAddress;			/* Address of room's heating switch */
+} roomControlDescriptors[ROOMS_COUNT];
+
+/* Room descriptors initialization */
+void initRoomDescriptors()
+{
+	// Small children room
+	roomControlDescriptors[0].sensorAddress = childrenSmallSensor;
+	roomControlDescriptors[0].temperatureCorrection = 0.0;
+	roomControlDescriptors[0].switchAddress = childrenSmallSwitch;
+
+	// Guestroom (AM)
+	roomControlDescriptors[1].sensorAddress = amSensor;
+	roomControlDescriptors[1].temperatureCorrection = 0.0;
+	roomControlDescriptors[1].switchAddress = NULL;
+
+	// Bedroom
+	roomControlDescriptors[2].sensorAddress = bedroomSensor;
+	roomControlDescriptors[2].temperatureCorrection = 0.0;
+	roomControlDescriptors[2].switchAddress = NULL;
+
+	// Cabinet
+	roomControlDescriptors[3].sensorAddress = cabinetSensor;
+	roomControlDescriptors[3].temperatureCorrection = 0.0;
+	roomControlDescriptors[3].switchAddress = NULL;
+
+	// Kitchen
+	roomControlDescriptors[4].sensorAddress = kitchenSensor;
+	roomControlDescriptors[4].temperatureCorrection = 0.0;
+	roomControlDescriptors[4].switchAddress = NULL;
+}
 
 void loadSettings()
 {
@@ -219,6 +260,13 @@ float getTargetTemp()
 	return configuration.standbyTargetTemp;
 }
 
+/** Room control routine.
+ *	roomDescr - descriptor of the room to control
+ */
+//void controlRoom(RoomControlDescriptor roomDescr)
+//{
+//}
+
 /** Heater control routine.
  *	controlTemp - current control temperature (room or composite of rooms)
  *	heaterTemp - current heater temperature to control
@@ -340,7 +388,7 @@ int main()
 	getDateTimeStr(nowStr, 60, time(NULL));
 	getDateTimeStr(onStr, 60, getHeatingStartTime());
 
-	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%4.1f|%s|\r\n", 
+	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%4.1f|%s|\r\n", 
 		nowStr,
 		heaterTemp,
 		getT(inputSensor),
@@ -350,6 +398,7 @@ int main()
 		getT(bedroomSensor),
 		getT(cabinetSensor),
 		getT(kitchenSensor),
+		getT(childrenSmallSensor),
 		controlTemp,
 		controlHeater(controlTemp, heaterTemp, outgoingFluidTemp),
 		controlPump(outgoingFluidTemp),

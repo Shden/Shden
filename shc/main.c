@@ -8,6 +8,7 @@
  *	26-APR-2011:	- configuration goes to .ini file.
  *	01-MAY-2011:	- turn off heater logic added to work with external heater.
  *	11-SEP-2011:	- kitchen sensor added.
+ *	07-OCT-2011:	- per room heating control added.
  */
 #include <stdio.h>
 #include <time.h>

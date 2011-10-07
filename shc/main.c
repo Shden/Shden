@@ -68,12 +68,14 @@ const char* HEATER_FAILURE_FILE	= "/home/den/shc/HeaterFailure";
 #define 	ROOMS_COUNT 	5
 
 /* Room control descriptor */
-struct RoomControlDescriptor
+typedef struct TRoomControlDescriptor
 {
 	char*		sensorAddress;			/* Address of temperature sensor of the room */
 	float		temperatureCorrection;		/* Temperature correction, 0 if no correction needed, >0 if sensor returns less that actually <0 otherwise */
 	char*		switchAddress;			/* Address of room's heating switch */
-} roomControlDescriptors[ROOMS_COUNT];
+} RoomControlDescriptor;
+
+RoomControlDescriptor roomControlDescriptors[ROOMS_COUNT];
 
 /* Room descriptors initialization */
 void initRoomDescriptors()
@@ -262,10 +264,21 @@ float getTargetTemp()
 
 /** Room control routine.
  *	roomDescr - descriptor of the room to control
+ *	targetTemp - target temperature for the room
  */
-//void controlRoom(RoomControlDescriptor roomDescr)
-//{
-//}
+void controlRoom(RoomControlDescriptor* roomDescr, float targetTemp)
+{
+	// -- Return if no room control available
+	if (!roomDescr->switchAddress || !roomDescr->sensorAddress)
+		return;
+
+	float roomTemp = getT(roomDescr->sensorAddress) + roomDescr->temperatureCorrection;
+
+	if (roomTemp > targetTemp + configuration.tempDelta)
+		changeSwitch(roomDescr->switchAddress, OFF);
+	else
+		changeSwitch(roomDescr->switchAddress, ON);
+}
 
 /** Heater control routine.
  *	controlTemp - current control temperature (room or composite of rooms)
@@ -379,11 +392,22 @@ int main()
 //	return; 
 // 	end of debug stuff
 
-	// -- Temperatures
+	// -- Measure current temperatures and set out the target
 	float controlTemp = getControlTemperature();
 	float outgoingFluidTemp = getT(outputSensor);
 	float heaterTemp = getT(heaterSensor);
+	float targetTemp = getTargetTemp();
+
+	// -- Control heater and pump
+	int heaterState = controlHeater(controlTemp, heaterTemp, outgoingFluidTemp);
+	int pumpState = controlPump(outgoingFluidTemp);
+
+	// -- Individual rooms control
+	int i;
+	for (i=0; i<ROOMS_COUNT; i++)
+		controlRoom(&roomControlDescriptors[i], targetTemp);
 	
+	// -- Dates: now and when to start heating next time by our arrival
 	char nowStr[60], onStr[60];
 	getDateTimeStr(nowStr, 60, time(NULL));
 	getDateTimeStr(onStr, 60, getHeatingStartTime());
@@ -400,9 +424,9 @@ int main()
 		getT(kitchenSensor),
 		getT(childrenSmallSensor),
 		controlTemp,
-		controlHeater(controlTemp, heaterTemp, outgoingFluidTemp),
-		controlPump(outgoingFluidTemp),
-		getTargetTemp(),
+		heaterState,
+		pumpState,
+		targetTemp,
 		onStr
 	);
 

@@ -32,13 +32,13 @@
         var stopDate = $("#dep_date").datepicker("getDate");
         var now = new Date();
         
-        if (startDate.getTime() > stopDate.getTime()) {
-            alert("Прибытие по идее должно быть раньше отъезда, видимо ошибка?");
+        if (startDate.getDate() > stopDate.getDate()) {
+            alert("Прибытие по идее должно быть раньше отъезда, видимо ошибка? Программа НЕ установлена.");
             return false;
         }
-        if (startDate.getTime() < now.getTime() || stopDate.getTime() < now.getTime()) {
-            alert("Одна или обе даты в прошлом, видимо ошибка?");
-            return false;
+        if (startDate.getDate() < now.getDate() || stopDate.getDate() < now.getDate()) {
+            alert("Одна или обе даты в прошлом, может ошибка? Программа будет установлена все равно.");
+            return true;
         }
         return true;
     }

@@ -2,13 +2,14 @@
  *	Smart house controller module.
  *	
  *	14-Nov-2010: 	- pump is controlled separately from heater allowing other heaters to work effectively.
- *			- overheating control implemented.
+ *					- overheating control implemented.
  *	28-NOV-2010:	- simple standby energy saving algorithm based on weekday added.
  *	10-APR-2011:	- standby temperature change from 10.0 to 8.0.
  *	26-APR-2011:	- configuration goes to .ini file.
  *	01-MAY-2011:	- turn off heater logic added to work with external heater.
  *	11-SEP-2011:	- kitchen sensor added.
  *	07-OCT-2011:	- per room heating control added.
+ *	07-NOV-2011:	- night tariff & energy saving in standby mode implemented.
  */
 #include <stdio.h>
 #include <time.h>
@@ -30,14 +31,15 @@ struct ConfigT
 {
 	struct tm	arrive;
 	struct tm	dep;
-	float		presenceTargetTemp;		/* Target temp when we are at home */
-	float		standbyTargetTemp;		/* Target temp when nobody at home */
-	float		tempDelta;			/* Histeresis */
-	float 		fluidPumpOffTemp;		/* Fluid temperature on heater out when to stop pump */
+	float		presenceTargetTemp;			/* Target temp when we are at home */
+	float		standbyTargetTemp;			/* Target temp when nobody at home (day) */
+	float		standbyTargetNightTemp;		/* Target temp when nobody at home (night) */
+	float		tempDelta;					/* Histeresis */
+	float 		fluidPumpOffTemp;			/* Fluid temperature on heater out when to stop pump */
 	float		fluidElectroHeaterOffTemp;	/* Fluid temperature when electic heater is off, only coal will work */
 } configuration;
 
-const float heaterCutOffTemp	= 95.0;			/* Heater failure temperature */
+const float heaterCutOffTemp	= 95.0;		/* Heater failure temperature */
 
 enum SwitchStatus
 {
@@ -46,24 +48,28 @@ enum SwitchStatus
 //	UNCHANGED = 2
 };
 
+/* Tariff section */
+const int nightTariffStartHour	= 0;	/* actually 23 to 7 but meanwhile they failed to */
+const int nightTariffEndHour	= 8;	/* block powermeters to stop swithing to winter time :) /*
+
 /* Temperature sensors */
-const char* heaterSensor 	= "28.0AB28D020000"; /* датчик ТЭН */
-const char* externalSensor 	= "28.0FF26D020000"; /* улица */
-const char* outputSensor 	= "28.18DB6D020000"; /* жидкость на выходе */
-const char* amSensor 		= "28.4BC66D020000"; /* комната для гостей (АМ) */
-const char* inputSensor 	= "28.EDEA6D020000"; /* жидкость на входе */
-const char* bedroomSensor 	= "28.99C68D020000"; /* спальня */
-const char* cabinetSensor 	= "28.B5DE8D020000"; /* кабинет */
-const char* kitchenSensor	= "28.AAC56D020000"; /* кухня */
+const char* heaterSensor 		= "28.0AB28D020000"; /* датчик ТЭН */
+const char* externalSensor 		= "28.0FF26D020000"; /* улица */
+const char* outputSensor 		= "28.18DB6D020000"; /* жидкость на выходе */
+const char* amSensor 			= "28.4BC66D020000"; /* комната для гостей (АМ) */
+const char* inputSensor 		= "28.EDEA6D020000"; /* жидкость на входе */
+const char* bedroomSensor 		= "28.99C68D020000"; /* спальня */
+const char* cabinetSensor 		= "28.B5DE8D020000"; /* кабинет */
+const char* kitchenSensor		= "28.AAC56D020000"; /* кухня */
 const char* childrenSmallSensor	= "28.CFE58D020000"; /* детская (Ал) */
 
-const char* heaterSwitch	= "/mnt/1wire/3A.3E9403000000/PIO.A";
-const char* pumpSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.B";
+const char* heaterSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.A";
+const char* pumpSwitch			= "/mnt/1wire/3A.3E9403000000/PIO.B";
 
 const char* childrenSmallSwitch	= "/mnt/1wire/3A.CB9703000000/PIO.A"; /* heating switch in the small children room */
 
 /* Absolute paths! Unfortunately still need them to run under cron, but have to be refactored */
-const char* iniFilePath		= "/home/den/shc/controller.ini";
+const char* iniFilePath			= "/home/den/shc/controller.ini";
 const char* HEATER_FAILURE_FILE	= "/home/den/shc/HeaterFailure";
 
 #define 	ROOMS_COUNT 	5
@@ -72,7 +78,7 @@ const char* HEATER_FAILURE_FILE	= "/home/den/shc/HeaterFailure";
 typedef struct TRoomControlDescriptor
 {
 	char*		sensorAddress;			/* Address of temperature sensor of the room */
-	float		temperatureCorrection;		/* Temperature correction, 0 if no correction needed, >0 if sensor returns less that actually <0 otherwise */
+	float		temperatureCorrection;	/* Temperature correction, 0 if no correction needed, >0 if sensor returns less that actually <0 otherwise */
 	char*		switchAddress;			/* Address of room's heating switch */
 } RoomControlDescriptor;
 
@@ -146,6 +152,7 @@ void loadSettings()
 	// -- presenceTargetTemp && standbyTargetTemp
 	sscanf(g_key_file_get_string(iniFile, "heating", "presence", NULL), "\"%f\"", &configuration.presenceTargetTemp);
 	sscanf(g_key_file_get_string(iniFile, "heating", "standby", NULL), "\"%f\"", &configuration.standbyTargetTemp);
+	sscanf(g_key_file_get_string(iniFile, "heating", "standby_night", NULL), "\"%f\"", &configuration.standbyTargetNightTemp);
 	sscanf(g_key_file_get_string(iniFile, "heating", "tempDelta", NULL), "\"%f\"", &configuration.tempDelta);
 	sscanf(g_key_file_get_string(iniFile, "heating", "fluidPumpOffTemp", NULL), "\"%f\"", &configuration.fluidPumpOffTemp);
 	sscanf(g_key_file_get_string(iniFile, "heating", "fluidElectroHeaterOffTemp", NULL), "\"%f\"", &configuration.fluidElectroHeaterOffTemp);
@@ -251,7 +258,7 @@ time_t getHeatingStartTime()
 /** Current target temperature, controlled by configuration */
 float getTargetTemp()
 {
-	// -- Check weekday etc to see how to heat house
+	// -- Check precence time
 	time_t now = time(NULL);
 	time_t start = getHeatingStartTime();
 	time_t finish = mktime(&configuration.dep);
@@ -260,6 +267,15 @@ float getTargetTemp()
 	{
 		return configuration.presenceTargetTemp;
 	}
+
+	// -- If in standby, check day/night targets to save power
+	struct tm *ti = localtime(&now);
+
+	if (ti->tm_hour >= nightTariffStartHour && ti->tm_hour < nightTariffEndHour)
+	{
+		return configuration.standbyTargetNightTemp;
+	}
+
 	return configuration.standbyTargetTemp;
 }
 

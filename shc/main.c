@@ -259,24 +259,38 @@ time_t getHeatingStartTime()
 float getTargetTemp()
 {
 	// -- Check precence time
-	time_t now = time(NULL);
-	time_t start = getHeatingStartTime();
-	time_t finish = mktime(&configuration.dep);
-
-	if (now >= start && now <= finish)
+	if (isPresence())
 	{
 		return configuration.presenceTargetTemp;
 	}
 
 	// -- If in standby, check day/night targets to save power
-	struct tm *ti = localtime(&now);
-
-	if (ti->tm_hour >= nightTariffStartHour && ti->tm_hour < nightTariffEndHour)
+	if (isSaving())
 	{
 		return configuration.standbyTargetNightTemp;
 	}
 
 	return configuration.standbyTargetTemp;
+}
+
+/** Returns TRUE if presence mode or FALSE if standby mode */
+int isPresence()
+{
+	// -- Check precence time
+	time_t now = time(NULL);
+	time_t start = getHeatingStartTime();
+	time_t finish = mktime(&configuration.dep);
+
+	return now >= start && now <= finish;
+}
+
+//** Return TRUE if saving (night) tariff is on or FALSE otherwise */
+int isSaving()
+{
+	time_t now = time(NULL);
+	struct tm *ti = localtime(&now);
+
+	return ti->tm_hour >= nightTariffStartHour && ti->tm_hour < nightTariffEndHour;
 }
 
 /** Room control routine.
@@ -431,7 +445,7 @@ int main()
 	getDateTimeStr(nowStr, 60, time(NULL));
 	getDateTimeStr(onStr, 60, getHeatingStartTime());
 
-	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%4.1f|%s|\r\n", 
+	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%c|%c|%4.1f|%s|\r\n", 
 		nowStr,
 		heaterTemp,
 		getT(inputSensor),
@@ -445,6 +459,8 @@ int main()
 		controlTemp,
 		heaterState,
 		pumpState,
+		(isPresence() ? 'P' : 'S'),
+		(isSaving() ? 'N' : 'D'),
 		targetTemp,
 		onStr
 	);

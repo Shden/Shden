@@ -46,7 +46,7 @@
                 <td><input type="text" name="tempDelta" value="<?=$controller_config[heating][tempDelta]?>"/><sup>o</sup>С
             </tr>
             <tr>
-                <td>Порог отключения наcоса:</td>
+                <td>Порог отключения наcоса (разница вход/выход):</td>
                 <td><input type="text" name="fluidPumpOffTemp" value="<?=$controller_config[heating][fluidPumpOffTemp]?>"/><sup>o</sup>С
             </tr>
             <tr>

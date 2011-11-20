@@ -10,6 +10,7 @@
  *	11-SEP-2011:	- kitchen sensor added.
  *	07-OCT-2011:	- per room heating control added.
  *	07-NOV-2011:	- night tariff & energy saving in standby mode implemented.
+ *  20-NOV-2011:	- pump is on based on in/out temperature difference.
  */
 #include <stdio.h>
 #include <time.h>
@@ -35,7 +36,7 @@ struct ConfigT
 	float		standbyTargetTemp;			/* Target temp when nobody at home (day) */
 	float		standbyTargetNightTemp;		/* Target temp when nobody at home (night) */
 	float		tempDelta;					/* Histeresis */
-	float 		fluidPumpOffTemp;			/* Fluid temperature on heater out when to stop pump */
+	float 		inOutDeltaPumpOffTemp;		/* Temperature differeince (in/out) on heater when stop pump */
 	float		fluidElectroHeaterOffTemp;	/* Fluid temperature when electic heater is off, only coal will work */
 } configuration;
 
@@ -154,7 +155,7 @@ void loadSettings()
 	sscanf(g_key_file_get_string(iniFile, "heating", "standby", NULL), "\"%f\"", &configuration.standbyTargetTemp);
 	sscanf(g_key_file_get_string(iniFile, "heating", "standby_night", NULL), "\"%f\"", &configuration.standbyTargetNightTemp);
 	sscanf(g_key_file_get_string(iniFile, "heating", "tempDelta", NULL), "\"%f\"", &configuration.tempDelta);
-	sscanf(g_key_file_get_string(iniFile, "heating", "fluidPumpOffTemp", NULL), "\"%f\"", &configuration.fluidPumpOffTemp);
+	sscanf(g_key_file_get_string(iniFile, "heating", "fluidPumpOffTemp", NULL), "\"%f\"", &configuration.inOutDeltaPumpOffTemp);
 	sscanf(g_key_file_get_string(iniFile, "heating", "fluidElectroHeaterOffTemp", NULL), "\"%f\"", &configuration.fluidElectroHeaterOffTemp);
 }
 
@@ -363,14 +364,16 @@ int controlHeater(float controlTemp, float heaterTemp, float currentFluidTemp)
 	return getHeaterState();
 }
 
-int controlPump(float currentFluidTemp)
+int controlPump(float ingoingFluidTemp, float outgoingFluidTemp)
 {
-	if (OFF == getHeaterState() && currentFluidTemp < configuration.fluidPumpOffTemp)
+	float inOutDelta = outgoingFluidTemp - ingoingFluidTemp;
+
+	if (/*OFF == getHeaterState() && */inOutDelta < configuration.inOutDeltaPumpOffTemp)
 	{
 		setPump(OFF);
 		return OFF;
 	}
-	if (currentFluidTemp >= configuration.fluidPumpOffTemp)
+	if (inOutDelta >= configuration.inOutDeltaPumpOffTemp)
 	{
 		setPump(ON);
 		return ON;
@@ -426,12 +429,13 @@ int main()
 	// -- Measure current temperatures and set out the target
 	float controlTemp = getControlTemperature();
 	float outgoingFluidTemp = getT(outputSensor);
+	float ingoingFluidTemp = getT(inputSensor);
 	float heaterTemp = getT(heaterSensor);
 	float targetTemp = getTargetTemp();
 
 	// -- Control heater and pump
 	int heaterState = controlHeater(controlTemp, heaterTemp, outgoingFluidTemp);
-	int pumpState = controlPump(outgoingFluidTemp);
+	int pumpState = controlPump(ingoingFluidTemp, outgoingFluidTemp);
 
 	// -- Individual rooms control
 	/* Not tested yet	
@@ -448,7 +452,7 @@ int main()
 	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%c|%c|%4.1f|%s|\r\n", 
 		nowStr,
 		heaterTemp,
-		getT(inputSensor),
+		ingoingFluidTemp,
 		outgoingFluidTemp,
 		getT(externalSensor),
 		getT(amSensor),

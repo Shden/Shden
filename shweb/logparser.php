@@ -118,7 +118,13 @@ class LogParser
 					$saving = $tokens[19];
 					$heating = $tokens[15];
 
+					// outside (sum for avg, min, max
 					$result[$date]["outside"] += $outside;
+					if ($result[$date]["outside_min"] == null || $result[$date]["outside_min"] > $outside)
+						$result[$date]["outside_min"] = $outside;
+					if ($result[$date]["outside_max"] == null || $result[$date]["outside_max"] < $outside)
+						$result[$date]["outside_max"] = $outside;
+
 					$result[$date]["inside"] += $inside;
 					$result[$date]["total"] += $heating;
 					if ($saving == "N")					

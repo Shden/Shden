@@ -4,13 +4,17 @@
   <title>Температурный график</title>
 </head>
 <body>
-<?include 'menu.php';?>
-<h2>Температурный график</h2>
-<a href="graphview.php?start=<?=time()-60*60*24;?>&finish=<?=time()?>" target="gr">Сутки</a> |
-<a href="graphview.php?start=<?=time()-60*60*24*2;?>&finish=<?=time()?>" target="gr">Двое суток</a> |
-<a href="graphview.php?start=<?=time()-60*60*24*7;?>&finish=<?=time()?>" target="gr">Неделя</a> |
-<a href="graphview.php?start=<?=time()-60*60*24*30;?>&finish=<?=time()?>" target="gr">Месяц</a> |
-Интервал |
-<iframe name="gr" width="100%" height="600">
-<iframe>
+<?include 'menu.php';
+
+if ($_REQUEST[days] == "") $days = 1; else $days = $_REQUEST[days];
+?>
+<h2>Температурный график, интервал в днях: <?=$days?></h2>
+<a href="?days=1">Сутки</a> |
+<a href="?days=2">Двое суток</a> |
+<a href="?days=7">Неделя</a> |
+<a href="?days=14">2 недели</a> |
+<a href="?days=21">3 недели</a> |
+<a href="?days=31">Месяц</a> |
+<br/>
+<img src="graphview.php?start=<?=time()-60*60*24*$days;?>&finish=<?=time()?>"/>
 </body>

@@ -1,0 +1,50 @@
+#!/bin/sh
+
+##############################################
+#  CUSD *100# for DIR320 and Huawei E1550    #
+#           Megafon Moscow                   #
+#           from dlukanidin                  #
+##############################################
+
+# type:
+#   txt - static text
+#   gr1 - slide bar
+#   gr2 - ????????
+# value: text or numerical value in %
+# name: text
+# field delimiter: ":"
+
+decode(){   # input - $str, output - $res
+  res=""
+  while [ ${#str} -gt 3 ]; do
+    i=${str:0:4}
+    str=${str:4}
+    if [ $i == "0451" ]; then k="\\270"
+    elif [ $i == "0401" ]; then k="\\250"
+    elif [ ${i:0:2} == "00" ]; then
+        k="\\"`printf "%03o" 0x${i:2:2}`
+    else
+        j=`printf "%d" 0x$i`
+        let "j = $j - 1040 + 192"
+        k="\\"`printf "%03o" $j`
+    fi
+    sym=`printf "%b" $k`
+    res=$res$sym
+  done
+}
+
+filename='/tmp/statistic.add'
+port='/dev/usb/tts/2'
+delim=' : '
+name='Huawei E1550 Megafon Balans'
+cusd="AT+CUSD=1,AA180C3602,15"
+
+while true; do
+    echo $cusd > $port
+    rep=$(grep -m 1 "CUSD:" $port | awk -F':' '{print $2}' | awk -F',' '{print $2}')
+    str=${rep:1}
+    decode
+    echo $name$delim"txt"$delim$res >$filename
+    sleep 1800
+done
+

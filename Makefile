@@ -21,7 +21,7 @@
 include $(TOPDIR)/rules.mk
 
 # Name and release number of this package
-PKG_NAME:=acontroller
+PKG_NAME:=controller
 PKG_RELEASE:=1
 
 # This specifies the directory where we're going to build the program.
@@ -50,7 +50,7 @@ endef
 # much easier to do it this way.
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)
-	$(CP) ./src/* $(PKG_BUILD_DIR)/
+	$(CP) ./shc/* $(PKG_BUILD_DIR)/
 endef
 
 # We do not need to define Build/Configure or Build/Compile directives

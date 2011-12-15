@@ -78,9 +78,9 @@ const char* HEATER_FAILURE_FILE	= "/home/den/shc/HeaterFailure";
 /* Room control descriptor */
 typedef struct TRoomControlDescriptor
 {
-	char*		sensorAddress;			/* Address of temperature sensor of the room */
+	const char*	sensorAddress;			/* Address of temperature sensor of the room */
 	float		temperatureCorrection;	/* Temperature correction, 0 if no correction needed, >0 if sensor returns less that actually <0 otherwise */
-	char*		switchAddress;			/* Address of room's heating switch */
+	const char*	switchAddress;			/* Address of room's heating switch */
 } RoomControlDescriptor;
 
 RoomControlDescriptor roomControlDescriptors[ROOMS_COUNT];
@@ -159,7 +159,7 @@ void loadSettings()
 	sscanf(g_key_file_get_string(iniFile, "heating", "fluidElectroHeaterOffTemp", NULL), "\"%f\"", &configuration.fluidElectroHeaterOffTemp);
 }
 
-float getT(char* sensor)
+float getT(const char* sensor)
 {
 	#ifdef DEBUG_NO_1WIRE
 	return 20.0;
@@ -180,7 +180,7 @@ float getT(char* sensor)
 	#endif
 }
 
-void changeSwitch(char* addr, int ison)
+void changeSwitch(const char* addr, int ison)
 {
 	#ifndef DEBUG_NO_1WIRE
 	FILE *fp;
@@ -196,7 +196,7 @@ void changeSwitch(char* addr, int ison)
 	return;
 }
 
-int getSwitchState(char* addr)
+int getSwitchState(const char* addr)
 {
 	#ifndef DEBUG_NO_1WIRE
 	FILE *fp;

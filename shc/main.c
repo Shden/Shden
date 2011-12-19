@@ -2,7 +2,7 @@
  *	Smart house controller module.
  *	
  *	14-Nov-2010: 	- pump is controlled separately from heater allowing other heaters to work effectively.
- *					- overheating control implemented.
+ *			- overheating control implemented.
  *	28-NOV-2010:	- simple standby energy saving algorithm based on weekday added.
  *	10-APR-2011:	- standby temperature change from 10.0 to 8.0.
  *	26-APR-2011:	- configuration goes to .ini file.
@@ -10,14 +10,14 @@
  *	11-SEP-2011:	- kitchen sensor added.
  *	07-OCT-2011:	- per room heating control added.
  *	07-NOV-2011:	- night tariff & energy saving in standby mode implemented.
- *  20-NOV-2011:	- pump is on based on in/out temperature difference.
+ *  	20-NOV-2011:	- pump is on based on in/out temperature difference.
+ *	19-DEC-2011:	- mips porting: Glib removed.
  */
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <glib.h>
 
-//#define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
+#define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
 
 const int OneWirePathLen = 100;
 
@@ -32,15 +32,15 @@ struct ConfigT
 {
 	struct tm	arrive;
 	struct tm	dep;
-	float		presenceTargetTemp;			/* Target temp when we are at home */
-	float		standbyTargetTemp;			/* Target temp when nobody at home (day) */
+	float		presenceTargetTemp;		/* Target temp when we are at home */
+	float		standbyTargetTemp;		/* Target temp when nobody at home (day) */
 	float		standbyTargetNightTemp;		/* Target temp when nobody at home (night) */
-	float		tempDelta;					/* Histeresis */
+	float		tempDelta;			/* Histeresis */
 	float 		inOutDeltaPumpOffTemp;		/* Temperature differeince (in/out) on heater when stop pump */
 	float		fluidElectroHeaterOffTemp;	/* Fluid temperature when electic heater is off, only coal will work */
 } configuration;
 
-const float heaterCutOffTemp	= 95.0;		/* Heater failure temperature */
+const float heaterCutOffTemp	= 95.0;			/* Heater failure temperature */
 
 enum SwitchStatus
 {
@@ -54,33 +54,57 @@ const int nightTariffStartHour	= 0;	/* actually 23 to 7 but meanwhile they faile
 const int nightTariffEndHour	= 8;	/* block powermeters to stop swithing to winter time :) /*
 
 /* Temperature sensors */
-const char* heaterSensor 		= "28.0AB28D020000"; /* датчик ТЭН */
-const char* externalSensor 		= "28.0FF26D020000"; /* улица */
-const char* outputSensor 		= "28.18DB6D020000"; /* жидкость на выходе */
-const char* amSensor 			= "28.4BC66D020000"; /* комната для гостей (АМ) */
-const char* inputSensor 		= "28.EDEA6D020000"; /* жидкость на входе */
-const char* bedroomSensor 		= "28.99C68D020000"; /* спальня */
-const char* cabinetSensor 		= "28.B5DE8D020000"; /* кабинет */
-const char* kitchenSensor		= "28.AAC56D020000"; /* кухня */
+const char* heaterSensor 	= "28.0AB28D020000"; /* датчик ТЭН */
+const char* externalSensor 	= "28.0FF26D020000"; /* улица */
+const char* outputSensor 	= "28.18DB6D020000"; /* жидкость на выходе */
+const char* amSensor 		= "28.4BC66D020000"; /* комната для гостей (АМ) */
+const char* inputSensor 	= "28.EDEA6D020000"; /* жидкость на входе */
+const char* bedroomSensor 	= "28.99C68D020000"; /* спальня */
+const char* cabinetSensor 	= "28.B5DE8D020000"; /* кабинет */
+const char* kitchenSensor	= "28.AAC56D020000"; /* кухня */
 const char* childrenSmallSensor	= "28.CFE58D020000"; /* детская (Ал) */
 
-const char* heaterSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.A";
-const char* pumpSwitch			= "/mnt/1wire/3A.3E9403000000/PIO.B";
+const char* heaterSwitch	= "/mnt/1wire/3A.3E9403000000/PIO.A";
+const char* pumpSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.B";
 
 const char* childrenSmallSwitch	= "/mnt/1wire/3A.CB9703000000/PIO.A"; /* heating switch in the small children room */
 
 /* Absolute paths! Unfortunately still need them to run under cron, but have to be refactored */
-const char* iniFilePath			= "/home/den/shc/controller.ini";
-const char* HEATER_FAILURE_FILE	= "/home/den/shc/HeaterFailure";
+const char* iniFilePath		= "/home/den/Shden/shc/controller.ini";
+const char* HEATER_FAILURE_FILE	= "/home/den/Shden/shc/HeaterFailure";
 
-#define 	ROOMS_COUNT 	5
+#define 	ROOMS_COUNT 		5
+#define		INI_BUFF_LEN		80
+
+// Ini file headers & variables are defined here:
+#define		HEATING_SECTION		"[heating]"
+#define		SCHEDULE_SECTION	"[schedule]"
+
+#define		STANDBY_VALUE		"standby"
+#define		STANDBY_NIGHT_VALUE	"standby_night"
+#define		PRESENCE_VALUE		"presence"
+#define		TEMP_DELTA_VALUE	"tempDelta"
+#define		PUMP_OFF_VALUE		"fluidPumpOffTemp"
+#define		HEATER_OFF_VALUE	"fluidElectroHeaterOffTemp"
+
+#define		ARRIVE_DATE_VALUE	"arrive_date"
+#define		ARRIVE_HOUR_VALUE	"arrive_hour"
+#define		DEP_DATE_VALUE		"dep_date"
+#define		DEP_HOUR_VALUE		"dep_hour"
+
+typedef enum ConfigParserStatus
+{
+	DISORIENTED,
+	HEATING,
+	SCHEDULE
+} ConfigParserStatus;
 
 /* Room control descriptor */
 typedef struct TRoomControlDescriptor
 {
-	const char*	sensorAddress;			/* Address of temperature sensor of the room */
+	const char*	sensorAddress;		/* Address of temperature sensor of the room */
 	float		temperatureCorrection;	/* Temperature correction, 0 if no correction needed, >0 if sensor returns less that actually <0 otherwise */
-	const char*	switchAddress;			/* Address of room's heating switch */
+	const char*	switchAddress;		/* Address of room's heating switch */
 } RoomControlDescriptor;
 
 RoomControlDescriptor roomControlDescriptors[ROOMS_COUNT];
@@ -116,47 +140,118 @@ void initRoomDescriptors()
 
 void loadSettings()
 {
-	GKeyFile* iniFile;
-	GKeyFileFlags flags = 0;
-	GError* error = NULL;
+	FILE* iniFile;
+	iniFile = fopen(iniFilePath, "r");
 
-	// -- Create a new GKeyFile and prepare flags
-	iniFile = g_key_file_new();
+	const char* iniFileBuff[INI_BUFF_LEN];
+	const char* sectionName[INI_BUFF_LEN];
+	ConfigParserStatus status = DISORIENTED;
 
-	if (!g_key_file_load_from_file(iniFile, iniFilePath, flags, &error))
+	while (NULL != fgets(iniFileBuff, INI_BUFF_LEN, iniFile))
 	{
-		printf(error->message);
-		g_error(error->message);
-		exit(EXIT_FAIL);
-	}
-
-	// -- arrival date & hour	
-	configuration.arrive.tm_sec = configuration.arrive.tm_min = 0;
-	sscanf(g_key_file_get_string(iniFile, "schedule", "arrive_hour", NULL), "\"%d\"", &configuration.arrive.tm_hour);
-	sscanf(g_key_file_get_string(iniFile, "schedule", "arrive_date", NULL), "\"%d.%d.%d\"",
-		&configuration.arrive.tm_mday, &configuration.arrive.tm_mon, &configuration.arrive.tm_year);
-	configuration.arrive.tm_year -= 1900;
-	configuration.arrive.tm_mon -= 1;
-	configuration.arrive.tm_hour -= 1;
-	mktime(&configuration.arrive);
-
-	// -- departure date & hour
-	configuration.dep.tm_sec = configuration.dep.tm_min = 0;
-	sscanf(g_key_file_get_string(iniFile, "schedule", "dep_hour", NULL), "\"%d\"", &configuration.dep.tm_hour);
-	sscanf(g_key_file_get_string(iniFile, "schedule", "dep_date", NULL), "\"%d.%d.%d\"",
-		&configuration.dep.tm_mday, &configuration.dep.tm_mon, &configuration.dep.tm_year);
-	configuration.dep.tm_year -= 1900;
-	configuration.dep.tm_mon -= 1;
-	configuration.dep.tm_hour -= 1;
-	mktime(&configuration.dep);
-
-	// -- presenceTargetTemp && standbyTargetTemp
-	sscanf(g_key_file_get_string(iniFile, "heating", "presence", NULL), "\"%f\"", &configuration.presenceTargetTemp);
-	sscanf(g_key_file_get_string(iniFile, "heating", "standby", NULL), "\"%f\"", &configuration.standbyTargetTemp);
-	sscanf(g_key_file_get_string(iniFile, "heating", "standby_night", NULL), "\"%f\"", &configuration.standbyTargetNightTemp);
-	sscanf(g_key_file_get_string(iniFile, "heating", "tempDelta", NULL), "\"%f\"", &configuration.tempDelta);
-	sscanf(g_key_file_get_string(iniFile, "heating", "fluidPumpOffTemp", NULL), "\"%f\"", &configuration.inOutDeltaPumpOffTemp);
-	sscanf(g_key_file_get_string(iniFile, "heating", "fluidElectroHeaterOffTemp", NULL), "\"%f\"", &configuration.fluidElectroHeaterOffTemp);
+		switch(status)
+		{
+		case DISORIENTED:
+			if (1 == sscanf(iniFileBuff, "%s", sectionName))
+			{
+				if (!strcmp(sectionName, HEATING_SECTION))
+				{
+					status = HEATING;
+				}
+				else if (!strcmp(sectionName, SCHEDULE_SECTION))
+				{
+					status = SCHEDULE;
+				}
+				else
+				{
+					printf("Unrecognized section: [%s], skipped.\n\r", sectionName); 
+					status = DISORIENTED;
+				}
+			}
+			break;
+			
+		case HEATING:
+		case SCHEDULE:
+			{
+				const char* varName[INI_BUFF_LEN];
+				const char* varValue[INI_BUFF_LEN];
+			
+				if (2 == sscanf(iniFileBuff,"%s = \"%s\"", varName, varValue))
+				{
+					if (!strcmp(varName, STANDBY_VALUE))
+					{
+						sscanf(varValue, "%f", &configuration.standbyTargetTemp);
+					}
+					else if (!strcmp(varName, STANDBY_NIGHT_VALUE))
+					{
+						sscanf(varValue, "%f", &configuration.standbyTargetNightTemp);
+					}
+					else if (!strcmp(varName, PRESENCE_VALUE))
+					{
+						sscanf(varValue, "%f", &configuration.presenceTargetTemp);
+					}
+					else if (!strcmp(varName, TEMP_DELTA_VALUE))
+					{
+						sscanf(varValue, "%f", &configuration.tempDelta);
+					}
+					else if (!strcmp(varName, PUMP_OFF_VALUE))
+					{
+						sscanf(varValue, "%f", &configuration.inOutDeltaPumpOffTemp);
+					}
+					else if (!strcmp(varName, HEATER_OFF_VALUE))
+					{
+						sscanf(varValue, "%f", &configuration.fluidElectroHeaterOffTemp);
+					}
+					else if (!strcmp(varName, ARRIVE_DATE_VALUE))
+					{
+						// arrival date parse
+						configuration.arrive.tm_sec = 
+						configuration.arrive.tm_min = 0;
+						sscanf(varValue, "%d.%d.%d",
+							&configuration.arrive.tm_mday, 
+							&configuration.arrive.tm_mon, 
+							&configuration.arrive.tm_year);
+						configuration.arrive.tm_year -= 1900;
+						configuration.arrive.tm_mon -= 1;
+						configuration.arrive.tm_hour -= 1;
+						mktime(&configuration.arrive);
+					}
+					else if (!strcmp(varName, ARRIVE_HOUR_VALUE))
+					{
+						// arrival hour
+						sscanf(varValue, "%d", 
+							&configuration.arrive.tm_hour);
+					}
+					else if (!strcmp(varName, DEP_HOUR_VALUE))
+					{
+						// departure hour
+						sscanf(varValue, "%d", 
+						&configuration.dep.tm_hour);
+					}
+					else if (!strcmp(varName, DEP_DATE_VALUE))
+					{
+						// departure date
+						configuration.dep.tm_sec = 
+						configuration.dep.tm_min = 0;
+						sscanf(varValue, "%d.%d.%d",
+							&configuration.dep.tm_mday, 
+							&configuration.dep.tm_mon, 
+							&configuration.dep.tm_year);
+						configuration.dep.tm_year -= 1900;
+						configuration.dep.tm_mon -= 1;
+						configuration.dep.tm_hour -= 1;
+						mktime(&configuration.dep);
+					}
+					else
+					{
+						printf("Unrecognized value: [%s], skipped.\n\r", varName);
+					}
+				}
+			}
+			break;
+		} // switch
+	} // while
+	fclose(iniFile);
 }
 
 float getT(const char* sensor)

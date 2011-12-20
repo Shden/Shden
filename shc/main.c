@@ -72,10 +72,6 @@ const char* pumpSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.B";
 
 const char* childrenSmallSwitch	= "/mnt/1wire/3A.CB9703000000/PIO.A"; /* heating switch in the small children room */
 
-/* Absolute paths! Unfortunately still need them to run under cron, but have to be refactored */
-const char* iniFilePath		= "/home/den/Shden/shc/controller.ini";
-const char* HEATER_FAILURE_FILE	= "/home/den/Shden/shc/HeaterFailure";
-
 #define 	ROOMS_COUNT 		5
 #define		INI_BUFF_LEN		80
 
@@ -155,7 +151,7 @@ void initRoomDescriptors()
 void loadSettings()
 {
 	FILE* iniFile;
-	iniFile = fopen(iniFilePath, "r");
+	iniFile = fopen(configuration.configFilePath, "r");
 
 	const char* iniFileBuff[INI_BUFF_LEN];
 	const char* sectionName[INI_BUFF_LEN];
@@ -436,7 +432,7 @@ int controlHeater(float controlTemp, float heaterTemp, float currentFluidTemp)
 
 		// -- Persist failure info		
 		FILE *fp;
-		fp = fopen(HEATER_FAILURE_FILE, "w");
+		fp = fopen(configuration.heaterFailurePath, "w");
 		if (NULL != fp)
 		{
 			const char* formatStr = "%s: Heater failure detected t=%4.2f.\r\n";
@@ -493,7 +489,7 @@ int controlPump(float ingoingFluidTemp, float outgoingFluidTemp)
 int wasOverheated()
 {
 	FILE *fp;
-	fp = fopen(HEATER_FAILURE_FILE, "r");
+	fp = fopen(configuration.heaterFailurePath, "r");
 	if (NULL != fp)
 	{
 		fclose(fp);

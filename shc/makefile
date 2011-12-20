@@ -1,4 +1,4 @@
-controller: main.c
+controller: controller.c
 	$(CC) $< -o $@ 
 
 clean:

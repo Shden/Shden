@@ -11,13 +11,14 @@
  *	07-OCT-2011:	- per room heating control added.
  *	07-NOV-2011:	- night tariff & energy saving in standby mode implemented.
  *  	20-NOV-2011:	- pump is on based on in/out temperature difference.
- *	19-DEC-2011:	- mips porting: Glib removed.
+ *	19-DEC-2011:	- mips porting: Glib dependency removed.
  */
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 
 #define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
+#define PATH_LEN	80
 
 const int OneWirePathLen = 100;
 
@@ -30,6 +31,8 @@ enum ExitStatus
 /* Configuration data lives here */
 struct ConfigT
 {
+	const char*	configFilePath[PATH_LEN];	/* controller.ini full path */
+	const char*	heaterFailurePath[PATH_LEN];	/* heater failure control file path */
 	struct tm	arrive;
 	struct tm	dep;
 	float		presenceTargetTemp;		/* Target temp when we are at home */
@@ -108,6 +111,17 @@ typedef struct TRoomControlDescriptor
 } RoomControlDescriptor;
 
 RoomControlDescriptor roomControlDescriptors[ROOMS_COUNT];
+
+/* Init configuration directories based on the controller path */
+void setDirectories(const char* controllerPath)
+{
+	/* Note: the directory controller executable is deployed
+	 * shall contain the subdirectory named the same as controller
+	 * but having _config suffix e.g. controller_config.
+	 * Configuration files are to be deployed to this subdirectory. */
+	sprintf(configuration.configFilePath, "%s_config/controller.ini", controllerPath);
+	sprintf(configuration.heaterFailurePath, "%s_config/HeaterFailure", controllerPath);
+}
 
 /* Room descriptors initialization */
 void initRoomDescriptors()
@@ -496,8 +510,11 @@ void getDateTimeStr(char *str, int length, time_t time)
 	sprintf(str, "%02d/%02d/%4d %02d:%02d:%02d", ti->tm_mday, ti->tm_mon+1, ti->tm_year+1900, ti->tm_hour, ti->tm_min, ti->tm_sec);
 }
 
-int main()
+int main(int argc, const char** args)
 {
+	// -- Set confguration.ini & others directories relative to the app location
+	setDirectories(args[0]);
+	
 	// -- Check for previous fatal errors
 	if (wasOverheated())
 	{
@@ -566,11 +583,4 @@ int main()
 
 	return EXIT_OK;
 }
-
-
-/*void wait(int seconds)
-{
-	clock_t endwait = clock() + seconds * CLOCK_PER_SEC;
-	while (clock() < endwait) {}
-}*/
 

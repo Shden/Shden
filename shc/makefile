@@ -1,8 +1,5 @@
-CFLAGS := $(shell pkg-config --cflags glib-2.0)
-LDFLAGS := $(shell pkg-config --libs glib-2.0)
-
-controller: main.c
-	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+controller: controller.c
+	$(CC) $< -o $@ 
 
 clean:
 	rm -f *.o controller

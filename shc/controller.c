@@ -352,7 +352,7 @@ float getControlTemperature()
 /** This returns time required to heat up the house for presence mode, in hours */
 float getHeatingTimeForPresence()
 {
-	const float heatUpSpeed = 0.5;	// speed of heating up, C/hour.
+	const float heatUpSpeed = 0.8;	// speed of heating up, C/hour.
 	float current = getControlTemperature();
 	return (configuration.presenceTargetTemp - current) / heatUpSpeed; // hours
 }

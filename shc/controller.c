@@ -17,7 +17,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
+//#define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
 #define PATH_LEN	80
 
 const int OneWirePathLen = 100;
@@ -224,7 +224,6 @@ void loadSettings()
 						configuration.arrive.tm_year -= 1900;
 						configuration.arrive.tm_mon -= 1;
 						configuration.arrive.tm_hour -= 1;
-						mktime(&configuration.arrive);
 					}
 					else if (!strcmp(varName, ARRIVE_HOUR_VALUE))
 					{
@@ -250,7 +249,6 @@ void loadSettings()
 						configuration.dep.tm_year -= 1900;
 						configuration.dep.tm_mon -= 1;
 						configuration.dep.tm_hour -= 1;
-						mktime(&configuration.dep);
 					}
 					else
 					{
@@ -261,6 +259,10 @@ void loadSettings()
 			break;
 		} // switch
 	} // while
+
+	mktime(&configuration.arrive);
+	mktime(&configuration.dep);
+
 	fclose(iniFile);
 }
 

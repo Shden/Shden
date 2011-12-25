@@ -61,7 +61,7 @@
         </table>
     </form>
     <?
-    $output = `cat /home/den/shc/controller.ini`;
+    $output = `cat /home/den/shc/controller_config/controller.ini`;
     print "<pre>$output</pre>";
     ?>
 </body>

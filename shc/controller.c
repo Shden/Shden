@@ -40,7 +40,10 @@ struct ConfigT
 	float		standbyTargetNightTemp;		/* Target temp when nobody at home (night) */
 	float		tempDelta;			/* Histeresis */
 	float 		inOutDeltaPumpOffTemp;		/* Temperature differeince (in/out) on heater when stop pump */
-	float		fluidElectroHeaterOffTemp;	/* Fluid temperature when electic heater is off, only coal will work */
+	
+	/* The next two parameters both control how electric heater is turned off when oven is on: */
+	float		fluidElectricHeaterOffTemp;	/* Outgoing fluid temperature O2 to off electic heater */
+	float		ovenExtraElectricHeaterOffTemp;	/* O2 - O1 difference to off electric heater */
 } configuration;
 
 const float heaterCutOffTemp	= 95.0;			/* Heater failure temperature */
@@ -84,7 +87,8 @@ const char* childrenSmallSwitch	= "/mnt/1wire/3A.CB9703000000/PIO.A"; /* heating
 #define		PRESENCE_VALUE		"presence"
 #define		TEMP_DELTA_VALUE	"tempDelta"
 #define		PUMP_OFF_VALUE		"fluidPumpOffTemp"
-#define		HEATER_OFF_VALUE	"fluidElectroHeaterOffTemp"
+#define		HEATER_OFF_VALUE	"fluidElectricHeaterOffTemp"
+#define		HEATER_DELTA_OFF_VALUE	"ovenExtraElectricHeaterOffTemp"
 
 #define		ARRIVE_DATE_VALUE	"arrive_date"
 #define		ARRIVE_HOUR_VALUE	"arrive_hour"
@@ -210,7 +214,11 @@ void loadSettings()
 					}
 					else if (!strcmp(varName, HEATER_OFF_VALUE))
 					{
-						sscanf(varValue, "%f", &configuration.fluidElectroHeaterOffTemp);
+						sscanf(varValue, "%f", &configuration.fluidElectricHeaterOffTemp);
+					}
+					else if (!strcmp(varName, HEATER_DELTA_OFF_VALUE))
+					{
+						sscanf(varValue, "%f", &configuration.ovenExtraElectricHeaterOffTemp);
 					}
 					else if (!strcmp(varName, ARRIVE_DATE_VALUE))
 					{
@@ -422,11 +430,13 @@ void controlRoom(RoomControlDescriptor* roomDescr, float targetTemp)
 /** Heater control routine.
  *	controlTemp - current control temperature (room or composite of rooms)
  *	heaterTemp - current heater temperature to control
- *	currentFluidTemp - current temperature of the fluid
+ *	outgoingFluidTemp - current outgoing temperature of the fluid 
+ *			    (oven + electric heater, ref: O2)
+ *	outgoingTENTemp - current outgoing fluid temerature from the electric heater (ref: O1)
  */
-int controlHeater(float controlTemp, float heaterTemp, float currentFluidTemp)
+int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp, float outgoingTENTemp)
 {
-	/* First chech heater is OK */
+	/* First check heater is OK (wasn't overheated) */
 	if (heaterTemp > heaterCutOffTemp)
 	{
 		// -- Current date and time
@@ -448,7 +458,8 @@ int controlHeater(float controlTemp, float heaterTemp, float currentFluidTemp)
 		exit(EXIT_FAIL);
 	}
 
-	if (currentFluidTemp > configuration.fluidElectroHeaterOffTemp)
+	if (outgoingFluidTemp > configuration.fluidElectricHeaterOffTemp &&
+	    outgoingFluidTemp - outgoingTENTemp > configruation.ovenExtraElectricHeaterOffTemp)
 	{
 		// Other heater has created enough temperature, no need to run electricity
 		setHeater(OFF);
@@ -540,11 +551,11 @@ int main(int argc, const char** args)
 	float controlTemp = getControlTemperature();
 	float outgoingFluidTemp = getT(outputSensor);
 	float ingoingFluidTemp = getT(inputSensor);
-	float heaterTemp = getT(heaterSensor);
+	float electricHeaterTemp = getT(heaterSensor);
 	float targetTemp = getTargetTemp();
 
 	// -- Control heater and pump
-	int heaterState = controlHeater(controlTemp, heaterTemp, outgoingFluidTemp);
+	int heaterState = controlHeater(controlTemp, heaterTemp, outgoingFluidTemp, electricHeaterTemp);
 	int pumpState = controlPump(ingoingFluidTemp, outgoingFluidTemp);
 
 	// -- Individual rooms control
@@ -561,7 +572,7 @@ int main(int argc, const char** args)
 
 	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%c|%c|%4.1f|%s|\r\n", 
 		nowStr,
-		heaterTemp,
+		electricHeaterTemp,
 		ingoingFluidTemp,
 		outgoingFluidTemp,
 		getT(externalSensor),

@@ -17,7 +17,7 @@
         $controller_config[heating][presence] = $_REQUEST[presenсe];
         $controller_config[heating][tempDelta] = $_REQUEST[tempDelta];
         $controller_config[heating][fluidPumpOffTemp] = $_REQUEST[fluidPumpOffTemp];
-		$controller_config[heating][fluidElectroHeaterOffTemp] = $_REQUEST[fluidElectroHeaterOffTemp];
+        $controller_config[heating][fluidElectricHeaterOffTemp] = $_REQUEST[fluidElectricHeaterOffTemp];
         
         //print_r($controller_config);
         
@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <td>Отключаем ТЭН, если котел нагревает воду до:</td>
-                <td><input type="text" name="fluidElectroHeaterOffTemp" value="<?=$controller_config[heating][fluidElectroHeaterOffTemp]?>"/><sup>o</sup>С
+                <td><input type="text" name="fluidElectricHeaterOffTemp" value="<?=$controller_config[heating][fluidElectricHeaterOffTemp]?>"/><sup>o</sup>С
             </tr>
             <tr>
                 <td colspan="2">

@@ -12,6 +12,8 @@
  *	07-NOV-2011:	- night tariff & energy saving in standby mode implemented.
  *  	20-NOV-2011:	- pump is on based on in/out temperature difference.
  *	19-DEC-2011:	- mips porting: Glib dependency removed.
+ *	01-JAN-2012:	- HNY!)) electric heater off algorithm improved, based on 2 parameters:
+ *			  1) outgoing fluid temp and 2) extra heating from oven.
  */
 #include <stdio.h>
 #include <time.h>
@@ -429,12 +431,11 @@ void controlRoom(RoomControlDescriptor* roomDescr, float targetTemp)
 
 /** Heater control routine.
  *	controlTemp - current control temperature (room or composite of rooms)
- *	heaterTemp - current heater temperature to control
+ *	heaterTemp - current electric heater temperature to control (ref: O1)
  *	outgoingFluidTemp - current outgoing temperature of the fluid 
  *			    (oven + electric heater, ref: O2)
- *	outgoingTENTemp - current outgoing fluid temerature from the electric heater (ref: O1)
  */
-int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp, float outgoingTENTemp)
+int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp)
 {
 	/* First check heater is OK (wasn't overheated) */
 	if (heaterTemp > heaterCutOffTemp)
@@ -459,7 +460,7 @@ int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp, 
 	}
 
 	if (outgoingFluidTemp > configuration.fluidElectricHeaterOffTemp &&
-	    outgoingFluidTemp - outgoingTENTemp > configruation.ovenExtraElectricHeaterOffTemp)
+	    outgoingFluidTemp - heaterTemp > configuration.ovenExtraElectricHeaterOffTemp)
 	{
 		// Other heater has created enough temperature, no need to run electricity
 		setHeater(OFF);
@@ -555,7 +556,7 @@ int main(int argc, const char** args)
 	float targetTemp = getTargetTemp();
 
 	// -- Control heater and pump
-	int heaterState = controlHeater(controlTemp, heaterTemp, outgoingFluidTemp, electricHeaterTemp);
+	int heaterState = controlHeater(controlTemp, electricHeaterTemp, outgoingFluidTemp);
 	int pumpState = controlPump(ingoingFluidTemp, outgoingFluidTemp);
 
 	// -- Individual rooms control

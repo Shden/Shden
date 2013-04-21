@@ -5,7 +5,7 @@ require_once ('logparser.php');
 
 if (isset($_REQUEST[start]) && isset($_REQUEST[finish]))
 {  
-	$parser = new LogParser("/home/den/shc/controller.log");
+	$parser = new LogParser("/home/den/Shden/shc/controller.log");
 
 	list($times, $outTemp, $hotfluid, $coldfluid, $bedRoomTemp) = 
 		$parser->GetStat($_REQUEST[start], $_REQUEST[finish]);

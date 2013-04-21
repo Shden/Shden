@@ -89,6 +89,7 @@ class LogParser
 
 		// Line pattern:
 		//13/11/2011 12:59:05|46.00|23.25|47.06||4.25||22.75|19.19|16.94|16.88|26.69||19.19||1|1||P|D|20.0|12/11/2011 13:23:34
+		//21/04/2013 16:07:08|41.00|31.06|39.69||8.75||18.69|20.44|20.88|22.69||20.56|16.94||20.44||1|0||P|D|20.5|20/04/2013 15:54:14|
        	while (!feof($fp)) 
 		{
 			$line = $this->GetLine($fp);
@@ -115,8 +116,8 @@ class LogParser
 					$outside = $tokens[5];
 					$inside = $tokens[8];
 					//$presence = $tokens[18];
-					$saving = $tokens[19];
-					$heating = $tokens[15];
+					$saving = $tokens[21];
+					$heating = $tokens[17];
 
 					// outside (sum for avg, min, max
 					$result[$date]["outside"] += $outside;

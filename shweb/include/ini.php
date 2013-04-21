@@ -3,7 +3,7 @@
 /*
  * Stuff to work with .ini files in php
  */
-$controller_ini = "/home/den/shc/controller_config/controller.ini";
+$controller_ini = "/home/den/Shden/shc/controller_config/controller.ini";
 
 function write_ini_file($file, array $options){
     $tmp = '';

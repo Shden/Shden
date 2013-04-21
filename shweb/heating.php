@@ -15,7 +15,7 @@
 <hr/>
 <?
 if ($_REQUEST[n] == "") $n = 10; else $n = $_REQUEST[n];
-$output = `tail /home/den/shc/controller.log -n$n`;
+$output = `tail /home/den/Shden/shc/controller.log -n$n`;
 print "<pre>$output</pre>";
 ?>
 </body>

@@ -8,7 +8,7 @@ require_once ('logparser.php');
 
 if ($_REQUEST[days] == "") $days = 7; else $days = $_REQUEST[days];
 
-$parser = new LogParser("/home/den/shc/controller.log");
+$parser = new LogParser("/home/den/Shden/shc/controller.log");
 $r = $parser->GetSummaryDaily(time() - 3600 * 24 * $days, time());
 ?>
 <a href="?days=7">1 week</a> |

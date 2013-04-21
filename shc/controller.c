@@ -71,7 +71,7 @@ const char* bedroomSensor 	= "28.99C68D020000"; /* спальня */
 const char* cabinetSensor 	= "28.B5DE8D020000"; /* кабинет */
 const char* kitchenSensor	= "28.AAC56D020000"; /* кухня */
 const char* childrenSmallSensor	= "28.CFE58D020000"; /* детская (Ал) */
-
+const char* bathRoomSensor	= "10.AEFF8F020800"; /* ванная на 1-м этаже */
 const char* heaterSwitch	= "/mnt/1wire/3A.3E9403000000/PIO.A";
 const char* pumpSwitch		= "/mnt/1wire/3A.3E9403000000/PIO.B";
 
@@ -469,7 +469,7 @@ int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp)
 	else if (controlTemp < getTargetTemp())
 	{
 		setHeater(ON);
-		setPump(ON);
+//		setPump(ON);
 		return ON;
 	}
 	else if (controlTemp > getTargetTemp() + configuration.tempDelta)
@@ -571,7 +571,7 @@ int main(int argc, const char** args)
 	getDateTimeStr(nowStr, 60, time(NULL));
 	getDateTimeStr(onStr, 60, getHeatingStartTime());
 
-	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f|%4.2f||%4.2f||%d|%d||%c|%c|%4.1f|%s|\r\n", 
+	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f||%4.2f|%4.2f||%4.2f||%d|%d||%c|%c|%4.1f|%s|\r\n", 
 		nowStr,
 		electricHeaterTemp,
 		ingoingFluidTemp,
@@ -580,8 +580,9 @@ int main(int argc, const char** args)
 		getT(amSensor),
 		getT(bedroomSensor),
 		getT(cabinetSensor),
-		getT(kitchenSensor),
 		getT(childrenSmallSensor),
+		getT(kitchenSensor),
+		getT(bathRoomSensor),
 		controlTemp,
 		heaterState,
 		pumpState,

@@ -33,8 +33,8 @@ enum ExitStatus
 /* Configuration data lives here */
 struct ConfigT
 {
-	const char*	configFilePath[PATH_LEN];	/* controller.ini full path */
-	const char*	heaterFailurePath[PATH_LEN];	/* heater failure control file path */
+	const char	configFilePath[PATH_LEN];	/* controller.ini full path */
+	const char	heaterFailurePath[PATH_LEN];	/* heater failure control file path */
 	struct tm	arrive;
 	struct tm	dep;
 	float		presenceTargetTemp;		/* Target temp when we are at home */
@@ -159,8 +159,8 @@ void loadSettings()
 	FILE* iniFile;
 	iniFile = fopen(configuration.configFilePath, "r");
 
-	const char* iniFileBuff[INI_BUFF_LEN];
-	const char* sectionName[INI_BUFF_LEN];
+	const char iniFileBuff[INI_BUFF_LEN];
+	const char sectionName[INI_BUFF_LEN];
 	ConfigParserStatus status = DISORIENTED;
 
 	while (NULL != fgets(iniFileBuff, INI_BUFF_LEN, iniFile))
@@ -189,8 +189,8 @@ void loadSettings()
 		case HEATING:
 		case SCHEDULE:
 			{
-				const char* varName[INI_BUFF_LEN];
-				const char* varValue[INI_BUFF_LEN];
+				const char varName[INI_BUFF_LEN];
+				const char varValue[INI_BUFF_LEN];
 			
 				if (2 == sscanf(iniFileBuff,"%s = \"%s\"", varName, varValue))
 				{
@@ -283,7 +283,7 @@ float getT(const char* sensor)
 	#else
 	FILE *fp;
 	float temperature;
-	char* sensorPath[OneWirePathLen];
+	char sensorPath[OneWirePathLen];
 	sprintf(sensorPath, "/mnt/1wire/%s/temperature", sensor);
 	fp = fopen(sensorPath, "r");
 	if (fp == NULL)

@@ -33,8 +33,8 @@ enum ExitStatus
 /* Configuration data lives here */
 struct ConfigT
 {
-	const char	configFilePath[PATH_LEN];	/* controller.ini full path */
-	const char	heaterFailurePath[PATH_LEN];	/* heater failure control file path */
+	char		configFilePath[PATH_LEN];	/* controller.ini full path */
+	char		heaterFailurePath[PATH_LEN];	/* heater failure control file path */
 	struct tm	arrive;
 	struct tm	dep;
 	float		presenceTargetTemp;		/* Target temp when we are at home */
@@ -159,7 +159,7 @@ void loadSettings()
 	FILE* iniFile;
 	iniFile = fopen(configuration.configFilePath, "r");
 
-	const char iniFileBuff[INI_BUFF_LEN];
+	char iniFileBuff[INI_BUFF_LEN];
 	const char sectionName[INI_BUFF_LEN];
 	ConfigParserStatus status = DISORIENTED;
 

@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "onewire.h"
 
-float getT(const char* sensor)
+// Returns specific named float value of the sensor. 
+float getFV(const char* sensor, const char* valueName)
 {
         #ifdef DEBUG_NO_1WIRE
         return 20.0;
@@ -10,7 +12,7 @@ float getT(const char* sensor)
         FILE *fp;
         float temperature;
         char sensorPath[OneWirePathLen];
-        sprintf(sensorPath, "/mnt/1wire/%s/temperature", sensor);
+        sprintf(sensorPath, "/mnt/1wire/%s/%s", sensor, valueName);
         fp = fopen(sensorPath, "r");
         if (fp == NULL)
         {
@@ -21,6 +23,11 @@ float getT(const char* sensor)
         fclose(fp); 
         return temperature;
         #endif
+}
+
+float getT(const char* sensor)
+{
+	return getFV(sensor, "temperature");
 }
 
 void changeSwitch(const char* addr, int ison)
@@ -57,3 +64,20 @@ int getSwitchState(const char* addr)
         return 0;
         #endif
 }
+
+float getHumidity(const char* sensor)
+{
+	return getFV(sensor, "humidity");
+}
+
+
+void getDateTimeStr(char *str, int length, time_t time)
+{
+        struct tm *ti = localtime(&time);
+
+        // TODO : buffer overrun control!
+        sprintf(str, "%02d/%02d/%4d %02d:%02d:%02d", 
+                ti->tm_mday, ti->tm_mon+1, ti->tm_year+1900, 
+                ti->tm_hour, ti->tm_min, ti->tm_sec);
+}
+

@@ -426,14 +426,6 @@ int wasOverheated()
 	return 0;
 }
 
-void getDateTimeStr(char *str, int length, time_t time)
-{
-	struct tm *ti = localtime(&time);
-
-	// TODO : buffer overrun control!
-	sprintf(str, "%02d/%02d/%4d %02d:%02d:%02d", ti->tm_mday, ti->tm_mon+1, ti->tm_year+1900, ti->tm_hour, ti->tm_min, ti->tm_sec);
-}
-
 int main(int argc, const char** args)
 {
 	// -- Set confguration.ini & others directories relative to the app location

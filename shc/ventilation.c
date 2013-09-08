@@ -26,7 +26,7 @@ int controlBathVentilation(float humidity)
 	}
 	else
 	{
-		changeSwitch(bathVentilationSpeed1, ON);
+		changeSwitch(bathVentilationSpeed1, OFF);
 		changeSwitch(bathVentilationSpeed2, ON);
 		return 2;
 	}

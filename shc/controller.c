@@ -375,6 +375,9 @@ int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp)
 		else
 			printf("Cannot write heater failure status file.\n\r");
 
+		setHeater(OFF);
+		setPump(ON);
+
 		exit(EXIT_FAIL);
 	}
 

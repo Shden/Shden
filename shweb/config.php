@@ -16,7 +16,7 @@
         $controller_config[heating][standby_night] = $_REQUEST[standby_night];
         $controller_config[heating][presence] = $_REQUEST[presenсe];
         $controller_config[heating][tempDelta] = $_REQUEST[tempDelta];
-        $controller_config[heating][fluidPumpOffTemp] = $_REQUEST[fluidPumpOffTemp];
+        $controller_config[heating][stopPumpTempDelta] = $_REQUEST[stopPumpTempDelta];
         $controller_config[heating][fluidElectricHeaterOffTemp] = $_REQUEST[fluidElectricHeaterOffTemp];
         
         //print_r($controller_config);
@@ -42,12 +42,12 @@
                 <td><input type="text" name="presenсe" value="<?=$controller_config[heating][presence]?>"/><sup>o</sup>С
             </tr>
             <tr>
-                <td>Температурный гистерезис:</td>
+                <td>Точность поддержания температуры:</td>
                 <td><input type="text" name="tempDelta" value="<?=$controller_config[heating][tempDelta]?>"/><sup>o</sup>С
             </tr>
             <tr>
-                <td>Порог отключения наcоса (разница вход/выход):</td>
-                <td><input type="text" name="fluidPumpOffTemp" value="<?=$controller_config[heating][fluidPumpOffTemp]?>"/><sup>o</sup>С
+                <td>Помпа отключается при разнице температур по контуру менее:</td>
+                <td><input type="text" name="stopPumpTempDelta" value="<?=$controller_config[heating][stopPumpTempDelta]?>"/><sup>o</sup>С
             </tr>
             <tr>
                 <td>Отключаем ТЭН, если котел нагревает воду до:</td>

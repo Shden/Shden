@@ -41,6 +41,7 @@ float getT(const char* sensor);
 void changeSwitch(const char* addr, int ison);
 int getSwitchState(const char* addr);
 float getHumidity(const char* sensor);
+void getDateTimeStr(char *str, int length, time_t time);
 
 #endif /* FILE_ONEWIRE_SEEN */
 

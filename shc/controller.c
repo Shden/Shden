@@ -14,10 +14,12 @@
  *	19-DEC-2011:	- mips porting: Glib dependency removed.
  *	01-JAN-2012:	- HNY!)) electric heater off algorithm improved, based on 2 parameters:
  *			  1) outgoing fluid temp and 2) extra heating from oven.
+ *	08-SEP-2013:	- pump differential algorithm to keep temperature the same when heating is off.
  */
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 #include "onewire.h"
 
 //#define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
@@ -34,7 +36,7 @@ struct ConfigT
 	float		standbyTargetTemp;		/* Target temp when nobody at home (day) */
 	float		standbyTargetNightTemp;		/* Target temp when nobody at home (night) */
 	float		tempDelta;			/* Histeresis */
-	float 		inOutDeltaPumpOffTemp;		/* Temperature differeince (in/out) on heater when stop pump */
+	float 		stopPumpTempDelta;		/* Temperature differeince across the house to stop pump */
 	
 	/* The next two parameters both control how electric heater is turned off when oven is on: */
 	float		fluidElectricHeaterOffTemp;	/* Outgoing fluid temperature O2 to off electic heater */
@@ -58,7 +60,7 @@ const int nightTariffEndHour	= 8;	/* block powermeters to stop swithing to winte
 #define		STANDBY_NIGHT_VALUE	"standby_night"
 #define		PRESENCE_VALUE		"presence"
 #define		TEMP_DELTA_VALUE	"tempDelta"
-#define		PUMP_OFF_VALUE		"fluidPumpOffTemp"
+#define		PUMP_OFF_VALUE		"stopPumpTempDelta"
 #define		HEATER_OFF_VALUE	"fluidElectricHeaterOffTemp"
 #define		HEATER_DELTA_OFF_VALUE	"ovenExtraElectricHeaterOffTemp"
 
@@ -83,6 +85,9 @@ typedef struct TRoomControlDescriptor
 } RoomControlDescriptor;
 
 RoomControlDescriptor roomControlDescriptors[ROOMS_COUNT];
+
+// -- Forward declarations
+time_t getHeatingStartTime(); 
 
 /* Init configuration directories based on the controller path */
 void setDirectories(const char* controllerPath)
@@ -182,7 +187,7 @@ void loadSettings()
 					}
 					else if (!strcmp(varName, PUMP_OFF_VALUE))
 					{
-						sscanf(varValue, "%f", &configuration.inOutDeltaPumpOffTemp);
+						sscanf(varValue, "%f", &configuration.stopPumpTempDelta);
 					}
 					else if (!strcmp(varName, HEATER_OFF_VALUE))
 					{
@@ -246,6 +251,26 @@ void loadSettings()
 	fclose(iniFile);
 }
 
+/** Returns TRUE if presence mode or FALSE if standby mode */
+int isPresence()
+{
+        // -- Check precence time
+        time_t now = time(NULL);
+        time_t start = getHeatingStartTime();
+        time_t finish = mktime(&configuration.dep);
+
+        return now >= start && now <= finish;
+}
+
+//** Return TRUE if saving (night) tariff is on or FALSE otherwise */
+int isSaving()
+{
+        time_t now = time(NULL);
+        struct tm *ti = localtime(&now);
+
+        return ti->tm_hour >= nightTariffStartHour && ti->tm_hour < nightTariffEndHour;
+}
+
 void setHeater(int ison)
 {
 	return changeSwitch(heaterSwitch, ison);
@@ -303,26 +328,6 @@ float getTargetTemp()
 	}
 
 	return configuration.standbyTargetTemp;
-}
-
-/** Returns TRUE if presence mode or FALSE if standby mode */
-int isPresence()
-{
-	// -- Check precence time
-	time_t now = time(NULL);
-	time_t start = getHeatingStartTime();
-	time_t finish = mktime(&configuration.dep);
-
-	return now >= start && now <= finish;
-}
-
-//** Return TRUE if saving (night) tariff is on or FALSE otherwise */
-int isSaving()
-{
-	time_t now = time(NULL);
-	struct tm *ti = localtime(&now);
-
-	return ti->tm_hour >= nightTariffStartHour && ti->tm_hour < nightTariffEndHour;
 }
 
 /** Room control routine.
@@ -397,21 +402,25 @@ int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp)
 	return getHeaterState();
 }
 
-int controlPump(float ingoingFluidTemp, float outgoingFluidTemp)
+/*
+ *	Pump control procedure
+ *	tempVector - vector of temperatures across the house
+ *	size - length of the vector
+ *
+ *	Pump shall be on while the vector contains devations more than configured.
+ */
+int controlPump(const float* tempVector, int size)
 {
-	float inOutDelta = outgoingFluidTemp - ingoingFluidTemp;
+	float minT = 1000, maxT = -1000;
+	for (int i = 0; i < size; i++)
+	{
+		if (tempVector[i] < minT) minT = tempVector[i];
+		if (tempVector[i] > maxT) maxT = tempVector[i];
+	}
 
-	if (/*OFF == getHeaterState() && */inOutDelta < configuration.inOutDeltaPumpOffTemp)
-	{
-		setPump(OFF);
-		return OFF;
-	}
-	if (inOutDelta >= configuration.inOutDeltaPumpOffTemp)
-	{
-		setPump(ON);
-		return ON;
-	}
-	return getPumpState();
+	int pumpState = (abs(maxT - minT) > configuration.stopPumpTempDelta) ? ON : OFF;
+	setPump(pumpState);
+	return pumpState;
 }
 
 int wasOverheated()
@@ -463,7 +472,16 @@ int main(int argc, const char** args)
 
 	// -- Control heater and pump
 	int heaterState = controlHeater(controlTemp, electricHeaterTemp, outgoingFluidTemp);
-	int pumpState = controlPump(ingoingFluidTemp, outgoingFluidTemp);
+	
+	// -- Initizlize temp vector (no paritcular order)
+	float tv[10];
+	int tvc = 0;
+	tv[tvc++] = controlTemp;
+	tv[tvc++] = electricHeaterTemp;
+	tv[tvc++] = ingoingFluidTemp;
+	tv[tvc++] = outgoingFluidTemp;
+
+	int pumpState = controlPump(tv, tvc);
 
 	// -- Individual rooms control
 	/* Not tested yet	

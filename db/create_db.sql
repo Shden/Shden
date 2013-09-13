@@ -1,9 +1,9 @@
 CREATE TABLE heating (
 	time 		DATETIME,
-	external 	DECIMAL,
-	fluid_in 	DECIMAL,
-	heater 		DECIMAL,
-	fluid_out 	DECIMAL,
-	bedroom 	DECIMAL,
-	kitchen 	DECIMAL,
+	external 	DECIMAL(5,2),
+	fluid_in 	DECIMAL(5,2),
+	heater 		DECIMAL(5,2),
+	fluid_out 	DECIMAL(5,2),
+	bedroom 	DECIMAL(5,2),
+	kitchen 	DECIMAL(5,2),
 	PRIMARY KEY(time));

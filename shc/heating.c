@@ -92,8 +92,8 @@ time_t getHeatingStartTime();
 /* Init configuration directories based on the controller path */
 void setDirectories()
 {
-	strcpy    (configuration.configFilePath, "/home/den/Shden/shc/controller_config/controller.ini");
-	strcpy (configuration.heaterFailurePath, "/home/den/Shden/shc/controller_config/HeaterFailure");
+	strcpy    (configuration.configFilePath, "/home/den/Shden/shc/heating_config/controller.ini");
+	strcpy (configuration.heaterFailurePath, "/home/den/Shden/shc/heating_config/HeaterFailure");
 }
 
 /* Room descriptors initialization */

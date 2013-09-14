@@ -10,4 +10,4 @@ ventilation: onewireio.c ventilation.c
 	$(CC) $^ $(OPTIONS) -o $(BUILD)/$@
 
 clean:
-	rm -f *.o heating ventilation
+	rm -f *.o $(BUILD)/heating $(BUILD)/ventilation

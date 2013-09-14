@@ -70,8 +70,8 @@ class SHDHConnector(object):
 			self.do_get_heating_log(finished, **command.parameters)
 		elif command.command == 'GetHeatingConfig':
 			self.do_get_heating_config(finished, **command.parameters)
-		elif command.command == 'SetHeatingProgramme':
-			self.do_set_heating_programme(finished, **command.parameters)
+		elif command.command == 'SetHeatingSchedule':
+			self.do_set_heating_schedule(finished, **command.parameters)
 		else :
 			finished.errback(NotImplementedError('Unknown command {0}.'.format(command.command)))
     
@@ -83,12 +83,18 @@ class SHDHConnector(object):
 		output = subprocess.check_output(['cat', '/home/den/Shden/shc/heating_config/controller.ini'])
 		finish_deferred.callback(devicehive.CommandResult('Done', output))
     
-	def do_set_heating_programme(self, finish_deferred, arrival_date, arrival_hour, dep_date, dep_hour):
-		print arrival_date
-		print arrival_hour
-		print dep_date
-		print dep_hour
-		finish_deferred.callback(devicehive.CommandResult('Completed'))
+	def do_set_heating_schedule(self, finish_deferred, arrival_date, arrival_hour, dep_date, dep_hour):
+		config = Conf()
+		config.read('/home/den/Shden/shc/heating_config/controller.ini')
+		config.set('schedule', 'arrive_date', '"' + arrival_date + '"')
+		config.set('schedule', 'arrive_hour', '"' + arrival_hour + '"')
+		config.set('schedule', 'dep_date', '"' + dep_date + '"')
+		config.set('schedule', 'dep_hour', '"' + dep_hour + '"')
+		with open('/home/den/Shden/shc/heating_config/controller.ini', 'w') as configFile:
+			config.write(configFile)
+
+		output = subprocess.check_output(['cat', '/home/den/Shden/shc/heating_config/controller.ini'])
+		finish_deferred.callback(devicehive.CommandResult('Done', output))
 
 	def status_notify(self):
 		if self.connected :

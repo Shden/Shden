@@ -1,13 +1,13 @@
 OPTIONS := -std=c99
 BUILD := bin
 
-build: controller ventilation
+build: heating ventilation
 
-controller: onewireio.c controller.c 
+heating: onewireio.c heating.c 
 	$(CC) $^ $(OPTIONS) -o $(BUILD)/$@ 
 
 ventilation: onewireio.c ventilation.c
 	$(CC) $^ $(OPTIONS) -o $(BUILD)/$@
 
 clean:
-	rm -f *.o controller ventilation
+	rm -f *.o heating ventilation

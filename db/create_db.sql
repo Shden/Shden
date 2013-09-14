@@ -11,4 +11,6 @@ CREATE TABLE heating (
 	kitchen 	DECIMAL(5,2),
 	bathroom 	DECIMAL(5,2),
 	control 	DECIMAL(5,2),
+	heating		INT,
+	pump		INT,
 	PRIMARY KEY(time));

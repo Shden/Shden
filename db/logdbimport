@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mysqlimport -L -u root -pexpress --fields-terminated-by="|" SHDEN ../shc/log/heating.log
+rm ../shc/log/heating.log -f
+

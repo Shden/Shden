@@ -4,6 +4,7 @@
 
 import sys
 import os
+import subprocess
 from twisted.python import log
 from twisted.internet import reactor
 from zope.interface import implements
@@ -67,18 +68,20 @@ class SHDHConnector(object):
 	def on_command(self, device_id, command, finished):
 		if command.command == 'GetHeatingLog':
 			self.do_get_heating_log(finished, **command.parameters)
+		elif command.command == 'GetHeatingConfig':
+			self.do_get_heating_config(finished, **command.parameters)
 		elif command.command == 'SetHeatingProgramme':
 			self.do_set_heating_programme(finished, **command.parameters)
 		else :
 			finished.errback(NotImplementedError('Unknown command {0}.'.format(command.command)))
     
-	def do_get_heating_log(self, finish_deferred, equipment = None, state = 0):
-		if equipment == 'LED':
-			#self.led_state = state
-			#self.status_notify()
-			finish_deferred.callback(devicehive.CommandResult('Completed'))
-		else :
-			finish_deferred.errback(NotImplementedError('Unknown equipment {0}.'.format(equipment)))
+	def do_get_heating_log(self, finish_deferred):
+		output = subprocess.check_output(['tail', '/home/den/Shden/shc/log/heating.log'])
+		finish_deferred.callback(devicehive.CommandResult('Done', output))
+
+	def do_get_heating_config(self, finish_deferred):
+		output = subprocess.check_output(['cat', '/home/den/Shden/shc/heating_config/controller.ini'])
+		finish_deferred.callback(devicehive.CommandResult('Done', output))
     
 	def do_set_heating_programme(self, finish_deferred, arrival_date, arrival_hour, dep_date, dep_hour):
 		print arrival_date

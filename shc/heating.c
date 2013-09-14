@@ -59,10 +59,10 @@ const int nightTariffEndHour	= 8;				/* block powermeters to stop swithing to wi
 #define		STANDBY_VALUE		"standby"
 #define		STANDBY_NIGHT_VALUE	"standby_night"
 #define		PRESENCE_VALUE		"presence"
-#define		TEMP_DELTA_VALUE	"tempDelta"
-#define		PUMP_OFF_VALUE		"stopPumpTempDelta"
-#define		HEATER_OFF_VALUE	"fluidElectricHeaterOffTemp"
-#define		HEATER_DELTA_OFF_VALUE	"ovenExtraElectricHeaterOffTemp"
+#define		TEMP_DELTA_VALUE	"tempdelta"
+#define		PUMP_OFF_VALUE		"stoppumptempdelta"
+#define		HEATER_OFF_VALUE	"fluidelectricheaterofftemp"
+#define		HEATER_DELTA_OFF_VALUE	"ovenextraelectricheaterofftemp"
 
 #define		ARRIVE_DATE_VALUE	"arrive_date"
 #define		ARRIVE_HOUR_VALUE	"arrive_hour"
@@ -410,14 +410,14 @@ int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp)
  */
 int controlPump(const float* tempVector, int size)
 {
-	float minT = 1000, maxT = -1000;
-	for (int i = 0; i < size; i++)
+	float minT = tempVector[0], maxT = tempVector[0];
+	for (int i = 1; i < size; i++)
 	{
 		if (tempVector[i] < minT) minT = tempVector[i];
 		if (tempVector[i] > maxT) maxT = tempVector[i];
 	}
 
-	int pumpState = (abs(maxT - minT) > configuration.stopPumpTempDelta) ? ON : OFF;
+	int pumpState = (maxT - minT > configuration.stopPumpTempDelta) ? ON : OFF;
 	setPump(pumpState);
 	return pumpState;
 }
@@ -467,6 +467,9 @@ int main(int argc, const char** args)
 	float outgoingFluidTemp = getT(outputSensor);
 	float ingoingFluidTemp = getT(inputSensor);
 	float electricHeaterTemp = getT(heaterSensor);
+	float kitchenTemp = getT(kitchenSensor);
+	float bathroomTemp = getT(bathRoomSensor);
+	float sashaBedroomTemp = getT(childrenSmallSensor); 
 	float targetTemp = getTargetTemp();
 
 	// -- Control heater and pump
@@ -479,6 +482,9 @@ int main(int argc, const char** args)
 	tv[tvc++] = electricHeaterTemp;
 	tv[tvc++] = ingoingFluidTemp;
 	tv[tvc++] = outgoingFluidTemp;
+	tv[tvc++] = bathroomTemp;
+	tv[tvc++] = kitchenTemp;
+	tv[tvc++] = sashaBedroomTemp;
 
 	int pumpState = controlPump(tv, tvc);
 
@@ -503,9 +509,9 @@ int main(int argc, const char** args)
 		0.0,//getT(amSensor),
 		getT(bedroomSensor),
 		0.0,//getT(cabinetSensor),
-		getT(childrenSmallSensor),
-		getT(kitchenSensor),
-		getT(bathRoomSensor),
+		sashaBedroomTemp,
+		kitchenTemp,
+		bathroomTemp,
 		controlTemp,
 		heaterState,
 		pumpState,

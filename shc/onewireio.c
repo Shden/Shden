@@ -76,8 +76,8 @@ void getDateTimeStr(char *str, int length, time_t time)
         struct tm *ti = localtime(&time);
 
         // TODO : buffer overrun control!
-        sprintf(str, "%02d/%02d/%4d %02d:%02d:%02d", 
-                ti->tm_mday, ti->tm_mon+1, ti->tm_year+1900, 
+        sprintf(str, "%4d-%02d-%02d %02d:%02d:%02d", 
+                ti->tm_year+1900, ti->tm_mon+1, ti->tm_mday, 
                 ti->tm_hour, ti->tm_min, ti->tm_sec);
 }
 

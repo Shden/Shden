@@ -20,34 +20,34 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "onewire.h"
 
 //#define DEBUG_NO_1WIRE	// Should be DEBUG_NO_1WIRE to run without 1-wire net
-#define PATH_LEN	80
 
 /* Configuration data lives here */
 struct ConfigT
 {
-	char		configFilePath[PATH_LEN];	/* controller.ini full path */
-	char		heaterFailurePath[PATH_LEN];	/* heater failure control file path */
+	char		configFilePath[FILENAME_MAX];		/* controller.ini full path */
+	char		heaterFailurePath[FILENAME_MAX];	/* heater failure control file path */
 	struct tm	arrive;
 	struct tm	dep;
-	float		presenceTargetTemp;		/* Target temp when we are at home */
-	float		standbyTargetTemp;		/* Target temp when nobody at home (day) */
-	float		standbyTargetNightTemp;		/* Target temp when nobody at home (night) */
-	float		tempDelta;			/* Histeresis */
-	float 		stopPumpTempDelta;		/* Temperature differeince across the house to stop pump */
+	float		presenceTargetTemp;			/* Target temp when we are at home */
+	float		standbyTargetTemp;			/* Target temp when nobody at home (day) */
+	float		standbyTargetNightTemp;			/* Target temp when nobody at home (night) */
+	float		tempDelta;				/* Histeresis */
+	float 		stopPumpTempDelta;			/* Temperature differeince across the house to stop pump */
 	
 	/* The next two parameters both control how electric heater is turned off when oven is on: */
-	float		fluidElectricHeaterOffTemp;	/* Outgoing fluid temperature O2 to off electic heater */
-	float		ovenExtraElectricHeaterOffTemp;	/* O2 - O1 difference to off electric heater */
+	float		fluidElectricHeaterOffTemp;		/* Outgoing fluid temperature O2 to off electic heater */
+	float		ovenExtraElectricHeaterOffTemp;		/* O2 - O1 difference to off electric heater */
 } configuration;
 
-const float heaterCutOffTemp	= 95.0;			/* Heater failure temperature */
+const float heaterCutOffTemp	= 95.0;				/* Heater failure temperature */
 
 /* Tariff section */
-const int nightTariffStartHour	= 0;	/* actually 23 to 7 but meanwhile they failed to */
-const int nightTariffEndHour	= 8;	/* block powermeters to stop swithing to winter time :) */
+const int nightTariffStartHour	= 0;				/* actually 23 to 7 but meanwhile they failed to */
+const int nightTariffEndHour	= 8;				/* block powermeters to stop swithing to winter time :) */
 
 #define 	ROOMS_COUNT 		5
 #define		INI_BUFF_LEN		80
@@ -90,14 +90,10 @@ RoomControlDescriptor roomControlDescriptors[ROOMS_COUNT];
 time_t getHeatingStartTime(); 
 
 /* Init configuration directories based on the controller path */
-void setDirectories(const char* controllerPath)
+void setDirectories()
 {
-	/* Note: the directory controller executable is deployed
-	 * shall contain the subdirectory named the same as controller
-	 * but having _config suffix e.g. controller_config.
-	 * Configuration files are to be deployed to this subdirectory. */
-	sprintf(configuration.configFilePath, "%s_config/controller.ini", controllerPath);
-	sprintf(configuration.heaterFailurePath, "%s_config/HeaterFailure", controllerPath);
+	strcpy    (configuration.configFilePath, "/home/den/Shden/shc/controller_config/controller.ini");
+	strcpy (configuration.heaterFailurePath, "/home/den/Shden/shc/controller_config/HeaterFailure");
 }
 
 /* Room descriptors initialization */
@@ -440,8 +436,8 @@ int wasOverheated()
 
 int main(int argc, const char** args)
 {
-	// -- Set confguration.ini & others directories relative to the app location
-	setDirectories(args[0]);
+	// -- Set confguration.ini & others directories
+	setDirectories();
 	
 	// -- Check for previous fatal errors
 	if (wasOverheated())
@@ -498,7 +494,7 @@ int main(int argc, const char** args)
 	getDateTimeStr(nowStr, 60, time(NULL));
 	getDateTimeStr(onStr, 60, getHeatingStartTime());
 
-	printf("%s|%4.2f|%4.2f|%4.2f||%4.2f||%4.2f|%4.2f|%4.2f|%4.2f||%4.2f|%4.2f||%4.2f||%d|%d||%c|%c|%4.1f|%s|\r\n", 
+	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%c|%c|%4.1f|%s|\r\n", 
 		nowStr,
 		electricHeaterTemp,
 		ingoingFluidTemp,

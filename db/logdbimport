@@ -1,5 +1,9 @@
 #!/bin/sh
 
-mysqlimport -L -u root -pexpress --fields-terminated-by="|" SHDEN /home/den/Shden/shc/log/heating.log
-rm /home/den/Shden/shc/log/heating.log -f
+heatinglog=/home/den/Shden/shc/log/heating.log
+tmp=/home/den/Shden/shc/log/heating.tmp
+
+mv $heatinglog $tmp -f
+mysqlimport -L -u root -pexpress --fields-terminated-by="|" SHDEN $tmp
+rm $tmp -f
 

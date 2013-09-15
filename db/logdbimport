@@ -3,6 +3,9 @@
 heatinglog=/home/den/Shden/shc/log/heating.log
 tmp=/home/den/Shden/shc/log/heating.tmp
 
+# wait for controller to log this minute data
+sleep 30
+
 mv $heatinglog $tmp -f
 mysqlimport -L -u root -pexpress --fields-terminated-by="|" SHDEN $tmp
 rm $tmp -f

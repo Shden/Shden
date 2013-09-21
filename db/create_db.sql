@@ -18,5 +18,5 @@ CREATE TABLE heating (
 CREATE TABLE tariff (
 	date		DATE,
 	day		DECIMAL(5,2),
-	night		DECIMAL(5,2)
+	night		DECIMAL(5,2),
 	PRIMARY KEY(date));

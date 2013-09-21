@@ -14,3 +14,9 @@ CREATE TABLE heating (
 	heating		INT,
 	pump		INT,
 	PRIMARY KEY(time));
+
+CREATE TABLE tariff (
+	date		DATE,
+	day		DECIMAL(5,2),
+	night		DECIMAL(5,2)
+	PRIMARY KEY(date));

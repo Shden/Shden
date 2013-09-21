@@ -16,5 +16,5 @@ if ($_REQUEST[days] == "") $days = 1; else $days = $_REQUEST[days];
 <a href="?days=21">3 недели</a> |
 <a href="?days=31">Месяц</a> |
 <br/>
-<img src="graphview.php?start=<?=time()-60*60*24*$days;?>&finish=<?=time()?>"/>
+<img src="graphview.php?days=<?=$days?>"/>
 </body>

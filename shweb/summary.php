@@ -3,13 +3,15 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />     
 </head>
 <body>
+
 <?include 'menu.php';
-require_once ('logparser.php');
+require_once ('include/db.inc');
 
 if ($_REQUEST[days] == "") $days = 7; else $days = $_REQUEST[days];
 
-$parser = new LogParser("/home/den/Shden/shc/controller.log");
-$r = $parser->GetSummaryDaily(time() - 3600 * 24 * $days, time());
+$query_ConsRS = "CALL SP_HEATING_CONSUMPTION();";
+$ConsRS = mysql_query($query_ConsRS) or die(mysql_error());
+
 ?>
 <a href="?days=7">1 week</a> |
 <a href="?days=14">2 weeks</a> |
@@ -19,21 +21,25 @@ $r = $parser->GetSummaryDaily(time() - 3600 * 24 * $days, time());
 <hr>
 <table border=1>
 	<tr>
-		<td>Date</td>
-		<td colspan="3">Outside (avg/min/max)</td>
-		<td>Average inside</td>
-		<td colspan="3">Heating time, h (total/night/day)</td>
+		<td>Дата</td>
+		<td colspan="3">Снаружи, <sup>o</sup>C (средняя/мин/макс)</td>
+		<td>Внутри, <sup>o</sup>C</td>
+		<td colspan="3">Время обогрева, ч (всего/ночь/день)</td>
+		<td colspan="3">Стоимость, руб (всего/ночь/день)</td>
 	</tr>
-<?foreach ($r as $i => $value) { ?>
+<?while($r = mysql_fetch_array($ConsRS)) { ?>
 	<tr>
-		<td><?=$i?></td>
-		<td align="right"><?=number_format($r[$i]["outside"]/$r[$i]["count"], 2)?></td>
-		<td align="right"><?=number_format($r[$i]["outside_min"], 1)?></td>
-		<td align="right"><?=number_format($r[$i]["outside_max"], 1)?></td>
-		<td align="right"><?=number_format($r[$i]["inside"]/$r[$i]["count"], 2)?></td>
-		<td align="right"><?=number_format($r[$i]["total"]/60, 1)?></td>
-		<td align="right"><?=number_format($r[$i]["night"]/60, 1)?></td>
-		<td align="right"><?=number_format(($r[$i]["total"]-$r[$i]["night"])/60, 1)?></td>
+		<td><?=$r["Date"]?></td>
+		<td align="right"><?=number_format($r["AvgOutside"], 2)?></td>
+		<td align="right"><?=number_format($r["MinOutside"], 1)?></td>
+		<td align="right"><?=number_format($r["MaxOutside"], 1)?></td>
+		<td align="right"><?=number_format($r["Inside"], 2)?></td>
+		<td align="right"><?=number_format($r["HeatingTotalTime"], 1)?></td>
+		<td align="right"><?=number_format($r["HeatingNightTime"], 1)?></td>
+		<td align="right"><?=number_format($r["HeatingDayTime"], 1)?></td>
+		<td align="right"><?=number_format($r["TotalCost"], 2)?></td>
+		<td align="right"><?=number_format($r["NightCost"], 1)?></td>
+		<td align="right"><?=number_format($r["DayCost"], 1)?></td>
 	</tr>
 <?}?>
 

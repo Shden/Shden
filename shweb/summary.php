@@ -8,9 +8,10 @@
 require_once ('include/db.inc');
 
 if ($_REQUEST[days] == "") $days = 7; else $days = $_REQUEST[days];
+$startDate = Date("Y-m-d", strtotime("-$days days"));
+$endDate = Date("Y-m-d");
 
-$query_ConsRS = "CALL SP_HEATING_CONSUMPTION();";
-$ConsRS = mysql_query($query_ConsRS) or die(mysql_error());
+$res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 
 ?>
 <a href="?days=7">1 week</a> |
@@ -27,7 +28,7 @@ $ConsRS = mysql_query($query_ConsRS) or die(mysql_error());
 		<td colspan="3">Время обогрева, ч (всего/ночь/день)</td>
 		<td colspan="3">Стоимость, руб (всего/ночь/день)</td>
 	</tr>
-<?while($r = mysql_fetch_array($ConsRS)) { ?>
+<?while($r = $res->fetch_assoc()) { ?>
 	<tr>
 		<td><?=$r["Date"]?></td>
 		<td align="right"><?=number_format($r["AvgOutside"], 1)?></td>

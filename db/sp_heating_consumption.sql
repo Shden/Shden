@@ -1,6 +1,6 @@
 DELIMITER //
 DROP PROCEDURE IF EXISTS SP_HEATING_CONSUMPTION;
-CREATE PROCEDURE SP_HEATING_CONSUMPTION() 
+CREATE PROCEDURE SP_HEATING_CONSUMPTION(startDate DATE, endDate DATE) 
 BEGIN
 	DECLARE	nightTariff, dayTariff DECIMAL;
 
@@ -28,6 +28,7 @@ BEGIN
 		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60 * 9 * dayTariff as TotalCost, 
 		SUM(heating)/60*9 as HeatingKWh 
 	FROM 	heating 
+	WHERE	time >= startDate AND time < endDate
 	GROUP BY DATE(time);
 END//
 DELIMITER ;

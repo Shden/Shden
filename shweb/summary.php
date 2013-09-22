@@ -30,7 +30,7 @@ $ConsRS = mysql_query($query_ConsRS) or die(mysql_error());
 <?while($r = mysql_fetch_array($ConsRS)) { ?>
 	<tr>
 		<td><?=$r["Date"]?></td>
-		<td align="right"><?=number_format($r["AvgOutside"], 2)?></td>
+		<td align="right"><?=number_format($r["AvgOutside"], 1)?></td>
 		<td align="right"><?=number_format($r["MinOutside"], 1)?></td>
 		<td align="right"><?=number_format($r["MaxOutside"], 1)?></td>
 		<td align="right"><?=number_format($r["Inside"], 2)?></td>
@@ -38,8 +38,8 @@ $ConsRS = mysql_query($query_ConsRS) or die(mysql_error());
 		<td align="right"><?=number_format($r["HeatingNightTime"], 1)?></td>
 		<td align="right"><?=number_format($r["HeatingDayTime"], 1)?></td>
 		<td align="right"><?=number_format($r["TotalCost"], 2)?></td>
-		<td align="right"><?=number_format($r["NightCost"], 1)?></td>
-		<td align="right"><?=number_format($r["DayCost"], 1)?></td>
+		<td align="right"><?=number_format($r["NightCost"], 2)?></td>
+		<td align="right"><?=number_format($r["DayCost"], 2)?></td>
 	</tr>
 <?}?>
 

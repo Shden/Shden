@@ -6,25 +6,24 @@ require_once ('include/db.inc');
 $days = 1;
 if (isset($_REQUEST[days])) $days = $_REQUEST[days];
 
-$query_TempRS = "SELECT CONCAT(DATE(time), ' ', HOUR(time), ':00') as time, " .
-		"AVG(external) as outTemp, " .
-		"AVG(bedroom) as bedRoomTemp " .
-		"FROM heating " .
-		"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
-		"GROUP BY HOUR(time), DATE(time) " .
-		"ORDER BY DATE(time), HOUR(time);";
-
-$TempRS = mysql_query($query_TempRS) or die(mysql_error());
+$res = $conn->query(	"SELECT CONCAT(DATE(time), ' ', HOUR(time), ':00') as time, " .
+			"AVG(external) as outTemp, " .
+			"AVG(bedroom) as bedRoomTemp " .
+			"FROM heating " .
+			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
+			"GROUP BY HOUR(time), DATE(time) " .
+			"ORDER BY DATE(time), HOUR(time);");
 
 $times = array();
 $bedRoomTemp = array();
 $outTemp = array();
 
-while($row_TempRS = mysql_fetch_array($TempRS))
+$res->data_seek(0);
+while($r = $res->fetch_assoc())
 {
-	$times[] = $row_TempRS['time'];
-	$bedRoomTemp[] = $row_TempRS['bedRoomTemp'];
-	$outTemp[] = $row_TempRS['outTemp'];
+	$times[] = $r['time'];
+	$bedRoomTemp[] = $r['bedRoomTemp'];
+	$outTemp[] = $r['outTemp'];
 }
 
 // Create the graph. These two calls are always required

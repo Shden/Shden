@@ -2,7 +2,7 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS SP_HEATING_CONSUMPTION;
 CREATE PROCEDURE SP_HEATING_CONSUMPTION(startDate DATE, endDate DATE) 
 BEGIN
-	DECLARE	nightTariff, dayTariff DECIMAL;
+	DECLARE	nightTariff, dayTariff DECIMAL(5,2);
 
 	SELECT	day INTO dayTariff
 	FROM	tariff 
@@ -20,13 +20,13 @@ BEGIN
 		MAX(external) as MaxOutside, 
 		AVG(control) as Inside, 
 		SUM(heating)/60 as HeatingTotalTime, 
-		SUM(CASE WHEN HOUR(time)<8 THEN heating END)/60 as HeatingNightTime, 
-		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60 as HeatingDayTime, 
-		SUM(CASE WHEN HOUR(time)<8 THEN heating END)/60 * 9 * nightTariff as NightCost,
-		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60 * 9 * dayTariff as DayCost, 
-		SUM(CASE WHEN HOUR(time)<8 THEN heating END)/60 * 9 * nightTariff +
-		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60 * 9 * dayTariff as TotalCost, 
-		SUM(heating)/60*9 as HeatingKWh 
+		SUM(CASE WHEN HOUR(time)<8 THEN heating END)/60.0 as HeatingNightTime, 
+		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60.0 as HeatingDayTime, 
+		SUM(CASE WHEN HOUR(time)<8 THEN heating END)/60.0 * 9.0 * nightTariff as NightCost,
+		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60.0 * 9.0 * dayTariff as DayCost, 
+		SUM(CASE WHEN HOUR(time)<8 THEN heating END)/60.0 * 9.0 * nightTariff +
+		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60.0 * 9.0 * dayTariff as TotalCost, 
+		SUM(heating)/60.0 * 9.0 as HeatingKWh 
 	FROM 	heating 
 	WHERE	time >= startDate AND time < endDate
 	GROUP BY DATE(time);

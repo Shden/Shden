@@ -17,6 +17,7 @@
 #define pumpSwitch		"/mnt/1wire/3A.3E9403000000/PIO.B"
 #define bathVentilationSpeed1	"/mnt/1wire/3A.599403000000/PIO.A"
 #define bathVentilationSpeed2	"/mnt/1wire/3A.599403000000/PIO.B"
+#define usMice			"/mnt/1wire/3A.C19703000000/PIO.B"
 
 #define bathRoomHumiditySensor	"26.140A56010000"
 

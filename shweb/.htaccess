@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Restricted Access"
+AuthUserFile /home/den/Shden/secure/apasswords
+Require user test01

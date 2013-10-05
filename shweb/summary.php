@@ -8,8 +8,9 @@
 require_once ('include/db.inc');
 
 if ($_REQUEST[days] == "") $days = 7; else $days = $_REQUEST[days];
-$startDate = Date("Y-m-d", strtotime("-$days days"));
-$endDate = Date("Y-m-d");
+$d = $days - 1;
+$startDate = Date("Y-m-d", strtotime("-$d days"));
+$endDate = Date("Y-m-d", strtotime("+1 days"));
 
 $res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 

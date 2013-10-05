@@ -20,3 +20,9 @@ CREATE TABLE tariff (
 	day		DECIMAL(5,2),
 	night		DECIMAL(5,2),
 	PRIMARY KEY(date));
+
+CREATE TABLE presence (
+	time		DATETIME,
+	isin		INT,
+	PRIMARY KEY(time));
+	

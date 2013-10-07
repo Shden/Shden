@@ -1,35 +1,27 @@
 DELIMITER //
-DROP PROCEDURE IF EXISTS SP_HEATING_CONSUMPTION;
-CREATE PROCEDURE SP_HEATING_CONSUMPTION(startDate DATE, endDate DATE) 
+DROP PROCEDURE IF EXISTS SP_CHANGE_PRESENCE;
+CREATE PROCEDURE SP_CHANGE_PRESENCE(isin INT) 
 BEGIN
-	DECLARE	nightTariff, dayTariff DECIMAL(5,2);
+	DECLARE	currentState INT;
 
-	SELECT	day INTO dayTariff
-	FROM	tariff 
-	ORDER BY date
+	SELECT	ison INTO currentState
+	FROM	presence
+	WHERE	time > NOW()
+	ORDER BY time
 	LIMIT	1;
 
-	SELECT	night INTO nightTariff
-	FROM	tariff 
-	ORDER BY date
-	LIMIT	1;
+	IF currentState = isin THEN
+		IF currentState = 0 THEN
+			SIGNAL SQLSTATE '80000'
+				SET MESSAGE_TEXT = 'Already in standby mode';
+		ELSE
+			SIGNAL SQLSTATE '80001'
+				SET MESSAGE_TEXT = 'Already in presence mode';
+		END IF;
+	END IF;
 
-	SELECT 	DATE(time) as Date, 
-		AVG(external) as AvgOutside, 
-		MIN(external) as MinOutside, 
-		MAX(external) as MaxOutside, 
-		AVG(control) as Inside, 
-		SUM(heating)/60 as HeatingTotalTime, 
-		SUM(CASE WHEN HOUR(time)<8 THEN heating END)/60.0 as HeatingNightTime, 
-		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60.0 as HeatingDayTime, 
-		SUM(CASE WHEN HOUR(time)<8 THEN heating END)/60.0 * 9.0 * nightTariff as NightCost,
-		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60.0 * 9.0 * dayTariff as DayCost, 
-		SUM(CASE WHEN HOUR(time)<8 THEN heating END)/60.0 * 9.0 * nightTariff +
-		SUM(CASE WHEN HOUR(time)>=8 THEN heating END)/60.0 * 9.0 * dayTariff as TotalCost, 
-		SUM(heating)/60.0 * 9.0 as HeatingKWh 
-	FROM 	heating 
-	WHERE	time > startDate AND time <= endDate
-	GROUP BY DATE(time);
+	INSERT INTO presence
+	VALUES (NOW(), isin);
 END//
 DELIMITER ;
 

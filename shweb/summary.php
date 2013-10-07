@@ -1,9 +1,24 @@
+<!DOCTYPE html>
 <html>
-<head>    
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />     
+<head>
+	<title>Heating energy consumption summary</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />     
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 </head>
 <body>
 
+<div data-role="page">
+
+	<div data-role="header">
+		<h1>Heating summary</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
 <?include 'menu.php';
 require_once ('include/db.inc');
 
@@ -15,12 +30,15 @@ $endDate = Date("Y-m-d", strtotime("+1 days"));
 $res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 
 ?>
-<a href="?days=7">1 week</a> |
-<a href="?days=14">2 weeks</a> |
-<a href="?days=21">3 weeks</a> |
-<a href="?days=31">1 month</a> |
-<a href="?days=62">2 month</a>
-<hr>
+<div data-role="navbar" data-grid="d">
+    <ul>
+	<li> class="ui-state-persist"<a href="?days=7">1 week</a></li>
+	<li><a href="?days=14">2 weeks</a></li>
+	<li><a href="?days=21">3 weeks</a></li>
+	<li><a href="?days=31">1 month</a></li>
+	<li><a href="?days=62">2 month</a></li>
+    </ul>
+</div><!-- /navbar -->
 <table border=1>
 	<tr>
 		<td>Дата</td>
@@ -46,5 +64,9 @@ $res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 <?}?>
 
 <table>
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
 </body>
 </html>

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <mysql.h>
 #include "onewire.h"
 
 int main(int argc, const char** args)

@@ -10,7 +10,7 @@ ventilation: onewireio.c ventilation.c
 	$(CC) $^ $(OPTIONS) -o $(BUILD)/$@
 
 usmice: onewireio.c usmice.c
-	$(CC) $^ $(OPTIONS) -o $(BUILD)/$@
+	$(CC) $^ $(OPTIONS) -o $(BUILD)/$@ `mysql_config --cflags --libs`
 
 clean:
-	rm -f *.o $(BUILD)/heating $(BUILD)/ventilation
+	rm -f *.o $(BUILD)/heating $(BUILD)/ventilation $(BUILD)/usmice

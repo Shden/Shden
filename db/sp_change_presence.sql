@@ -4,10 +4,9 @@ CREATE PROCEDURE SP_CHANGE_PRESENCE(isin INT)
 BEGIN
 	DECLARE	currentState INT;
 
-	SELECT	ison INTO currentState
-	FROM	presence
-	WHERE	time > NOW()
-	ORDER BY time
+	SELECT	p.isin INTO currentState
+	FROM	presence p
+	ORDER BY p.time desc
 	LIMIT	1;
 
 	IF currentState = isin THEN

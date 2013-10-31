@@ -5,5 +5,6 @@
 		<li><a href="heating.php">Лог</a></li>
 		<li><a href="graph.php">График</a></li>
 		<li><a href="summary.php">Потребление</a></li>
+		<li><a href="ups.php">UPS</a></li>
 	</ul>
 </div>

@@ -265,7 +265,7 @@ int isSaving()
         time_t now = time(NULL);
         struct tm *ti = localtime(&now);
 
-        return ti->tm_hour >= nightTariffStartHour && ti->tm_hour < nightTariffEndHour;
+        return ti->tm_hour >= nightTariffStartHour || ti->tm_hour < nightTariffEndHour;
 }
 
 void setHeater(int ison)

@@ -15,6 +15,7 @@
  *	01-JAN-2012:	- HNY!)) electric heater off algorithm improved, based on 2 parameters:
  *			  1) outgoing fluid temp and 2) extra heating from oven.
  *	08-SEP-2013:	- pump differential algorithm to keep temperature the same when heating is off.
+ *	13-NOV-2013:	- night tariff is back to 11pm to 7am period.
  */
 #include <stdio.h>
 #include <time.h>
@@ -43,11 +44,11 @@ struct ConfigT
 	float		ovenExtraElectricHeaterOffTemp;		/* O2 - O1 difference to off electric heater */
 } configuration;
 
-const float heaterCutOffTemp	= 95.0;				/* Heater failure temperature */
+const float heaterCutOffTemp		= 95.0;			/* Heater failure temperature */
 
 /* Tariff section */
-const int nightTariffStartHour	= 0;				/* actually 23 to 7 but meanwhile they failed to */
-const int nightTariffEndHour	= 8;				/* block powermeters to stop swithing to winter time :) */
+const int nightTariffStartHour		= 23;
+const int nightTariffEndHour		= 7;
 
 #define 	ROOMS_COUNT 		5
 #define		INI_BUFF_LEN		80
@@ -156,13 +157,13 @@ void loadSettings()
 				}
 			}
 			break;
-			
+
 		case HEATING:
 		case SCHEDULE:
 			{
 				const char varName[INI_BUFF_LEN];
 				const char varValue[INI_BUFF_LEN];
-			
+
 				if (2 == sscanf(iniFileBuff,"%s = \"%s\"", varName, varValue))
 				{
 					if (!strcmp(varName, STANDBY_VALUE))

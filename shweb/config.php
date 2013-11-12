@@ -15,9 +15,9 @@
         $controller_config[heating][standby] = $_REQUEST[standby];
         $controller_config[heating][standby_night] = $_REQUEST[standby_night];
         $controller_config[heating][presence] = $_REQUEST[presenсe];
-        $controller_config[heating][tempDelta] = $_REQUEST[tempDelta];
-        $controller_config[heating][stopPumpTempDelta] = $_REQUEST[stopPumpTempDelta];
-        $controller_config[heating][fluidElectricHeaterOffTemp] = $_REQUEST[fluidElectricHeaterOffTemp];
+        $controller_config[heating][tempdelta] = $_REQUEST[tempDelta];
+        $controller_config[heating][stoppumptempdelta] = $_REQUEST[stopPumpTempDelta];
+        $controller_config[heating][fluidelectricheaterofftemp] = $_REQUEST[fluidElectricHeaterOffTemp];
         
         //print_r($controller_config);
         
@@ -43,15 +43,15 @@
             </tr>
             <tr>
                 <td>Точность поддержания температуры:</td>
-                <td><input type="text" name="tempDelta" value="<?=$controller_config[heating][tempDelta]?>"/><sup>o</sup>С
+                <td><input type="text" name="tempDelta" value="<?=$controller_config[heating][tempdelta]?>"/><sup>o</sup>С
             </tr>
             <tr>
                 <td>Помпа отключается при разнице температур по контуру менее:</td>
-                <td><input type="text" name="stopPumpTempDelta" value="<?=$controller_config[heating][stopPumpTempDelta]?>"/><sup>o</sup>С
+                <td><input type="text" name="stopPumpTempDelta" value="<?=$controller_config[heating][stoppumptempdelta]?>"/><sup>o</sup>С
             </tr>
             <tr>
                 <td>Отключаем ТЭН, если котел нагревает воду до:</td>
-                <td><input type="text" name="fluidElectricHeaterOffTemp" value="<?=$controller_config[heating][fluidElectricHeaterOffTemp]?>"/><sup>o</sup>С
+                <td><input type="text" name="fluidElectricHeaterOffTemp" value="<?=$controller_config[heating][fluidelectricheaterofftemp]?>"/><sup>o</sup>С
             </tr>
             <tr>
                 <td colspan="2">

@@ -6,5 +6,6 @@
 		<li><a href="graph.php">График</a></li>
 		<li><a href="summary.php">Потребление</a></li>
 		<li><a href="ups.php">UPS</a></li>
+		<li><a href="status.php">Status</a></li>
 	</ul>
 </div>

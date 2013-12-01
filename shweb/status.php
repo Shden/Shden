@@ -72,7 +72,7 @@ if ($r = $res->fetch_assoc())
 		</tr>
 		<tr>
 			<td>24 hours temperature summary:</td>
-			<td><small>[min/avg/max]</small></td>
+			<td><small>[min/avg/max] <a href="graph.php?days=1">See details >></a></small></td>
 		</tr>
 		<tr>
 			<td>&nbsp;Inside:</td>
@@ -84,7 +84,7 @@ if ($r = $res->fetch_assoc())
 		</tr>
 		<tr>
 			<td>30 days temperature summary:</td>
-			<td><small>[min/avg/max]</small></td>
+			<td><small>[min/avg/max] <a href="graph.php?days=30">See details >></a></small></td>
 		</tr>
 		<tr>
 			<td>&nbsp;Inside:</td>

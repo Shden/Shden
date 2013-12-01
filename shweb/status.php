@@ -25,13 +25,14 @@ require_once ('include/db.inc');
 function TF($tempVal)
 {
 	$strTemp = (is_null($tempVal) ? "--.--" : number_format($tempVal, 1));
+	$strTemp = $strTemp . "&nbsp;<sup>o</sup>C";
 	if (!is_null($tempVal))
 	{
 		if ($tempVal > 0) $strTemp = "+" . $strTemp;
 		if ($tempVal > +2) $strTemp = "<font color=green>" . $strTemp . "</font>";
 		if ($tempVal < -2) $strTemp = "<font color=blue>" . $strTemp . "</font>";
 	}
-	return $strTemp . "&nbsp;<sup>o</sup>C";
+	return $strTemp;
 }
 
 $changeStatusTo = $_REQUEST[changeStatusTo];
@@ -63,11 +64,11 @@ if ($r = $res->fetch_assoc())
 		</tr>
 		<tr>
 			<td>&nbsp;Inside:</td>
-			<td><?=TF($r["CUR_INT"])?></td>
+			<td><font size=30><?=TF($r["CUR_INT"])?></font></td>
 		</tr>
 		<tr>
 			<td>&nbsp;Outside:</td>
-			<td><?=TF($r["CUR_EXT"])?></td>
+			<td><font size=30><?=TF($r["CUR_EXT"])?></font></td>
 		</tr>
 		<tr>
 			<td>24 hours temperature summary:</td>

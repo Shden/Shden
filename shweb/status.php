@@ -22,29 +22,76 @@
 <?include 'menu.php';
 require_once ('include/db.inc');
 
+function TF($tempVal)
+{
+	$strTemp = (is_null($tempVal) ? "--.--" : number_format($tempVal, 1));
+	if (!is_null($tempVal))
+	{
+		if ($tempVal > 0) $strTemp = "+" . $strTemp;
+		if ($tempVal > +2) $strTemp = "<font color=green>" . $strTemp . "</font>";
+		if ($tempVal < -2) $strTemp = "<font color=blue>" . $strTemp . "</font>";
+	}
+	return $strTemp . "&nbsp;<sup>o</sup>C";
+}
+
 $changeStatusTo = $_REQUEST[changeStatusTo];
 if ($changeStatusTo != "") 
 	$conn->query("CALL SP_CHANGE_PRESENCE($changeStatusTo);");
 
-$res = $conn->query("CALL SP_GET_PRESENCE();");
+$res = $conn->query("CALL SP_GET_STATUS();");
 
 $isin = 0;
 
 if ($r = $res->fetch_assoc()) 
 {
-	$isin = $r["isin"];
-	$starting = $r["time"];
+	$isin = $r["PRESENCE_ISIN"];
+	$starting = $r["PRESENCE_TIME"];
 }
 ?>
-	<h1>Current status:</h1>
+	<h3>Current status:</h3>
 	<table>
 		<tr>
-			<td>Status:</td>
+			<td>House mode:</td>
 			<td><?=($isin) ? "Presence" : "Standby"?></td>
 		</tr>
 		<tr>
 			<td>Last changed:</td>
 			<td><?=$starting?></td>
+		</tr>
+		<tr>
+			<td>Current temperature:</td>
+		</tr>
+		<tr>
+			<td>&nbsp;Inside:</td>
+			<td><?=TF($r["CUR_INT"])?></td>
+		</tr>
+		<tr>
+			<td>&nbsp;Outside:</td>
+			<td><?=TF($r["CUR_EXT"])?></td>
+		</tr>
+		<tr>
+			<td>24 hours temperature summary:</td>
+			<td><small>[min/avg/max]</small></td>
+		</tr>
+		<tr>
+			<td>&nbsp;Inside:</td>
+			<td><?=TF($r["MIN_INT_H24"])?> / <?=TF($r["AVG_INT_H24"])?> / <?=TF($r["MAX_INT_H24"])?></td>
+		</tr>
+		<tr>
+			<td>&nbsp;Outside:</td>
+			<td><?=TF($r["MIN_EXT_H24"])?> / <?=TF($r["AVG_EXT_H24"])?> / <?=TF($r["MAX_EXT_H24"])?></td>
+		</tr>
+		<tr>
+			<td>30 days temperature summary:</td>
+			<td><small>[min/avg/max]</small></td>
+		</tr>
+		<tr>
+			<td>&nbsp;Inside:</td>
+			<td><?=TF($r["MIN_INT_D30"])?> / <?=TF($r["AVG_INT_D30"])?> / <?=TF($r["MAX_INT_D30"])?></td>
+		</tr>
+		<tr>
+			<td>&nbsp;Outside:</td>
+			<td><?=TF($r["MIN_EXT_D30"])?> / <?=TF($r["AVG_EXT_D30"])?> / <?=TF($r["MAX_EXT_D30"])?></td>
 		</tr>
 	</table>
 	<a href="?changeStatusTo=<?=($isin) ? 0 : 1?>" data-role="button" data-theme=<?=($isin) ? "a" : "b"?>><?=($isin) ? "To Standby" : "To Presence"?></a>

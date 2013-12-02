@@ -4,7 +4,7 @@
 	<title>House status</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />     
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -25,7 +25,7 @@ require_once ('include/db.inc');
 function TF($tempVal)
 {
 	$strTemp = (is_null($tempVal) ? "--.--" : number_format($tempVal, 1));
-	$strTemp = $strTemp . "&nbsp;<sup>o</sup>C";
+	$strTemp = $strTemp . "&nbsp;&deg;C";
 	if (!is_null($tempVal))
 	{
 		if ($tempVal > 0) $strTemp = "+" . $strTemp;

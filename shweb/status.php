@@ -49,53 +49,48 @@ if ($r = $res->fetch_assoc())
 	$starting = $r["PRESENCE_TIME"];
 }
 ?>
-	<h3>Current status:</h3>
 	<table>
 		<tr>
-			<td>House mode:</td>
-			<td><?=($isin) ? "Presence" : "Standby"?></td>
+			<td>Режим:</td>
+			<td><h3><?=($isin) ? "Присутствие" : "Ожидание"?></h3><small>(с <?=$starting?>)</small></td>
 		</tr>
 		<tr>
-			<td>Last changed:</td>
-			<td><?=$starting?></td>
+			<td>Температура сейчас</td>
 		</tr>
 		<tr>
-			<td>Current temperature:</td>
-		</tr>
-		<tr>
-			<td>&nbsp;Inside:</td>
+			<td>&nbsp;В доме:</td>
 			<td><font size=30><?=TF($r["CUR_INT"])?></font></td>
 		</tr>
 		<tr>
-			<td>&nbsp;Outside:</td>
+			<td>&nbsp;На улице:</td>
 			<td><font size=30><?=TF($r["CUR_EXT"])?></font></td>
 		</tr>
 		<tr>
-			<td>24 hours temperature summary:</td>
-			<td><small>[min/avg/max] <a href="graph.php?days=1">See details >></a></small></td>
+			<td>Температура за 24 часа</td>
+			<td><small>[min/avg/max] <a href="graph.php?days=1">Подробнее >></a></small></td>
 		</tr>
 		<tr>
-			<td>&nbsp;Inside:</td>
+			<td>&nbsp;В доме:</td>
 			<td><?=TF($r["MIN_INT_H24"])?> / <?=TF($r["AVG_INT_H24"])?> / <?=TF($r["MAX_INT_H24"])?></td>
 		</tr>
 		<tr>
-			<td>&nbsp;Outside:</td>
+			<td>&nbsp;На улице:</td>
 			<td><?=TF($r["MIN_EXT_H24"])?> / <?=TF($r["AVG_EXT_H24"])?> / <?=TF($r["MAX_EXT_H24"])?></td>
 		</tr>
 		<tr>
-			<td>30 days temperature summary:</td>
-			<td><small>[min/avg/max] <a href="graph.php?days=30">See details >></a></small></td>
+			<td>Температура за 30 дней</td>
+			<td><small>[min/avg/max] <a href="graph.php?days=30">Подробнее >></a></small></td>
 		</tr>
 		<tr>
-			<td>&nbsp;Inside:</td>
+			<td>&nbsp;В доме:</td>
 			<td><?=TF($r["MIN_INT_D30"])?> / <?=TF($r["AVG_INT_D30"])?> / <?=TF($r["MAX_INT_D30"])?></td>
 		</tr>
 		<tr>
-			<td>&nbsp;Outside:</td>
+			<td>&nbsp;На улице:</td>
 			<td><?=TF($r["MIN_EXT_D30"])?> / <?=TF($r["AVG_EXT_D30"])?> / <?=TF($r["MAX_EXT_D30"])?></td>
 		</tr>
 	</table>
-	<a href="?changeStatusTo=<?=($isin) ? 0 : 1?>" data-role="button" data-theme=<?=($isin) ? "a" : "b"?>><?=($isin) ? "To Standby" : "To Presence"?></a>
+	<a href="?changeStatusTo=<?=($isin) ? 0 : 1?>" data-role="button" data-theme=<?=($isin) ? "a" : "b"?>><?=($isin) ? "В режим ожидания" : "В режим присутствия"?></a>
 	</div>
 </div>
 

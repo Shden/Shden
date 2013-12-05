@@ -65,28 +65,28 @@ if ($r = $res->fetch_assoc())
 			<td><font size=30><?=TF($r["CUR_EXT"])?></font></td>
 		</tr>
 		<tr>
-			<td>За 24 часа:</td>
+			<td>24 часа:</td>
 			<td><small>[min/avg/max] <a href="graph.php?days=1">Подробнее >></a></small></td>
 		</tr>
 		<tr>
 			<td>&nbsp;в доме</td>
-			<td><?=TF($r["MIN_INT_H24"])?> / <?=TF($r["AVG_INT_H24"])?> / <?=TF($r["MAX_INT_H24"])?></td>
+			<td><?=TF($r["MIN_INT_H24"])?>/<?=TF($r["AVG_INT_H24"])?>/<?=TF($r["MAX_INT_H24"])?></td>
 		</tr>
 		<tr>
 			<td>&nbsp;на улице</td>
-			<td><?=TF($r["MIN_EXT_H24"])?> / <?=TF($r["AVG_EXT_H24"])?> / <?=TF($r["MAX_EXT_H24"])?></td>
+			<td><?=TF($r["MIN_EXT_H24"])?>/<?=TF($r["AVG_EXT_H24"])?>/<?=TF($r["MAX_EXT_H24"])?></td>
 		</tr>
 		<tr>
-			<td>За 30 дней:</td>
+			<td>30 дней:</td>
 			<td><small>[min/avg/max] <a href="graph.php?days=30">Подробнее >></a></small></td>
 		</tr>
 		<tr>
 			<td>&nbsp;в доме</td>
-			<td><?=TF($r["MIN_INT_D30"])?> / <?=TF($r["AVG_INT_D30"])?> / <?=TF($r["MAX_INT_D30"])?></td>
+			<td><?=TF($r["MIN_INT_D30"])?>/<?=TF($r["AVG_INT_D30"])?>/<?=TF($r["MAX_INT_D30"])?></td>
 		</tr>
 		<tr>
 			<td>&nbsp;на улице</td>
-			<td><?=TF($r["MIN_EXT_D30"])?> / <?=TF($r["AVG_EXT_D30"])?> / <?=TF($r["MAX_EXT_D30"])?></td>
+			<td><?=TF($r["MIN_EXT_D30"])?>/<?=TF($r["AVG_EXT_D30"])?>/<?=TF($r["MAX_EXT_D30"])?></td>
 		</tr>
 	</table>
 	<a href="?changeStatusTo=<?=($isin) ? 0 : 1?>" data-role="button" data-theme=<?=($isin) ? "a" : "b"?>><?=($isin) ? "В режим ожидания" : "В режим присутствия"?></a>

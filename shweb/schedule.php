@@ -65,7 +65,7 @@
         write_ini_file($controller_ini, $controller_config);
     }
     ?>
-<?include 'menu.php';?>
+<?php include 'menu.php';?>
 <h2>Управление режимами</h2>
 <form onsubmit="return programValidation()">
 <table>

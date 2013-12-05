@@ -19,7 +19,7 @@
 	</div>
 
 	<div data-role="content">
-<?include 'menu.php';
+<?php include 'menu.php';
 require_once ('include/db.inc');
 
 function TF($tempVal)

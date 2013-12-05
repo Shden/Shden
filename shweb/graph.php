@@ -4,7 +4,7 @@
   <title>Температурный график</title>
 </head>
 <body>
-<?include 'menu.php';
+<?php include 'menu.php';
 
 if ($_REQUEST[days] == "") $days = 1; else $days = $_REQUEST[days];
 ?>

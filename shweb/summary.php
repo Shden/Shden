@@ -19,11 +19,12 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
-<?include 'menu.php';
+<?php include 'menu.php';
 require_once ('include/db.inc');
 
-if ($_REQUEST[days] == "") $days = 7; else $days = $_REQUEST[days];
+$days = (isset($_REQUEST['days'])) ? $_REQUEST['days'] : 7;
 $d = $days - 1;
+date_default_timezone_set("Europe/Moscow");
 $startDate = Date("Y-m-d", strtotime("-$d days"));
 $endDate = Date("Y-m-d", strtotime("+1 days"));
 
@@ -47,7 +48,7 @@ $res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 		<td colspan="3">Время обогрева, ч (всего/ночь/день)</td>
 		<td colspan="3">Стоимость, руб (всего/ночь/день)</td>
 	</tr>
-<?while($r = $res->fetch_assoc()) { ?>
+<?php while($r = $res->fetch_assoc()) { ?>
 	<tr>
 		<td><?=$r["Date"]?></td>
 		<td align="right"><?=number_format($r["AvgOutside"], 1)?></td>
@@ -61,7 +62,7 @@ $res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 		<td align="right"><?=number_format($r["NightCost"], 2)?></td>
 		<td align="right"><?=number_format($r["DayCost"], 2)?></td>
 	</tr>
-<?}?>
+<?php }?>
 
 <table>
 	</div><!-- /content -->

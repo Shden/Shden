@@ -3,7 +3,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />     
 </head>
 <body>
-<?include 'menu.php';?>
+<?php include 'menu.php';?>
 <form action="heating.php">
 	Show me last: 
 	<a href="?n=10">10 lines</a> |
@@ -13,8 +13,8 @@
 	<input type="submit" value="Go"/>
 </form>
 <hr/>
-<?
-if ($_REQUEST[n] == "") $n = 10; else $n = $_REQUEST[n];
+<?php
+$n = (isset($_REQUEST['n'])) ? $_REQUEST['n'] : 10;
 $output = `tail /home/den/Shden/shc/log/heating.log -n$n`;
 print "<pre>$output</pre>";
 ?>

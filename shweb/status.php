@@ -51,42 +51,41 @@ if ($r = $res->fetch_assoc())
 ?>
 	<table>
 		<tr>
-			<td>Режим:</td>
-			<td><h3><?=($isin) ? "Присутствие" : "Ожидание"?></h3><small>(с <?=$starting?>)</small></td>
+			<td colspan=2><h1>Режим <?=($isin) ? "присутствия" : "ожидания"?></h1></td>
 		</tr>
 		<tr>
-			<td>Температура сейчас</td>
+			<td>Сейчас:</td>
 		</tr>
 		<tr>
-			<td>&nbsp;В доме:</td>
+			<td>&nbsp;в доме</td>
 			<td><font size=30><?=TF($r["CUR_INT"])?></font></td>
 		</tr>
 		<tr>
-			<td>&nbsp;На улице:</td>
+			<td>&nbsp;на улице</td>
 			<td><font size=30><?=TF($r["CUR_EXT"])?></font></td>
 		</tr>
 		<tr>
-			<td>Температура за 24 часа</td>
+			<td>За 24 часа:</td>
 			<td><small>[min/avg/max] <a href="graph.php?days=1">Подробнее >></a></small></td>
 		</tr>
 		<tr>
-			<td>&nbsp;В доме:</td>
+			<td>&nbsp;в доме</td>
 			<td><?=TF($r["MIN_INT_H24"])?> / <?=TF($r["AVG_INT_H24"])?> / <?=TF($r["MAX_INT_H24"])?></td>
 		</tr>
 		<tr>
-			<td>&nbsp;На улице:</td>
+			<td>&nbsp;на улице</td>
 			<td><?=TF($r["MIN_EXT_H24"])?> / <?=TF($r["AVG_EXT_H24"])?> / <?=TF($r["MAX_EXT_H24"])?></td>
 		</tr>
 		<tr>
-			<td>Температура за 30 дней</td>
+			<td>За 30 дней:</td>
 			<td><small>[min/avg/max] <a href="graph.php?days=30">Подробнее >></a></small></td>
 		</tr>
 		<tr>
-			<td>&nbsp;В доме:</td>
+			<td>&nbsp;в доме</td>
 			<td><?=TF($r["MIN_INT_D30"])?> / <?=TF($r["AVG_INT_D30"])?> / <?=TF($r["MAX_INT_D30"])?></td>
 		</tr>
 		<tr>
-			<td>&nbsp;На улице:</td>
+			<td>&nbsp;на улице</td>
 			<td><?=TF($r["MIN_EXT_D30"])?> / <?=TF($r["AVG_EXT_D30"])?> / <?=TF($r["MAX_EXT_D30"])?></td>
 		</tr>
 	</table>

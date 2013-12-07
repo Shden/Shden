@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Heating energy consumption summary</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />     
+	<title>Энергопотребление системы отопления</title>
 
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 </head>
-<body>
 
-<div data-role="page">
-
-	<div data-role="header">
-		<h1>Heating summary</h1>
-	</div><!-- /header -->
-
-	<div data-role="content">
 <?php include 'menu.php';
 require_once ('include/db.inc');
 
@@ -31,23 +26,24 @@ $endDate = Date("Y-m-d", strtotime("+1 days"));
 $res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 
 ?>
-<div data-role="navbar" data-grid="d">
-    <ul>
-	<li> class="ui-state-persist"<a href="?days=7">1 week</a></li>
-	<li><a href="?days=14">2 weeks</a></li>
-	<li><a href="?days=21">3 weeks</a></li>
-	<li><a href="?days=31">1 month</a></li>
-	<li><a href="?days=62">2 month</a></li>
+<h1>Энергопотребление системы отопления</h1>
+<div class="navbar navbar-default" role="navigation">
+    <ul class="nav navbar-nav">
+		<li><a href="?days=7">1 неделя</a></li>
+		<li><a href="?days=14">2 недели</a></li>
+		<li><a href="?days=21">3 недели</a></li>
+		<li><a href="?days=31">1 месяц</a></li>
+		<li><a href="?days=62">2 месяца</a></li>
     </ul>
 </div><!-- /navbar -->
-<table border=1>
-	<tr>
-		<td>Дата</td>
-		<td colspan="3">Снаружи, <sup>o</sup>C (средняя/мин/макс)</td>
-		<td>Внутри, <sup>o</sup>C</td>
-		<td colspan="3">Время обогрева, ч (всего/ночь/день)</td>
-		<td colspan="3">Стоимость, руб (всего/ночь/день)</td>
-	</tr>
+<table border="1" width="100%">
+	<thead>
+		<th>Дата</th>
+		<th colspan="3">Снаружи, &deg;C (средняя/мин/макс)</th>
+		<th>Внутри, &deg;C</th>
+		<th colspan="3">Время обогрева, ч (всего/ночь/день)</th>
+		<th colspan="3">Стоимость, руб (всего/ночь/день)</th>
+	</thead>
 <?php while($r = $res->fetch_assoc()) { ?>
 	<tr>
 		<td><?=$r["Date"]?></td>
@@ -64,10 +60,11 @@ $res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 	</tr>
 <?php }?>
 
-<table>
-	</div><!-- /content -->
-
-</div><!-- /page -->
+</table>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
 </body>
 </html>

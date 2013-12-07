@@ -1,52 +1,94 @@
+<!DOCTYPE html>
 <html>
-<head>    
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />     
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <title>Режим отопления</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/i18n/jquery-ui-i18n.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script type="text/javascript">                                         
-    $(document).ready(function() {
-	$.datepicker.setDefaults($.datepicker.regional['ru']);
-      	$("#arrive_date").datepicker();
-	$("#dep_date").datepicker();
-        setDefaultWeekend();
-    });
-    
-    function setDefaultWeekend()
-    {
-        var nextFriday = new Date(); 
-        while (nextFriday.getDay() != 5)
-            nextFriday.setDate(nextFriday.getDate() + 1);
-        $("#arrive_date").datepicker("setDate", nextFriday);
-        var nextSunday = new Date();
-        nextSunday.setDate((nextFriday.getDate() + 2));
-        $("#dep_date").datepicker("setDate", nextSunday);
-    }
-    
-    function programValidation()
-    {
-        var startDate = $("#arrive_date").datepicker("getDate");
-        var stopDate = $("#dep_date").datepicker("getDate");
-        var now = new Date();
-        
-        if (startDate.getDate() > stopDate.getDate()) {
-            alert("Прибытие по идее должно быть раньше отъезда, видимо ошибка? Программа НЕ установлена.");
-            return false;
-        }
-        if (startDate.getDate() < now.getDate() || stopDate.getDate() < now.getDate()) {
-            alert("Одна или обе даты в прошлом, может ошибка? Программа будет установлена все равно.");
-            return true;
-        }
-        return true;
-    }
-   </script>                                                               
+  	<title>Таймер отопления</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+	
+	<!-- Shweb cutom styles -->
+	<link rel="stylesheet" href="css/shweb.css">
+	<link rel="stylesheet" href="css/datepicker.css">
+	
+	<style>
+	#alert {
+		display: none;
+	}
+	.form-schedule {
+		max-width: 640px;
+		padding: 15px;
+		margin: 0 auto;
+	}
+	.form-schedule input[type=text] {
+	  	width: 160px;
+		height: 18;
+	}
+	.form-schedule select {
+	  	width: 160px;
+		height: 18;
+		font-size: 12px;
+	}
+	</style>
+	
+	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	
+    <script src="js/bootstrap-datepicker.js"></script>
+	
+  	<script type="text/javascript">     
+	
+	    $(document).ready(function() {
+			$('#arrive_date').datepicker({
+				format: 'dd.mm.yyyy'
+			});     
+			$('#dep_date').datepicker({
+				format: 'dd.mm.yyyy'
+			});			
+
+			/* Setting default start and end dates to the next weekend (Friday to Sunday) */
+	        var startDate = new Date(); 
+	        while (startDate.getDay() != 5)
+	            startDate.setDate(startDate.getDate() + 1);
+	        $("#arrive_date").datepicker("setValue", startDate);
+	        
+			var endDate = new Date();
+	        endDate.setDate((startDate.getDate() + 2));
+	        $("#dep_date").datepicker("setValue", endDate);
+
+			/* Dates validation handlers */
+			$('#arrive_date').datepicker()
+				.on('changeDate', function(ev){
+					if (ev.date.valueOf() > endDate.valueOf()){
+						$('#alert').show().find('strong').text('Предупреждение: дата прибытия должна быть раньше даты отъезда.');
+					} else {
+						$('#alert').hide();
+						startDate = new Date(ev.date);
+					}
+					$('#arrive_date').datepicker('hide');
+				});
+			$('#dep_date').datepicker()
+				.on('changeDate', function(ev){
+					if (ev.date.valueOf() < startDate.valueOf()){
+						$('#alert').show().find('strong').text('Предупреждение: дата отъезда должна быть после даты прибытия.');
+					} else {
+						$('#alert').hide();
+						endDate = new Date(ev.date);
+					}
+					$('#dep_date').datepicker('hide');
+				});
+
+			//$.datepicker.setDefaults($.datepicker.regional['ru']);
+	    });
+	</script>                                                               
 </head> 
 <body>
-    <?php
-    include 'include/ini.php';
+    <?php include 'include/ini.php';
    
     $controller_config = parse_ini_file($controller_ini, true);
     
@@ -64,49 +106,47 @@
         
         write_ini_file($controller_ini, $controller_config);
     }
-    ?>
-<?php include 'menu.php';?>
-<h2>Управление режимами</h2>
-<form onsubmit="return programValidation()">
-<table>
-	<tr>
-		<td colspan="4"><b>Приедем:</b></td>
-        </tr>
-        <tr>
-		<td>когда:</td>
-                <td><input type="text" id="arrive_date" name="arrive_date"/></td>
-                <td>и во сколько:</td>
-                <td><select name="arrive_hour">
-                        <option value="2">Ночью, к 2 часам</option>
-                        <option value="12">Утром, к 12 часам</option>
-                        <option value="16" selected>Днем, к 16 часам</option>
-                        <option value="20">Вечером, к 20 часам</option>
-                        <option value="23">Поздно вечером, к 23 часам</option>
-                    </select>
-                </td>
-        <tr>
-		<td colspan="4"><b>Уедем:</b></td>
-	</tr>
-		<td>когда:</td>
-                <td><input type="text" id="dep_date" name="dep_date"/></td>
-                <td>и во сколько:</td>
-                <td><select name="dep_hour">
-                        <option value="9">Утром, в 9 часов</option>
-                        <option value="12">Утром, в 12 часов</option>
-                        <option value="17" selected>Вечером, в 17 часов</option>
-                        <option value="21">Вечером, в 21 час</option>
-                    </select>
-                </td>
-	</tr>
-        <tr>
-            <td colspan="4"><input type="submit" value="Установить программу"/></td>
-        </tr>
-</table>
-</form>
-<input type="button" value="Перевести в ждущий режим прямо сейчас" 
-       onclick="alert('пока не работает')"/>
-<input type="button" value="Перевести в режим присутствия прямо сейчас"
-       onclick="alert('пока не работает')"/>
-
+    
+	include 'menu.php';?>
+	
+	<div class="container" align="center">
+		<h2>Таймер отопления</h2>
+		<form role="form" class="form-schedule">
+			<div class="alert alert-warning" id="alert">
+				<strong>Oh snap!</strong>
+			</div>
+			<div>
+				<label for="arrive_date">Приедем:</label>
+			</div>
+			<div>
+				<input type="text" id="arrive_date" name="arrive_date"/> 
+				<select name="arrive_hour" id="arrive_hour">
+	                <option value="2">Ночью, к 2 часам</option>
+	                <option value="12">Утром, к 12 часам</option>
+	                <option value="16" selected>Днем, к 16 часам</option>
+	                <option value="20">Вечером, к 20 часам</option>
+	                <option value="23">Поздно вечером, к 23 часам</option>
+	            </select>
+			</div>
+			<div>
+				<label for="dep_date">Уедем:</label>
+			</div>
+			<div>
+				<input type="text" id="dep_date" name="dep_date"/> 
+				<select name="dep_hour" id="dep_hour">
+                    <option value="9">Утром, в 9 часов</option>
+                    <option value="12">Утром, в 12 часов</option>
+                    <option value="17" selected>Вечером, в 17 часов</option>
+                    <option value="21">Вечером, в 21 час</option>
+                </select>
+			</div>
+			<div>
+				<br/><input type="submit" class="btn btn-primary" value="Установить программу"/>
+			</div>
+		</form>
+	</div>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
 </html>

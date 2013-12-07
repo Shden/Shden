@@ -35,9 +35,11 @@ function TF($tempVal)
 	return $strTemp;
 }
 
-$changeStatusTo = $_REQUEST[changeStatusTo];
-if ($changeStatusTo != "") 
+if (isset($_REQUEST['changeStatusTo'])) 
+{	
+	$changeStatusTo = $_REQUEST['changeStatusTo'];
 	$conn->query("CALL SP_CHANGE_PRESENCE($changeStatusTo);");
+}
 
 $res = $conn->query("CALL SP_GET_STATUS();");
 

@@ -13,22 +13,16 @@
       	</div>
       	<div class="navbar-collapse collapse">
         	<ul class="nav navbar-nav">
-          		<li class="active"><a href="status.php">Состояние дома</a></li>
-  				<li><a href="schedule.php">Управление режимами</a></li>
-  				<li><a href="config.php">Настройки</a></li>
-  				<li><a href="heating.php">Лог</a></li>
-  				<li><a href="graph.php">График</a></li>
-  				<li><a href="summary.php">Потребление</a></li>
-          	  	<!--li class="dropdown">
-            		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+          		<li><a href="status.php">Состояние дома</a></li>
+          	  	<li class="dropdown">
+            		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Отопление <b class="caret"></b></a>
             		<ul class="dropdown-menu">
-              			<li><a href="#">Action</a></li>
-              		  	<li><a href="#">Another action</a></li>
-              		  	<li><a href="#">Something else here</a></li>
+		  				<li><a href="schedule.php">Таймер отопления</a></li>
+		  				<li><a href="heating.php">Лог</a></li>
+		  				<li><a href="graph.php">Температурный график</a></li>
+		  				<li><a href="summary.php">Потребление</a></li>
               		  	<li class="divider"></li>
-              		  	<li class="dropdown-header">Nav header</li>
-              		  	<li><a href="#">Separated link</a></li>
-              		  	<li><a href="#">One more separated link</a></li-->
+		  				<li><a href="config.php">Настройки</a></li>
             		</ul>
           	  	</li>
         	</ul>

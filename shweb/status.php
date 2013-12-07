@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<title>House status</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+	
+	<!-- Shweb cutom styles -->
+	<link rel="stylesheet" href="css/shweb.css">
 </head>
 <body>
 
-<div data-role="page">
 
-	<div data-role="header">
-		<h1>Status</h1>
-	</div>
-
-	<div data-role="content">
 <?php include 'menu.php';
 require_once ('include/db.inc');
 
@@ -29,8 +29,8 @@ function TF($tempVal)
 	if (!is_null($tempVal))
 	{
 		if ($tempVal > 0) $strTemp = "+" . $strTemp;
-		if ($tempVal > +2) $strTemp = "<font color=green>" . $strTemp . "</font>";
-		if ($tempVal < -2) $strTemp = "<font color=blue>" . $strTemp . "</font>";
+		if ($tempVal > +2.0) $strTemp = "<font color=green>" . $strTemp . "</font>";
+		if ($tempVal < -2.0) $strTemp = "<font color=blue>" . $strTemp . "</font>";
 	}
 	return $strTemp;
 }
@@ -49,23 +49,20 @@ if ($r = $res->fetch_assoc())
 	$starting = $r["PRESENCE_TIME"];
 }
 ?>
+<div class="jumbotron">
+	<div class="container" align="center">
+		<h1>Режим <?=($isin) ? "присутствия" : "ожидания"?></h1>
+		<p>В доме: <font size="30"><?=TF($r["CUR_INT"])?></font> На&nbsp;улице:&nbsp;<font size="30"><?=TF($r["CUR_EXT"])?></font></p>
+		<a href="?changeStatusTo=<?=($isin) ? 0 : 1?>" class="btn <?=($isin) ? "btn-primary" : "btn-danger"?> btn-lg" role="button">
+			В режим <?=($isin) ? "ожидания" : "присутствия"?>
+		</a>
+	</div>
+</div>
+<div class="row" align="center">
+  	<div class="col-md-6" align=center>
 	<table>
 		<tr>
-			<td colspan=2><h1>Режим <?=($isin) ? "присутствия" : "ожидания"?></h1></td>
-		</tr>
-		<tr>
-			<td>Сейчас:</td>
-		</tr>
-		<tr>
-			<td>&nbsp;в доме</td>
-			<td><font size=30><?=TF($r["CUR_INT"])?></font></td>
-		</tr>
-		<tr>
-			<td>&nbsp;на улице</td>
-			<td><font size=30><?=TF($r["CUR_EXT"])?></font></td>
-		</tr>
-		<tr>
-			<td>24 часа:</td>
+			<td><b>24 часа:</b></td>
 			<td><small>[min/avg/max] <a href="graph.php?days=1">Подробнее >></a></small></td>
 		</tr>
 		<tr>
@@ -76,8 +73,12 @@ if ($r = $res->fetch_assoc())
 			<td>&nbsp;на улице</td>
 			<td><?=TF($r["MIN_EXT_H24"])?>/<?=TF($r["AVG_EXT_H24"])?>/<?=TF($r["MAX_EXT_H24"])?></td>
 		</tr>
+	</table>
+	</div>
+  	<div class="col-md-6" align="center">
+	<table>
 		<tr>
-			<td>30 дней:</td>
+			<td><b>30 дней:</b></td>
 			<td><small>[min/avg/max] <a href="graph.php?days=30">Подробнее >></a></small></td>
 		</tr>
 		<tr>
@@ -89,9 +90,12 @@ if ($r = $res->fetch_assoc())
 			<td><?=TF($r["MIN_EXT_D30"])?>/<?=TF($r["AVG_EXT_D30"])?>/<?=TF($r["MAX_EXT_D30"])?></td>
 		</tr>
 	</table>
-	<a href="?changeStatusTo=<?=($isin) ? 0 : 1?>" data-role="button" data-theme=<?=($isin) ? "a" : "b"?>><?=($isin) ? "В режим ожидания" : "В режим присутствия"?></a>
-	</div>
+</div>
 </div>
 
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
 </html>

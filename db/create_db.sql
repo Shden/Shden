@@ -26,3 +26,7 @@ CREATE TABLE presence (
 	isin		INT,
 	PRIMARY KEY(time));
 	
+CREATE TABLE humidity (
+	time		DATETIME,
+	bathroom	DECIMAL(5,2),
+	PRIMARY KEY(time));

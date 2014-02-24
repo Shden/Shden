@@ -10,3 +10,9 @@ mv $heatinglog $tmp -f
 mysqlimport -L -u root -pexpress --fields-terminated-by="|" SHDEN $tmp
 rm $tmp -f
 
+humiditylog=/home/den/Shden/shc/log/ventilation.log
+tmphumidity=/home/den/Shden/shc/log/humidity.tmp
+
+mv $humiditylog $tmphumidity -f
+mysqlimport -L -u root -pexpress --fields-terminated-by="|" SHDEN $tmphumidity
+rm $tmphumidity

@@ -1,6 +1,6 @@
 /*
  *	Smart house controller module.
- *	
+ *
  *	14-Nov-2010: 	- pump is controlled separately from heater allowing other heaters to work effectively.
  *			- overheating control implemented.
  *	28-NOV-2010:	- simple standby energy saving algorithm based on weekday added.
@@ -38,7 +38,7 @@ struct ConfigT
 	float		standbyTargetNightTemp;			/* Target temp when nobody at home (night) */
 	float		tempDelta;				/* Histeresis */
 	float 		stopPumpTempDelta;			/* Temperature differeince across the house to stop pump */
-	
+
 	/* The next two parameters both control how electric heater is turned off when oven is on: */
 	float		fluidElectricHeaterOffTemp;		/* Outgoing fluid temperature O2 to off electic heater */
 	float		ovenExtraElectricHeaterOffTemp;		/* O2 - O1 difference to off electric heater */
@@ -88,7 +88,7 @@ typedef struct TRoomControlDescriptor
 RoomControlDescriptor roomControlDescriptors[ROOMS_COUNT];
 
 // -- Forward declarations
-time_t getHeatingStartTime(); 
+time_t getHeatingStartTime();
 
 /* Init configuration directories based on the controller path */
 void setDirectories()
@@ -303,9 +303,9 @@ float getHeatingTimeForPresence()
 	return (configuration.presenceTargetTemp - current) / heatUpSpeed; // hours
 }
 
-//** This will return the time when to start heating so that it will all ok when we there */
+//** This will return the time when to start heating so that house is heated when we will be there */
 time_t getHeatingStartTime()
-{	
+{
 	return mktime(&configuration.arrive) - getHeatingTimeForPresence() * 60 * 60;
 }
 
@@ -359,7 +359,7 @@ int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp)
 		// -- Current date and time
 		time_t now = time(NULL);
 
-		// -- Persist failure info		
+		// -- Persist failure info
 		FILE *fp;
 		fp = fopen(configuration.heaterFailurePath, "w");
 		if (NULL != fp)
@@ -439,7 +439,7 @@ int main(int argc, const char** args)
 {
 	// -- Set confguration.ini & others directories
 	setDirectories();
-	
+
 	// -- Check for previous fatal errors
 	if (wasOverheated())
 	{
@@ -475,7 +475,7 @@ int main(int argc, const char** args)
 
 	// -- Control heater and pump
 	int heaterState = controlHeater(controlTemp, electricHeaterTemp, outgoingFluidTemp);
-	
+
 	// -- Initizlize temp vector (no paritcular order)
 	float tv[10];
 	int tvc = 0;
@@ -490,18 +490,18 @@ int main(int argc, const char** args)
 	int pumpState = controlPump(tv, tvc);
 
 	// -- Individual rooms control
-	/* Not tested yet	
+	/* Not tested yet
 	int i;
 	for (i=0; i<ROOMS_COUNT; i++)
 		controlRoom(&roomControlDescriptors[i], targetTemp);
 	*/
-	
+
 	// -- Dates: now and when to start heating next time by our arrival
 	char nowStr[60], onStr[60];
 	getDateTimeStr(nowStr, 60, time(NULL));
 	getDateTimeStr(onStr, 60, getHeatingStartTime());
 
-	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%c|%c|%4.1f|%s|\r\n", 
+	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%c|%c|%4.1f|%s|\r\n",
 		nowStr,
 		electricHeaterTemp,
 		ingoingFluidTemp,

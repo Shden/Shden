@@ -21,7 +21,7 @@
 
 #define bathRoomHumiditySensor	"26.140A56010000"
 
-#define childrenSmallSwitch	"/mnt/1wire/3A.CB9703000000/PIO.A" 
+#define childrenSmallSwitch	"/mnt/1wire/3A.CB9703000000/PIO.A"
 
 enum SwitchStatus
 {

@@ -450,6 +450,8 @@ int main(int argc, const char** args)
 	// -- Load settings from .ini file
 	loadSettings();
 
+	initRoomDescriptors();
+
 //	debug stuff
 //	printf("%s", asctime(&configuration.arrive));
 //	printf("%s", asctime(&configuration.dep));
@@ -490,11 +492,10 @@ int main(int argc, const char** args)
 	int pumpState = controlPump(tv, tvc);
 
 	// -- Individual rooms control
-	/* Not tested yet
+	/* Not tested yet */
 	int i;
 	for (i=0; i<ROOMS_COUNT; i++)
 		controlRoom(&roomControlDescriptors[i], targetTemp);
-	*/
 
 	// -- Dates: now and when to start heating next time by our arrival
 	char nowStr[60], onStr[60];

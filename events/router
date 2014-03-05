@@ -6,10 +6,12 @@ case "$1" in
 
 	sunraise)
 		echo "[$(date)]: Sunraise" >> $log
+		echo 0 >> ${PWD}/../appliances/streetLight1
 		;;
 
 	sunset)
 		echo "[$(date)]: Sunset" >> $log
+		echo 1 >> ${PWD}/../appliances/streetLight1
 		;;
 
 	*)

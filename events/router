@@ -1,0 +1,18 @@
+#!/bin/sh
+
+log="${PWD}/events.log"
+
+case "$1" in
+
+	sunraise)
+		echo "[$(date)]: Sunraise" >> $log
+		;;
+
+	sunset)
+		echo "[$(date)]: Sunset" >> $log
+		;;
+
+	*)
+		echo "[$(date)]: Unknown event [$1], cannot route." >> $log
+		exit 1
+esac

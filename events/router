@@ -1,18 +1,19 @@
 #!/bin/sh
 
-log="${PWD}/events.log"
+DIR="/home/den/Shden"
+log="$DIR/events/events.log"
 
 case "$1" in
 
 	sunraise)
 		echo "[$(date)]: Sunraise" >> $log
-		echo 0 >> ${PWD}/../appliances/streetLight1
+		echo 0 >> $DIR/appliances/streetLight1
 		echo "  Street light turned off." >> $log
 		;;
 
 	sunset)
 		echo "[$(date)]: Sunset" >> $log
-		echo 1 >> ${PWD}/../appliances/streetLight1
+		echo 1 >> $DIR/appliances/streetLight1
 		echo "  Street light turned on." >> $log
 		;;
 

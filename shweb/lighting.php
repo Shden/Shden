@@ -22,10 +22,10 @@
 	if (isset($_REQUEST['changeStreetLightStatusTo'])) 
 	{
 		$newStatus = $_REQUEST['changeStreetLightStatusTo'];
-		`echo $newStatus >> /mnt/1wire/3A.B8380D000000/PIO.A`;
+		`echo $newStatus >> /home/den/Shden/appliances/streetLight250`;
 	}
 
-	$streetLightStatus = (int)`cat /mnt/1wire/3A.B8380D000000/PIO.A`;
+	$streetLightStatus = (int)`cat /home/den/Shden/appliances/streetLight250`;
 	?>
 
 	<div class="container" align="center">

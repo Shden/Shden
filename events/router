@@ -5,8 +5,8 @@ log="$DIR/events/events.log"
 
 case "$1" in
 
-	sunraise)
-		echo "[$(date)]: Sunraise" >> $log
+	sunrise)
+		echo "[$(date)]: Sunrise" >> $log
 		echo 0 >> $DIR/appliances/streetLight250
 		echo "  Street light turned off." >> $log
 		;;

@@ -19,21 +19,65 @@
 <body>
 	<?php include 'menu.php';
 
-	if (isset($_REQUEST['changeStreetLightStatusTo'])) 
+	if (isset($_REQUEST['changeStreetLight250StatusTo'])) 
 	{
-		$newStatus = $_REQUEST['changeStreetLightStatusTo'];
+		$newStatus = $_REQUEST['changeStreetLight250StatusTo'];
 		`echo $newStatus >> /home/den/Shden/appliances/streetLight250`;
 	}
+	if (isset($_REQUEST['changeStreetLight150StatusTo'])) 
+	{
+		$newStatus = $_REQUEST['changeStreetLight150StatusTo'];
+		`echo $newStatus >> /home/den/Shden/appliances/streetLight150`;
+	}
+	if (isset($_REQUEST['changeBalkonLightStatusTo'])) 
+	{
+		$newStatus = $_REQUEST['changeBalkonLightStatusTo'];
+		`echo $newStatus >> /home/den/Shden/appliances/balkonLight`;
+	}
 
-	$streetLightStatus = (int)`cat /home/den/Shden/appliances/streetLight250`;
+	$streetLight250Status = (int)`cat /home/den/Shden/appliances/streetLight250`;
+	$streetLight150Status = (int)`cat /home/den/Shden/appliances/streetLight150`;
+	$balkonLightStatus = (int)`cat /home/den/Shden/appliances/balkonLight`;
 	?>
 
 	<div class="container" align="center">
 		<h2>Управление освещением</h2>
-		<a href="?changeStreetLightStatusTo=<?=($streetLightStatus == 1) ? 0 : 1?>" 
-			class="btn <?=($streetLightStatus == 1) ? "btn-default" : "btn-warning"?> btn-lg" role="button">
-			<?=($streetLightStatus == 1) ? "Погасить" : "Зажечь"?> уличный фонарь
-		</a>
+		<table>
+			<tr>
+				<td>
+					Уличный фонарь около дороги (250W):
+				</td>
+				<td>
+					<a href="?changeStreetLight250StatusTo=<?=($streetLight250Status == 1) ? 0 : 1?>" 
+						class="btn <?=($streetLight250Status == 1) ? "btn-default" : "btn-warning"?> btn-lg" role="button">
+						<?=($streetLight250Status == 1) ? "Погасить" : "Зажечь"?> 
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Уличный фонарь на озеро (150W):
+				</td>
+				<td>
+					<a href="?changeStreetLight150StatusTo=<?=($streetLight150Status == 1) ? 0 : 1?>" 
+						class="btn <?=($streetLight150Status == 1) ? "btn-default" : "btn-warning"?> btn-lg" role="button">
+						<?=($streetLight150Status == 1) ? "Погасить" : "Зажечь"?> 
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Свет на балконе 2-го этажа:
+				</td>
+				<td>
+					<a href="?changeBalkonLightStatusTo=<?=($balkonLightStatus == 1) ? 0 : 1?>" 
+						class="btn <?=($balkonLightStatus == 1) ? "btn-default" : "btn-warning"?> btn-lg" role="button">
+						<?=($balkonLightStatus == 1) ? "Погасить" : "Зажечь"?> 
+					</a>
+				</td>
+			</tr>
+		</table>
+			
 	</div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

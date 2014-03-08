@@ -8,12 +8,14 @@ case "$1" in
 	sunrise)
 		echo "[$(date)]: Sunrise" >> $log
 		echo 0 >> $DIR/appliances/streetLight250
+		echo 0 >> $DIR/appliances/streetLight150
 		echo "  Street light turned off." >> $log
 		;;
 
 	sunset)
 		echo "[$(date)]: Sunset" >> $log
 		echo 1 >> $DIR/appliances/streetLight250
+		echo 1 >> $DIR/appliances/streetLight150
 		echo "  Street light turned on." >> $log
 		;;
 

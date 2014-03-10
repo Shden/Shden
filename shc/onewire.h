@@ -5,7 +5,7 @@
 #define heaterSensor			"28.0AB28D020000"	/* датчик ТЭН */
 #define externalSensor			"28.0FF26D020000"	/* улица */
 #define outputSensor			"28.18DB6D020000"	/* жидкость на выходе */
-#define amSensor				"28.4BC66D020000"	/* комната для гостей (АМ) */
+#define amSensor				"28.ED64B4040000"	/* комната для гостей (АМ) */
 #define inputSensor				"28.BCBC6D020000"	/* жидкость на входе */
 #define bedroomSensor			"28.99C68D020000"	/* спальня */
 #define cabinetSensor			"28.EA09B5040000"	/* кабинет */

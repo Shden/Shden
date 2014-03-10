@@ -510,7 +510,7 @@ int main(int argc, const char** args)
 		getT(externalSensor),
 		0.0,//getT(amSensor),
 		getT(bedroomSensor),
-		0.0,//getT(cabinetSensor),
+		getT(cabinetSensor),
 		sashaBedroomTemp,
 		kitchenTemp,
 		bathroomTemp,

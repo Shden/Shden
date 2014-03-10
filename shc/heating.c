@@ -508,7 +508,7 @@ int main(int argc, const char** args)
 		ingoingFluidTemp,
 		outgoingFluidTemp,
 		getT(externalSensor),
-		0.0,//getT(amSensor),
+		getT(amSensor),
 		getT(bedroomSensor),
 		getT(cabinetSensor),
 		sashaBedroomTemp,

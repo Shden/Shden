@@ -30,3 +30,13 @@ CREATE TABLE humidity (
 	time		DATETIME,
 	bathroom	DECIMAL(5,2),
 	PRIMARY KEY(time));
+	
+CREATE TABLE power (
+	time		DATETIME,
+	U1		DECIMAL(5,2),
+	U2		DECIMAL(5,2),
+	U3		DECIMAL(5,2),
+	I1		DECIMAL(5,2),
+	I2		DECIMAL(5,2),
+	I3		DECIMAL(5,2)
+	PRIMARY KEY(time));

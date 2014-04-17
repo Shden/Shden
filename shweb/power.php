@@ -23,15 +23,12 @@
 	$json = `/Users/den/Shden/mercury236/mercury236 --testRun --json`;
 	$r = json_decode($json, true);
 	
-	function VF($val)
-	{
-		return number_format($val, 2);
-	}
+	function VF($val) { return number_format($val, 2); }
 	?>
 		
 	<div class="container" align="center">
 		<h2>Данные электросчетчика</h2>
-		<table>
+		<table border="1">
 			<thead>
 				<th>Параметр</th>
 				<th>Фаза 1</th>
@@ -61,10 +58,10 @@
 			</tr>
 			<tr>
 				<td>Частота сети (Гц):</td>
+				<td></td>
+				<td></td>
+				<td></td>
 				<td align="right"><?=VF($r["F"])?></td>
-				<td></td>
-				<td></td>
-				<td></td>
 			</tr>
 			<tr>
 				<td>Угол сдвига фаз:</td>
@@ -109,7 +106,8 @@
 				<td align="right"><?=VF($r["PT"]["sum"])?></td>
 			</tr>
 		</table>
-
+		<br/>
+		<a href="?" class="btn btn-primary" role="button">Обновить</a>
 	</div>
 
 

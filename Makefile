@@ -14,3 +14,4 @@ build:
 clean:
 	$(MAKE) -C $(SUNWAIT) clean
 	$(MAKE) -C $(SHC) clean
+	$(MAKE) -C $(MERCURY236) clean

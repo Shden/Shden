@@ -12,9 +12,6 @@
 	
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
-	
-	<!-- Shweb cutom styles -->
-	<link rel="stylesheet" href="css/shweb.css">
 </head>
 <body>
 

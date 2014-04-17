@@ -25,7 +25,8 @@
 		  				<li><a href="config.php">Настройки</a></li>
             		</ul>
           	  	</li>
-				<li><a href="lighting.php">Освещение</a></li>
+			<li><a href="lighting.php">Освещение</a></li>
+			<li><a href="power.php">Электричество</a></li>
         	</ul>
       	</div><!--/.nav-collapse -->
     </div>

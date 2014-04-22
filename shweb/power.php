@@ -27,8 +27,9 @@
 	?>
 		
 	<div class="container" align="center">
-		<h2>Данные электросчетчика</h2>
-		<table border="1" width="80%">
+		<h2>Электросеть</h2>
+		<h3>Мгновенные значения:</h3>
+		<table border="1" width="100%">
 			<thead>
 				<th>Параметр</th>
 				<th>Фаза 1</th>
@@ -83,7 +84,8 @@
 			</tr>
 		</table>
 		<br/>
-		<table border="1" width="80%">
+		<h3>Накопленные значения:</h3>
+		<table border="1" width="100%">
 			<thead>
 				<th>Потребление</th>
 				<th>Активное</th>

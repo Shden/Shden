@@ -14,18 +14,18 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 
 	<!-- Shweb cutom styles -->
-	<link rel="stylesheet" href="css/shweb.css">
-</head>
+	<link rel="stylesheet" href="css/shweb.css"></head>
 <body>
 	<?php include 'menu.php';?>
 
 	<?php
-	$json = `/Users/den/Shden/mercury236/mercury236 --testRun --json`;
+	$json = `/home/den/Shden/mercury236/mercury236 /dev/ttyUSB0 --json`;
+print "<pre>$json</pre>";
 	$r = json_decode($json, true);
-	
+
 	function VF($val) { return number_format($val, 2); }
 	?>
-		
+
 	<div class="container" align="center">
 		<h2>Данные электросчетчика</h2>
 		<table border="1">

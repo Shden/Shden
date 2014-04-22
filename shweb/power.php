@@ -28,7 +28,7 @@
 		
 	<div class="container" align="center">
 		<h2>Данные электросчетчика</h2>
-		<table border="1">
+		<table border="1" width="80%">
 			<thead>
 				<th>Параметр</th>
 				<th>Фаза 1</th>
@@ -57,13 +57,6 @@
 				<td align="right"><?=VF($r["CosF"]["sum"])?></td>
 			</tr>
 			<tr>
-				<td>Частота сети (Гц):</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td align="right"><?=VF($r["F"])?></td>
-			</tr>
-			<tr>
 				<td>Угол сдвига фаз:</td>
 				<td align="right"><?=VF($r["A"]["p1"])?></td>
 				<td align="right"><?=VF($r["A"]["p2"])?></td>
@@ -85,25 +78,31 @@
 				<td align="right"><?=VF($r["S"]["sum"])?></td>
 			</tr>
 			<tr>
+				<td>Частота сети (Гц):</td>
+				<td align="right" colspan="4"><?=VF($r["F"])?></td>
+			</tr>
+		</table>
+		<br/>
+		<table border="1" width="80%">
+			<thead>
+				<th>Потребление</th>
+				<th>Активное</th>
+				<th>Реактивное</th>
+			</thead>
+			<tr>
 				<td>Потребление энергии, всего (кВт):</td>
 				<td align="right"><?=VF($r["PR"]["ap"])?></td>
 				<td align="right"><?=VF($r["PR"]["rp"])?></td>
-				<td></td>
-				<td></td>
 			</tr>
 			<tr>
 				<td>Потребление энергии, вчера (кВт):</td>
 				<td align="right"><?=VF($r["PY"]["ap"])?></td>
 				<td align="right"><?=VF($r["PY"]["rp"])?></td>
-				<td></td>
-				<td></td>
 			</tr>
 			<tr>
 				<td>Потребление энергии, сегодня (кВт):</td>
 				<td align="right"><?=VF($r["PT"]["ap"])?></td>
 				<td align="right"><?=VF($r["PT"]["rp"])?></td>
-				<td></td>
-				<td></td>
 			</tr>
 		</table>
 		<br/>

@@ -14,18 +14,18 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 
 	<!-- Shweb cutom styles -->
-	<link rel="stylesheet" href="css/shweb.css"></head>
+	<link rel="stylesheet" href="css/shweb.css">
+</head>
 <body>
 	<?php include 'menu.php';?>
 
 	<?php
-	$json = `/home/den/Shden/mercury236/mercury236 /dev/ttyUSB0 --json`;
-print "<pre>$json</pre>";
+	$json = `/Users/den/Shden/mercury236/mercury236 --testRun --json`;
 	$r = json_decode($json, true);
-
+	
 	function VF($val) { return number_format($val, 2); }
 	?>
-
+		
 	<div class="container" align="center">
 		<h2>Данные электросчетчика</h2>
 		<table border="1">
@@ -46,14 +46,14 @@ print "<pre>$json</pre>";
 			<tr>
 				<td>Ток потребления (А):</td>
 				<td align="right"><?=VF($r["I"]["p1"])?></td>
-				<td align="right"><?=VF($r["I"]["p1"])?></td>
-				<td align="right"><?=VF($r["I"]["p1"])?></td>
+				<td align="right"><?=VF($r["I"]["p2"])?></td>
+				<td align="right"><?=VF($r["I"]["p3"])?></td>
 				<td></td>
 			<tr>
 				<td>Коэффициент мощности (cos(f)):</td>
 				<td align="right"><?=VF($r["CosF"]["p1"])?></td>
-				<td align="right"><?=VF($r["CosF"]["p1"])?></td>
-				<td align="right"><?=VF($r["CosF"]["p1"])?></td>
+				<td align="right"><?=VF($r["CosF"]["p2"])?></td>
+				<td align="right"><?=VF($r["CosF"]["p3"])?></td>
 				<td align="right"><?=VF($r["CosF"]["sum"])?></td>
 			</tr>
 			<tr>
@@ -66,44 +66,44 @@ print "<pre>$json</pre>";
 			<tr>
 				<td>Угол сдвига фаз:</td>
 				<td align="right"><?=VF($r["A"]["p1"])?></td>
-				<td align="right"><?=VF($r["A"]["p1"])?></td>
-				<td align="right"><?=VF($r["A"]["p1"])?></td>
+				<td align="right"><?=VF($r["A"]["p2"])?></td>
+				<td align="right"><?=VF($r["A"]["p3"])?></td>
 				<td></td>
 			</tr>
 			<tr>
 				<td>Текущая активная мощность (Вт):</td>
 				<td align="right"><?=VF($r["P"]["p1"])?></td>
-				<td align="right"><?=VF($r["P"]["p1"])?></td>
-				<td align="right"><?=VF($r["P"]["p1"])?></td>
+				<td align="right"><?=VF($r["P"]["p2"])?></td>
+				<td align="right"><?=VF($r["P"]["p3"])?></td>
 				<td align="right"><?=VF($r["P"]["sum"])?></td>
 			</tr>
 			<tr>
 				<td>Текущая реактивная мощность (Вт):</td>
 				<td align="right"><?=VF($r["S"]["p1"])?></td>
-				<td align="right"><?=VF($r["S"]["p1"])?></td>
-				<td align="right"><?=VF($r["S"]["p1"])?></td>
+				<td align="right"><?=VF($r["S"]["p2"])?></td>
+				<td align="right"><?=VF($r["S"]["p3"])?></td>
 				<td align="right"><?=VF($r["S"]["sum"])?></td>
 			</tr>
 			<tr>
 				<td>Потребление энергии, всего (кВт):</td>
-				<td align="right"><?=VF($r["PR"]["p1"])?></td>
-				<td align="right"><?=VF($r["PR"]["p1"])?></td>
-				<td align="right"><?=VF($r["PR"]["p1"])?></td>
-				<td align="right"><?=VF($r["PR"]["sum"])?></td>
+				<td align="right"><?=VF($r["PR"]["ap"])?></td>
+				<td align="right"><?=VF($r["PR"]["rp"])?></td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>Потребление энергии, вчера (кВт):</td>
-				<td align="right"><?=VF($r["PY"]["p1"])?></td>
-				<td align="right"><?=VF($r["PY"]["p1"])?></td>
-				<td align="right"><?=VF($r["PY"]["p1"])?></td>
-				<td align="right"><?=VF($r["PY"]["sum"])?></td>
+				<td align="right"><?=VF($r["PY"]["ap"])?></td>
+				<td align="right"><?=VF($r["PY"]["rp"])?></td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>Потребление энергии, сегодня (кВт):</td>
-				<td align="right"><?=VF($r["PT"]["p1"])?></td>
-				<td align="right"><?=VF($r["PT"]["p1"])?></td>
-				<td align="right"><?=VF($r["PT"]["p1"])?></td>
-				<td align="right"><?=VF($r["PT"]["sum"])?></td>
+				<td align="right"><?=VF($r["PT"]["ap"])?></td>
+				<td align="right"><?=VF($r["PT"]["rp"])?></td>
+				<td></td>
+				<td></td>
 			</tr>
 		</table>
 		<br/>

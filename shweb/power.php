@@ -20,7 +20,7 @@
 	<?php include 'menu.php';?>
 
 	<?php
-	$json = `/Users/den/Shden/mercury236/mercury236 --testRun --json`;
+	$json = `/home/den/Shden/mercury236/mercury236 /dev/ttyUSB0 --json`;
 	$r = json_decode($json, true);
 	
 	function VF($val) { return number_format($val, 2); }

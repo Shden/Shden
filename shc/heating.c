@@ -52,6 +52,7 @@ const int nightTariffEndHour		= 7;
 
 #define 	ROOMS_COUNT 		5
 #define		INI_BUFF_LEN		80
+#define		TBL			60
 
 // Ini file headers & variables are defined here:
 #define		HEATING_SECTION		"[heating]"
@@ -132,7 +133,7 @@ void loadSettings()
 	iniFile = fopen(configuration.configFilePath, "r");
 
 	char iniFileBuff[INI_BUFF_LEN];
-	const char sectionName[INI_BUFF_LEN];
+	char sectionName[INI_BUFF_LEN];
 	ConfigParserStatus status = DISORIENTED;
 
 	while (NULL != fgets(iniFileBuff, INI_BUFF_LEN, iniFile))
@@ -161,8 +162,8 @@ void loadSettings()
 		case HEATING:
 		case SCHEDULE:
 			{
-				const char varName[INI_BUFF_LEN];
-				const char varValue[INI_BUFF_LEN];
+				char varName[INI_BUFF_LEN];
+				char varValue[INI_BUFF_LEN];
 
 				if (2 == sscanf(iniFileBuff,"%s = \"%s\"", varName, varValue))
 				{
@@ -498,9 +499,9 @@ int main(int argc, const char** args)
 		controlRoom(&roomControlDescriptors[i], targetTemp);
 
 	// -- Dates: now and when to start heating next time by our arrival
-	char nowStr[60], onStr[60];
-	getDateTimeStr(nowStr, 60, time(NULL));
-	getDateTimeStr(onStr, 60, getHeatingStartTime());
+	char nowStr[TBL], onStr[TBL];
+	getDateTimeStr(nowStr, TBL, time(NULL));
+	getDateTimeStr(onStr, TBL, getHeatingStartTime());
 
 	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%c|%c|%4.1f|%s|\r\n",
 		nowStr,

@@ -50,7 +50,8 @@ $lineU3->SetLegend("Напряжение фаза 3");
 
 // Add the plot to the graph
 $graph->Add($lineU1);
-$graph->Add($linePlotBR);
+$graph->Add($lineU2);
+$graph->Add($lineU3);
 
 // Legend setup
 $graph->legend->SetFrameWeight(1);

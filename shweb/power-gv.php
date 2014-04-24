@@ -7,23 +7,26 @@ $days = 1;
 if (isset($_REQUEST[days])) $days = $_REQUEST[days];
 
 $res = $conn->query(	"SELECT CONCAT(DATE(time), ' ', HOUR(time), ':00') as time, " .
-			"AVG(external) as outTemp, " .
-			"AVG(bedroom) as bedRoomTemp " .
-			"FROM heating " .
+			"AVG(U1) as U1, " .
+			"AVG(U2) as U2, " .
+			"AVG(U3) as U3 " .
+			"FROM power " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 			"GROUP BY HOUR(time), DATE(time) " .
 			"ORDER BY DATE(time), HOUR(time);");
 
 $times = array();
-$bedRoomTemp = array();
-$outTemp = array();
+$U1 = array();
+$U2 = array();
+$U3 = array();
 
 $res->data_seek(0);
 while($r = $res->fetch_assoc())
 {
 	$times[] = $r['time'];
-	$bedRoomTemp[] = $r['bedRoomTemp'];
-	$outTemp[] = $r['outTemp'];
+	$U1[] = $r['U1'];
+	$U2[] = $r['U2'];
+	$U3[] = $r['U3'];
 }
 
 // Create the graph. These two calls are always required
@@ -36,14 +39,17 @@ $graph->xaxis->SetLabelAngle(90);
 $graph->xaxis->SetTextLabelInterval(count($times)/10);
 
 // Create the linear plot
-$linePlotOut = new LinePlot($outTemp);
-$linePlotOut->SetLegend("На улице");
+$lineU1 = new LinePlot($U1);
+$lineU1->SetLegend("Напряжение фаза 1");
 
-$linePlotBR = new LinePlot($bedRoomTemp);
-$linePlotBR->SetLegend("Спальня, контрольная");
+$lineU2 = new LinePlot($U2);
+$lineU2->SetLegend("Напряжение фаза 2");
+
+$lineU3 = new LinePlot($U3);
+$lineU3->SetLegend("Напряжение фаза 3");
 
 // Add the plot to the graph
-$graph->Add($linePlotOut);
+$graph->Add($lineU1);
 $graph->Add($linePlotBR);
 
 // Legend setup

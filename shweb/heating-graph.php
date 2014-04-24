@@ -27,7 +27,7 @@
 	<a href="?days=21">3 недели</a> |
 	<a href="?days=31">Месяц</a> |
 	<br/>
-	<img src="graphview.php?days=<?=$days?>"/>
+	<img src="heatinggraph.php?days=<?=$days?>"/>
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://code.jquery.com/jquery.js"></script>

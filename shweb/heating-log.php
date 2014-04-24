@@ -15,14 +15,6 @@
 </head>
 <body>
 	<?php include 'menu.php';?>
-	<form action="heating.php">
-		Show me last: 
-		<a href="?n=10">10 lines</a> |
-		<a href="?n=60">60 lines</a> |
-		other:
-		<input type="text" name="n" value="<select>"/>
-		<input type="submit" value="Go"/>
-	</form>
 	<hr/>
 	
 	<?php

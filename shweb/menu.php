@@ -18,8 +18,8 @@
             		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Отопление <b class="caret"></b></a>
             		<ul class="dropdown-menu">
 		  				<li><a href="schedule.php">Таймер отопления</a></li>
-		  				<li><a href="heating.php">Лог</a></li>
-		  				<li><a href="graph.php">Температурный график</a></li>
+		  				<li><a href="heating-log.php">Лог</a></li>
+		  				<li><a href="heating-graph.php">Температурный график</a></li>
 		  				<li><a href="summary.php">Потребление</a></li>
               		  	<li class="divider"></li>
 		  				<li><a href="config.php">Настройки</a></li>

@@ -33,7 +33,7 @@ $graph->SetScale('textlin');
 
 $graph->xaxis->SetTickLabels($times);
 $graph->xaxis->SetLabelAngle(90);
-$graph->xaxis->SetTextLabelInterval(count($times)/(10 * 60));
+$graph->xaxis->SetTextLabelInterval(count($times)/10);
 
 // Create the linear plot
 $lineU1 = new LinePlot($U1);

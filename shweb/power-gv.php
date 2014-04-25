@@ -7,12 +7,9 @@ $days = 1;
 if (isset($_REQUEST[days])) $days = $_REQUEST[days];
 
 $res = $conn->query(	"SELECT CONCAT(DATE(time), ' ', HOUR(time), ':00') as time, " .
-			"AVG(U1) as U1, " .
-			"AVG(U2) as U2, " .
-			"AVG(U3) as U3 " .
+			"U1, U2, U3 " .
 			"FROM power " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
-			"GROUP BY HOUR(time), DATE(time) " .
 			"ORDER BY DATE(time), HOUR(time);");
 
 $times = array();
@@ -36,7 +33,7 @@ $graph->SetScale('textlin');
 
 $graph->xaxis->SetTickLabels($times);
 $graph->xaxis->SetLabelAngle(90);
-$graph->xaxis->SetTextLabelInterval(count($times)/10);
+$graph->xaxis->SetTextLabelInterval(count($times)/(10 * 60));
 
 // Create the linear plot
 $lineU1 = new LinePlot($U1);

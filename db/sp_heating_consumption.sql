@@ -32,5 +32,3 @@ BEGIN
 	GROUP BY DATE(time);
 END//
 DELIMITER ;
-
-

@@ -14,26 +14,10 @@ BEGIN
 		MAX(U3) AS U3_MAX,
 		AVG(U3) AS U3_AVG,
 		STD(U3) AS U3_STD,
-		lv.LowVoltage AS LowVoltageMinutes,
-		hv.HighVoltage AS HighVoltageMinutes,
+		SUM(CASE WHEN U1 < 207 OR U2 < 207 OR U3 < 207 THEN 1 END) AS LowVoltageMinutes,
+		SUM(CASE WHEN U1 > 253 OR U2 > 253 OR U3 > 253 THEN 1 END) AS HighVoltageMinutes,
 		oo.OnOffs AS CutOffsCount
 	FROM	power
-	JOIN   	(
-			SELECT COUNT(*) as LowVoltage 
-			FROM	power p1 
-			WHERE 	(p1.time > DATE_SUB(NOW(), INTERVAL 1 DAY)) AND
-				(p1.U1 < 207 OR 
-				p1.U2 < 207 OR 
-				p1.U3 < 207) 
-		) lv
-	JOIN   	(
-			SELECT COUNT(*) as HighVoltage 
-			FROM	power p2 
-			WHERE 	(p2.time > DATE_SUB(NOW(), INTERVAL 1 DAY)) AND
-				(p2.U1 > 253 OR
-				p2.U2 > 253 OR
-				p2.U3 > 253)
-		) hv
 	JOIN	(
 			SELECT COUNT(*) as OnOffs
 			FROM (

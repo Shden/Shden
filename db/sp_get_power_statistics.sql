@@ -40,9 +40,9 @@ BEGIN
 				SELECT 	@last AS prev_voltage, @last:=U1 + U2 + U3 AS now_voltage 
 				FROM 	power 
 				WHERE 	time > DATE_SUB(NOW(), INTERVAL 1 DAY)
-					AND prev_voltage != 0 AND now_voltage = 0
 				ORDER BY time
 			) AS sub
+			WHERE prev_voltage != 0 AND now_voltage = 0
 		) oo
 	WHERE 	time > DATE_SUB(NOW(), INTERVAL 1 DAY);
 END//

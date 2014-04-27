@@ -20,19 +20,19 @@ BEGIN
 	FROM	power
 	JOIN   	(
 			SELECT COUNT(*) as LowVoltage 
-			FROM	power p 
-			WHERE 	(p.time > DATE_SUB(NOW(), INTERVAL 1 DAY)) AND
-				(p.U1 < 207 OR 
-				p.U2 < 207 OR 
-				p.U3 < 207) 
+			FROM	power p1 
+			WHERE 	(p1.time > DATE_SUB(NOW(), INTERVAL 1 DAY)) AND
+				(p1.U1 < 207 OR 
+				p1.U2 < 207 OR 
+				p1.U3 < 207) 
 		) lv
 	JOIN   	(
 			SELECT COUNT(*) as HighVoltage 
-			FROM	power p 
-			WHERE 	(p.time > DATE_SUB(NOW(), INTERVAL 1 DAY)) AND
-				(p.U1 > 253 OR
-				p.U2 > 253 OR
-				p.U3 > 253)
+			FROM	power p2 
+			WHERE 	(p2.time > DATE_SUB(NOW(), INTERVAL 1 DAY)) AND
+				(p2.U1 > 253 OR
+				p2.U2 > 253 OR
+				p2.U3 > 253)
 		) hv
 	JOIN	(
 			SELECT COUNT(*) as OnOffs

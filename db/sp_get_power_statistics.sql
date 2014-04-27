@@ -29,6 +29,7 @@ BEGIN
 			) AS sub
 			WHERE prev_voltage != 0 AND now_voltage = 0
 		) oo*/
-	WHERE 	time > DATE_SUB(NOW(), INTERVAL 1 DAY);
+	/*WHERE 	time > DATE_SUB(NOW(), INTERVAL 1 DAY);*/
+	GROUP BY DATE(time);
 END//
 DELIMITER ;

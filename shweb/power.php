@@ -88,23 +88,27 @@
 		<table border="1" width="100%">
 			<thead>
 				<th>Потребление</th>
-				<th>Активное</th>
-				<th>Реактивное</th>
+				<th>Значение</th>
 			</thead>
 			<tr>
-				<td>Потребление энергии, всего (кВт):</td>
-				<td align="right"><?=VF($r["PR"]["ap"])?></td>
-				<td align="right"><?=VF($r["PR"]["rp"])?></td>
+				<td>Потребление энергии, всего:</td>
+				<td align="right"><?=VF($r["PR"]["ap"])?>&nbsp;кВт</td>
 			</tr>
 			<tr>
-				<td>Потребление энергии, вчера (кВт):</td>
-				<td align="right"><?=VF($r["PY"]["ap"])?></td>
-				<td align="right"><?=VF($r["PY"]["rp"])?></td>
+				<td>&nbsp;&nbsp;из них по дневному тарифу:</td>
+				<td align="right"><?=VF($r["PR-day"]["ap"])?>&nbsp;кВт</td>
 			</tr>
 			<tr>
-				<td>Потребление энергии, сегодня (кВт):</td>
-				<td align="right"><?=VF($r["PT"]["ap"])?></td>
-				<td align="right"><?=VF($r["PT"]["rp"])?></td>
+				<td>&nbsp;&nbsp;из них по ночному тарифу:</td>
+				<td align="right"><?=VF($r["PR-night"]["ap"])?>&nbsp;кВт</td>
+			</tr>
+			<tr>
+				<td>Потребление энергии, вчера:</td>
+				<td align="right"><?=VF($r["PY"]["ap"])?>&nbsp;кВт</td>
+			</tr>
+			<tr>
+				<td>Потребление энергии, сегодня:</td>
+				<td align="right"><?=VF($r["PT"]["ap"])?>&nbsp;кВт</td>
 			</tr>
 		</table>
 		<br/>

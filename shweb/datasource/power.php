@@ -6,7 +6,8 @@ $days = 1;
 if (isset($_REQUEST[days])) $days = $_REQUEST[days];
 
 $res = $conn->query(	
-			"SELECT time, U1, U2, U3 " .
+			"SELECT CONCAT(DATE(time), ' ', HOUR(time), ':', MINUTE(time)) as time, " .
+			"U1, U2, U3 " .
 			"FROM power " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 			"ORDER BY time;");

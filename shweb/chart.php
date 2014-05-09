@@ -2,6 +2,7 @@
 function RenderChart($dataSourceURL, $yAxisTitle)
 {
 ?>	
+	<script src="http://d3js.org/d3.v3.js"></script>
 
 	<script>
 	var margin = {top: 20, right: 80, bottom: 30, left: 50},

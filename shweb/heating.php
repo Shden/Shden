@@ -12,34 +12,11 @@
 	
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+	
+	<link rel="stylesheet" href="css/chart.css">
 </head>
 
-<style>
-.chart {
-	font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-	fill: none;
-	stroke: #000;
-	shape-rendering: crispEdges;
-}
-
-.axis .minor line {
-	stroke: #777;
-	stroke-dasharray: 2,2;
-}
-
-.line {
-	fill: none;
-	stroke-width: 2.5px;
-}
-
-</style>
 <body>
-	<script src="http://d3js.org/d3.v3.js"></script>
-
 	<?php 
 	include 'menu.php';
 	include 'chart.php';

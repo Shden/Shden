@@ -31,7 +31,7 @@
 	<a href="?days=21">3 недели</a> |
 	<a href="?days=31">Месяц</a> |
 
-	<?php RenderChart("datasource/power.php?days=days", "Напряжение (V)");?>
+	<?php RenderChart("datasource/power.php?days=$days", "Напряжение (V)");?>
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://code.jquery.com/jquery.js"></script>

@@ -5,11 +5,11 @@ require_once ('../include/db.inc');
 $days = 1;
 if (isset($_REQUEST[days])) $days = $_REQUEST[days];
 
-$res = $conn->query(	"SELECT CONCAT(DATE(time), ' ', HOUR(time), ':00') as time, " .
-			"U1, U2, U3 " .
+$res = $conn->query(	
+			"SELECT time, U1, U2, U3 " .
 			"FROM power " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
-			"ORDER BY DATE(time), HOUR(time);");
+			"ORDER BY time;");
 
 $series = array();
 $datapoint = array();

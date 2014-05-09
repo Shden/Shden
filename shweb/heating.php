@@ -33,7 +33,7 @@
 	<a href="?days=61">2 месяца</a> |
 	<br/>
 	
-	<?php RenderChart("datasource/temperature.php?days=180", "Температура (С)");?>
+	<?php RenderChart("datasource/temperature.php?days=$days", "Температура (С)");?>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://code.jquery.com/jquery.js"></script>

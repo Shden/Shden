@@ -12,10 +12,14 @@
 	
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+	
+	<link rel="stylesheet" href="css/chart.css">
 </head>
 <body>
 
-	<?php include 'menu.php';
+	<?php 
+	include 'menu.php';
+	include 'chart.php';
 
 	$days = (isset($_REQUEST[days])) ? $_REQUEST[days] : 1;
 	?>
@@ -26,8 +30,8 @@
 	<a href="?days=14">2 недели</a> |
 	<a href="?days=21">3 недели</a> |
 	<a href="?days=31">Месяц</a> |
-	<br/>
-	<img src="power-gv.php?days=<?=$days?>"/>
+
+	<?php RenderChart("datasource/power.php?days=days", "Напряжение (V)");?>
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://code.jquery.com/jquery.js"></script>

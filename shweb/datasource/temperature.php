@@ -1,4 +1,4 @@
-<?php //content="application/json; charset=utf-8"
+<?php 
 header('Content-type: application/json');
 require_once ('../include/db.inc');
 

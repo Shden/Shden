@@ -65,7 +65,7 @@ if ($r = $res->fetch_assoc())
 	<table>
 		<tr>
 			<td><b>24 часа:</b></td>
-			<td><small>[min/avg/max] <a href="heating-graph.php?days=1">Подробнее >></a></small></td>
+			<td><small>[min/avg/max] <a href="heating.php?days=1">Подробнее >></a></small></td>
 		</tr>
 		<tr>
 			<td>&nbsp;в доме</td>
@@ -81,7 +81,7 @@ if ($r = $res->fetch_assoc())
 	<table>
 		<tr>
 			<td><b>30 дней:</b></td>
-			<td><small>[min/avg/max] <a href="heating-graph.php?days=30">Подробнее >></a></small></td>
+			<td><small>[min/avg/max] <a href="heating.php?days=30">Подробнее >></a></small></td>
 		</tr>
 		<tr>
 			<td>&nbsp;в доме</td>

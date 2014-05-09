@@ -19,7 +19,7 @@
             			<ul class="dropdown-menu">
 		  			<li><a href="schedule.php">Таймер отопления</a></li>
 		  			<li><a href="logview.php?log=heating.log">Лог</a></li>
-		  			<li><a href="heating-graph.php">Температурный график</a></li>
+		  			<li><a href="heating.php">Температурный график</a></li>
 		  			<li><a href="summary.php">Потребление</a></li>
               		  		<li class="divider"></li>
 		  			<li><a href="config.php">Настройки</a></li>

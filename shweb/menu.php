@@ -31,6 +31,7 @@
             			<ul class="dropdown-menu">
 					<li><a href="power.php">Состояние сети</a></li>
 		  			<li><a href="power-graph.php">График</a></li>
+					<li><a href="power-stat.php">Статистика</a></li>
 				</ul>
 			</li>
         	</ul>

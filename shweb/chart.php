@@ -4,7 +4,7 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 ?>	
 	<script src="http://d3js.org/d3.v3.js"></script>
 
-	<script>
+	<script type='text/javascript'>
 	var margin = {top: 20, right: 80, bottom: 30, left: 50},
 	    width = 960 - margin.left - margin.right,
 	    height = 420 - margin.top - margin.bottom;
@@ -35,9 +35,9 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 
 	var svg = d3.select("body")
 	  .append("div")
-    	    .attr("align", "center")
+    	.attr("align", "center")
 	    .attr("class", "chart")
-	.append("svg")
+	  .append("svg")
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	  .append("g")
@@ -98,7 +98,7 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 	  sensor.append("text")
 	      .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
 	      .attr("transform", function(d) { return "translate(" + x(d.value.time) + "," + y(d.value.temperature) + ")"; })
-	      .attr("x", 3)
+	      .attr("x", 23)
 	      .attr("dy", ".35em")
 	      .text(function(d) { return d.name; });
 	});

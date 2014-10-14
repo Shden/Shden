@@ -22,11 +22,11 @@ BEGIN
 		SUM(heating)/60 as HeatingTotalTime, 
 		SUM(CASE WHEN HOUR(time)<7 OR HOUR(time)>=23 THEN heating END)/60.0 as HeatingNightTime, 
 		SUM(CASE WHEN HOUR(time)>=7 AND HOUR(time)<23 THEN heating END)/60.0 as HeatingDayTime, 
-		SUM(CASE WHEN HOUR(time)<7 OR HOUR(time)>=23 THEN heating END)/60.0 * 9.0 * nightTariff as NightCost,
-		SUM(CASE WHEN HOUR(time)>=7 AND HOUR(time)<23 THEN heating END)/60.0 * 9.0 * dayTariff as DayCost, 
-		SUM(CASE WHEN HOUR(time)<7 OR HOUR(time)>=23 THEN heating END)/60.0 * 9.0 * nightTariff +
-		SUM(CASE WHEN HOUR(time)>=7 AND HOUR(time)<23 THEN heating END)/60.0 * 9.0 * dayTariff as TotalCost, 
-		SUM(heating)/60.0 * 9.0 as HeatingKWh 
+		SUM(CASE WHEN HOUR(time)<7 OR HOUR(time)>=23 THEN heating END)/60.0 * 12.0 * nightTariff as NightCost,
+		SUM(CASE WHEN HOUR(time)>=7 AND HOUR(time)<23 THEN heating END)/60.0 * 12.0 * dayTariff as DayCost, 
+		SUM(CASE WHEN HOUR(time)<7 OR HOUR(time)>=23 THEN heating END)/60.0 * 12.0 * nightTariff +
+		SUM(CASE WHEN HOUR(time)>=7 AND HOUR(time)<23 THEN heating END)/60.0 * 12.0 * dayTariff as TotalCost, 
+		SUM(heating)/60.0 * 12.0 as HeatingKWh 
 	FROM 	heating 
 	WHERE	time > startDate AND time <= endDate
 	GROUP BY DATE(time);

@@ -6,12 +6,12 @@ BEGIN
 
 	SELECT	day INTO dayTariff
 	FROM	tariff 
-	ORDER BY date
+	ORDER BY date desc
 	LIMIT	1;
 
 	SELECT	night INTO nightTariff
 	FROM	tariff 
-	ORDER BY date
+	ORDER BY date desc
 	LIMIT	1;
 
 	SELECT 	DATE(time) as Date, 

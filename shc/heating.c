@@ -42,6 +42,11 @@ struct ConfigT
 	/* The next two parameters both control how electric heater is turned off when oven is on: */
 	float		fluidElectricHeaterOffTemp;		/* Outgoing fluid temperature O2 to off electic heater */
 	float		ovenExtraElectricHeaterOffTemp;		/* O2 - O1 difference to off electric heater */
+	
+	/* Comfort sleep parameters */
+	int		sleepModeStartHour;			/* Sleep start */
+	int 		sleepModeEndHour;			/* and end time (hours) */
+	float		sleepTargetTemp;			/* Target temperature for sleep mode (for bedrooms only) */
 } configuration;
 
 const float heaterCutOffTemp		= 95.0;			/* Heater failure temperature */
@@ -53,10 +58,13 @@ const int nightTariffEndHour		= 7;
 #define 	ROOMS_COUNT 		5
 #define		INI_BUFF_LEN		80
 #define		TBL			60
+#define		MPH			60			// 60 minutes per hour
+#define 	SPM			60			// 60 seconds per minute
 
-// Ini file headers & variables are defined here:
+// INI file headers & variables are defined here:
 #define		HEATING_SECTION		"[heating]"
 #define		SCHEDULE_SECTION	"[schedule]"
+#define		COMFORT_SLEEP_SECTION	"[comfort_sleep]"
 
 #define		STANDBY_VALUE		"standby"
 #define		STANDBY_NIGHT_VALUE	"standby_night"
@@ -71,11 +79,16 @@ const int nightTariffEndHour		= 7;
 #define		DEP_DATE_VALUE		"dep_date"
 #define		DEP_HOUR_VALUE		"dep_hour"
 
+#define		SLEEP_MODE_START_HOUR	"sleep_mode_start_hour"
+#define		SLEEP_MODE_END_HOUR	"sleep_mode_end_hour"
+#define		SLEEP_TARGET_TEMP	"sleep_target_temp"
+
 typedef enum ConfigParserStatus
 {
 	DISORIENTED,
 	HEATING,
-	SCHEDULE
+	SCHEDULE,
+	COMFORT_SLEEP
 } ConfigParserStatus;
 
 /* Room control descriptor */
@@ -90,6 +103,7 @@ RoomControlDescriptor roomControlDescriptors[ROOMS_COUNT];
 
 // -- Forward declarations
 time_t getHeatingStartTime();
+int checkIfNowWithinInterval(int, int, int, int);
 
 /* Init configuration directories based on the controller path */
 void setDirectories()
@@ -151,6 +165,10 @@ void loadSettings()
 				{
 					status = SCHEDULE;
 				}
+				else if (!strcmp(sectionName, COMFORT_SLEEP_SECTION))
+				{
+					status = COMFORT_SLEEP;
+				}
 				else
 				{
 					printf("Unrecognized section: [%s], skipped.\n\r", sectionName); 
@@ -161,6 +179,7 @@ void loadSettings()
 
 		case HEATING:
 		case SCHEDULE:
+		case COMFORT_SLEEP:
 			{
 				char varName[INI_BUFF_LEN];
 				char varValue[INI_BUFF_LEN];
@@ -233,6 +252,21 @@ void loadSettings()
 						configuration.dep.tm_mon -= 1;
 						configuration.dep.tm_hour -= 1;
 					}
+					else if (!strcmp(varName, SLEEP_MODE_START_HOUR))
+					{
+						// comfort sleep start hour
+						sscanf(varValue, "%d", &configuration.sleepModeStartHour);
+					}
+					else if (!strcmp(varName, SLEEP_MODE_END_HOUR))
+					{
+						// comfort sleep end hour
+						sscanf(varValue, "%d", &configuration.sleepModeEndHour);
+					}
+					else if (!strcmp(varName, SLEEP_TARGET_TEMP))
+					{
+						// departure hour
+						sscanf(varValue, "%f", &configuration.sleepTargetTemp);
+					}
 					else
 					{
 						printf("Unrecognized value: [%s], skipped.\n\r", varName);
@@ -263,10 +297,7 @@ int isPresence()
 //** Return TRUE if saving (night) tariff is on or FALSE otherwise */
 int isSaving()
 {
-        time_t now = time(NULL);
-        struct tm *ti = localtime(&now);
-
-        return ti->tm_hour >= nightTariffStartHour || ti->tm_hour < nightTariffEndHour;
+	return checkIfNowWithinInterval(nightTariffStartHour, 0, nightTariffEndHour, 0);
 }
 
 void setHeater(int ison)
@@ -307,7 +338,31 @@ float getHeatingTimeForPresence()
 //** This will return the time when to start heating so that house is heated when we will be there */
 time_t getHeatingStartTime()
 {
-	return mktime(&configuration.arrive) - getHeatingTimeForPresence() * 60 * 60;
+	return mktime(&configuration.arrive) - getHeatingTimeForPresence() * MPH * SPM;
+}
+
+/* Helper function.
+  Checks if now we are within time interval specified by its start (h:m) and end (h:m) */
+int checkIfNowWithinInterval(int startHour, int startMin, int endHour, int endMin)
+{
+	time_t now_t = time(NULL);
+        struct tm *ti = localtime(&now_t);
+	
+	// all 3 below in minutes
+	int start = startHour * MPH + startMin;
+	int end = endHour * MPH + endMin;
+	int now = ti->tm_hour * MPH + ti->tm_min;
+	
+	if (start < end)
+	{		
+		// interval start is earlier than end, straightforward interval (e.g. 14 to 20)
+		return (now >= start && now <= end);
+	}
+	else
+	{
+		// interval start is later than end, looped interval (e.g. 23 to 7)
+		return (now >= start || now <= end);
+	}
 }
 
 /** Current target temperature, controlled by configuration */
@@ -316,7 +371,12 @@ float getTargetTemp()
 	// -- Check precence time
 	if (isPresence())
 	{
-		return configuration.presenceTargetTemp;
+		/* TMP solution for comfort sleep. Once per room valves are installed, this code should be gone
+		to controlRoom() function. */
+		if (checkIfNowWithinInterval(configuration.sleepModeStartHour, 0, configuration.sleepModeEndHour, 0))
+			return configuration.sleepTargetTemp;
+		else
+			return configuration.presenceTargetTemp;
 	}
 
 	// -- If in standby, check day/night targets to save power

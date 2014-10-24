@@ -16,7 +16,7 @@
  *			  1) outgoing fluid temp and 2) extra heating from oven.
  *	08-SEP-2013:	- pump differential algorithm to keep temperature the same when heating is off.
  *	13-NOV-2013:	- night tariff is back to 11pm to 7am period.
- *	24-OCT-2014:	- comfort sleet mode added, no per room control yet.
+ *	24-OCT-2014:	- comfort sleep mode added, no per room control yet.
  */
 #include <stdio.h>
 #include <time.h>

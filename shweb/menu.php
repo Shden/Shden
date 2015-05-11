@@ -25,10 +25,11 @@
 		  			<li><a href="config.php">Настройки</a></li>
             			</ul>
           	  	</li>
-			<li><a href="lighting.php">Освещение</a></li>
-          	  	<li class="dropdown">
-            			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Электросеть <b class="caret"></b></a>
-            			<ul class="dropdown-menu">
+				<li><a href="lighting.php">Освещение</a></li>
+	      	  	<li class="dropdown">
+	        			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Электросеть <b class="caret"></b></a>
+	        			<ul class="dropdown-menu">
+					<li><a href="mains.php">Электропитание дома</a></li>
 					<li><a href="power.php">Состояние сети</a></li>
 		  			<li><a href="power-graph.php">График</a></li>
 					<li><a href="power-stat.php">Статистика</a></li>

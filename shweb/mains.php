@@ -33,9 +33,6 @@
 		<table>
 			<tr>
 				<td>
-					Уличный фонарь около дороги (250W):
-				</td>
-				<td>
 					<a href="?changeMainsStatusTo=<?=($mainsStatus == 1) ? 0 : 1?>" 
 						class="btn <?=($mainsStatus == 1) ? "btn-default" : "btn-warning"?> btn-lg" role="button">
 						<?=($mainsStatus == 1) ? "В режим ожидания" : "В режим присутствия"?> 

@@ -10,14 +10,14 @@
 
 int controlBathVentilation(float humidity)
 {
-	if (humidity < 65.0)
+	if (humidity < 75.0)
 	{
 		// -- all off
 		changeSwitch(bathVentilationSpeed1, OFF);
 		changeSwitch(bathVentilationSpeed2, OFF);
 		return 0;
 	}
-	else if (humidity < 75.0)
+	else if (humidity < 65.0)
 	{
 		// -- speed 1
 		changeSwitch(bathVentilationSpeed1, ON);

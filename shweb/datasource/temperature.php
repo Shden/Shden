@@ -16,3 +16,4 @@ echo SQL2JS(
 	"ORDER BY DATE(time), HOUR(time);"
 );
 ?>
+

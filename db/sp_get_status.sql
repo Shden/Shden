@@ -1,3 +1,8 @@
+/* 
+ * Depreciating. Individual calls e.g. sp_get_power_statistics, sp_get_power_statistisc
+ * will have to be used.
+ */
+
 DELIMITER //
 DROP PROCEDURE IF EXISTS SP_GET_STATUS;
 CREATE PROCEDURE SP_GET_STATUS() 

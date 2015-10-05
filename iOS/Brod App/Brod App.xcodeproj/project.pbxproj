@@ -16,6 +16,8 @@
 		B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */; };
 		B7BD39A21BB59AFA009F5FE8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD39A01BB59AFA009F5FE8 /* MainInterface.storyboard */; };
 		B7BD39A61BB59AFA009F5FE8 /* Brod Today Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B7BD39991BB59AF9009F5FE8 /* Brod Today Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B7BD39B61BB5ABF7009F5FE8 /* brod.P12 in Resources */ = {isa = PBXBuildFile; fileRef = B7BD39B51BB5ABF7009F5FE8 /* brod.P12 */; settings = {ASSET_TAGS = (); }; };
+		B7BD39C01BB6F311009F5FE8 /* ConfidoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BD39BD1BB6EF7E009F5FE8 /* ConfidoIOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +27,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = B7BD39981BB59AF9009F5FE8;
 			remoteInfo = "Brod Today Widget";
+		};
+		B7BD39BC1BB6EF7E009F5FE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AB710EA71BA060FB003AE8B0;
+			remoteInfo = ConfidoIOS;
+		};
+		B7BD39BE1BB6EF7E009F5FE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AB710EB21BA060FB003AE8B0;
+			remoteInfo = ConfidoIOSTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -55,6 +71,8 @@
 		B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		B7BD39A11BB59AFA009F5FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B7BD39A31BB59AFA009F5FE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7BD39B51BB5ABF7009F5FE8 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
+		B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ConfidoIOS.xcodeproj; path = ConfidoIOS/ConfidoIOS.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7BD39C01BB6F311009F5FE8 /* ConfidoIOS.framework in Frameworks */,
 				B7BD399C1BB59AF9009F5FE8 /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,6 +98,7 @@
 		B7BD395B1BB59A83009F5FE8 = {
 			isa = PBXGroup;
 			children = (
+				B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */,
 				B7BD39661BB59A83009F5FE8 /* Brod App */,
 				B7BD399D1BB59AF9009F5FE8 /* Brod Today Widget */,
 				B7BD399A1BB59AF9009F5FE8 /* Frameworks */,
@@ -119,11 +139,21 @@
 		B7BD399D1BB59AF9009F5FE8 /* Brod Today Widget */ = {
 			isa = PBXGroup;
 			children = (
+				B7BD39B51BB5ABF7009F5FE8 /* brod.P12 */,
 				B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */,
 				B7BD39A01BB59AFA009F5FE8 /* MainInterface.storyboard */,
 				B7BD39A31BB59AFA009F5FE8 /* Info.plist */,
 			);
 			path = "Brod Today Widget";
+			sourceTree = "<group>";
+		};
+		B7BD39B81BB6EF7E009F5FE8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B7BD39BD1BB6EF7E009F5FE8 /* ConfidoIOS.framework */,
+				B7BD39BF1BB6EF7E009F5FE8 /* ConfidoIOSTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +223,12 @@
 			mainGroup = B7BD395B1BB59A83009F5FE8;
 			productRefGroup = B7BD39651BB59A83009F5FE8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B7BD39B81BB6EF7E009F5FE8 /* Products */;
+					ProjectRef = B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B7BD39631BB59A83009F5FE8 /* Brod App */,
@@ -200,6 +236,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B7BD39BD1BB6EF7E009F5FE8 /* ConfidoIOS.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ConfidoIOS.framework;
+			remoteRef = B7BD39BC1BB6EF7E009F5FE8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B7BD39BF1BB6EF7E009F5FE8 /* ConfidoIOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ConfidoIOSTests.xctest;
+			remoteRef = B7BD39BE1BB6EF7E009F5FE8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B7BD39621BB59A83009F5FE8 /* Resources */ = {
@@ -216,6 +269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7BD39B61BB5ABF7009F5FE8 /* brod.P12 in Resources */,
 				B7BD39A21BB59AFA009F5FE8 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

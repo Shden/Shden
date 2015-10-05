@@ -48,3 +48,34 @@ CREATE TABLE power (
 	S3		DECIMAL(5,2),
 	SS		DECIMAL(5,2),
 	PRIMARY KEY(time));
+
+CREATE TABLE switch (
+	id		SMALLINT,
+	address		CHAR(15),
+	channel		CHAR(5),
+	ison		TINYINT,
+	max_per_hour	SMALLINT,
+	max_per_day	SMALLINT,
+	description	NVARCHAR(64),
+	PRIMARY KEY(id)
+	);
+	
+INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1200, '3A.C19703000000', 'PIO.B', 0, 10, 60, N'Ультразвук от грызунов');
+INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1201, '3A.843C0D000000', 'PIO.B', 0, 10, 20, N'Ключ управления электропитанием');
+INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1202, '3A.4A370D000000', 'PIO.B', 0, 10, 20, N'Уличный фонарь на озеро');
+INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1203, '3A.4A370D000000', 'PIO.A', 0, 10, 20, N'Свет на балконе');
+INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1204, '3A.B8380D000000', 'PIO.A', 0, 10, 20, N'Уличный фонарь');
+INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1205, '3A.599403000000', 'PIO.A', 0, 10, 20, N'Управление вытяжкой в сауне - скорость 1');
+INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1206, '3A.599403000000', 'PIO.B', 0, 10, 20, N'Управление вытяжкой в сауне - скорость 2');
+
+CREATE TABLE switch_operations (
+	time		DATETIME,
+	switch_id	SMALLINT,
+	new_state	TINYINT
+	);
+	
+CREATE TABLE switch_schedule (
+	time		DATETIME,
+	switch_id	SMALLINT,
+	to_state	TINYINT
+	);

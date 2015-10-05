@@ -57,7 +57,7 @@ $res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 <?php }?>
 
 </table>
-	<?php include 'include/js.php';?>
+<?php include 'include/js.php';?>
 
 </body>
 </html>

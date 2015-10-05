@@ -73,7 +73,7 @@
 	<a href="?days=21">3 недели</a> |
 	<a href="?days=31">Месяц</a> 
 
-	<script src="http://d3js.org/d3.v3.js"></script>
+	<script src="https://d3js.org/d3.v3.js"></script>
 	<script type='text/javascript'>
 	var table = d3.select(".container")
 		.append("table")
@@ -130,10 +130,6 @@
 	}
 	</script>
 	
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+	<?php include 'include/js.php';?>
 </body>
 </html>

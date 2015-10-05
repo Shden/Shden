@@ -7,11 +7,7 @@
 
 	<title>Энергопотребление системы отопления</title>
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-	
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+	<?php include 'include/css.php';?>
 </head>
 
 <?php include 'menu.php';
@@ -61,10 +57,7 @@ $res = $conn->query("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 <?php }?>
 
 </table>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://code.jquery.com/jquery.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<?php include 'include/js.php';?>
 
 </body>
 </html>

@@ -33,7 +33,7 @@
 	}
 	</style>
 	
-	<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+	<?php include 'include/js.php';?>
 	
     <script src="https://shden.info:8081/js/bootstrap-datepicker.js"></script>
 	
@@ -141,7 +141,7 @@
 			</div>
 		</form>
 	</div>
+	
 
-	<?php include 'include/js.php';?>
 </body>
 </html>

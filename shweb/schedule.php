@@ -33,9 +33,9 @@
 	}
 	</style>
 	
-	<script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
 	
-    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="https://shden.info:8081/js/bootstrap-datepicker.js"></script>
 	
   	<script type="text/javascript">     
 	

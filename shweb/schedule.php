@@ -35,7 +35,7 @@
 	
 	<?php include 'include/js.php';?>
 	
-    <script src="https://shden.info:8081/js/bootstrap-datepicker.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
 	
   	<script type="text/javascript">     
 	

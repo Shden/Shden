@@ -8,6 +8,8 @@
 	<title>Температурный график</title>
 
 	<?php include 'include/css.php';?>
+	
+	<link rel="stylesheet" href="css/chart.css">
 </head>
 
 <body>

@@ -73,7 +73,7 @@
 	<a href="?days=21">3 недели</a> |
 	<a href="?days=31">Месяц</a> 
 
-	<script src="https://d3js.org/d3.v3.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 	<script type='text/javascript'>
 	var table = d3.select(".container")
 		.append("table")

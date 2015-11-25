@@ -63,7 +63,7 @@
 	<?php 
 	include 'menu.php';
 
-	$days = (isset($_REQUEST[days])) ? $_REQUEST[days] : 1;
+	$days = (isset($_REQUEST[days])) ? $_REQUEST[days] : 14;
 	?>
 	<h2>Статистика электросети, интервал в днях: <?=$days?></h2>
 	<a href="?days=1">Сутки</a> |

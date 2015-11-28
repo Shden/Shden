@@ -7,17 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B788DA941C0A14F6006913A1 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B788DA931C0A14F6006913A1 /* Settings.bundle */; };
 		B7BD39681BB59A83009F5FE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */; };
 		B7BD396A1BB59A83009F5FE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39691BB59A83009F5FE8 /* ViewController.swift */; };
 		B7BD396D1BB59A83009F5FE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD396B1BB59A83009F5FE8 /* Main.storyboard */; };
 		B7BD396F1BB59A83009F5FE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */; };
 		B7BD39721BB59A83009F5FE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD39701BB59A83009F5FE8 /* LaunchScreen.storyboard */; };
-		B7BD399C1BB59AF9009F5FE8 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BD399B1BB59AF9009F5FE8 /* NotificationCenter.framework */; settings = {ASSET_TAGS = (); }; };
+		B7BD399C1BB59AF9009F5FE8 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BD399B1BB59AF9009F5FE8 /* NotificationCenter.framework */; };
 		B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */; };
 		B7BD39A21BB59AFA009F5FE8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD39A01BB59AFA009F5FE8 /* MainInterface.storyboard */; };
 		B7BD39A61BB59AFA009F5FE8 /* Brod Today Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B7BD39991BB59AF9009F5FE8 /* Brod Today Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B7BD39B61BB5ABF7009F5FE8 /* brod.P12 in Resources */ = {isa = PBXBuildFile; fileRef = B7BD39B51BB5ABF7009F5FE8 /* brod.P12 */; settings = {ASSET_TAGS = (); }; };
-		B7BD39C01BB6F311009F5FE8 /* ConfidoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BD39BD1BB6EF7E009F5FE8 /* ConfidoIOS.framework */; };
+		B7E635941C08D021003CFE14 /* HouseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635931C08D021003CFE14 /* HouseAPI.swift */; };
+		B7E635951C08D021003CFE14 /* HouseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635931C08D021003CFE14 /* HouseAPI.swift */; };
+		B7E635971C09C272003CFE14 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635961C09C272003CFE14 /* Formatter.swift */; };
+		B7E635981C09C272003CFE14 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635961C09C272003CFE14 /* Formatter.swift */; };
+		B7E6359A1C09E14C003CFE14 /* brod.P12 in Resources */ = {isa = PBXBuildFile; fileRef = B7E635991C09E14C003CFE14 /* brod.P12 */; };
+		B7E6359B1C09E14C003CFE14 /* brod.P12 in Resources */ = {isa = PBXBuildFile; fileRef = B7E635991C09E14C003CFE14 /* brod.P12 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,20 +32,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B7BD39981BB59AF9009F5FE8;
 			remoteInfo = "Brod Today Widget";
-		};
-		B7BD39BC1BB6EF7E009F5FE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AB710EA71BA060FB003AE8B0;
-			remoteInfo = ConfidoIOS;
-		};
-		B7BD39BE1BB6EF7E009F5FE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AB710EB21BA060FB003AE8B0;
-			remoteInfo = ConfidoIOSTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -59,6 +50,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B788DA931C0A14F6006913A1 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		B788DA961C0A42F3006913A1 /* Brod App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brod App.entitlements"; sourceTree = "<group>"; };
 		B7BD39641BB59A83009F5FE8 /* Brod App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brod App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7BD39691BB59A83009F5FE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,8 +64,10 @@
 		B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		B7BD39A11BB59AFA009F5FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B7BD39A31BB59AFA009F5FE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B7BD39B51BB5ABF7009F5FE8 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
-		B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ConfidoIOS.xcodeproj; path = ConfidoIOS/ConfidoIOS.xcodeproj; sourceTree = "<group>"; };
+		B7E635931C08D021003CFE14 /* HouseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseAPI.swift; sourceTree = "<group>"; };
+		B7E635961C09C272003CFE14 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		B7E635991C09E14C003CFE14 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
+		B7E6359C1C09E241003CFE14 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7BD39C01BB6F311009F5FE8 /* ConfidoIOS.framework in Frameworks */,
 				B7BD399C1BB59AF9009F5FE8 /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,7 +92,6 @@
 		B7BD395B1BB59A83009F5FE8 = {
 			isa = PBXGroup;
 			children = (
-				B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */,
 				B7BD39661BB59A83009F5FE8 /* Brod App */,
 				B7BD399D1BB59AF9009F5FE8 /* Brod Today Widget */,
 				B7BD399A1BB59AF9009F5FE8 /* Frameworks */,
@@ -118,12 +111,15 @@
 		B7BD39661BB59A83009F5FE8 /* Brod App */ = {
 			isa = PBXGroup;
 			children = (
+				B788DA961C0A42F3006913A1 /* Brod App.entitlements */,
 				B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */,
 				B7BD39691BB59A83009F5FE8 /* ViewController.swift */,
 				B7BD396B1BB59A83009F5FE8 /* Main.storyboard */,
 				B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */,
 				B7BD39701BB59A83009F5FE8 /* LaunchScreen.storyboard */,
 				B7BD39731BB59A83009F5FE8 /* Info.plist */,
+				B7E635991C09E14C003CFE14 /* brod.P12 */,
+				B788DA931C0A14F6006913A1 /* Settings.bundle */,
 			);
 			path = "Brod App";
 			sourceTree = "<group>";
@@ -139,21 +135,14 @@
 		B7BD399D1BB59AF9009F5FE8 /* Brod Today Widget */ = {
 			isa = PBXGroup;
 			children = (
-				B7BD39B51BB5ABF7009F5FE8 /* brod.P12 */,
 				B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */,
 				B7BD39A01BB59AFA009F5FE8 /* MainInterface.storyboard */,
 				B7BD39A31BB59AFA009F5FE8 /* Info.plist */,
+				B7E635931C08D021003CFE14 /* HouseAPI.swift */,
+				B7E635961C09C272003CFE14 /* Formatter.swift */,
+				B7E6359C1C09E241003CFE14 /* brod.P12 */,
 			);
 			path = "Brod Today Widget";
-			sourceTree = "<group>";
-		};
-		B7BD39B81BB6EF7E009F5FE8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B7BD39BD1BB6EF7E009F5FE8 /* ConfidoIOS.framework */,
-				B7BD39BF1BB6EF7E009F5FE8 /* ConfidoIOSTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,11 +190,17 @@
 		B7BD395C1BB59A83009F5FE8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Dennis Afanassiev";
 				TargetAttributes = {
 					B7BD39631BB59A83009F5FE8 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 9UZ84DB5HW;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					B7BD39981BB59AF9009F5FE8 = {
 						CreatedOnToolsVersion = 7.0;
@@ -223,12 +218,6 @@
 			mainGroup = B7BD395B1BB59A83009F5FE8;
 			productRefGroup = B7BD39651BB59A83009F5FE8 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = B7BD39B81BB6EF7E009F5FE8 /* Products */;
-					ProjectRef = B7BD39B71BB6EF7D009F5FE8 /* ConfidoIOS.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				B7BD39631BB59A83009F5FE8 /* Brod App */,
@@ -237,29 +226,14 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		B7BD39BD1BB6EF7E009F5FE8 /* ConfidoIOS.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ConfidoIOS.framework;
-			remoteRef = B7BD39BC1BB6EF7E009F5FE8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B7BD39BF1BB6EF7E009F5FE8 /* ConfidoIOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ConfidoIOSTests.xctest;
-			remoteRef = B7BD39BE1BB6EF7E009F5FE8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
 		B7BD39621BB59A83009F5FE8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7E6359A1C09E14C003CFE14 /* brod.P12 in Resources */,
 				B7BD39721BB59A83009F5FE8 /* LaunchScreen.storyboard in Resources */,
+				B788DA941C0A14F6006913A1 /* Settings.bundle in Resources */,
 				B7BD396F1BB59A83009F5FE8 /* Assets.xcassets in Resources */,
 				B7BD396D1BB59A83009F5FE8 /* Main.storyboard in Resources */,
 			);
@@ -269,7 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7BD39B61BB5ABF7009F5FE8 /* brod.P12 in Resources */,
+				B7E6359B1C09E14C003CFE14 /* brod.P12 in Resources */,
 				B7BD39A21BB59AFA009F5FE8 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +256,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7BD396A1BB59A83009F5FE8 /* ViewController.swift in Sources */,
+				B7E635941C08D021003CFE14 /* HouseAPI.swift in Sources */,
+				B7E635971C09C272003CFE14 /* Formatter.swift in Sources */,
 				B7BD39681BB59A83009F5FE8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,7 +266,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7E635981C09C272003CFE14 /* Formatter.swift in Sources */,
 				B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */,
+				B7E635951C08D021003CFE14 /* HouseAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,11 +397,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Brod App/Brod App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "Brod App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Dennis-Afanassiev.Brod-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -431,11 +413,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Brod App/Brod App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "Brod App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Dennis-Afanassiev.Brod-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -480,6 +466,7 @@
 				B7BD398E1BB59A84009F5FE8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B7BD39A71BB59AFA009F5FE8 /* Build configuration list for PBXNativeTarget "Brod Today Widget" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +475,7 @@
 				B7BD39A91BB59AFA009F5FE8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

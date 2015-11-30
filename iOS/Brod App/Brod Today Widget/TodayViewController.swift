@@ -48,7 +48,13 @@ class TodayViewController: UIViewController, NCWidgetProviding, NSURLSessionDele
         let API = HouseAPI()
         API.GetHouseStatus({
             (error, outTemp, bedroomTemp) -> Void in
-            
+        
+            if (error != nil)
+            {
+                let alert = UIAlertController(title: "Error", message: error!.description,
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
             self.insideTemp.text = Formatter.formatTemperature(bedroomTemp)
             self.outsideTemp.text = Formatter.formatTemperature(outTemp)
         })

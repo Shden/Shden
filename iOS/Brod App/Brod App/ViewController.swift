@@ -29,12 +29,20 @@ class ViewController: UIViewController {
     func updateInterface() -> Void
     {
         let API = HouseAPI()
-        API.GetHouseStatus({
+        API.GetHouseStatus
+        {
             (error, outTemp, bedroomTemp) -> Void in
             
+            if (error != nil)
+            {
+                let alert = UIAlertController(title: "Error", message: error!.localizedDescription,
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                self.presentViewController(alert, animated: true, completion: nil)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+            }
             self.insideTemp.text = Formatter.formatTemperature(bedroomTemp)
             self.outsideTemp.text = Formatter.formatTemperature(outTemp)
-        })
+        }
     }
 
     @IBAction func onRefreshBtnClick(sender: AnyObject)

@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import SystemConfiguration
 
 class HouseAPI : NSObject, NSURLSessionDelegate
 {
@@ -68,7 +69,7 @@ class HouseAPI : NSObject, NSURLSessionDelegate
             // proxy configuration to connect via Megafon
             let proxyInfo = [
                 kCFStreamPropertyHTTPSProxyHost : proxyAddress! as NSString,
-                kCFStreamPropertyHTTPSProxyPort : Int(proxyPort!) ?? 0 as Int,
+                kCFStreamPropertyHTTPSProxyPort : Int(proxyPort!)!,
                 "HTTPSEnable" as NSString : true
                 //kCFNetworkProxiesHTTPProxy as NSString : "152.2.81.209" as NSString,
                 //kCFNetworkProxiesHTTPPort : 8080,

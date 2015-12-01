@@ -17,7 +17,7 @@ class HouseAPI : NSObject, NSURLSessionDelegate
     // Get house status API call 
     func GetHouseStatus(completionHandler:(NSError?, Double?, Double?) -> Void) -> Void
     {
-        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "housestatus.php"
+        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "Status/GetHouseStatus"
         
         self.RequestAPI(URL, completionHandler: {
             (data, response, error) -> Void in
@@ -33,7 +33,7 @@ class HouseAPI : NSObject, NSURLSessionDelegate
                     
                     if let json = jsonResult
                     {
-                        if let now = json["now"]
+                        if let now = json["climate"]
                         {
                             if let outT = now["outTemp"]
                             {

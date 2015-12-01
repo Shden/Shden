@@ -1,7 +1,0 @@
-# Password-protected access over http
-AuthType Basic
-AuthName "Restricted Access"
-AuthUserFile /users/den/Shden/secure/apasswords
-Require user test01
-
-

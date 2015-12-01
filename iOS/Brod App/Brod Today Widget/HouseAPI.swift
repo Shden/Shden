@@ -10,61 +10,116 @@
 import Foundation
 import SystemConfiguration
 
+struct HouseModeResponce {
+    var outTemp: Float = 0.0
+    var inTemp: Float = 0.0
+    var presenceMode = 0
+}
+
 class HouseAPI : NSObject, NSURLSessionDelegate
 {
     private static var userDefaults = NSUserDefaults.init()
-    
-    // Get house status API call 
-    func GetHouseStatus(completionHandler:(NSError?, Double?, Double?) -> Void) -> Void
+
+    // JSON decode for HouseModeResponce
+    private func getHouseModeResponce(data: NSData) throws -> HouseModeResponce
     {
-        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "Status/GetHouseStatus"
+        var houseMode = HouseModeResponce()
         
-        self.RequestAPI(URL, completionHandler: {
-            (data, response, error) -> Void in
+        let json: NSDictionary! = try NSJSONSerialization.JSONObjectWithData(data,
+            options:NSJSONReadingOptions.MutableContainers) as? NSDictionary
+        
+        // Get current temperature
+        if let climate = json["climate"]
+        {
+            if let outT = climate["outTemp"]
+            {
+                houseMode.outTemp = outT?.floatValue ?? Float.NaN
+            }
+            if let bedroomT = climate["inTemp"]
+            {
+                houseMode.inTemp = bedroomT?.floatValue ?? Float.NaN
+            }
+        }
+        // Get the presence mode
+        if let mode = json["mode"]
+        {
+            if let isin = mode["presence"]
+            {
+                houseMode.presenceMode = isin?.integerValue ?? -1
+            }
+        }
+        
+        return houseMode
+    }
+    
+    // SetHouseMode REST call
+    func SetHouseMode(newMode: Int, completionHandler: (NSError?, HouseModeResponce?) -> Void) -> Void
+    {
+        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "status/SetHouseMode/\(newMode)"
+        self.PUT(URL, completionHandler: {
+            (data, responce, error) -> Void in
             
             print(data ?? error)
-            do
+            
+            if (error == nil && data != nil)
             {
-                var outTemp, bedroomTemp: Double?
-                
-                if (error == nil)
+                do
                 {
-                    let jsonResult: NSDictionary! = try NSJSONSerialization.JSONObjectWithData(data!, options:NSJSONReadingOptions.MutableContainers) as? NSDictionary
-                    
-                    if let json = jsonResult
-                    {
-                        if let now = json["climate"]
-                        {
-                            if let outT = now["outTemp"]
-                            {
-                                outTemp = outT?.doubleValue
-                            }
-                            if let bedroomT = now["bedRoomTemp"]
-                            {
-                                bedroomTemp = bedroomT?.doubleValue
-                            }
-                        }
-                    }
+                    let houseMode = try self.getHouseModeResponce(data!)
+                    completionHandler(nil, houseMode)
                 }
-                
-                completionHandler(error, outTemp, bedroomTemp)
+                catch
+                {
+                    completionHandler(error as NSError?, nil)
+                }
             }
-            catch
+            else
             {
-                completionHandler(error as NSError?, nil, nil)
+                completionHandler(error, nil)
             }
         })
     }
     
-    // Internal gate to all API methods
-    private func RequestAPI(URL: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> Void
+    // GetHouseStatus REST call
+    func GetHouseStatus(completionHandler: (NSError?, HouseModeResponce?) -> Void) -> Void
+    {
+        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "status/GetHouseStatus"
+        
+        self.GET(URL, completionHandler: {
+            (data, response, error) -> Void in
+            
+            print(data ?? error)
+
+            if (error == nil && data != nil)
+            {
+                do
+                {
+                    let houseMode = try self.getHouseModeResponce(data!)
+                    completionHandler(nil, houseMode)
+                }
+                catch
+                {
+                    completionHandler(error as NSError?, nil)
+                }
+            }
+            else
+            {
+                completionHandler(error, nil)
+            }
+        })
+    }
+    
+    // Return NSURLSessionConfiguration with proxy settings
+    private func GetRequestConfiguration() -> NSURLSessionConfiguration
     {
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
- 
+
         // load proxy configuration
         let proxyAddress = HouseAPI.userDefaults.stringForKey("SettingsProxyAddress")
         let proxyPort = HouseAPI.userDefaults.stringForKey("SettingsProxyPort")
-        if (proxyAddress != nil && proxyPort != nil)
+        let useProxy = HouseAPI.userDefaults.boolForKey("SettingsUseProxy")
+        
+        if (useProxy && proxyAddress != nil && proxyPort != nil)
         {
             // proxy configuration to connect via Megafon
             let proxyInfo = [
@@ -78,9 +133,38 @@ class HouseAPI : NSObject, NSURLSessionDelegate
             
             configuration.connectionProxyDictionary = proxyInfo
         }
-        
+
+        return configuration
+    }
+    
+    // Invoke GET method of the API
+    private func GET(URL: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> Void
+    {
+        Invoke(URL, method: HouseAPIMethod.GET, completionHandler: completionHandler)
+    }
+
+    // Invoke PUT method of the API
+    private func PUT(URL: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> Void
+    {
+        Invoke(URL, method: HouseAPIMethod.PUT, completionHandler: completionHandler)
+    }
+
+    // Invoke selected method of the API
+    private func Invoke(URL: String, method: HouseAPIMethod,
+        completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> Void
+    {
         let request = NSMutableURLRequest(URL: NSURL(string: URL)!)
-        let session = NSURLSession(configuration: configuration, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        let requestConfig = GetRequestConfiguration()
+
+        switch method
+        {
+            case HouseAPIMethod.PUT:
+                request.HTTPMethod = "PUT"
+            case HouseAPIMethod.GET:
+                request.HTTPMethod = "GET"
+        }
+        
+        let session = NSURLSession(configuration: requestConfig, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
         
         // fire off the request & route the responce to the completion handler
         session.dataTaskWithRequest(request, completionHandler: completionHandler).resume();
@@ -155,5 +239,11 @@ struct IdentityAndTrust
     var identityRef: SecIdentityRef
     var trust: SecTrustRef
     var certArray: NSArray
+}
+
+enum HouseAPIMethod
+{
+    case GET
+    case PUT
 }
 

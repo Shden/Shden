@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		B788DA941C0A14F6006913A1 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B788DA931C0A14F6006913A1 /* Settings.bundle */; };
 		B7BD39681BB59A83009F5FE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */; };
-		B7BD396A1BB59A83009F5FE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39691BB59A83009F5FE8 /* ViewController.swift */; };
+		B7BD396A1BB59A83009F5FE8 /* HouseStatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */; };
 		B7BD396D1BB59A83009F5FE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD396B1BB59A83009F5FE8 /* Main.storyboard */; };
 		B7BD396F1BB59A83009F5FE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */; };
 		B7BD39721BB59A83009F5FE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD39701BB59A83009F5FE8 /* LaunchScreen.storyboard */; };
@@ -54,7 +54,7 @@
 		B788DA961C0A42F3006913A1 /* Brod App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brod App.entitlements"; sourceTree = "<group>"; };
 		B7BD39641BB59A83009F5FE8 /* Brod App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brod App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B7BD39691BB59A83009F5FE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseStatusController.swift; sourceTree = "<group>"; };
 		B7BD396C1BB59A83009F5FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B7BD39711BB59A83009F5FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 			children = (
 				B788DA961C0A42F3006913A1 /* Brod App.entitlements */,
 				B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */,
-				B7BD39691BB59A83009F5FE8 /* ViewController.swift */,
+				B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */,
 				B7BD396B1BB59A83009F5FE8 /* Main.storyboard */,
 				B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */,
 				B7BD39701BB59A83009F5FE8 /* LaunchScreen.storyboard */,
@@ -255,7 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7BD396A1BB59A83009F5FE8 /* ViewController.swift in Sources */,
+				B7BD396A1BB59A83009F5FE8 /* HouseStatusController.swift in Sources */,
 				B7E635941C08D021003CFE14 /* HouseAPI.swift in Sources */,
 				B7E635971C09C272003CFE14 /* Formatter.swift in Sources */,
 				B7BD39681BB59A83009F5FE8 /* AppDelegate.swift in Sources */,

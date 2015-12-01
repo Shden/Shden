@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HouseStatusController.swift
 //  Brod App
 //
 //  Created by Dennis Afanassiev on 25/09/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HouseStatusController: UIViewController {
     
     override func viewDidLoad()
     {
@@ -31,17 +31,31 @@ class ViewController: UIViewController {
         let API = HouseAPI()
         API.GetHouseStatus
         {
-            (error, outTemp, bedroomTemp) -> Void in
+            (error, houseMode) -> Void in
             
             if (error != nil)
             {
-                let alert = UIAlertController(title: "Error", message: error!.localizedDescription,
+                let alert = UIAlertController(title: "Ошибка", message: error!.localizedDescription,
                     preferredStyle: UIAlertControllerStyle.Alert)
                 self.presentViewController(alert, animated: true, completion: nil)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                return
             }
-            self.insideTemp.text = Formatter.formatTemperature(bedroomTemp)
-            self.outsideTemp.text = Formatter.formatTemperature(outTemp)
+            self.insideTemp.text = Formatter.formatTemperature(houseMode!.inTemp)
+            self.outsideTemp.text = Formatter.formatTemperature(houseMode!.outTemp)
+            
+            switch houseMode!.presenceMode
+            {
+            case 0:
+                self.presenceLabel.text = "Режим ожидания"
+                self.presenceModeBtn.titleLabel?.text = "В режим присутствия"
+            case 1:
+                self.presenceLabel.text = "Режим присутствия"
+                self.presenceModeBtn.titleLabel?.text = "В режим ожидания"
+            default:
+                self.presenceLabel.text = "Ошибка"
+                self.presenceModeBtn.titleLabel?.text = "Ошибка"
+            }
         }
     }
 

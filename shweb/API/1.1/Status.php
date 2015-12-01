@@ -6,6 +6,7 @@ require_once ('../../include/db.inc');
 Class Status
 {
 	/**
+	 * Return house status information.
 	 *
 	 * @url GET /GetHouseStatus
 	 */
@@ -26,13 +27,31 @@ Class Status
 		
 		return array(
 					"climate" => array(
-						"outTemp" 		=> $outsideTemp, 
-						"bedRoomTemp" 	=> $bedRoomTemp),
+						"outTemp" 	=> $outsideTemp, 
+						"inTemp"	=> $bedRoomTemp),
 					"mode" => array(
-						"isin"			=> $isin,
-						"starting"		=> $starting
+						"presence"	=> $isin,
+						"starting"	=> $starting
 					)
 				);
+	}
+	
+	/**
+	 * Change house mode to the mode provided.
+	 *
+	 * @url PUT /SetHouseMode/$changeStatusTo
+	 */
+	public function SetHouseMode($changeStatusTo)
+	{
+		global $conn;
+		
+		if ($changeStatusTo != 1 && $changeStatusTo != 0)
+		{
+			throw new RestException(400, 'Invalid house mode.');
+		}
+		$conn->query("CALL SP_CHANGE_PRESENCE($changeStatusTo);");
+		
+		return $this->GetHouseStatus();
 	}
 }
 

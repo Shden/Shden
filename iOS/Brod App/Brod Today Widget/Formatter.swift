@@ -11,13 +11,13 @@ import Foundation
 class Formatter
 {
     // Temperature formatting
-    static func formatTemperature(temp: Double?) -> String
+    static func formatTemperature(temp: Float) -> String
     {
-        if let t = temp
+        if temp != Float.NaN
         {
-            return (t > 0)
-                ? NSString(format: "+%.01f \u{00B0}C", t) as String
-                : NSString(format: "%.01f \u{00B0}C", t) as String
+            return (temp > 0)
+                ? NSString(format: "+%.01f \u{00B0}C", temp) as String
+                : NSString(format: "%.01f \u{00B0}C", temp) as String
         }
         else
         {

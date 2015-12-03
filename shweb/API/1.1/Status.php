@@ -28,7 +28,8 @@ Class Status
 		return array(
 					"climate" => array(
 						"outTemp" 	=> $outsideTemp, 
-						"inTemp"	=> $bedRoomTemp),
+						"inTemp"	=> $bedRoomTemp
+					),
 					"mode" => array(
 						"presence"	=> $isin,
 						"starting"	=> $starting

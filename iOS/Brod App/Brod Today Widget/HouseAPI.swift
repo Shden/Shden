@@ -119,13 +119,14 @@ class HouseAPI : NSObject, NSURLSessionDelegate
         let proxyPort = HouseAPI.userDefaults.stringForKey("SettingsProxyPort")
         let useProxy = HouseAPI.userDefaults.boolForKey("SettingsUseProxy")
         
-        if (useProxy && proxyAddress != nil && proxyPort != nil)
+        if (useProxy && proxyAddress != nil)
         {
             // proxy configuration to connect via Megafon
-            let proxyInfo = [
-                kCFStreamPropertyHTTPSProxyHost : proxyAddress! as NSString,
-                kCFStreamPropertyHTTPSProxyPort : Int(proxyPort!)!,
-                "HTTPSEnable" as NSString : true
+            let proxyInfo:[NSString: NSString] = [
+                kCFStreamPropertyHTTPSProxyHost : proxyAddress ?? "",
+                kCFStreamPropertyHTTPSProxyPort : "8080", //proxyPort ?? "",
+                "HTTPSEnable" : "1",
+                kCFProxyTypeKey : kCFProxyTypeHTTPS
                 //kCFNetworkProxiesHTTPProxy as NSString : "152.2.81.209" as NSString,
                 //kCFNetworkProxiesHTTPPort : 8080,
                 //kCFNetworkProxiesHTTPEnable : true
@@ -154,7 +155,6 @@ class HouseAPI : NSObject, NSURLSessionDelegate
         completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> Void
     {
         let request = NSMutableURLRequest(URL: NSURL(string: URL)!)
-        let requestConfig = GetRequestConfiguration()
 
         switch method
         {
@@ -164,6 +164,7 @@ class HouseAPI : NSObject, NSURLSessionDelegate
                 request.HTTPMethod = "GET"
         }
         
+        let requestConfig = GetRequestConfiguration()
         let session = NSURLSession(configuration: requestConfig, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
         
         // fire off the request & route the responce to the completion handler

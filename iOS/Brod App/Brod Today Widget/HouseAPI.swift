@@ -116,23 +116,19 @@ class HouseAPI : NSObject, NSURLSessionDelegate
 
         // load proxy configuration
         let proxyAddress = HouseAPI.userDefaults.stringForKey("SettingsProxyAddress")
-        let proxyPort = HouseAPI.userDefaults.stringForKey("SettingsProxyPort")
+        let proxyPort = HouseAPI.userDefaults.integerForKey("SettingsProxyPort")
         let useProxy = HouseAPI.userDefaults.boolForKey("SettingsUseProxy")
         
-        if (useProxy && proxyAddress != nil)
+        if (useProxy)
         {
             // proxy configuration to connect via Megafon
-            let proxyInfo:[NSString: NSString] = [
-                kCFStreamPropertyHTTPSProxyHost : proxyAddress ?? "",
-                kCFStreamPropertyHTTPSProxyPort : "8080", //proxyPort ?? "",
-                "HTTPSEnable" : "1",
-                kCFProxyTypeKey : kCFProxyTypeHTTPS
-                //kCFNetworkProxiesHTTPProxy as NSString : "152.2.81.209" as NSString,
-                //kCFNetworkProxiesHTTPPort : 8080,
-                //kCFNetworkProxiesHTTPEnable : true
+            let proxyInfo = [
+                "HTTPSEnable" : NSNumber(integer: 1),
+                String(kCFStreamPropertyHTTPSProxyHost) : String(proxyAddress ?? ""),
+                String(kCFStreamPropertyHTTPSProxyPort) : NSNumber(integer: proxyPort),
             ]
             
-            configuration.connectionProxyDictionary = proxyInfo
+            configuration.connectionProxyDictionary = proxyInfo;// as [NSObject : AnyObject]
         }
 
         return configuration

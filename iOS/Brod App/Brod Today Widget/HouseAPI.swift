@@ -25,6 +25,17 @@ enum HouseMode: Int
                 return HouseMode.Standby
         }
     }
+    
+    func ToInt() -> Int
+    {
+        switch self
+        {
+            case HouseMode.Standby:
+                return 0
+            case HouseMode.Precense:
+                return 1
+        }
+    }
 }
 
 struct HouseModeResponce
@@ -73,8 +84,8 @@ class HouseAPI : NSObject, NSURLSessionDelegate
     // SetHouseMode REST call
     func SetHouseMode(newMode: HouseMode, completionHandler: (NSError?, HouseModeResponce?) -> Void) -> Void
     {
-        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "status/SetHouseMode/\(newMode)"
-        self.PUT(URL, completionHandler: {
+        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "status/SetHouseMode/\(newMode.ToInt())"
+        self.POST(URL, completionHandler: {
             (data, responce, error) -> Void in
             
             print(data ?? error)
@@ -164,6 +175,12 @@ class HouseAPI : NSObject, NSURLSessionDelegate
         Invoke(URL, method: HouseAPIMethod.PUT, completionHandler: completionHandler)
     }
 
+    // Invoke POST method of the API
+    private func POST(URL: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> Void
+    {
+        Invoke(URL, method: HouseAPIMethod.POST, completionHandler: completionHandler)
+    }
+    
     // Invoke selected method of the API
     private func Invoke(URL: String, method: HouseAPIMethod,
         completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> Void
@@ -176,6 +193,8 @@ class HouseAPI : NSObject, NSURLSessionDelegate
                 request.HTTPMethod = "PUT"
             case HouseAPIMethod.GET:
                 request.HTTPMethod = "GET"
+            case HouseAPIMethod.POST:
+                request.HTTPMethod = "POST"
         }
         
         let requestConfig = GetRequestConfiguration()
@@ -260,6 +279,7 @@ enum HouseAPIMethod
 {
     case GET
     case PUT
+    case POST
 }
 
 

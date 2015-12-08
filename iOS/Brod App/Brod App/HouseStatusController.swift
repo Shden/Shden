@@ -1,6 +1,7 @@
 //
 //  HouseStatusController.swift
 //  Brod App
+//  User interface controller class linked to House Status functionality.
 //
 //  Created by Dennis Afanassiev on 25/09/15.
 //  Copyright © 2015 Dennis Afanassiev. All rights reserved.
@@ -48,12 +49,14 @@ class HouseStatusController: UIViewController {
                 {
                     case HouseMode.Standby:
                         self.presenceLabel.text = "Режим ожидания"
-                        self.presenceModeBtn.titleLabel?.text = "В режим присутствия"
+                        self.presenceModeBtn.setTitle("В режим присутствия", forState: UIControlState.Normal)
                         self.presenceModeBtn.backgroundColor = UIColor.redColor()
+                    
                     case HouseMode.Precense:
                         self.presenceLabel.text = "Режим присутствия"
-                        self.presenceModeBtn.titleLabel?.text = "В режим ожидания"
-                        self.presenceModeBtn.backgroundColor = UIColor.blueColor()
+                        self.presenceModeBtn.setTitle("В режим ожидания", forState: UIControlState.Normal)
+                        //#337AB7 - blue
+                        self.presenceModeBtn.backgroundColor = UIColor(red:0.20, green:0.48, blue:0.72, alpha:1.0)
                 }
             }
         }
@@ -107,12 +110,16 @@ class HouseStatusController: UIViewController {
                 () -> Void in
             
                 self.presenceModeBtn.enabled = false
+                self.refreshBtn.enabled = false
+                self.progress.startAnimating()
 
                 let API = HouseAPI()
                 API.SetHouseMode(self.CurrentHouseMode!.ToggleMode(), completionHandler: {
                     (error, houseMode) -> Void in
                     
                     self.presenceModeBtn.enabled = true
+                    self.refreshBtn.enabled = true
+                    self.progress.stopAnimating()
 
                     if (error != nil)
                     {

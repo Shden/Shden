@@ -8,7 +8,7 @@
         <!--Отопление-->
         <scene sceneID="dl9-ku-O8u">
             <objects>
-                <viewController id="Ksv-zu-Nvw" customClass="UITableViewController" sceneMemberID="viewController">
+                <viewController id="Ksv-zu-Nvw" customClass="HeatingController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Отопление" id="OJr-wD-taC"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xu0-Lg-4az" userLabel="First Responder" sceneMemberID="firstResponder"/>

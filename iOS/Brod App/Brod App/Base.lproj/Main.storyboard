@@ -18,7 +18,7 @@
         <!--Состояние-->
         <scene sceneID="XUk-e7-sky">
             <objects>
-                <viewController id="uT5-rS-zvs" customClass="HouseStatusController" customModule="Brod_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="uT5-rS-zvs" customClass="HouseStatusController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qzo-bC-aAO"/>
                         <viewControllerLayoutGuide type="bottom" id="8Qc-Aj-FpO"/>
@@ -27,12 +27,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iR7-1q-Kls">
-                                <rect key="frame" x="82" y="458" width="156" height="30"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="В режим присутствия"/>
-                            </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LDb-I3-1zf">
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <animations/>
@@ -55,7 +49,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Режим [ожидания]" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywY-TP-Job">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Установка соединения..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywY-TP-Job">
                                 <rect key="frame" x="20" y="89" width="280" height="35"/>
                                 <animations/>
                                 <constraints>
@@ -96,6 +90,19 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hGP-fB-Zy5">
+                                <rect key="frame" x="150" y="413" width="20" height="20"/>
+                                <animations/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iR7-1q-Kls" customClass="HouseStatusButton" customModule="Брод" customModuleProvider="target">
+                                <rect key="frame" x="60" y="447" width="201" height="43"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="20" minY="12" maxX="20" maxY="12"/>
+                                <state key="normal" title="В режим присутствия"/>
+                                <connections>
+                                    <action selector="modeChange:" destination="uT5-rS-zvs" eventType="primaryActionTriggered" id="tS8-qL-13B"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -126,6 +133,8 @@
                         <outlet property="outsideTemp" destination="j7T-Uw-Zto" id="CnS-lB-ajs"/>
                         <outlet property="presenceLabel" destination="ywY-TP-Job" id="4qx-0q-NHJ"/>
                         <outlet property="presenceModeBtn" destination="iR7-1q-Kls" id="4yt-EM-1fS"/>
+                        <outlet property="progress" destination="hGP-fB-Zy5" id="9C8-5W-7mG"/>
+                        <outlet property="refreshBtn" destination="uN5-vD-Htz" id="xpB-bt-SVQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GCY-Hq-eAz" userLabel="First Responder" sceneMemberID="firstResponder"/>

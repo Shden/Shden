@@ -2,7 +2,10 @@
 require_once ('../../include/db.inc');
 
 
-/* Status API endpoint */	
+/** 
+ *	House status API endpoint. This API is primarely works with overall house status, including status snaps for remote
+ *	monitoring and status changing.
+ */	
 Class Status
 {
 	/**
@@ -40,7 +43,7 @@ Class Status
 	/**
 	 * Change house mode to the mode provided.
 	 *
-	 * @url PUT /SetHouseMode/$changeStatusTo
+	 * @url POST /SetHouseMode/$changeStatusTo
 	 */
 	public function SetHouseMode($changeStatusTo)
 	{
@@ -48,7 +51,7 @@ Class Status
 		
 		if ($changeStatusTo != 1 && $changeStatusTo != 0)
 		{
-			throw new RestException(400, 'Invalid house mode.');
+			throw new RestException(400, 'Invalid staus requested.');
 		}
 		$conn->query("CALL SP_CHANGE_PRESENCE($changeStatusTo);");
 		

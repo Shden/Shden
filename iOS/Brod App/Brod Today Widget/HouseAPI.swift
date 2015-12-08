@@ -10,10 +10,28 @@
 import Foundation
 import SystemConfiguration
 
-struct HouseModeResponce {
+enum HouseMode: Int
+{
+    case Standby = 0
+    case Precense = 1
+    
+    func ToggleMode() -> HouseMode
+    {
+        switch self
+        {
+            case HouseMode.Standby:
+                return HouseMode.Precense
+            case HouseMode.Precense:
+                return HouseMode.Standby
+        }
+    }
+}
+
+struct HouseModeResponce
+{
     var outTemp: Float = 0.0
     var inTemp: Float = 0.0
-    var presenceMode = 0
+    var presenceMode: HouseMode = HouseMode.Standby
 }
 
 class HouseAPI : NSObject, NSURLSessionDelegate
@@ -45,7 +63,7 @@ class HouseAPI : NSObject, NSURLSessionDelegate
         {
             if let isin = mode["presence"]
             {
-                houseMode.presenceMode = isin?.integerValue ?? -1
+                houseMode.presenceMode = isin?.integerValue == 0 ? HouseMode.Standby : HouseMode.Precense
             }
         }
         
@@ -53,7 +71,7 @@ class HouseAPI : NSObject, NSURLSessionDelegate
     }
     
     // SetHouseMode REST call
-    func SetHouseMode(newMode: Int, completionHandler: (NSError?, HouseModeResponce?) -> Void) -> Void
+    func SetHouseMode(newMode: HouseMode, completionHandler: (NSError?, HouseModeResponce?) -> Void) -> Void
     {
         let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "status/SetHouseMode/\(newMode)"
         self.PUT(URL, completionHandler: {
@@ -243,4 +261,6 @@ enum HouseAPIMethod
     case GET
     case PUT
 }
+
+
 

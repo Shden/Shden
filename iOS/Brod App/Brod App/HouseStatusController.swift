@@ -13,7 +13,7 @@ class HouseStatusController: UIViewController {
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.updateInterface()
+        self.refreshInterface()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,49 +21,159 @@ class HouseStatusController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBOutlet weak var presenceModeBtn: UIButton!
+    @IBOutlet weak var presenceModeBtn: HouseStatusButton!
     @IBOutlet weak var presenceLabel: UILabel!
     @IBOutlet weak var insideTemp: UILabel!
     @IBOutlet weak var outsideTemp: UILabel!
+    @IBOutlet weak var refreshBtn: UIButton!
+    @IBOutlet weak var progress: UIActivityIndicatorView!
     
-    func updateInterface() -> Void
+    
+    private var currentHouseMode: HouseMode?
+    
+    // Represents actual house mode as it reported by the API.
+    // House mode will return nil until the first API request didn't return the actual state.
+    var CurrentHouseMode: HouseMode?
     {
+        get
+        {
+            return self.currentHouseMode
+        }
+        set
+        {
+            self.currentHouseMode = newValue
+            if (newValue != nil)
+            {
+                switch newValue!
+                {
+                    case HouseMode.Standby:
+                        self.presenceLabel.text = "Режим ожидания"
+                        self.presenceModeBtn.titleLabel?.text = "В режим присутствия"
+                        self.presenceModeBtn.backgroundColor = UIColor.redColor()
+                    case HouseMode.Precense:
+                        self.presenceLabel.text = "Режим присутствия"
+                        self.presenceModeBtn.titleLabel?.text = "В режим ожидания"
+                        self.presenceModeBtn.backgroundColor = UIColor.blueColor()
+                }
+            }
+        }
+    }
+
+    
+    // UI refresh procedure
+    func refreshInterface() -> Void
+    {
+        self.insideTemp.text = "выясняем..."
+        self.outsideTemp.text = "выясняем..."
+        self.refreshBtn.enabled = false
+        self.presenceModeBtn.enabled = false
+        self.progress.startAnimating()
+        
         let API = HouseAPI()
         API.GetHouseStatus
         {
             (error, houseMode) -> Void in
             
+            self.refreshBtn.enabled = true
+            self.presenceModeBtn.enabled = true
+            self.progress.stopAnimating()
+            
             if (error != nil)
             {
-                let alert = UIAlertController(title: "Ошибка", message: error!.localizedDescription,
-                    preferredStyle: UIAlertControllerStyle.Alert)
-                self.presentViewController(alert, animated: true, completion: nil)
-                alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-                return
+                self.showUnhandledAlert("Ошибка", message: error!.localizedDescription)
+                self.insideTemp.text = "неизвестно"
+                self.outsideTemp.text = "неизвестно"
             }
-            self.insideTemp.text = Formatter.formatTemperature(houseMode!.inTemp)
-            self.outsideTemp.text = Formatter.formatTemperature(houseMode!.outTemp)
-            
-            switch houseMode!.presenceMode
+            else
             {
-            case 0:
-                self.presenceLabel.text = "Режим ожидания"
-                self.presenceModeBtn.titleLabel?.text = "В режим присутствия"
-            case 1:
-                self.presenceLabel.text = "Режим присутствия"
-                self.presenceModeBtn.titleLabel?.text = "В режим ожидания"
-            default:
-                self.presenceLabel.text = "Ошибка"
-                self.presenceModeBtn.titleLabel?.text = "Ошибка"
+                self.insideTemp.text = Formatter.formatTemperature(houseMode!.inTemp)
+                self.outsideTemp.text = Formatter.formatTemperature(houseMode!.outTemp)
+                self.CurrentHouseMode = houseMode!.presenceMode
             }
         }
     }
+    
+    // House mode change procedure
+    func changeMode() -> Void
+    {
+        if (CurrentHouseMode == nil)
+        {
+            self.showUnhandledAlert("Ошибка", message: "Текущее состояние дома неизвестно.")
+        }
+        else
+        {
+            self.showConfirmationAlert("Подтверждение", message: "Переводим дом в другой режим?", confirmedHandler:
+            {
+                () -> Void in
+            
+                self.presenceModeBtn.enabled = false
 
+                let API = HouseAPI()
+                API.SetHouseMode(self.CurrentHouseMode!.ToggleMode(), completionHandler: {
+                    (error, houseMode) -> Void in
+                    
+                    self.presenceModeBtn.enabled = true
+
+                    if (error != nil)
+                    {
+                        self.showUnhandledAlert("Ошибка", message: error!.localizedDescription)
+                    }
+                    else
+                    {
+                        if (houseMode!.presenceMode != self.CurrentHouseMode!.ToggleMode())
+                        {
+                            self.showUnhandledAlert("Ошибка", message: "Сбой при смене режима дома.")
+                        }
+                        else
+                        {
+                            self.CurrentHouseMode = houseMode!.presenceMode
+                        }
+                    }
+                })
+            })
+        }
+    }
+    
+    func showUnhandledAlert(title: String, message: String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        self.presentViewController(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.Default, handler: nil))
+    }
+    
+    func showConfirmationAlert(title: String, message: String, confirmedHandler: () -> Void) ->Void
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        self.presentViewController(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Да", style: UIAlertActionStyle.Default, handler:
+            {
+                (action) -> Void in
+                confirmedHandler()
+            } ))
+        alert.addAction(UIAlertAction(title: "Нет", style: UIAlertActionStyle.Default, handler: nil))
+    }
+
+    // Refresh UI button handler
     @IBAction func onRefreshBtnClick(sender: AnyObject)
     {
-        self.insideTemp.text = "выясняем..."
-        self.outsideTemp.text = "выясняем..."
-        self.updateInterface();
+        self.refreshInterface();
+    }
+    
+    // House status change handler
+    @IBAction func modeChange(sender: AnyObject)
+    {
+        self.changeMode()
+    }
+    
+}
+
+class HouseStatusButton : UIButton
+{
+    required init(coder aDecoder: (NSCoder!))
+    {
+        super.init(coder: aDecoder)!
+        self.layer.cornerRadius = 5.0
+        self.tintColor = UIColor.whiteColor()
     }
 }
 

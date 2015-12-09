@@ -1,5 +1,7 @@
 <?php
-#require_once '../../include/ini.php';
+require_once '../../include/ini.php';
+
+define(TZ, "MSK");
 
 /** 
  *	House heating API endpoint. This API is desginged to control most of the heating system parameters including
@@ -14,13 +16,13 @@ Class Heating
 	 */
 	public function GetSchedule()
 	{
-		$controller_ini = $_SERVER['DOCUMENT_ROOT'] . "/../shc/heating_config/controller.ini";
+		global $controller_ini;
 		$controller_config = parse_ini_file($controller_ini, true);
 		
 		$arrival_segments = explode(".", $controller_config[schedule][arrive_date]);
 		$departure_segments = explode(".", $controller_config[schedule][dep_date]);
 		
-		$time_zone = new DateTimeZone("MSK");
+		$time_zone = new DateTimeZone(TZ);
 		$arrival_date = new DateTime(now, $time_zone);
 		$departure_date = new DateTime(now, $time_zone);
 		$arrival_date->setDate($arrival_segments[2], $arrival_segments[1], $arrival_segments[0]);
@@ -29,23 +31,104 @@ Class Heating
 		$departure_date->setTime($controller_config[schedule][dep_hour], 0);
 		
 		return array(
-					"arr" => array (
-						"day" 	=> (int)$arrival_segments[0],
-						"month" => (int)$arrival_segments[1],
-						"year" 	=> (int)$arrival_segments[2],
-						"hour" 	=> (int)$controller_config[schedule][arrive_hour],
-						"min"	=> 0
-					),
-					"dep" => array (
-						"day" 	=> (int)$departure_segments[0],
-						"month" => (int)$departure_segments[1],
-						"year" 	=> (int)$departure_segments[2],
-						"hour" 	=> (int)$controller_config[schedule][dep_hour],
-						"min"	=> 0
-					),
+					// "arr" => array (
+					// 	"day" 	=> (int)$arrival_segments[0],
+					// 	"month" => (int)$arrival_segments[1],
+					// 	"year" 	=> (int)$arrival_segments[2],
+					// 	"hour" 	=> (int)$controller_config[schedule][arrive_hour],
+					// 	"min"	=> 0
+					// ),
+					// "dep" => array (
+					// 	"day" 	=> (int)$departure_segments[0],
+					// 	"month" => (int)$departure_segments[1],
+					// 	"year" 	=> (int)$departure_segments[2],
+					// 	"hour" 	=> (int)$controller_config[schedule][dep_hour],
+					// 	"min"	=> 0
+					// ),
 					"from" 	=> $arrival_date->format(DateTime::ISO8601),
 					"to" => $departure_date->format(DateTime::ISO8601)
 				);
+	}
+	
+	/**
+	 *	Set heating schedule by time and duration provided.
+	 * 	
+	 *	Arrival date & time parameters block:
+	 *	@param $arr_year - scheduled year when presence condition to be reached.
+	 *	@param $arr_month - scheduled month.
+	 *	@param $arr_day - schedluled day.
+	 *	@param $arr_hour - scheduled hour.
+	 *	Departure date & time parameters:
+	 *	@param $dep_year - scheduled year when presence condition to be over.
+	 *	@param $dep_month - scheduled month.
+	 *	@param $dep_day - schedluled day.
+	 *	@param $dep_hour - scheduled hour.
+	 *
+	 *	@url PUT /SetSchedule/$arr_year/$arr_month/$arr_day/$arr_hour/$dep_year/$dep_month/$dep_day/$dep_hour
+	 */
+	public function SetSchedule($arr_year, $arr_month, $arr_day, $arr_hour,
+								$dep_year, $dep_month, $dep_day, $dep_hour)
+	{
+		$this->CheckDateTimeRange($arr_year, $arr_month, $arr_day, $arr_hour, 0);
+		$this->CheckDateTimeRange($dep_year, $dep_month, $dep_day, $dep_hour, 0);
+		
+		$this->UpdateScheduleIni($arr_year, $arr_month, $arr_day, $arr_hour, $dep_year, $dep_month, $dep_day, $dep_hour);
+		return $this->GetSchedule();
+	}
+	
+	/**
+	 *	Clears heating schedule settings so it would never activated in the future.
+	 *	@url PUT /ResetSchedule
+	 */
+	public function ResetSchedule()
+	{
+		$this->UpdateScheduleIni(1990, 1, 1, 0, 1990, 1, 1, 0);
+		return $this->GetSchedule();		
+	}
+	
+	/**
+	 *	Helper updating INI schedule section.
+	 */
+	private function UpdateScheduleIni($arr_year, $arr_month, $arr_day, $arr_hour,
+									   $dep_year, $dep_month, $dep_day, $dep_hour)
+	{
+		global $controller_ini;
+	    $controller_config = parse_ini_file($controller_ini, true);
+
+		# DD.MM.YYYY
+        $controller_config[schedule][arrive_date] = "$arr_day.$arr_month.$arr_year";
+        $controller_config[schedule][arrive_hour] = $arr_hour;
+        $controller_config[schedule][dep_date] = "$dep_day.$dep_month.$dep_year";
+        $controller_config[schedule][dep_hour] = $dep_hour;
+        
+         write_ini_file($controller_ini, $controller_config);
+	}
+	
+	/**
+	 *	Check date time component ranges.
+	 */
+	private function CheckDateTimeRange($year, $month, $day, $hour, $minute)
+	{
+		if (!ctype_digit((string)$year) || $year < 2010 || $year > 2050)
+		{
+			throw new RestException(400, "Year: $year is out of the range.");
+		}
+		if (!ctype_digit((string)$month) || $month < 1 || $month > 12)
+		{
+			throw new RestException(400, "Month: $month is out of the range.");
+		}
+		if (!ctype_digit((string)$day) || $day < 1 || $day > 31)
+		{
+			throw new RestException(400, "Day: $day is out of the range.");
+		}
+		if (!ctype_digit((string)$hour) || $hour < 0 || $hour > 23)
+		{
+			throw new RestException(400, "Hour: $hour is out of the range.");
+		}
+		if (!ctype_digit((string)$minute) || $minute < 0 || $minute > 59)
+		{
+			throw new RestException(400, "Minute: $minute is out of the range.");
+		}
 	}
 }
 ?>

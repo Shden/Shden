@@ -84,8 +84,10 @@ class HouseAPI : NSObject, NSURLSessionDelegate
     // SetHouseMode REST call
     func SetHouseMode(newMode: HouseMode, completionHandler: (NSError?, HouseModeResponce?) -> Void) -> Void
     {
-        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "status/SetHouseMode/\(newMode.ToInt())"
-        self.POST(URL, completionHandler: {
+        let numericNewMode = newMode.ToInt()
+        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "status/SetHouseMode/\(numericNewMode)"
+        
+        self.PUT(URL, completionHandler: {
             (data, responce, error) -> Void in
             
             print(data ?? error)

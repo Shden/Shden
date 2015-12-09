@@ -43,7 +43,7 @@ Class Status
 	/**
 	 * Change house mode to the mode provided.
 	 *
-	 * @url POST /SetHouseMode/$changeStatusTo
+	 * @url PUT /SetHouseMode/$changeStatusTo
 	 */
 	public function SetHouseMode($changeStatusTo)
 	{

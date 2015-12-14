@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class HeatingController : UIViewController
+class HeatingController : UITableViewController
 {
     
 }

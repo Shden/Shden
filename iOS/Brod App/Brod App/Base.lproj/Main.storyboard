@@ -5,15 +5,17 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Отопление-->
+        <!--123-->
         <scene sceneID="dl9-ku-O8u">
             <objects>
-                <viewController id="Ksv-zu-Nvw" customClass="HeatingController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Отопление" id="OJr-wD-taC"/>
-                </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xu0-Lg-4az" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="Ksv-zu-Nvw" customClass="HeatingController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="123" prompt="456" id="QfA-Ik-guL">
+                        <barButtonItem key="backBarButtonItem" title="789" id="0A3-9k-IDz"/>
+                    </navigationItem>
+                </viewController>
             </objects>
-            <point key="canvasLocation" x="238" y="2077"/>
+            <point key="canvasLocation" x="770" y="2077"/>
         </scene>
         <!--Состояние-->
         <scene sceneID="XUk-e7-sky">
@@ -94,8 +96,8 @@
                                 <rect key="frame" x="150" y="413" width="20" height="20"/>
                                 <animations/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iR7-1q-Kls" customClass="HouseStatusButton" customModule="Брод" customModuleProvider="target">
-                                <rect key="frame" x="60" y="447" width="201" height="43"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iR7-1q-Kls" customClass="HouseStatusButton" customModule="Брод" customModuleProvider="target">
+                                <rect key="frame" x="62" y="446" width="196" height="42"/>
                                 <animations/>
                                 <inset key="contentEdgeInsets" minX="20" minY="12" maxX="20" maxY="12"/>
                                 <state key="normal" title="В режим присутствия"/>
@@ -154,12 +156,52 @@
                     </tabBar>
                     <connections>
                         <segue destination="uT5-rS-zvs" kind="relationship" relationship="viewControllers" id="vP1-2P-j79"/>
-                        <segue destination="Ksv-zu-Nvw" kind="relationship" relationship="viewControllers" id="C4K-tb-1cR"/>
+                        <segue destination="Oco-QA-D4j" kind="relationship" relationship="viewControllers" id="C4K-tb-1cR"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QS3-jO-4jd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-366" y="1737"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="nrb-WQ-HHJ">
+            <objects>
+                <viewController id="dOf-mw-MMV" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sFt-ew-4Pe"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Mj-R8-qWS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ONh-LG-Mx0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mGd-PU-wYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-344" y="2385"/>
+        </scene>
+        <!--titutii-->
+        <scene sceneID="qBY-vZ-Xux">
+            <objects>
+                <navigationController title="titutii" automaticallyAdjustsScrollViewInsets="NO" id="Oco-QA-D4j" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Отопление" id="OJr-wD-taC"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jma-iE-6HR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Ksv-zu-Nvw" kind="relationship" relationship="rootViewController" id="PQT-4d-17V"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XUZ-Lf-FWC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="238" y="2077"/>
         </scene>
     </scenes>
 </document>

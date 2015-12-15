@@ -114,30 +114,37 @@ class HouseAPI : NSObject, NSURLSessionDelegate
     // GetHouseStatus REST call
     func GetHouseStatus(completionHandler: (NSError?, HouseModeResponce?) -> Void) -> Void
     {
-        let URL = HouseAPI.userDefaults.stringForKey("SettingsServer")! + "status/GetHouseStatus"
+        if let host = HouseAPI.userDefaults.stringForKey("SettingsServer")
+        {
         
-        self.GET(URL, completionHandler: {
-            (data, response, error) -> Void in
-            
-            print(data ?? error)
+            let URL = host + "status/GetHouseStatus"
+            self.GET(URL, completionHandler: {
+                (data, response, error) -> Void in
+                
+                print(data ?? error)
 
-            if (error == nil && data != nil)
-            {
-                do
+                if (error == nil && data != nil)
                 {
-                    let houseMode = try self.getHouseModeResponce(data!)
-                    completionHandler(nil, houseMode)
+                    do
+                    {
+                        let houseMode = try self.getHouseModeResponce(data!)
+                        completionHandler(nil, houseMode)
+                    }
+                    catch
+                    {
+                        completionHandler(error as NSError?, nil)
+                    }
                 }
-                catch
+                else
                 {
-                    completionHandler(error as NSError?, nil)
+                    completionHandler(error, nil)
                 }
-            }
-            else
-            {
-                completionHandler(error, nil)
-            }
-        })
+            })
+        }
+        else
+        {
+            completionHandler(NSError(domain: "Invalid House API host configuration.", code: 1001, userInfo: nil), nil)
+        }
     }
     
     // Return NSURLSessionConfiguration with proxy settings

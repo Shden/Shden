@@ -40,9 +40,9 @@ class HeatingController : UITableViewController
         super.viewDidLoad()
         
         // setup our data source
-        let itemOne = [kTitleKey : "Tap a cell to change its date:"]
-        let itemTwo = [kTitleKey : "Start Date", kDateKey : NSDate()]
-        let itemThree = [kTitleKey : "End Date", kDateKey : NSDate()]
+        let itemOne = [kTitleKey : "Таймер отопления:"]
+        let itemTwo = [kTitleKey : "Приезжаем", kDateKey : NSDate()]
+        let itemThree = [kTitleKey : "Уезжаем", kDateKey : NSDate()]
         let itemFour = [kTitleKey : "(other item1)"]
         let itemFive = [kTitleKey : "(other item2)"]
         dataArray = [itemOne, itemTwo, itemThree, itemFour, itemFive]

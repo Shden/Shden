@@ -50,11 +50,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="215"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <datePicker tag="99" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZDN-UP-GYf">
+                                        <datePicker tag="99" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="ZDN-UP-GYf">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                             <animations/>
                                             <date key="date" timeIntervalSinceReferenceDate="444924088.28887397">
                                                 <!--2015-02-06 14:01:28 +0000-->
+                                            </date>
+                                            <date key="minimumDate" timeIntervalSinceReferenceDate="-31582800">
+                                                <!--2000-01-01 11:00:00 +0000-->
                                             </date>
                                             <connections>
                                                 <action selector="dateAction:" destination="Ksv-zu-Nvw" eventType="valueChanged" id="FLv-T4-LKA"/>
@@ -93,12 +96,15 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xu0-Lg-4az" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="qvO-op-rxo">
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" id="qvO-op-rxo">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <date key="date" timeIntervalSinceReferenceDate="444924989.11906302">
                         <!--2015-02-06 14:16:29 +0000-->
+                    </date>
+                    <date key="minimumDate" timeIntervalSinceReferenceDate="-31582800">
+                        <!--2000-01-01 11:00:00 +0000-->
                     </date>
                     <connections>
                         <action selector="dateAction:" destination="Ksv-zu-Nvw" eventType="valueChanged" id="V6o-kX-CKx"/>

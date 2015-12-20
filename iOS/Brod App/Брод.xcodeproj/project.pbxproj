@@ -1,0 +1,596 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B749FFC91C25DF5E006F1B13 /* HeatingTimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749FFC81C25DF5E006F1B13 /* HeatingTimerController.swift */; };
+		B749FFD11C26046B006F1B13 /* Brod_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749FFD01C26046B006F1B13 /* Brod_Tests.swift */; };
+		B788DA941C0A14F6006913A1 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B788DA931C0A14F6006913A1 /* Settings.bundle */; };
+		B7BD39681BB59A83009F5FE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */; };
+		B7BD396A1BB59A83009F5FE8 /* HouseStatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */; };
+		B7BD396D1BB59A83009F5FE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD396B1BB59A83009F5FE8 /* Main.storyboard */; };
+		B7BD396F1BB59A83009F5FE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */; };
+		B7BD39721BB59A83009F5FE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD39701BB59A83009F5FE8 /* LaunchScreen.storyboard */; };
+		B7BD399C1BB59AF9009F5FE8 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BD399B1BB59AF9009F5FE8 /* NotificationCenter.framework */; };
+		B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */; };
+		B7BD39A21BB59AFA009F5FE8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD39A01BB59AFA009F5FE8 /* MainInterface.storyboard */; };
+		B7BD39A61BB59AFA009F5FE8 /* Brod Today Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B7BD39991BB59AF9009F5FE8 /* Brod Today Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B7E635941C08D021003CFE14 /* HouseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635931C08D021003CFE14 /* HouseAPI.swift */; };
+		B7E635951C08D021003CFE14 /* HouseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635931C08D021003CFE14 /* HouseAPI.swift */; };
+		B7E635971C09C272003CFE14 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635961C09C272003CFE14 /* Formatter.swift */; };
+		B7E635981C09C272003CFE14 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635961C09C272003CFE14 /* Formatter.swift */; };
+		B7E6359A1C09E14C003CFE14 /* brod.P12 in Resources */ = {isa = PBXBuildFile; fileRef = B7E635991C09E14C003CFE14 /* brod.P12 */; };
+		B7E6359B1C09E14C003CFE14 /* brod.P12 in Resources */ = {isa = PBXBuildFile; fileRef = B7E635991C09E14C003CFE14 /* brod.P12 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B749FFD31C26046B006F1B13 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7BD395C1BB59A83009F5FE8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7BD39631BB59A83009F5FE8;
+			remoteInfo = "Брод";
+		};
+		B7BD39A41BB59AFA009F5FE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7BD395C1BB59A83009F5FE8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7BD39981BB59AF9009F5FE8;
+			remoteInfo = "Brod Today Widget";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B7BD39AA1BB59AFA009F5FE8 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B7BD39A61BB59AFA009F5FE8 /* Brod Today Widget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		B749FFC81C25DF5E006F1B13 /* HeatingTimerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeatingTimerController.swift; sourceTree = "<group>"; };
+		B749FFCE1C26046B006F1B13 /* Brod Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Brod Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B749FFD01C26046B006F1B13 /* Brod_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brod_Tests.swift; sourceTree = "<group>"; };
+		B749FFD21C26046B006F1B13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B788DA931C0A14F6006913A1 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		B788DA961C0A42F3006913A1 /* Brod App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brod App.entitlements"; sourceTree = "<group>"; };
+		B7BD39641BB59A83009F5FE8 /* Брод.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Брод.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseStatusController.swift; sourceTree = "<group>"; };
+		B7BD396C1BB59A83009F5FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B7BD39711BB59A83009F5FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B7BD39731BB59A83009F5FE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7BD39991BB59AF9009F5FE8 /* Brod Today Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Brod Today Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7BD399B1BB59AF9009F5FE8 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		B7BD39A11BB59AFA009F5FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		B7BD39A31BB59AFA009F5FE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7E635931C08D021003CFE14 /* HouseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseAPI.swift; sourceTree = "<group>"; };
+		B7E635961C09C272003CFE14 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		B7E635991C09E14C003CFE14 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
+		B7E6359C1C09E241003CFE14 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B749FFCB1C26046B006F1B13 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7BD39611BB59A83009F5FE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7BD39961BB59AF9009F5FE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7BD399C1BB59AF9009F5FE8 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B749FFCF1C26046B006F1B13 /* Brod Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B749FFD01C26046B006F1B13 /* Brod_Tests.swift */,
+				B749FFD21C26046B006F1B13 /* Info.plist */,
+			);
+			path = "Brod Tests";
+			sourceTree = "<group>";
+		};
+		B7BD395B1BB59A83009F5FE8 = {
+			isa = PBXGroup;
+			children = (
+				B7BD39661BB59A83009F5FE8 /* Brod App */,
+				B7BD399D1BB59AF9009F5FE8 /* Brod Today Widget */,
+				B749FFCF1C26046B006F1B13 /* Brod Tests */,
+				B7BD399A1BB59AF9009F5FE8 /* Frameworks */,
+				B7BD39651BB59A83009F5FE8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B7BD39651BB59A83009F5FE8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B7BD39641BB59A83009F5FE8 /* Брод.app */,
+				B7BD39991BB59AF9009F5FE8 /* Brod Today Widget.appex */,
+				B749FFCE1C26046B006F1B13 /* Brod Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B7BD39661BB59A83009F5FE8 /* Brod App */ = {
+			isa = PBXGroup;
+			children = (
+				B788DA961C0A42F3006913A1 /* Brod App.entitlements */,
+				B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */,
+				B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */,
+				B749FFC81C25DF5E006F1B13 /* HeatingTimerController.swift */,
+				B7BD396B1BB59A83009F5FE8 /* Main.storyboard */,
+				B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */,
+				B7BD39701BB59A83009F5FE8 /* LaunchScreen.storyboard */,
+				B7BD39731BB59A83009F5FE8 /* Info.plist */,
+				B7E635991C09E14C003CFE14 /* brod.P12 */,
+				B788DA931C0A14F6006913A1 /* Settings.bundle */,
+			);
+			path = "Brod App";
+			sourceTree = "<group>";
+		};
+		B7BD399A1BB59AF9009F5FE8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B7BD399B1BB59AF9009F5FE8 /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B7BD399D1BB59AF9009F5FE8 /* Brod Today Widget */ = {
+			isa = PBXGroup;
+			children = (
+				B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */,
+				B7BD39A01BB59AFA009F5FE8 /* MainInterface.storyboard */,
+				B7BD39A31BB59AFA009F5FE8 /* Info.plist */,
+				B7E635931C08D021003CFE14 /* HouseAPI.swift */,
+				B7E635961C09C272003CFE14 /* Formatter.swift */,
+				B7E6359C1C09E241003CFE14 /* brod.P12 */,
+			);
+			path = "Brod Today Widget";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B749FFCD1C26046B006F1B13 /* Brod Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B749FFD51C26046B006F1B13 /* Build configuration list for PBXNativeTarget "Brod Tests" */;
+			buildPhases = (
+				B749FFCA1C26046B006F1B13 /* Sources */,
+				B749FFCB1C26046B006F1B13 /* Frameworks */,
+				B749FFCC1C26046B006F1B13 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B749FFD41C26046B006F1B13 /* PBXTargetDependency */,
+			);
+			name = "Brod Tests";
+			productName = "Brod Tests";
+			productReference = B749FFCE1C26046B006F1B13 /* Brod Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B7BD39631BB59A83009F5FE8 /* Брод */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7BD398C1BB59A84009F5FE8 /* Build configuration list for PBXNativeTarget "Брод" */;
+			buildPhases = (
+				B7BD39601BB59A83009F5FE8 /* Sources */,
+				B7BD39611BB59A83009F5FE8 /* Frameworks */,
+				B7BD39621BB59A83009F5FE8 /* Resources */,
+				B7BD39AA1BB59AFA009F5FE8 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7BD39A51BB59AFA009F5FE8 /* PBXTargetDependency */,
+			);
+			name = "Брод";
+			productName = "Brod App";
+			productReference = B7BD39641BB59A83009F5FE8 /* Брод.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B7BD39981BB59AF9009F5FE8 /* Brod Today Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7BD39A71BB59AFA009F5FE8 /* Build configuration list for PBXNativeTarget "Brod Today Widget" */;
+			buildPhases = (
+				B7BD39951BB59AF9009F5FE8 /* Sources */,
+				B7BD39961BB59AF9009F5FE8 /* Frameworks */,
+				B7BD39971BB59AF9009F5FE8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Brod Today Widget";
+			productName = "Brod Today Widget";
+			productReference = B7BD39991BB59AF9009F5FE8 /* Brod Today Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B7BD395C1BB59A83009F5FE8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Dennis Afanassiev";
+				TargetAttributes = {
+					B749FFCD1C26046B006F1B13 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = B7BD39631BB59A83009F5FE8;
+					};
+					B7BD39631BB59A83009F5FE8 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 9UZ84DB5HW;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
+					};
+					B7BD39981BB59AF9009F5FE8 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+				};
+			};
+			buildConfigurationList = B7BD395F1BB59A83009F5FE8 /* Build configuration list for PBXProject "Брод" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B7BD395B1BB59A83009F5FE8;
+			productRefGroup = B7BD39651BB59A83009F5FE8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B7BD39631BB59A83009F5FE8 /* Брод */,
+				B7BD39981BB59AF9009F5FE8 /* Brod Today Widget */,
+				B749FFCD1C26046B006F1B13 /* Brod Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B749FFCC1C26046B006F1B13 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7BD39621BB59A83009F5FE8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7E6359A1C09E14C003CFE14 /* brod.P12 in Resources */,
+				B7BD39721BB59A83009F5FE8 /* LaunchScreen.storyboard in Resources */,
+				B788DA941C0A14F6006913A1 /* Settings.bundle in Resources */,
+				B7BD396F1BB59A83009F5FE8 /* Assets.xcassets in Resources */,
+				B7BD396D1BB59A83009F5FE8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7BD39971BB59AF9009F5FE8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7E6359B1C09E14C003CFE14 /* brod.P12 in Resources */,
+				B7BD39A21BB59AFA009F5FE8 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B749FFCA1C26046B006F1B13 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B749FFD11C26046B006F1B13 /* Brod_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7BD39601BB59A83009F5FE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B749FFC91C25DF5E006F1B13 /* HeatingTimerController.swift in Sources */,
+				B7BD396A1BB59A83009F5FE8 /* HouseStatusController.swift in Sources */,
+				B7E635941C08D021003CFE14 /* HouseAPI.swift in Sources */,
+				B7E635971C09C272003CFE14 /* Formatter.swift in Sources */,
+				B7BD39681BB59A83009F5FE8 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7BD39951BB59AF9009F5FE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7E635981C09C272003CFE14 /* Formatter.swift in Sources */,
+				B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */,
+				B7E635951C08D021003CFE14 /* HouseAPI.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B749FFD41C26046B006F1B13 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7BD39631BB59A83009F5FE8 /* Брод */;
+			targetProxy = B749FFD31C26046B006F1B13 /* PBXContainerItemProxy */;
+		};
+		B7BD39A51BB59AFA009F5FE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7BD39981BB59AF9009F5FE8 /* Brod Today Widget */;
+			targetProxy = B7BD39A41BB59AFA009F5FE8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B7BD396B1BB59A83009F5FE8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7BD396C1BB59A83009F5FE8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B7BD39701BB59A83009F5FE8 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7BD39711BB59A83009F5FE8 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B7BD39A01BB59AFA009F5FE8 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7BD39A11BB59AFA009F5FE8 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B749FFD61C26046B006F1B13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Brod Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dennis-Afanassiev.Brod-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Брод.app/Брод";
+			};
+			name = Debug;
+		};
+		B749FFD71C26046B006F1B13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Brod Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dennis-Afanassiev.Brod-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Брод.app/Брод";
+			};
+			name = Release;
+		};
+		B7BD398A1BB59A84009F5FE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRIP_STYLE = all;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B7BD398B1BB59A84009F5FE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				STRIP_STYLE = all;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B7BD398D1BB59A84009F5FE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Brod App/Brod App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "Brod App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dennis-Afanassiev.Brod-App";
+				PRODUCT_NAME = "Брод";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		B7BD398E1BB59A84009F5FE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Brod App/Brod App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "Brod App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dennis-Afanassiev.Brod-App";
+				PRODUCT_NAME = "Брод";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		B7BD39A81BB59AFA009F5FE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Brod Today Widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dennis-Afanassiev.Brod-App.Brod-Today-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B7BD39A91BB59AFA009F5FE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Brod Today Widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Dennis-Afanassiev.Brod-App.Brod-Today-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B749FFD51C26046B006F1B13 /* Build configuration list for PBXNativeTarget "Brod Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B749FFD61C26046B006F1B13 /* Debug */,
+				B749FFD71C26046B006F1B13 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B7BD395F1BB59A83009F5FE8 /* Build configuration list for PBXProject "Брод" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7BD398A1BB59A84009F5FE8 /* Debug */,
+				B7BD398B1BB59A84009F5FE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7BD398C1BB59A84009F5FE8 /* Build configuration list for PBXNativeTarget "Брод" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7BD398D1BB59A84009F5FE8 /* Debug */,
+				B7BD398E1BB59A84009F5FE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7BD39A71BB59AFA009F5FE8 /* Build configuration list for PBXNativeTarget "Brod Today Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7BD39A81BB59AFA009F5FE8 /* Debug */,
+				B7BD39A91BB59AFA009F5FE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B7BD395C1BB59A83009F5FE8 /* Project object */;
+}

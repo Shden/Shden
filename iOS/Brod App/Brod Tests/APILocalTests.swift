@@ -12,6 +12,7 @@ import XCTest
 class APILocalTests: XCTestCase {
 
     let houseStatusAPI = HouseStatusAPI(config: LocalRun_NoProxy_HTTP())
+    let heatingAPI = HeatingAPI(config: LocalRun_NoProxy_HTTP())
     
 //    override func setUp() {
 //        super.setUp()
@@ -47,10 +48,9 @@ class APILocalTests: XCTestCase {
         }
     }
     
-    func testSetHouseMode() {
+    func testSetHouseModeToPrecence() {
         
-        let expectation1 = expectationWithDescription("SetHouseMode(HouseMode.Precense) request will have to be done")
-        let expectation2 = expectationWithDescription("SetHouseMode(HouseMode.Standby) request will have to be done")
+        let expectation = expectationWithDescription("SetHouseMode(HouseMode.Precense) request will have to be done")
 
         // To precense mode
         self.houseStatusAPI.SetHouseMode(HouseMode.Precense, completionHandler:
@@ -60,9 +60,16 @@ class APILocalTests: XCTestCase {
             XCTAssert(responce != nil)
             if let responce = responce {
                 XCTAssert(responce.presenceMode == HouseMode.Precense)
-                expectation1.fulfill()
+                expectation.fulfill()
             }
         })
+
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testSetHouseModeToStandby() {
+
+        let expectation = expectationWithDescription("SetHouseMode(HouseMode.Standby) request will have to be done")
 
         // To standby mode
         self.houseStatusAPI.SetHouseMode(HouseMode.Standby, completionHandler:
@@ -72,12 +79,56 @@ class APILocalTests: XCTestCase {
                 XCTAssert(responce != nil)
                 if let responce = responce {
                     XCTAssert(responce.presenceMode == HouseMode.Standby)
-                    expectation2.fulfill()
+                    expectation.fulfill()
                 }
         })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
+    
+    // MARK: Heating schedule
+    func testGetHeatingSchedule() {
+        
+        let expectation = expectationWithDescription("GetSchedule() request will be done in less than 10 seconds.")
+        
+        // Trying to get current heating schedule
+        self.heatingAPI.GetSchedule({
+            (error, schedule) -> Void in
+            XCTAssert(error == nil)
+            XCTAssert(schedule != nil)
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
 
+    func testResetHeatingSchedule() {
+        
+        let expectation = expectationWithDescription("ResetSchedule() request will be done in less than 10 seconds.")
+        
+        // Trying to get current heating schedule
+        self.heatingAPI.ResetSchedule({
+            (error, schedule) -> Void in
+            XCTAssert(error == nil)
+            XCTAssert(schedule != nil)
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testSetValidHeatingSchedule() {
+        
+        let expectation = expectationWithDescription("SetSchedule() request will be done in less than 10 seconds.")
+        let validSchedule = HeatingSchedule(from: NSDate(timeIntervalSinceNow: 0.0), to: NSDate(timeIntervalSinceNow: 0.0), active: false)
+        
+        // Trying to get current heating schedule
+        self.heatingAPI.SetSchedule(validSchedule, completionHandler: {
+            (error, schedule) -> Void in
+            XCTAssert(error == nil)
+            XCTAssert(schedule != nil)
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
 //    func testPerformanceExample() {
 //        // This is an example of a performance test case.
 //        self.measureBlock {

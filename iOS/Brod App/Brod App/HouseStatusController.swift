@@ -17,10 +17,10 @@ class HouseStatusController: UIViewController {
         self.refreshInterface()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//        // Dispose of any resources that can be recreated.
+//    }
 
     @IBOutlet weak var presenceModeBtn: HouseStatusButton!
     @IBOutlet weak var presenceLabel: UILabel!

@@ -112,11 +112,15 @@
                         </connections>
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="3t8-Pe-84K">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <outlet property="endDate" destination="fOz-1C-UDV" id="6WO-8j-Hta"/>
                         <outlet property="startDate" destination="yOB-lU-W8F" id="pLX-0y-wgb"/>
                         <outlet property="timerFinishRow" destination="hUB-2A-UsU" id="hzc-WK-vyJ"/>
                         <outlet property="timerStartRow" destination="eLT-HW-sRu" id="5sz-aD-TIr"/>
+                        <outlet property="timerSwitch" destination="kbd-xe-J6Z" id="uLF-2K-su2"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7wl-Yt-tU3" userLabel="First Responder" sceneMemberID="firstResponder"/>

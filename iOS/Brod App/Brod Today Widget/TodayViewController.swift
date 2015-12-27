@@ -45,7 +45,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, NSURLSessionDele
     
     func updateInterface() -> Void
     {
-        let API = HouseAPI()
+        let API = HouseStatusAPI()
         API.GetHouseStatus({
             (error, houseMode) -> Void in
         

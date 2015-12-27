@@ -72,7 +72,7 @@ class HouseStatusController: UIViewController {
         self.presenceModeBtn.enabled = false
         self.progress.startAnimating()
         
-        let API = HouseAPI()
+        let API = HouseStatusAPI()
         API.GetHouseStatus
         {
             (error, houseMode) -> Void in
@@ -113,7 +113,7 @@ class HouseStatusController: UIViewController {
                 self.refreshBtn.enabled = false
                 self.progress.startAnimating()
 
-                let API = HouseAPI()
+                let API = HouseStatusAPI()
                 API.SetHouseMode(self.CurrentHouseMode!.ToggleMode(), completionHandler: {
                     (error, houseMode) -> Void in
                     

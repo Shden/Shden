@@ -14,30 +14,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Q2r-m9-vsR">
-                            <rect key="frame" x="0.0" y="196" width="320" height="323"/>
+                            <rect key="frame" x="0.0" y="195" width="320" height="323"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rc6-dR-tcn">
-                                    <rect key="frame" x="50" y="8" width="221" height="30"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rc6-dR-tcn" customClass="HouseStatusButton" customModule="Брод" customModuleProvider="target">
+                                    <rect key="frame" x="28" y="31" width="265" height="42"/>
                                     <state key="normal" title="Обновить настройки таймера"/>
+                                    <connections>
+                                        <action selector="timerUpdatePressed:" destination="HOj-QV-YBR" eventType="primaryActionTriggered" id="Yjn-Rl-SG7"/>
+                                    </connections>
                                 </button>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nha-hx-9b2">
+                                    <rect key="frame" x="150" y="111" width="20" height="20"/>
+                                </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <sections>
                             <tableViewSection id="KU3-cm-6yd">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="11" id="PPA-Xa-tMf">
-                                        <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="11" rowHeight="43" id="PPA-Xa-tMf">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PPA-Xa-tMf" id="Oya-96-iMH">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="42"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Таймер активен" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNB-T9-SNM">
                                                     <rect key="frame" x="14" y="11" width="129" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbd-xe-J6Z">
@@ -48,12 +54,9 @@
                                                 </switch>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="fRR-LD-7Pp" kind="show" action="showDetailViewController:sender:" id="bLG-Jl-E7O"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="n78-jG-DhV" detailTextLabel="yOB-lU-W8F" style="IBUITableViewCellStyleValue1" id="eLT-HW-sRu">
-                                        <rect key="frame" x="0.0" y="108" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="107" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eLT-HW-sRu" id="hFT-3M-UBq">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -63,7 +66,7 @@
                                                     <rect key="frame" x="15" y="12" width="75" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yOB-lU-W8F">
@@ -76,11 +79,11 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="fRR-LD-7Pp" kind="show" id="zhc-Uf-8Vm"/>
+                                            <segue destination="fRR-LD-7Pp" kind="show" identifier="StartDateSegue" id="zhc-Uf-8Vm"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="DJc-xy-jTH" detailTextLabel="fOz-1C-UDV" style="IBUITableViewCellStyleValue1" id="hUB-2A-UsU">
-                                        <rect key="frame" x="0.0" y="152" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="151" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hUB-2A-UsU" id="n3r-lf-uoy">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -90,7 +93,7 @@
                                                     <rect key="frame" x="15" y="12" width="53" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fOz-1C-UDV">
@@ -102,6 +105,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="fRR-LD-7Pp" kind="show" identifier="FinishDateSegue" id="3Aq-el-S2N"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -111,16 +117,19 @@
                             <outlet property="delegate" destination="HOj-QV-YBR" id="Wr7-0D-9dd"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Таймер" id="boy-YE-H5d"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="3t8-Pe-84K">
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="3b5-Z0-3cM">
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                     <connections>
                         <outlet property="endDate" destination="fOz-1C-UDV" id="6WO-8j-Hta"/>
+                        <outlet property="progressIndicator" destination="nha-hx-9b2" id="jd6-Qy-xUI"/>
                         <outlet property="startDate" destination="yOB-lU-W8F" id="pLX-0y-wgb"/>
                         <outlet property="timerFinishRow" destination="hUB-2A-UsU" id="hzc-WK-vyJ"/>
                         <outlet property="timerStartRow" destination="eLT-HW-sRu" id="5sz-aD-TIr"/>
                         <outlet property="timerSwitch" destination="kbd-xe-J6Z" id="uLF-2K-su2"/>
+                        <outlet property="updateButton" destination="Rc6-dR-tcn" id="wbR-hc-NW1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7wl-Yt-tU3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -130,7 +139,7 @@
         <!--Дата-->
         <scene sceneID="JG1-BC-P1b">
             <objects>
-                <viewController id="fRR-LD-7Pp" userLabel="Дата" sceneMemberID="viewController">
+                <viewController id="fRR-LD-7Pp" userLabel="Дата" customClass="DatePickerController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qN6-0X-mqB"/>
                         <viewControllerLayoutGuide type="bottom" id="ugo-k7-XWO"/>
@@ -139,16 +148,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="CyI-lb-Ec8">
-                                <rect key="frame" x="0.0" y="66" width="320" height="216"/>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="CyI-lb-Ec8">
+                                <rect key="frame" x="0.0" y="66" width="320" height="266"/>
                                 <date key="date" timeIntervalSinceReferenceDate="472092916.57121801">
                                     <!--2015-12-18 00:55:16 +0000-->
                                 </date>
                             </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJh-Uc-PFc">
+                                <rect key="frame" x="112" y="349" width="96" height="30"/>
+                                <state key="normal" title="Ok"/>
+                                <connections>
+                                    <action selector="OkPressed:" destination="fRR-LD-7Pp" eventType="primaryActionTriggered" id="l0w-Mp-X0z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Дата и время [назначение]" id="gKA-gd-1g9"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="datePicker" destination="CyI-lb-Ec8" id="4J0-Nh-hhC"/>
+                        <outlet property="navigation" destination="gKA-gd-1g9" id="HkO-ei-HHp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OIC-Xv-ZzA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -181,7 +202,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -201,7 +222,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -218,7 +239,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -396,6 +417,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bLG-Jl-E7O"/>
+        <segue reference="3Aq-el-S2N"/>
     </inferredMetricsTieBreakers>
 </document>

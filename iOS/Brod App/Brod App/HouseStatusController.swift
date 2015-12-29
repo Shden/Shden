@@ -181,6 +181,7 @@ class HouseStatusButton : UIButton
         super.init(coder: aDecoder)!
         self.layer.cornerRadius = 5.0
         self.tintColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor(red:0.20, green:0.48, blue:0.72, alpha:1.0)
     }
 }
 

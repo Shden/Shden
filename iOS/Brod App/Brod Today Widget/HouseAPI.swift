@@ -31,10 +31,13 @@ class HouseAPI : NSObject, NSURLSessionDelegate
     {
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
 
+        // reachibility
+        let reach = Reach()
+        
         // load proxy configuration
         let proxyAddress = self.config.ProxyHost
         let proxyPort = self.config.ProxyPort
-        let useProxy = self.config.UseProxy
+        let useProxy = self.config.UseProxy && reach.connectionStatus() == ReachabilityStatus.Online(ReachabilityType.WWAN)
         
         if (useProxy)
         {

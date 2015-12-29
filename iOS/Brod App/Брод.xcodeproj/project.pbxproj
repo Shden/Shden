@@ -15,6 +15,10 @@
 		B749FFDB1C268F15006F1B13 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749FFDA1C268F15006F1B13 /* Configuration.swift */; };
 		B788DA941C0A14F6006913A1 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B788DA931C0A14F6006913A1 /* Settings.bundle */; };
 		B79DCDFD1C31C82400E6CB15 /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCDFC1C31C82400E6CB15 /* DatePickerController.swift */; };
+		B79DCDFF1C32C7D800E6CB15 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCDFE1C32C7D800E6CB15 /* Reach.swift */; };
+		B79DCE001C32C84000E6CB15 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCDFE1C32C7D800E6CB15 /* Reach.swift */; };
+		B79DCE021C32C89700E6CB15 /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCE011C32C89700E6CB15 /* NetworkTests.swift */; };
+		B79DCE031C32D40F00E6CB15 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCDFE1C32C7D800E6CB15 /* Reach.swift */; };
 		B7BD39681BB59A83009F5FE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */; };
 		B7BD396A1BB59A83009F5FE8 /* HouseStatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */; };
 		B7BD396D1BB59A83009F5FE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD396B1BB59A83009F5FE8 /* Main.storyboard */; };
@@ -80,6 +84,8 @@
 		B788DA931C0A14F6006913A1 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B788DA961C0A42F3006913A1 /* Brod App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brod App.entitlements"; sourceTree = "<group>"; };
 		B79DCDFC1C31C82400E6CB15 /* DatePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerController.swift; sourceTree = "<group>"; };
+		B79DCDFE1C32C7D800E6CB15 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
+		B79DCE011C32C89700E6CB15 /* NetworkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
 		B7BD39641BB59A83009F5FE8 /* Брод.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Брод.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseStatusController.swift; sourceTree = "<group>"; };
@@ -132,6 +138,7 @@
 				B7F3FBCD1C26A28200E3AD95 /* TestAPIConfiguration.swift */,
 				B749FFD21C26046B006F1B13 /* Info.plist */,
 				B7F3FBD41C26AE4000E3AD95 /* APILocalTests.swift */,
+				B79DCE011C32C89700E6CB15 /* NetworkTests.swift */,
 			);
 			path = "Brod Tests";
 			sourceTree = "<group>";
@@ -190,6 +197,7 @@
 				B7BD39A01BB59AFA009F5FE8 /* MainInterface.storyboard */,
 				B7BD39A31BB59AFA009F5FE8 /* Info.plist */,
 				B749FFDA1C268F15006F1B13 /* Configuration.swift */,
+				B79DCDFE1C32C7D800E6CB15 /* Reach.swift */,
 				B7E635931C08D021003CFE14 /* HouseAPI.swift */,
 				B749FFD81C268E24006F1B13 /* HouseStatusAPI.swift */,
 				B7229EA91C3011540061E7DF /* HeatingAPI.swift */,
@@ -342,8 +350,10 @@
 			files = (
 				B7F3FBCF1C26A2B900E3AD95 /* Configuration.swift in Sources */,
 				B7F3FBD31C26ACF800E3AD95 /* HouseAPI.swift in Sources */,
+				B79DCE021C32C89700E6CB15 /* NetworkTests.swift in Sources */,
 				B7F3FBD51C26AE4000E3AD95 /* APILocalTests.swift in Sources */,
 				B7F3FBCE1C26A28200E3AD95 /* TestAPIConfiguration.swift in Sources */,
+				B79DCE001C32C84000E6CB15 /* Reach.swift in Sources */,
 				B7F3FBD21C26A9EA00E3AD95 /* HouseStatusAPI.swift in Sources */,
 				B7229EAB1C3033320061E7DF /* HeatingAPI.swift in Sources */,
 			);
@@ -360,6 +370,7 @@
 				B7F3FBCC1C26A03000E3AD95 /* HouseStatusAPI.swift in Sources */,
 				B7BD396A1BB59A83009F5FE8 /* HouseStatusController.swift in Sources */,
 				B7229EAC1C3033330061E7DF /* HeatingAPI.swift in Sources */,
+				B79DCE031C32D40F00E6CB15 /* Reach.swift in Sources */,
 				B7E635971C09C272003CFE14 /* Formatter.swift in Sources */,
 				B7BD39681BB59A83009F5FE8 /* AppDelegate.swift in Sources */,
 			);
@@ -373,6 +384,7 @@
 				B749FFDB1C268F15006F1B13 /* Configuration.swift in Sources */,
 				B749FFD91C268E24006F1B13 /* HouseStatusAPI.swift in Sources */,
 				B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */,
+				B79DCDFF1C32C7D800E6CB15 /* Reach.swift in Sources */,
 				B7E635951C08D021003CFE14 /* HouseAPI.swift in Sources */,
 				B7229EAA1C3011540061E7DF /* HeatingAPI.swift in Sources */,
 			);

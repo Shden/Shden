@@ -28,7 +28,7 @@ class HeatingTimerController : UITableViewController, DateUpdatedDelegate
     @IBOutlet weak var timerSwitch: UISwitch!
     @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     @IBOutlet weak var updateButton: HouseStatusButton!
-    
+
     @IBAction func timerIsActiveChanged(sender: AnyObject) {
         let timerSwitch = sender as! UISwitch
         
@@ -167,12 +167,14 @@ class HeatingTimerController : UITableViewController, DateUpdatedDelegate
         self.startDate.text = "запрос расписания..."
         self.endDate.text = "запрос расписания..."
         self.updateButton.enabled = false
+        self.timerSwitch.enabled = false
         
         let API = HeatingAPI()
         API.GetSchedule { (error, schedule) -> Void in
             
             self.refreshControl?.endRefreshing()
             self.updateButton.enabled = true
+            self.timerSwitch.enabled = true
             
             if let error = error {
                 self.displayError(error)

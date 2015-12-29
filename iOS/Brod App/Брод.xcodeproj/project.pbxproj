@@ -19,6 +19,8 @@
 		B79DCE001C32C84000E6CB15 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCDFE1C32C7D800E6CB15 /* Reach.swift */; };
 		B79DCE021C32C89700E6CB15 /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCE011C32C89700E6CB15 /* NetworkTests.swift */; };
 		B79DCE031C32D40F00E6CB15 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCDFE1C32C7D800E6CB15 /* Reach.swift */; };
+		B79DCE041C32EC9B00E6CB15 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B788DA931C0A14F6006913A1 /* Settings.bundle */; };
+		B79DCE061C32F74300E6CB15 /* TodayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCE051C32F74300E6CB15 /* TodayConfiguration.swift */; };
 		B7BD39681BB59A83009F5FE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */; };
 		B7BD396A1BB59A83009F5FE8 /* HouseStatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */; };
 		B7BD396D1BB59A83009F5FE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD396B1BB59A83009F5FE8 /* Main.storyboard */; };
@@ -86,6 +88,7 @@
 		B79DCDFC1C31C82400E6CB15 /* DatePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerController.swift; sourceTree = "<group>"; };
 		B79DCDFE1C32C7D800E6CB15 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		B79DCE011C32C89700E6CB15 /* NetworkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
+		B79DCE051C32F74300E6CB15 /* TodayConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayConfiguration.swift; sourceTree = "<group>"; };
 		B7BD39641BB59A83009F5FE8 /* Брод.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Брод.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7BD39671BB59A83009F5FE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseStatusController.swift; sourceTree = "<group>"; };
@@ -101,7 +104,6 @@
 		B7E635931C08D021003CFE14 /* HouseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseAPI.swift; sourceTree = "<group>"; };
 		B7E635961C09C272003CFE14 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		B7E635991C09E14C003CFE14 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
-		B7E6359C1C09E241003CFE14 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
 		B7F3FBCD1C26A28200E3AD95 /* TestAPIConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAPIConfiguration.swift; sourceTree = "<group>"; };
 		B7F3FBD41C26AE4000E3AD95 /* APILocalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APILocalTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				B7BD39661BB59A83009F5FE8 /* Brod App */,
-				B7BD399D1BB59AF9009F5FE8 /* Brod Today Widget */,
+				B7BD399D1BB59AF9009F5FE8 /* Brod Today */,
 				B749FFCF1C26046B006F1B13 /* Brod Tests */,
 				B7BD399A1BB59AF9009F5FE8 /* Frameworks */,
 				B7BD39651BB59A83009F5FE8 /* Products */,
@@ -190,7 +192,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B7BD399D1BB59AF9009F5FE8 /* Brod Today Widget */ = {
+		B7BD399D1BB59AF9009F5FE8 /* Brod Today */ = {
 			isa = PBXGroup;
 			children = (
 				B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */,
@@ -202,8 +204,9 @@
 				B749FFD81C268E24006F1B13 /* HouseStatusAPI.swift */,
 				B7229EA91C3011540061E7DF /* HeatingAPI.swift */,
 				B7E635961C09C272003CFE14 /* Formatter.swift */,
-				B7E6359C1C09E241003CFE14 /* brod.P12 */,
+				B79DCE051C32F74300E6CB15 /* TodayConfiguration.swift */,
 			);
+			name = "Brod Today";
 			path = "Brod Today Widget";
 			sourceTree = "<group>";
 		};
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7E6359B1C09E14C003CFE14 /* brod.P12 in Resources */,
+				B79DCE041C32EC9B00E6CB15 /* Settings.bundle in Resources */,
 				B7BD39A21BB59AFA009F5FE8 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -384,6 +388,7 @@
 				B749FFDB1C268F15006F1B13 /* Configuration.swift in Sources */,
 				B749FFD91C268E24006F1B13 /* HouseStatusAPI.swift in Sources */,
 				B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */,
+				B79DCE061C32F74300E6CB15 /* TodayConfiguration.swift in Sources */,
 				B79DCDFF1C32C7D800E6CB15 /* Reach.swift in Sources */,
 				B7E635951C08D021003CFE14 /* HouseAPI.swift in Sources */,
 				B7229EAA1C3011540061E7DF /* HeatingAPI.swift in Sources */,

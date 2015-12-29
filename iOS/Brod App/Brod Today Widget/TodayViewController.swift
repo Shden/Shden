@@ -29,6 +29,14 @@ class TodayViewController: UIViewController, NCWidgetProviding, NSURLSessionDele
         // Dispose of any resources that can be recreated.
     }
     
+    // The fantom button without a caption is plased all over the view to
+    // handle touch event. Touch event will run the containing application.
+    @IBAction func buttonPressed(sender: AnyObject) {
+        if let url = NSURL(string: "brodapp://home") {
+            self.extensionContext?.openURL(url, completionHandler: nil)
+        }
+    }
+    
     func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void))
     {
         // Perform any setup necessary in order to update the view.
@@ -45,7 +53,8 @@ class TodayViewController: UIViewController, NCWidgetProviding, NSURLSessionDele
     
     func updateInterface() -> Void
     {
-        let API = HouseStatusAPI()
+        let configuration = TodayConfiguration()
+        let API = HouseStatusAPI(config: configuration)
         API.GetHouseStatus({
             (error, houseMode) -> Void in
         

@@ -3,7 +3,7 @@
 /* Execute SQL statement and return resultset as an array */
 function SQL2Array($SQLStatement)
 {
-	require_once ('../include/db.inc');
+	require_once ("../include/db.inc");
 	$res = $conn->query($SQLStatement);
 	$arr = array();
 	while($r = $res->fetch_assoc())

@@ -74,6 +74,40 @@ Class Heating
 	}
 	
 	/**
+	 *	Return heating history hourly for the depth specified.
+	 *
+	 *	@param $days - history depth in days
+	 *
+	 *	@url GET /GetTempHistory/$days
+	 */
+	public function GetTempHistory($days)
+	{
+		global $conn;
+		$time_zone = new DateTimeZone(TZ);
+		
+		$res = $conn->query(
+			"SELECT DATE(time) as Date, HOUR(time) as Hour, AVG(external) as outTemp, AVG(bedroom) as inTemp " .
+			"FROM heating " .
+			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
+			"GROUP BY HOUR(time), DATE(time) " .
+			"ORDER BY DATE(time), HOUR(time);");
+		
+		$arr = array();
+		while($r = $res->fetch_assoc())
+		{
+			$moment = DateTime::createFromFormat("Y-m-d", $r["Date"], $time_zone);
+			$moment->setTime($r["Hour"], 0);
+				
+			$arr[] = array(
+				"date" 		=> $moment->format(DateTime::ISO8601),
+				"inTemp"	=> (float) $r["inTemp"],
+				"outTemp" 	=> (float) $r["outTemp"]
+			);
+		}
+		return $arr;		
+	}
+	
+	/**
 	 *	Helper updating INI schedule section.
 	 */
 	private function UpdateScheduleIni($arr_year, $arr_month, $arr_day, $arr_hour,

@@ -227,6 +227,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="uOY-0I-Z3b" kind="show" id="4zI-3R-G51"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="wVM-8V-xd4" style="IBUITableViewCellStyleDefault" id="sFw-Au-jRc">
                                         <rect key="frame" x="0.0" y="152" width="320" height="44"/>
@@ -259,6 +262,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGi-qD-nl5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="715" y="2077"/>
+        </scene>
+        <!--Температурный график-->
+        <scene sceneID="OXX-ol-zBp">
+            <objects>
+                <tableViewController id="uOY-0I-Z3b" userLabel="Температурный график" customClass="HeatingChartController" customModule="Brod_Tests" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="8b3-4L-adL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="aHw-c9-CDL" customClass="LineChartView" customModule="Charts">
+                            <rect key="frame" x="0.0" y="64" width="320" height="454"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <sections>
+                            <tableViewSection id="QjW-Wy-xsg">
+                                <cells/>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="uOY-0I-Z3b" id="HvB-KU-H1j"/>
+                            <outlet property="delegate" destination="uOY-0I-Z3b" id="sN3-Dp-mEV"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="График" id="FNy-aq-lPw"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HrP-oB-aTq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1204" y="2612"/>
         </scene>
         <!--Состояние-->
         <scene sceneID="XUk-e7-sky">

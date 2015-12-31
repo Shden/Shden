@@ -10,6 +10,9 @@
 		B7229EAA1C3011540061E7DF /* HeatingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7229EA91C3011540061E7DF /* HeatingAPI.swift */; };
 		B7229EAB1C3033320061E7DF /* HeatingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7229EA91C3011540061E7DF /* HeatingAPI.swift */; };
 		B7229EAC1C3033330061E7DF /* HeatingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7229EA91C3011540061E7DF /* HeatingAPI.swift */; };
+		B7471FBD1C35A2DA001ACA97 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7471FB81C35A277001ACA97 /* Charts.framework */; };
+		B7471FBE1C35A2DA001ACA97 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7471FB81C35A277001ACA97 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B7471FC31C35A675001ACA97 /* HeatingChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7471FC21C35A675001ACA97 /* HeatingChartController.swift */; };
 		B749FFC91C25DF5E006F1B13 /* HeatingTimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749FFC81C25DF5E006F1B13 /* HeatingTimerController.swift */; };
 		B749FFD91C268E24006F1B13 /* HouseStatusAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749FFD81C268E24006F1B13 /* HouseStatusAPI.swift */; };
 		B749FFDB1C268F15006F1B13 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749FFDA1C268F15006F1B13 /* Configuration.swift */; };
@@ -46,6 +49,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B7471FB71C35A277001ACA97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7471FB11C35A277001ACA97 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5BA8EC401A9D14DC00CE82E1;
+			remoteInfo = "Charts-iOS";
+		};
+		B7471FB91C35A277001ACA97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7471FB11C35A277001ACA97 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A52C5C371BAC5CA400594CDD;
+			remoteInfo = "Charts-TV";
+		};
+		B7471FBB1C35A277001ACA97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7471FB11C35A277001ACA97 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06AEE7A21BDC3F8B009875AE;
+			remoteInfo = ChartsTests;
+		};
+		B7471FBF1C35A2DA001ACA97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7471FB11C35A277001ACA97 /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5BA8EC3F1A9D14DC00CE82E1;
+			remoteInfo = "Charts-iOS";
+		};
 		B749FFD31C26046B006F1B13 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7BD395C1BB59A83009F5FE8 /* Project object */;
@@ -63,6 +94,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B7471FC11C35A2DB001ACA97 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B7471FBE1C35A2DA001ACA97 /* Charts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7BD39AA1BB59AFA009F5FE8 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -78,6 +120,8 @@
 
 /* Begin PBXFileReference section */
 		B7229EA91C3011540061E7DF /* HeatingAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeatingAPI.swift; sourceTree = "<group>"; };
+		B7471FB11C35A277001ACA97 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../ios-charts/Charts/Charts.xcodeproj"; sourceTree = "<group>"; };
+		B7471FC21C35A675001ACA97 /* HeatingChartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeatingChartController.swift; sourceTree = "<group>"; };
 		B749FFC81C25DF5E006F1B13 /* HeatingTimerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeatingTimerController.swift; sourceTree = "<group>"; };
 		B749FFCE1C26046B006F1B13 /* Brod Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Brod Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B749FFD21C26046B006F1B13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -120,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7471FBD1C35A2DA001ACA97 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +179,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B7471FB21C35A277001ACA97 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B7471FB81C35A277001ACA97 /* Charts.framework */,
+				B7471FBA1C35A277001ACA97 /* Charts.framework */,
+				B7471FBC1C35A277001ACA97 /* ChartsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		B749FFCF1C26046B006F1B13 /* Brod Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +203,7 @@
 		B7BD395B1BB59A83009F5FE8 = {
 			isa = PBXGroup;
 			children = (
+				B7471FB11C35A277001ACA97 /* Charts.xcodeproj */,
 				B7BD39661BB59A83009F5FE8 /* Brod App */,
 				B7BD399D1BB59AF9009F5FE8 /* Brod Today */,
 				B749FFCF1C26046B006F1B13 /* Brod Tests */,
@@ -174,6 +230,7 @@
 				B7BD39691BB59A83009F5FE8 /* HouseStatusController.swift */,
 				B749FFC81C25DF5E006F1B13 /* HeatingTimerController.swift */,
 				B79DCDFC1C31C82400E6CB15 /* DatePickerController.swift */,
+				B7471FC21C35A675001ACA97 /* HeatingChartController.swift */,
 				B7BD396B1BB59A83009F5FE8 /* Main.storyboard */,
 				B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */,
 				B7BD39701BB59A83009F5FE8 /* LaunchScreen.storyboard */,
@@ -239,11 +296,13 @@
 				B7BD39611BB59A83009F5FE8 /* Frameworks */,
 				B7BD39621BB59A83009F5FE8 /* Resources */,
 				B7BD39AA1BB59AFA009F5FE8 /* Embed App Extensions */,
+				B7471FC11C35A2DB001ACA97 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				B7BD39A51BB59AFA009F5FE8 /* PBXTargetDependency */,
+				B7471FC01C35A2DA001ACA97 /* PBXTargetDependency */,
 			);
 			name = "Брод";
 			productName = "Brod App";
@@ -306,6 +365,12 @@
 			mainGroup = B7BD395B1BB59A83009F5FE8;
 			productRefGroup = B7BD39651BB59A83009F5FE8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B7471FB21C35A277001ACA97 /* Products */;
+					ProjectRef = B7471FB11C35A277001ACA97 /* Charts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B7BD39631BB59A83009F5FE8 /* Брод */,
@@ -314,6 +379,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B7471FB81C35A277001ACA97 /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = B7471FB71C35A277001ACA97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B7471FBA1C35A277001ACA97 /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = B7471FB91C35A277001ACA97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B7471FBC1C35A277001ACA97 /* ChartsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ChartsTests.xctest;
+			remoteRef = B7471FBB1C35A277001ACA97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B749FFCC1C26046B006F1B13 /* Resources */ = {
@@ -358,6 +447,7 @@
 				B7F3FBD51C26AE4000E3AD95 /* APILocalTests.swift in Sources */,
 				B7F3FBCE1C26A28200E3AD95 /* TestAPIConfiguration.swift in Sources */,
 				B79DCE001C32C84000E6CB15 /* Reach.swift in Sources */,
+				B7471FC31C35A675001ACA97 /* HeatingChartController.swift in Sources */,
 				B7F3FBD21C26A9EA00E3AD95 /* HouseStatusAPI.swift in Sources */,
 				B7229EAB1C3033320061E7DF /* HeatingAPI.swift in Sources */,
 			);
@@ -398,6 +488,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B7471FC01C35A2DA001ACA97 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Charts-iOS";
+			targetProxy = B7471FBF1C35A2DA001ACA97 /* PBXContainerItemProxy */;
+		};
 		B749FFD41C26046B006F1B13 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B7BD39631BB59A83009F5FE8 /* Брод */;

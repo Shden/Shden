@@ -129,6 +129,20 @@ class APILocalTests: XCTestCase {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
+    func testGetTempHistory() {
+        
+        let expectation = expectationWithDescription("GetTempHistory() request will be done in less than 10 seconds.")
+        
+        // Trying to get temperature history for 2 days
+        self.heatingAPI.GetTempHistory(2, completionHandler: {
+            (error, ts) -> Void in
+            XCTAssertNil(error)
+            XCTAssertNotNil(ts)
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
 //    func testPerformanceExample() {
 //        // This is an example of a performance test case.
 //        self.measureBlock {

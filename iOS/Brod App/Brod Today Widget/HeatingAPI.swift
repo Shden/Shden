@@ -15,6 +15,12 @@ struct HeatingSchedule {
     var active: Bool = false
 }
 
+// Heating historical time series point.
+struct HeatingTSPoint {
+    var date: NSDate
+    var inTemp, outTemp: Float
+}
+
 class HeatingAPI : HouseAPI {
     
     // Defalult constructor uses bundle configuration
@@ -40,8 +46,7 @@ class HeatingAPI : HouseAPI {
     {
         var schedule = HeatingSchedule()
         
-        let json: NSDictionary! = try NSJSONSerialization.JSONObjectWithData(data,
-            options:NSJSONReadingOptions.MutableContainers) as? NSDictionary
+        let json: NSDictionary! = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
         
         // field by field maped load from json to the structure
         if let from = json["from"] {
@@ -57,6 +62,35 @@ class HeatingAPI : HouseAPI {
         }
         
         return schedule
+    }
+    
+    // JSON decode for GetTempHistory time series responce
+    private func getTempHistoryTS(data: NSData) throws -> [HeatingTSPoint] {
+        
+        let jsonArray: NSArray! = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSArray
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
+        
+        var ts = [HeatingTSPoint](count: jsonArray.count, repeatedValue: HeatingTSPoint(date: NSDate(timeIntervalSince1970: 0), inTemp: 0, outTemp: 0))
+        for var i: Int = 0; i < jsonArray.count; ++i {
+            if let jsonItem: NSDictionary = jsonArray[i] as? NSDictionary {
+                
+                if let inTemp = jsonItem["inTemp"]?.floatValue {
+                    ts[i].inTemp = inTemp
+                }
+                
+                if let outTemp = jsonItem["outTemp"]?.floatValue {
+                    ts[i].outTemp = outTemp
+                }
+                
+                let dateStr = jsonItem["date"] as! String
+                if let date = dateFormatter.dateFromString(dateStr) {
+                    ts[i].date = date
+                }
+            }
+        }
+        return ts
     }
     
     // MARK: Schedule
@@ -76,7 +110,7 @@ class HeatingAPI : HouseAPI {
                 }
                 catch
                 {
-                    completionHandler(error as NSError?, nil)
+                    completionHandler(NSError(domain: "GetSchedule() result decode error", code: 1001, userInfo: nil), nil)
                 }
             }
             else
@@ -109,7 +143,7 @@ class HeatingAPI : HouseAPI {
                 }
                 catch
                 {
-                    completionHandler(error as NSError?, nil)
+                    completionHandler(NSError(domain: "SetSchedule() result decode error", code: 1002, userInfo: nil), nil)
                 }
             }
             else
@@ -134,12 +168,34 @@ class HeatingAPI : HouseAPI {
                 }
                 catch
                 {
-                    completionHandler(error as NSError?, nil)
+                    completionHandler(NSError(domain: "ResetSchedule() result decode error", code: 1003, userInfo: nil), nil)
                 }
             }
             else
             {
                 completionHandler(error, nil)
+            }
+        })
+    }
+    
+    // Return heating history hourly for the depth specified.
+    func GetTempHistory(days: Int, completionHandler: (NSError?, [HeatingTSPoint]?) -> Void) -> Void {
+        let URL = self.config.URL + "heating/GetTempHistory/\(days)"
+        self.GET(URL, completionHandler: {
+            (data, response, error) -> Void in
+            
+            if let error = error {
+                completionHandler(error, nil)
+            }
+            
+            if let data = data {
+                do {
+                    let ts = try self.getTempHistoryTS(data)
+                    completionHandler(nil, ts)
+                }
+                catch {
+                    completionHandler(NSError(domain: "GetTempHistory() result decode error", code: 1004, userInfo: nil), nil)
+                }
             }
         })
     }

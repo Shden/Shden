@@ -12,10 +12,10 @@
 		B7229EAC1C3033330061E7DF /* HeatingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7229EA91C3011540061E7DF /* HeatingAPI.swift */; };
 		B7471FBD1C35A2DA001ACA97 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7471FB81C35A277001ACA97 /* Charts.framework */; };
 		B7471FBE1C35A2DA001ACA97 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7471FB81C35A277001ACA97 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B7471FC31C35A675001ACA97 /* HeatingChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7471FC21C35A675001ACA97 /* HeatingChartController.swift */; };
 		B749FFC91C25DF5E006F1B13 /* HeatingTimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749FFC81C25DF5E006F1B13 /* HeatingTimerController.swift */; };
 		B749FFD91C268E24006F1B13 /* HouseStatusAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749FFD81C268E24006F1B13 /* HouseStatusAPI.swift */; };
 		B749FFDB1C268F15006F1B13 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749FFDA1C268F15006F1B13 /* Configuration.swift */; };
+		B768DCA71C53C2AB00D79A37 /* HeatingChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7471FC21C35A675001ACA97 /* HeatingChartController.swift */; };
 		B788DA941C0A14F6006913A1 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B788DA931C0A14F6006913A1 /* Settings.bundle */; };
 		B79DCDFD1C31C82400E6CB15 /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCDFC1C31C82400E6CB15 /* DatePickerController.swift */; };
 		B79DCDFF1C32C7D800E6CB15 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79DCDFE1C32C7D800E6CB15 /* Reach.swift */; };
@@ -447,7 +447,6 @@
 				B7F3FBD51C26AE4000E3AD95 /* APILocalTests.swift in Sources */,
 				B7F3FBCE1C26A28200E3AD95 /* TestAPIConfiguration.swift in Sources */,
 				B79DCE001C32C84000E6CB15 /* Reach.swift in Sources */,
-				B7471FC31C35A675001ACA97 /* HeatingChartController.swift in Sources */,
 				B7F3FBD21C26A9EA00E3AD95 /* HouseStatusAPI.swift in Sources */,
 				B7229EAB1C3033320061E7DF /* HeatingAPI.swift in Sources */,
 			);
@@ -458,6 +457,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B749FFC91C25DF5E006F1B13 /* HeatingTimerController.swift in Sources */,
+				B768DCA71C53C2AB00D79A37 /* HeatingChartController.swift in Sources */,
 				B7F3FBCB1C26A02A00E3AD95 /* HouseAPI.swift in Sources */,
 				B7F3FBCA1C26A02600E3AD95 /* Configuration.swift in Sources */,
 				B79DCDFD1C31C82400E6CB15 /* DatePickerController.swift in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9oK-B0-pzJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9oK-B0-pzJ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -8,7 +8,7 @@
         <!--Таймер отопления-->
         <scene sceneID="fRn-MY-3bV">
             <objects>
-                <tableViewController id="HOj-QV-YBR" userLabel="Таймер отопления" sceneMemberID="viewController">
+                <tableViewController id="HOj-QV-YBR" userLabel="Таймер отопления" customClass="HeatingTimerController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="vOz-Xg-67X">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -17,18 +17,21 @@
                             <rect key="frame" x="0.0" y="195" width="320" height="323"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rc6-dR-tcn" customClass="HouseStatusButton" customModule="Брод" customModuleProvider="target">
-                                    <rect key="frame" x="28" y="31" width="265" height="42"/>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nha-hx-9b2">
+                                    <rect key="frame" x="150" y="111" width="20" height="20"/>
+                                </activityIndicatorView>
+                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rc6-dR-tcn" customClass="HouseStatusButton" customModule="Брод" customModuleProvider="target">
+                                    <rect key="frame" x="41" y="29" width="239" height="42"/>
                                     <state key="normal" title="Обновить настройки таймера"/>
                                     <connections>
                                         <action selector="timerUpdatePressed:" destination="HOj-QV-YBR" eventType="primaryActionTriggered" id="Yjn-Rl-SG7"/>
                                     </connections>
                                 </button>
-                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nha-hx-9b2">
-                                    <rect key="frame" x="150" y="111" width="20" height="20"/>
-                                </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="Rc6-dR-tcn" firstAttribute="centerX" secondItem="Q2r-m9-vsR" secondAttribute="centerX" id="TTk-hp-RM8"/>
+                            </constraints>
                         </view>
                         <sections>
                             <tableViewSection id="KU3-cm-6yd">
@@ -40,19 +43,23 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="42"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbd-xe-J6Z">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbd-xe-J6Z">
                                                     <rect key="frame" x="255" y="6" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="timerIsActiveChanged:" destination="HOj-QV-YBR" eventType="valueChanged" id="fOA-UX-RJq"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Таймер отопления" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNB-T9-SNM">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Таймер отопления" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNB-T9-SNM">
                                                     <rect key="frame" x="15" y="11" width="190" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="kbd-xe-J6Z" secondAttribute="trailing" constant="8" id="DnY-sM-CoR"/>
+                                                <constraint firstItem="kbd-xe-J6Z" firstAttribute="centerY" secondItem="RNB-T9-SNM" secondAttribute="centerY" id="U1Y-GM-Yyx"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="n78-jG-DhV" detailTextLabel="yOB-lU-W8F" style="IBUITableViewCellStyleValue1" id="eLT-HW-sRu">
@@ -137,39 +144,59 @@
             <point key="canvasLocation" x="1204" y="1946"/>
         </scene>
         <!--Температурный график-->
-        <scene sceneID="ECr-3n-uci">
+        <scene sceneID="5nm-jw-cjR">
             <objects>
-                <viewController id="yqF-Ee-OsU" userLabel="Температурный график" customClass="HeatingChartController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8vX-tl-LIf"/>
-                        <viewControllerLayoutGuide type="bottom" id="k6Z-VX-AOS"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="LgP-2n-pNX">
+                <tableViewController title="Температурный график" id="G2i-1z-U1l" customClass="HeatingChartController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="cxW-wX-abS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DgG-Yr-yUC" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="40" y="89" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="DgG-Yr-yUC" secondAttribute="trailing" constant="10" id="2N7-zy-dHa" userLabel="trailingMargin = Line Chart.trailing"/>
-                            <constraint firstItem="DgG-Yr-yUC" firstAttribute="leading" secondItem="LgP-2n-pNX" secondAttribute="leadingMargin" constant="10" id="4Ry-Zy-29V" userLabel="Line Chart.leading = leadingMargin"/>
-                            <constraint firstItem="DgG-Yr-yUC" firstAttribute="top" secondItem="8vX-tl-LIf" secondAttribute="bottom" constant="10" id="XtX-EG-bax" userLabel="Line Chart.top = Top Layout Guide.bottom"/>
-                            <constraint firstItem="k6Z-VX-AOS" firstAttribute="top" secondItem="DgG-Yr-yUC" secondAttribute="bottom" constant="10" id="ZDy-AE-5EB" userLabel="Bottom Layout Guide.top = Line Chart.bottom"/>
-                        </constraints>
-                    </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="zpt-zp-889" userLabel="Cell Container">
+                            <rect key="frame" x="0.0" y="64" width="320" height="446"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdP-6a-oaY" customClass="LineChartView" customModule="Charts">
+                                    <rect key="frame" x="8" y="52" width="304" height="386"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xRD-HL-Jxp">
+                                    <rect key="frame" x="68" y="8" width="185" height="29"/>
+                                    <segments>
+                                        <segment title="Сутки"/>
+                                        <segment title="Неделя"/>
+                                        <segment title="Месяц"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="timeSpanChanged:" destination="G2i-1z-U1l" eventType="primaryActionTriggered" id="2da-5I-JTg"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="tdP-6a-oaY" firstAttribute="centerX" secondItem="zpt-zp-889" secondAttribute="centerX" id="JEc-2Q-unb"/>
+                                <constraint firstAttribute="trailing" secondItem="tdP-6a-oaY" secondAttribute="trailing" constant="8" id="LFJ-Iu-uBN"/>
+                                <constraint firstItem="tdP-6a-oaY" firstAttribute="top" secondItem="xRD-HL-Jxp" secondAttribute="bottom" constant="16" id="RqL-gb-nU3"/>
+                                <constraint firstItem="xRD-HL-Jxp" firstAttribute="top" secondItem="zpt-zp-889" secondAttribute="top" constant="8" id="nfc-Dh-Feb"/>
+                                <constraint firstItem="tdP-6a-oaY" firstAttribute="leading" secondItem="zpt-zp-889" secondAttribute="leading" constant="8" id="oZf-jz-2Ft"/>
+                                <constraint firstItem="tdP-6a-oaY" firstAttribute="bottom" secondItem="zpt-zp-889" secondAttribute="bottomMargin" id="wks-Hb-wh1"/>
+                                <constraint firstItem="xRD-HL-Jxp" firstAttribute="centerX" secondItem="zpt-zp-889" secondAttribute="centerX" id="xSx-JR-4Nb"/>
+                            </constraints>
+                        </view>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="G2i-1z-U1l" id="7Ei-gg-557"/>
+                            <outlet property="delegate" destination="G2i-1z-U1l" id="xa1-zs-tUZ"/>
+                        </connections>
+                    </tableView>
                     <navigationItem key="navigationItem" title="График" id="zcc-7V-Ca4"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="lineChart" destination="DgG-Yr-yUC" id="5b2-J2-iu5"/>
+                        <outlet property="lineChart" destination="tdP-6a-oaY" id="nks-58-cvK"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wHt-GN-srh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0rG-PS-t6o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1204" y="2585"/>
+            <point key="canvasLocation" x="1204" y="2601"/>
         </scene>
         <!--Дата-->
         <scene sceneID="JG1-BC-P1b">
@@ -263,7 +290,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="yqF-Ee-OsU" kind="show" id="05z-Qr-iqk"/>
+                                            <segue destination="G2i-1z-U1l" kind="show" id="dVp-ym-nI0"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="wVM-8V-xd4" style="IBUITableViewCellStyleDefault" id="sFw-Au-jRc">

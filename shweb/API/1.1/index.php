@@ -3,6 +3,7 @@
 require '../RestServer.php';
 require 'Status.php';
 require 'Heating.php';
+require 'Lighting.php';
 
 spl_autoload_register(); // don't load our classes unless we use them
 

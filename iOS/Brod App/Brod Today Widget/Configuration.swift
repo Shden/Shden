@@ -20,9 +20,10 @@ protocol HouseAPIConfiguration {
 
 // Bundle settings based configuration
 class BundleConfig: HouseAPIConfiguration {
+    let DEBUG_API = "http://localhost/API/1.1/"
     private static var userDefaults = NSUserDefaults.init()
     
-    var URL: String { return BundleConfig.userDefaults.stringForKey("SettingsServer") ?? "" }
+    var URL: String { return BundleConfig.userDefaults.stringForKey("SettingsServer") ?? DEBUG_API }
     var UseProxy: Bool { return BundleConfig.userDefaults.boolForKey("SettingsUseProxy") }
     var ProxyHost: String { return BundleConfig.userDefaults.stringForKey("SettingsProxyAddress") ?? "" }
     var ProxyPort: Int { return BundleConfig.userDefaults.integerForKey("SettingsProxyPort") }

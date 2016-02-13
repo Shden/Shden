@@ -12,16 +12,31 @@
 		<key>Brod AppUITests copy.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>4</integer>
 		</dict>
 		<key>Brod Today Widget.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
+		</dict>
+		<key>Brod Watch App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Notification - Brod Watch App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>B74733641C5E8CB600F64DCE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B749FFCD1C26046B006F1B13</key>
 		<dict>
 			<key>primary</key>

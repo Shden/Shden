@@ -34,6 +34,9 @@
 		B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */; };
 		B7BD39A21BB59AFA009F5FE8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BD39A01BB59AFA009F5FE8 /* MainInterface.storyboard */; };
 		B7BD39A61BB59AFA009F5FE8 /* Brod Today Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B7BD39991BB59AF9009F5FE8 /* Brod Today Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B7DCAAA21C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DCAAA11C6F84CD00E2C4B6 /* LightingAPI.swift */; };
+		B7DCAAA31C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DCAAA11C6F84CD00E2C4B6 /* LightingAPI.swift */; };
+		B7DCAAA41C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DCAAA11C6F84CD00E2C4B6 /* LightingAPI.swift */; };
 		B7E635951C08D021003CFE14 /* HouseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635931C08D021003CFE14 /* HouseAPI.swift */; };
 		B7E635971C09C272003CFE14 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635961C09C272003CFE14 /* Formatter.swift */; };
 		B7E635981C09C272003CFE14 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635961C09C272003CFE14 /* Formatter.swift */; };
@@ -157,6 +160,7 @@
 		B7BD399E1BB59AFA009F5FE8 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		B7BD39A11BB59AFA009F5FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B7BD39A31BB59AFA009F5FE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7DCAAA11C6F84CD00E2C4B6 /* LightingAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightingAPI.swift; sourceTree = "<group>"; };
 		B7E635931C08D021003CFE14 /* HouseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseAPI.swift; sourceTree = "<group>"; };
 		B7E635961C09C272003CFE14 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		B7E635991C09E14C003CFE14 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
@@ -275,6 +279,7 @@
 				B7229EA91C3011540061E7DF /* HeatingAPI.swift */,
 				B7E635961C09C272003CFE14 /* Formatter.swift */,
 				B79DCE051C32F74300E6CB15 /* TodayConfiguration.swift */,
+				B7DCAAA11C6F84CD00E2C4B6 /* LightingAPI.swift */,
 			);
 			name = "Brod Today";
 			path = "Brod Today Widget";
@@ -458,6 +463,7 @@
 				B7F3FBCF1C26A2B900E3AD95 /* Configuration.swift in Sources */,
 				B7F3FBD31C26ACF800E3AD95 /* HouseAPI.swift in Sources */,
 				B79DCE021C32C89700E6CB15 /* NetworkTests.swift in Sources */,
+				B7DCAAA41C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */,
 				B7F3FBD51C26AE4000E3AD95 /* APILocalTests.swift in Sources */,
 				B7F3FBCE1C26A28200E3AD95 /* TestAPIConfiguration.swift in Sources */,
 				B79DCE001C32C84000E6CB15 /* Reach.swift in Sources */,
@@ -475,6 +481,7 @@
 				B768DCA71C53C2AB00D79A37 /* HeatingChartController.swift in Sources */,
 				B7F3FBCB1C26A02A00E3AD95 /* HouseAPI.swift in Sources */,
 				B7F3FBCA1C26A02600E3AD95 /* Configuration.swift in Sources */,
+				B7DCAAA21C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */,
 				B79DCDFD1C31C82400E6CB15 /* DatePickerController.swift in Sources */,
 				B7F3FBCC1C26A03000E3AD95 /* HouseStatusAPI.swift in Sources */,
 				B7BD396A1BB59A83009F5FE8 /* HouseStatusController.swift in Sources */,
@@ -492,6 +499,7 @@
 				B7E635981C09C272003CFE14 /* Formatter.swift in Sources */,
 				B749FFDB1C268F15006F1B13 /* Configuration.swift in Sources */,
 				B749FFD91C268E24006F1B13 /* HouseStatusAPI.swift in Sources */,
+				B7DCAAA31C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */,
 				B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */,
 				B79DCE061C32F74300E6CB15 /* TodayConfiguration.swift in Sources */,
 				B79DCDFF1C32C7D800E6CB15 /* Reach.swift in Sources */,

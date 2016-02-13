@@ -12,6 +12,7 @@ $server = new RestServer($mode);
 
 $server->addClass('Status', '/status'); 
 $server->addClass('Heating', '/heating');
+$server->addClass('Lighting', '/lighting');
 
 $server->handle();
 

@@ -37,6 +37,9 @@
 		B7DCAAA21C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DCAAA11C6F84CD00E2C4B6 /* LightingAPI.swift */; };
 		B7DCAAA31C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DCAAA11C6F84CD00E2C4B6 /* LightingAPI.swift */; };
 		B7DCAAA41C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DCAAA11C6F84CD00E2C4B6 /* LightingAPI.swift */; };
+		B7DCAAA61C6FC22700E2C4B6 /* LightingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DCAAA51C6FC22700E2C4B6 /* LightingController.swift */; };
+		B7DCAAA71C6FC22700E2C4B6 /* LightingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DCAAA51C6FC22700E2C4B6 /* LightingController.swift */; };
+		B7DCAAA81C6FC22700E2C4B6 /* LightingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DCAAA51C6FC22700E2C4B6 /* LightingController.swift */; };
 		B7E635951C08D021003CFE14 /* HouseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635931C08D021003CFE14 /* HouseAPI.swift */; };
 		B7E635971C09C272003CFE14 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635961C09C272003CFE14 /* Formatter.swift */; };
 		B7E635981C09C272003CFE14 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E635961C09C272003CFE14 /* Formatter.swift */; };
@@ -161,6 +164,7 @@
 		B7BD39A11BB59AFA009F5FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B7BD39A31BB59AFA009F5FE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7DCAAA11C6F84CD00E2C4B6 /* LightingAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightingAPI.swift; sourceTree = "<group>"; };
+		B7DCAAA51C6FC22700E2C4B6 /* LightingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightingController.swift; sourceTree = "<group>"; };
 		B7E635931C08D021003CFE14 /* HouseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseAPI.swift; sourceTree = "<group>"; };
 		B7E635961C09C272003CFE14 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		B7E635991C09E14C003CFE14 /* brod.P12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = brod.P12; path = "../../../../Dropbox/Домашние дела/Деревня/Умный дом/SSL certificate/brod.P12"; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 				B749FFC81C25DF5E006F1B13 /* HeatingTimerController.swift */,
 				B79DCDFC1C31C82400E6CB15 /* DatePickerController.swift */,
 				B7471FC21C35A675001ACA97 /* HeatingChartController.swift */,
+				B7DCAAA51C6FC22700E2C4B6 /* LightingController.swift */,
 				B7BD396B1BB59A83009F5FE8 /* Main.storyboard */,
 				B7BD396E1BB59A83009F5FE8 /* Assets.xcassets */,
 				B7BD39701BB59A83009F5FE8 /* LaunchScreen.storyboard */,
@@ -465,6 +470,7 @@
 				B79DCE021C32C89700E6CB15 /* NetworkTests.swift in Sources */,
 				B7DCAAA41C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */,
 				B7F3FBD51C26AE4000E3AD95 /* APILocalTests.swift in Sources */,
+				B7DCAAA81C6FC22700E2C4B6 /* LightingController.swift in Sources */,
 				B7F3FBCE1C26A28200E3AD95 /* TestAPIConfiguration.swift in Sources */,
 				B79DCE001C32C84000E6CB15 /* Reach.swift in Sources */,
 				B7F3FBD21C26A9EA00E3AD95 /* HouseStatusAPI.swift in Sources */,
@@ -477,6 +483,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B749FFC91C25DF5E006F1B13 /* HeatingTimerController.swift in Sources */,
+				B7DCAAA61C6FC22700E2C4B6 /* LightingController.swift in Sources */,
 				B74733621C5E4BA800F64DCE /* SDevIndicator.swift in Sources */,
 				B768DCA71C53C2AB00D79A37 /* HeatingChartController.swift in Sources */,
 				B7F3FBCB1C26A02A00E3AD95 /* HouseAPI.swift in Sources */,
@@ -501,6 +508,7 @@
 				B749FFD91C268E24006F1B13 /* HouseStatusAPI.swift in Sources */,
 				B7DCAAA31C6F84CD00E2C4B6 /* LightingAPI.swift in Sources */,
 				B7BD399F1BB59AFA009F5FE8 /* TodayViewController.swift in Sources */,
+				B7DCAAA71C6FC22700E2C4B6 /* LightingController.swift in Sources */,
 				B79DCE061C32F74300E6CB15 /* TodayConfiguration.swift in Sources */,
 				B79DCDFF1C32C7D800E6CB15 /* Reach.swift in Sources */,
 				B7E635951C08D021003CFE14 /* HouseAPI.swift in Sources */,

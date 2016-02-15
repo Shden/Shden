@@ -6,7 +6,7 @@
 Class Lighting
 {
 	/**
-	 *	Return lighting status for all appliances connected to the system.
+	 *	Returns lighting status for all appliances connected to the system.
 	 *
 	 *	@url GET /GetStatus
 	 */
@@ -33,8 +33,13 @@ Class Lighting
 	 */
 	public function ChangeStatus($applianceName, $newStatus)
 	{
-		`echo $newStatus >> /home/den/Shden/appliances/$applianceName`;
-		return $this->GetStatus();
+		if (!strpbrk($applianceName, './\\') && strlen($applianceName) < 15)
+		{
+			`echo $newStatus >> /home/den/Shden/appliances/$applianceName`;
+			return $this->GetStatus();
+		}
+		else
+			throw new RestException(400, 'Invalid appliance name.');
 	}
 }
 

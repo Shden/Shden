@@ -17,7 +17,7 @@ Class ElectricityConsumption
 		$oldPowerMeterDay = 21127;
 		$oldPowerMeterNight = 11438;
 	
-		$mercuryStr = `/Users/den/Shden/mercury236/mercury236 /dev/ttyUSB0 --json --testRun`;
+		$mercuryStr = `/home/den/Shden/mercury236/mercury236 /dev/ttyUSB0 --json`;
 		$mercuryData = json_decode($mercuryStr, true);
 		
 		// Enrich data to contain sum consumption with previous power meter. This is actually a temp thing.

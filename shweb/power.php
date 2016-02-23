@@ -13,96 +13,122 @@
 	<link rel="stylesheet" href="css/shweb.css">
 </head>
 <body>
+	<style>
+	.datatable {
+		width: 70%;
+        border-collapse: collapse;
+        border: 2px solid black;
+	}
+
+	.datatable th {
+		text-align: right;
+		border: 1px solid black;
+		padding: 2px;
+		background-color: #c0c0c0;
+	}
+	
+	.datatable td {
+		text-align: right;
+		border: 1px solid black;
+		padding: 2px;
+	}
+	
+	.datatable .first {
+		text-align: left;
+	}
+	
+	</style>
+	
 	<?php include 'menu.php';?>
 
 	<div class="container" align="center">
 		<h2>Электросеть</h2>
 		<h3>Мгновенные значения:</h3>
-		<table border="1" width="100%">
+		<table class="datatable">
 			<thead>
-				<th>Параметр</th>
+				<th class="first">Параметр</th>
 				<th>Фаза 1</th>
 				<th>Фаза 2</th>
 				<th>Фаза 3</th>
 				<th>Всего</th>
 			</thead>
 			<tr>
-				<td>Напряжение сети (В):</td>
-				<td align="right" id="U-p1"/>
-				<td align="right" id="U-p2"/>
-				<td align="right" id="U-p3"/>
+				<td class="first">Напряжение сети (В):</td>
+				<td id="U-p1"/>
+				<td id="U-p2"/>
+				<td id="U-p3"/>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Ток потребления (А):</td>
-				<td align="right" id="I-p1"/>
-				<td align="right" id="I-p2"/>
-				<td align="right" id="I-p3"/>
+				<td  class="first">Ток потребления (А):</td>
+				<td id="I-p1"/>
+				<td id="I-p2"/>
+				<td id="I-p3"/>
 				<td></td>
 			<tr>
-				<td>Коэффициент мощности (cos(f)):</td>
-				<td align="right" id="CosF-p1"/>
-				<td align="right" id="CosF-p2"/>
-				<td align="right" id="CosF-p3"/>
-				<td align="right" id="CosF-sum"/>
+				<td class="first">Коэффициент мощности (cos(f)):</td>
+				<td id="CosF-p1"/>
+				<td id="CosF-p2"/>
+				<td id="CosF-p3"/>
+				<td id="CosF-sum"/>
 			</tr>
 			<tr>
-				<td>Угол сдвига фаз:</td>
-				<td align="right" id="A-p1"/>
-				<td align="right" id="A-p2"/>
-				<td align="right" id="A-p3"/>
+				<td class="first">Угол сдвига фаз:</td>
+				<td id="A-p1"/>
+				<td id="A-p2"/>
+				<td id="A-p3"/>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Текущая активная мощность (Вт):</td>
-				<td align="right" id="P-p1"/>
-				<td align="right" id="P-p2"/>
-				<td align="right" id="P-p3"/>
-				<td align="right" id="P-sum"/>
+				<td class="first">Текущая активная мощность (Вт):</td>
+				<td id="P-p1"/>
+				<td id="P-p2"/>
+				<td id="P-p3"/>
+				<td id="P-sum"/>
 			</tr>
 			<tr>
-				<td>Текущая реактивная мощность (Вт):</td>
-				<td align="right" id="S-p1"/>
-				<td align="right" id="S-p2"/>
-				<td align="right" id="S-p3"/>
-				<td align="right" id="S-sum"/>
+				<td class="first">Текущая реактивная мощность (Вт):</td>
+				<td id="S-p1"/>
+				<td id="S-p2"/>
+				<td id="S-p3"/>
+				<td id="S-sum"/>
 			</tr>
 			<tr>
-				<td>Частота сети (Гц):</td>
-				<td align="right" colspan="4" id="F"/>
+				<td class="first">Частота сети (Гц):</td>
+				<td colspan="4" id="F"/>
 			</tr>
 		</table>
 		<br/>
 		<h3>Накопленные значения:</h3>
-		<table border="1" width="100%">
+		<table class="datatable">
 			<thead>
-				<th>Потребление</th>
+				<th class="first">Потребление энергии</th>
 				<th>Значение по счетчику</th>
 				<th>Накопленное значение</th>
 			</thead>
 			<tr>
-				<td>Потребление энергии, всего:</td>
-				<td align="right"><span id="PR-ap">...</span>&nbsp;кВт</td>
-				<td align="right"><span id="PR-ap2">...</span>&nbsp;кВт</td>
+				<td class="first">Всего:</td>
+				<td><span id="PR-ap">...</span>&nbsp;кВт</td>
+				<td><span id="PR-ap2">...</span>&nbsp;кВт</td>
 			</tr>
 			<tr>
-				<td>&nbsp;&nbsp;из них по дневному тарифу:</td>
-				<td align="right"><span id="PR-day-ap">...</span>&nbsp;кВт</td>
-				<td align="right"><span id="PR-day-ap2">...</span>&nbsp;кВт</td>
+				<td class="first">&nbsp;&nbsp;из них по дневному тарифу:</td>
+				<td><span id="PR-day-ap">...</span>&nbsp;кВт</td>
+				<td><span id="PR-day-ap2">...</span>&nbsp;кВт</td>
 			</tr>
 			<tr>
-				<td>&nbsp;&nbsp;из них по ночному тарифу:</td>
-				<td align="right"><span id="PR-night-ap">...</span>&nbsp;кВт</td>
-				<td align="right"><span id="PR-night-ap2">...</span>&nbsp;кВт</td>
+				<td class="first">&nbsp;&nbsp;из них по ночному тарифу:</td>
+				<td><span id="PR-night-ap">...</span>&nbsp;кВт</td>
+				<td><span id="PR-night-ap2">...</span>&nbsp;кВт</td>
 			</tr>
 			<tr>
-				<td>Потребление энергии, вчера:</td>
-				<td align="right"><span id="PY-ap">...</span>&nbsp;кВт</td>
+				<td class="first">Вчера:</td>
+				<td><span id="PY-ap">...</span>&nbsp;кВт</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Потребление энергии, сегодня:</td>
-				<td align="right"><span id="PT-ap">...</span>&nbsp;кВт</td>
+				<td class="first">Сегодня:</td>
+				<td><span id="PT-ap">...</span>&nbsp;кВт</td>
 				<td></td>
 			</tr>
 		</table>

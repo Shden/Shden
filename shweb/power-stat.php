@@ -131,8 +131,8 @@
 		row.append("td").text(function(d) { return d.CutoffMinutes; });
 	});
 	
-	//spinner.stop();
-	//$('#spinner').hide();
+	spinner.stop();
+	$('#spinner').hide();
 	
 	function checkVal(min, max, actual, defaultClass)
 	{

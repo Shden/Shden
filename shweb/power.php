@@ -152,7 +152,7 @@
 
 	<?php include 'include/js.php';?>
 	
-	<script src="http://fgnass.github.io/spin.js/spin.js"></script>
+	<script src="//fgnass.github.io/spin.js/spin.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
 	
 	<script>

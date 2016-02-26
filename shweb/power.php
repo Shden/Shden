@@ -14,42 +14,28 @@
 </head>
 <body>
 	<style>
-	.spinner {
-	    position: fixed;
-	    top: 50%;
-	    left: 50%;
-	    width: 80px;
-	    height: 80px;
-	    margin-top: -40px; /*set to a negative number 1/2 of your height*/
-	    margin-left: -40px; /*set to a negative number 1/2 of your width*/
-	    border: 1px solid #ccc;
-		border-radius: 8px;
-	    background-color: #f3f3f3;
-		display: none;
-	}
-	.datatable {
-		width: 70%;
-        border-collapse: collapse;
-        border: 2px solid black;
-	}
+		.datatable {
+			width: 70%;
+	        border-collapse: collapse;
+	        border: 2px solid black;
+		}
 
-	.datatable th {
-		text-align: right;
-		border: 1px solid black;
-		padding: 2px;
-		background-color: #c0c0c0;
-	}
+		.datatable th {
+			text-align: right;
+			border: 1px solid black;
+			padding: 2px;
+			background-color: #c0c0c0;
+		}
 	
-	.datatable td {
-		text-align: right;
-		border: 1px solid black;
-		padding: 2px;
-	}
+		.datatable td {
+			text-align: right;
+			border: 1px solid black;
+			padding: 2px;
+		}
 	
-	.datatable .first {
-		text-align: left;
-	}
-	
+		.datatable .first {
+			text-align: left;
+		}
 	</style>
 	
 	<?php include 'menu.php';?>
@@ -151,10 +137,7 @@
 	</div>
 
 	<?php include 'include/js.php';?>
-	
-	<script src="//fgnass.github.io/spin.js/spin.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
-	
+		
 	<script>
 		$(document).ready(function() {
 			refreshForm();
@@ -163,31 +146,7 @@
 		function refreshForm()
 		{
 			$('#spinner').show();
-
-			var opts = {
-				  lines: 13 // The number of lines to draw
-				, length: 10 // The length of each line
-				, width: 4 // The line thickness
-				, radius: 12 // The radius of the inner circle
-				, scale: 1 // Scales overall size of the spinner
-				, corners: 1 // Corner roundness (0..1)
-				, color: '#000' // #rgb or #rrggbb or array of colors
-				, opacity: 0.25 // Opacity of the lines
-				, rotate: 0 // The rotation offset
-				, direction: 1 // 1: clockwise, -1: counterclockwise
-				, speed: 1 // Rounds per second
-				, trail: 60 // Afterglow percentage
-				, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-				, zIndex: 2e9 // The z-index (defaults to 2000000000)
-				, className: 'spinner-css' // The CSS class to assign to the spinner
-				, top: '50%' // Top position relative to parent
-				, left: '50%' // Left position relative to parent
-				, shadow: false // Whether to render a shadow
-				, hwaccel: false // Whether to use hardware acceleration
-				, position: 'absolute' // Element positioning
-			};
-			var target = document.getElementById('spinner');
-			var spinner = new Spinner(opts).spin(target);
+			var spinner = createSpinner('spinner');
 
 			var API = "/API/1.1/consumption/electricity/GetPowerMeterData";
 			$.getJSON(API)

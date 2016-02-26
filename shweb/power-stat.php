@@ -62,6 +62,8 @@
 
 	<?php 
 	include 'menu.php';
+	include 'include/js.php';
+	include 'include/css.php';
 
 	$days = (isset($_REQUEST[days])) ? $_REQUEST[days] : 14;
 	?>
@@ -72,6 +74,8 @@
 	<a href="?days=14">2 недели</a> |
 	<a href="?days=21">3 недели</a> |
 	<a href="?days=31">Месяц</a> 
+
+	<div id="spinner" class="spinner">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 	<script type='text/javascript'>
@@ -98,6 +102,9 @@
 	head.append("th").attr("class", "bb").text("Выс.");
 	head.append("th").attr("class", "bb").text("Откл.");
 	
+	$('#spinner').show();
+	var spinner = createSpinner('spinner');
+
 	d3.json("../datasource/powerstat.php?days=<?=$days?>", function(error, data) {
 		var row = table.selectAll("row")
 				.data(data)
@@ -124,12 +131,14 @@
 		row.append("td").text(function(d) { return d.CutoffMinutes; });
 	});
 	
+	//spinner.stop();
+	//$('#spinner').hide();
+	
 	function checkVal(min, max, actual, defaultClass)
 	{
 		return (actual >= min && actual <= max) ? defaultClass : "error";
 	}
 	</script>
 	
-	<?php include 'include/js.php';?>
 </body>
 </html>

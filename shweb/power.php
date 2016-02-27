@@ -9,7 +9,7 @@
 
 	<?php include 'include/css.php';?>
 
-	<!-- Shweb cutom styles -->
+	<!-- Shweb cutsom styles -->
 	<link rel="stylesheet" href="css/shweb.css">
 </head>
 <body>

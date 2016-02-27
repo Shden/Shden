@@ -8,6 +8,9 @@
 	<title>Статистика электросети</title>
 
 	<?php include 'include/css.php';?>
+
+	<!-- Shweb cutom styles -->
+	<link rel="stylesheet" href="css/shweb.css">
 </head>
 <body>
 	
@@ -26,7 +29,6 @@
 	.datatable .leftalign {
 		text-align: left;
 	}
-	
 	.datatable .centeralign {
 		text-align: center;
 	}
@@ -63,7 +65,6 @@
 	<?php 
 	include 'menu.php';
 	include 'include/js.php';
-	include 'include/css.php';
 
 	$days = (isset($_REQUEST[days])) ? $_REQUEST[days] : 14;
 	?>
@@ -75,10 +76,13 @@
 	<a href="?days=21">3 недели</a> |
 	<a href="?days=31">Месяц</a> 
 
-	<div id="spinner" class="spinner">
+	<div id="spinner" class="spinner"/>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 	<script type='text/javascript'>
+	$('#spinner').show();
+	var spinner = createSpinner('spinner');
+
 	var table = d3.select(".container")
 		.append("table")
 			.attr("class", "datatable");
@@ -102,9 +106,6 @@
 	head.append("th").attr("class", "bb").text("Выс.");
 	head.append("th").attr("class", "bb").text("Откл.");
 	
-	$('#spinner').show();
-	var spinner = createSpinner('spinner');
-
 	d3.json("../datasource/powerstat.php?days=<?=$days?>", function(error, data) {
 		var row = table.selectAll("row")
 				.data(data)

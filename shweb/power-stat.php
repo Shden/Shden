@@ -120,6 +120,10 @@
 		head.append("th").attr("class", "bb").text("Откл.");
 	
 		d3.json("../datasource/powerstat.php?days=" + days, function(error, data) {
+	
+			spinner.stop();
+			$('#spinner').hide();
+
 			var row = table.selectAll("row")
 					.data(data)
 				.enter().append("tr");
@@ -144,9 +148,6 @@
 			row.append("td").text(function(d) { return d.HighVMinutes; });
 			row.append("td").text(function(d) { return d.CutoffMinutes; });
 		});
-	
-		spinner.stop();
-		$('#spinner').hide();
 	}
 	
 	function checkVal(min, max, actual, defaultClass)

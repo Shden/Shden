@@ -75,6 +75,7 @@
 		function refreshButtonView(applianceId, applianceStatus)
 		{
 			var button = $('#' + applianceId);
+			button.off('click');
 			if (applianceStatus == 0)
 			{
 				button.addClass('btn-warning').removeClass('btn-default');

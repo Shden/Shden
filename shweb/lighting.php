@@ -28,15 +28,15 @@
 		<table>
 			<tr>
 				<td>Уличный фонарь около дороги (250W):</td>
-				<td><a id="streetLight250" class="btn btn-lg">...</button></a>
+				<td><button id="streetLight250" class="btn btn-lg">...</button></a>
 			</tr>
 			<tr>
 				<td>Уличный фонарь на озеро (150W):</td>
-				<td><a id="streetLight150" class="btn btn-lg">...</button></a>
+				<td><button id="streetLight150" class="btn btn-lg">...</button></a>
 			</tr>
 			<tr>
 				<td>Свет на балконе 2-го этажа:</td>
-				<td><a id="balkonLight" class="btn btn-lg">...</button></a>
+				<td><button id="balkonLight" class="btn btn-lg">...</button></a>
 			</tr>
 		</table>
 		<div id="spinner" class="spinner">

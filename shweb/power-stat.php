@@ -76,7 +76,7 @@
 	<a href="?days=21">3 недели</a> |
 	<a href="?days=31">Месяц</a> 
 
-	<div id="spinner" class="spinner"/>
+	<div id="spinner" class="spinner"></div>
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 	<script type='text/javascript'>

@@ -9,7 +9,7 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 	    width = 960 - margin.left - margin.right,
 	    height = 420 - margin.top - margin.bottom;
 
-	var parseDate = d3.time.format("%Y-%m-%d %H:%M").parse;
+	var parseDate = d3.time.format('%Y-%m-%dT%H:%M:%S%Z').parse;
 
 	var x = d3.time.scale()
 	    .range([0, width]);
@@ -30,7 +30,7 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 
 	var line = d3.svg.line()
 	    .interpolate("basis")
-	    .x(function(d) { return x(d.time); })
+	    .x(function(d) { return x(d.date); })
 	    .y(function(d) { return y(d.temperature); });
 
 	var svg = d3.select("body")
@@ -45,22 +45,22 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 
 	d3.json("<?=$dataSourceURL?>", function(error, data) {
 
-	  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "time"; }));
+	  color.domain(d3.keys(data[0]).sort(d3.descending).filter(function(key) { return key !== "date"; }));
   
 	  data.forEach(function(d) {
-	    d.time = parseDate(d.time);
+	    d.date = parseDate(d.date);
 	  });
 
 	  var sensors = color.domain().map(function(name) {
 	    return {
 	      name: name,
 	      values: data.map(function(d) {
-	        return { time: d.time, temperature: +d[name]};
+	        return { date: d.date, temperature: +d[name]};
 	      })
 	    };
 	  });
 
-	  x.domain(d3.extent(data, function(d) { return d.time; }));
+	  x.domain(d3.extent(data, function(d) { return d.date; }));
 	  y.domain([
 	    d3.min(sensors, function(c) { return d3.min(c.values, function(v) { return v.temperature; }); }),
 	    d3.max(sensors, function(c) { return d3.max(c.values, function(v) { return v.temperature; }); })
@@ -87,7 +87,7 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 
 	  var sensor = svg.selectAll(".sensor")
 	      .data(sensors)
-	    .enter().append("g")
+	      .enter().append("g")
 	      .attr("class", "sensor");
       
 	  sensor.append("path")
@@ -97,7 +97,7 @@ function RenderChart($dataSourceURL, $yAxisTitle)
       
 	  sensor.append("text")
 	      .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
-	      .attr("transform", function(d) { return "translate(" + x(d.value.time) + "," + y(d.value.temperature) + ")"; })
+	      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
 	      .attr("x", 23)
 	      .attr("dy", ".35em")
 	      .text(function(d) { return d.name; });

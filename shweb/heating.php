@@ -29,7 +29,7 @@
 	<a href="?days=61">2 месяца</a> |
 	<br/>
 	
-	<?php RenderChart("datasource/temperature.php?days=$days", "Температура (С)");?>
+	<?php RenderChart("/API/1.1/heating/GetTempHistory/$days", "Температура (С)");?>
 
 	<?php include 'include/js.php';?>
 </body>

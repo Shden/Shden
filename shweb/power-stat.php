@@ -42,15 +42,6 @@
 		border: 1px solid black;
 		text-align: right;
 	}
-	.datatable .f1 {
-		background-color: #e0e0e0;
-	}
-	.datatable .f2 {
-		background-color: #c0c0c0;
-	}
-	.datatable .f3 {
-		background-color: #a0a0a0;
-	}
 	.datatable .lb {
 		border-left: 2px solid black;
 	}
@@ -78,6 +69,36 @@
 		<a href="javascript:refreshForm(31)" class="btn btn-default">Месяц</a> 
 	</div>
 	<br/><br/>
+	
+	<table class="datatable">
+		<tr>
+			<th rowspan="2" class="bb leftalign">Дата</th>
+			<th colspan="4" class="centeralign lb">Фаза 1</th>
+			<th colspan="4" class="centeralign lb">Фаза 2</th>
+			<th colspan="4" class="centeralign lb">Фаза 3</th>
+			<th colspan="3" class="centeralign lb">Ошибки (минут)</th>
+		</tr>
+		<tr>
+			<th class="bb lb">Min (V)</th>
+			<th class="bb">Max (V)</th>
+			<th class="bb">Avg (V)</th>
+			<th class="bb rb">STD</th>
+			
+			<th class="bb lb">Min (V)</th>
+			<th class="bb">Max (V)</th>
+			<th class="bb">Avg (V)</th>
+			<th class="bb rb">STD</th>
+			
+			<th class="bb lb">Min (V)</th>
+			<th class="bb">Max (V)</th>
+			<th class="bb">Avg (V)</th>
+			<th class="bb rb">STD</th>
+			
+			<th class="bb">Низк.</th>
+			<th class="bb">Выс.</th>
+			<th class="bb">Откл.</th>
+		</tr>
+	</table>
 
 	<div id="spinner" class="spinner"></div>
 
@@ -95,64 +116,70 @@
 		
 		$('#daysCount').html(days);
 
-		$('.datatable').remove();
-		var table = d3.select(".container")
-			.append("table")
-				.attr("class", "datatable");
+		// $('.datatable').remove();
+		// var table = d3.select(".container")
+		// 	.append("table")
+		// 		.attr("class", "datatable");
+		var table = d3.select(".datatable");
 	
-		var head = table.append("tr");
-		head.append("th").attr("rowspan", 2).attr("class", "bb leftalign").text("Дата");
-		for (var i=1; i<=3; i++)
-			head.append("th").attr("colspan", 4).attr("class", "centeralign lb f"+i).text("Фаза "+i);
-		head.append("th").attr("colspan", 3).attr("class", "centeralign lb").text("Ошибки (минут)");
+		// var head = table.append("tr");
+		// head.append("th").attr("rowspan", 2).attr("class", "bb leftalign").text("Дата");
+		// for (var i=1; i<=3; i++)
+		// 	head.append("th").attr("colspan", 4).attr("class", "centeralign lb f"+i).text("Фаза "+i);
+		// head.append("th").attr("colspan", 3).attr("class", "centeralign lb").text("Ошибки (минут)");
+		//
+		// var head = table.append("tr");
+		//
+		// for (var i=1; i<=3; i++)
+		// {
+		// 	head.append("th").attr("class", "bb lb f"+i).text("Min (V)");
+		// 	head.append("th").attr("class", "bb f"+i).text("Max (V)");
+		// 	head.append("th").attr("class", "bb f"+i).text("Avg (V)");
+		// 	head.append("th").attr("class", "bb rb f"+i).text("STD");
+		// }
+		// head.append("th").attr("class", "bb").text("Низк.");
+		// head.append("th").attr("class", "bb").text("Выс.");
+		// head.append("th").attr("class", "bb").text("Откл.");
 	
-		var head = table.append("tr");
+		var API = "/API/1.1/consumption/electricity/GetPowerStatistics/" + days;
+		$.getJSON(API)
+			.done(function(data) {
 	
-		for (var i=1; i<=3; i++)
-		{
-			head.append("th").attr("class", "bb lb f"+i).text("Min (V)");
-			head.append("th").attr("class", "bb f"+i).text("Max (V)");
-			head.append("th").attr("class", "bb f"+i).text("Avg (V)");
-			head.append("th").attr("class", "bb rb f"+i).text("STD");
-		}
-		head.append("th").attr("class", "bb").text("Низк.");
-		head.append("th").attr("class", "bb").text("Выс.");
-		head.append("th").attr("class", "bb").text("Откл.");
-	
-		d3.json("../datasource/powerstat.php?days=" + days, function(error, data) {
-	
-			spinner.stop();
-			$('#spinner').hide();
+				spinner.stop();
+				$('#spinner').hide();
 
-			var row = table.selectAll("row")
+				table.selectAll(".datarow").remove();
+				
+				var row = table.selectAll("row")
 					.data(data)
-				.enter().append("tr");
+					.enter()
+					.append("tr");
 			
-			row.attr("class", function(d) { return d.CutoffMinutes > 0 ? "failure" : ""; })
+				row.attr("class", function(d) { return d.CutoffMinutes > 0 ? "failure datarow" : "datarow"; })
 		
-			row.append("td").attr("class", "leftalign rb").text(function(d) { return d.DATE; });
+				row.append("td").attr("class", "leftalign rb").text(function(d) { return d.DATE; });
 
-			for (i=1; i<=3; i++)
-			{
-				row.append("td")
-					.attr("class", function(d) { return checkVal(230 * 0.9, 230 * 1.1, d["U"+i+"_MIN"], "lb f"+i); })
-					.text(function(d) { return d["U"+i+"_MIN"]; });
-				row.append("td")
-					.attr("class", function(d) { return checkVal(230 * 0.9, 230 * 1.1, d["U"+i+"_MAX"], "f"+i); })
-					.text(function(d) { return d["U"+i+"_MAX"]; });
-				row.append("td").attr("class", "f"+i).text(function(d) { return d["U"+i+"_AVG"]; });
-				row.append("td").attr("class", "rb f"+i).text(function(d) { return d["U"+i+"_STD"]; });
-			}
+				for (i=1; i<=3; i++)
+				{
+					row.append("td")
+						.attr("class", function(d) { return checkVal(d["U"+i+"_MIN"], "lb"); })
+						.text(function(d) { return d["U"+i+"_MIN"]; });
+					row.append("td")
+						.attr("class", function(d) { return checkVal(d["U"+i+"_MAX"], ""); })
+						.text(function(d) { return d["U"+i+"_MAX"]; });
+					row.append("td").text(function(d) { return d["U"+i+"_AVG"]; });
+					row.append("td").attr("class", "rb").text(function(d) { return d["U"+i+"_STD"]; });
+				}
 
-			row.append("td").text(function(d) { return d.LowVMinutes; });
-			row.append("td").text(function(d) { return d.HighVMinutes; });
-			row.append("td").text(function(d) { return d.CutoffMinutes; });
-		});
+				row.append("td").text(function(d) { return d.LowVMinutes; });
+				row.append("td").text(function(d) { return d.HighVMinutes; });
+				row.append("td").text(function(d) { return d.CutoffMinutes; });
+			});
 	}
 	
-	function checkVal(min, max, actual, defaultClass)
+	function checkVal(value, defaultClass)
 	{
-		return (actual >= min && actual <= max) ? defaultClass : "error";
+		return (value >= 230 * 0.9 && value <= 230 * 1.1) ? defaultClass : "error";
 	}
 	</script>
 	

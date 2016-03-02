@@ -1,4 +1,5 @@
 <?php
+require_once ('../../datasource/sql2js.php');
 	
 /**
  *	Electricity consumption API, including power meter data, aggregated consumption data and 
@@ -29,6 +30,20 @@ Class ElectricityConsumption
 		}
 		
 		return $mercuryData;
+	}
+	
+	/**
+	 *	Returns power meter statistics for specific period.
+	 *
+	 *	@url GET /GetPowerStatistics/$days
+	 */
+	public function GetPowerStatistics($days)
+	{
+		if (!ctype_digit((string)$days) || $days < 1 || $days > 365)
+		{
+			throw new RestException(400, "Invalid period ($days) specified.");
+		}
+		return SQL2Array("CALL SP_GET_POWER_STATISTICS(DATE(DATE_ADD(NOW(), INTERVAL -$days+1 DAY)), NOW());");
 	}
 }
 ?>

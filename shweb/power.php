@@ -148,8 +148,7 @@
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');
 
-			var API = "/API/1.1/consumption/electricity/GetPowerMeterData";
-			$.getJSON(API)
+			$.getJSON(GetAPIURL("consumption/electricity/GetPowerMeterData"))
 				.done(function(data) {
 
 					refreshValue('U', 'p1', data);

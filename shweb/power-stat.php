@@ -141,7 +141,7 @@
 		// head.append("th").attr("class", "bb").text("Выс.");
 		// head.append("th").attr("class", "bb").text("Откл.");
 	
-		var API = "/API/1.1/consumption/electricity/GetPowerStatistics/" + days;
+		var API = GetAPIURL("consumption/electricity/GetPowerStatistics/") + days;
 		$.getJSON(API)
 			.done(function(data) {
 	

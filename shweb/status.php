@@ -150,7 +150,6 @@ include 'include/js.php';
 	{
 		var strValue = numeral(value).format('0.0') + '&nbsp;&deg;C';
 		if (value > 0) strValue = '+' + strValue;
-		if (value < 0) strValue = '-' + strValue;
 		
 		control.html(strValue);
 		

@@ -82,6 +82,9 @@ Class Heating
 	 */
 	public function GetTempHistory($days)
 	{
+		if (!ctype_digit((string)$days) || $days < 1 || $days > 300)
+			throw new RestException(400, "Invalid request parameter: $days.");
+		
 		global $conn;
 		$time_zone = new DateTimeZone(TZ);
 		
@@ -105,6 +108,44 @@ Class Heating
 			);
 		}
 		return $arr;		
+	}
+	
+	/**
+	 *	Returns inside/outside min/avg/max values for the time period requested.
+	 *
+	 *	@param $days - period length from now to the past in days.
+	 *
+	 *	@url GET /GetTempStatistics/$days
+	 */
+	public function GetTempStatistics($days)
+	{
+		if (!ctype_digit((string)$days) || $days < 1 || $days > 1000)
+			throw new RestException(400, "Invalid request parameter: $days");
+
+		global $conn;
+		
+		$res = $conn->query(
+			"SELECT MIN(external), AVG(external), MAX(external), MIN(control), AVG(control), MAX(control) " .
+			"FROM heating WHERE time > DATE_SUB(NOW(), INTERVAL $days DAY);"
+		);
+		
+		// $arr = array();
+		if ($r = $res->fetch_assoc())
+		{
+			return array(
+				"inside"	=> array(
+					"min"	=> (float) $r["MIN(control)"],
+					"avg"	=> (float) $r["AVG(control)"],
+					"max"	=> (float) $r["MAX(control)"]
+				),
+				"outside"	=> array(
+					"min"	=> (float) $r["MIN(external)"],
+					"avg"	=> (float) $r["AVG(external)"],
+					"max"	=> (float) $r["MAX(external)"]					
+				)
+			);
+		}
+		return null;
 	}
 	
 	/**

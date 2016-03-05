@@ -15,7 +15,6 @@
 <body>
 
 <style>
-
 	.temp-big
 	{
 		font-size: 48px;
@@ -35,32 +34,8 @@
 <?php 
 include 'menu.php';
 include 'include/js.php';
-
-require_once ('include/db.inc');
-
-function TF($tempVal)
-{
-	$strTemp = (is_null($tempVal) ? "--.--" : number_format($tempVal, 1));
-	$strTemp = $strTemp . "&nbsp;&deg;C";
-	if (!is_null($tempVal))
-	{
-		if ($tempVal > 0) $strTemp = "+" . $strTemp;
-		if ($tempVal > +2.0) $strTemp = "<font color=green>" . $strTemp . "</font>";
-		if ($tempVal < -2.0) $strTemp = "<font color=blue>" . $strTemp . "</font>";
-	}
-	return $strTemp;
-}
-
-$res = $conn->query("CALL SP_GET_STATUS();");
-
-$isin = 0;
-
-if ($r = $res->fetch_assoc()) 
-{
-	$isin = $r["PRESENCE_ISIN"];
-	$starting = $r["PRESENCE_TIME"];
-}
 ?>
+
 <div class="jumbotron">
 	<div class="container" align="center">
 		<h1 id="statusHdr"></h1>
@@ -83,11 +58,11 @@ if ($r = $res->fetch_assoc())
 			</tr>
 			<tr>
 				<td>&nbsp;в доме</td>
-				<td><?=TF($r["MIN_INT_H24"])?>/<?=TF($r["AVG_INT_H24"])?>/<?=TF($r["MAX_INT_H24"])?></td>
+				<td><span id="MIN_INT_H24"></span>/<span id="AVG_INT_H24"></span>/<span id="MAX_INT_H24"></span></td>
 			</tr>
 			<tr>
 				<td>&nbsp;на улице</td>
-				<td><?=TF($r["MIN_EXT_H24"])?>/<?=TF($r["AVG_EXT_H24"])?>/<?=TF($r["MAX_EXT_H24"])?></td>
+				<td><span id="MIN_EXT_H24"></span>/<span id="AVG_EXT_H24"></span>/<span id="MAX_EXT_H24"></span></td>
 			</tr>
 		</table>
 	</div>
@@ -99,11 +74,11 @@ if ($r = $res->fetch_assoc())
 			</tr>
 			<tr>
 				<td>&nbsp;в доме</td>
-				<td><?=TF($r["MIN_INT_D30"])?>/<?=TF($r["AVG_INT_D30"])?>/<?=TF($r["MAX_INT_D30"])?></td>
+				<td><span id="MIN_INT_D30"></span>/<span id="AVG_INT_D30"></span>/<span id="MAX_INT_D30"></span></td>
 			</tr>
 			<tr>
 				<td>&nbsp;на улице</td>
-				<td><?=TF($r["MIN_EXT_D30"])?>/<?=TF($r["AVG_EXT_D30"])?>/<?=TF($r["MAX_EXT_D30"])?></td>
+				<td><span id="MIN_EXT_D30"></span>/<span id="AVG_EXT_D30"></span>/<span id="MAX_EXT_D30"></span></td>
 			</tr>
 		</table>
 	</div>
@@ -120,8 +95,7 @@ if ($r = $res->fetch_assoc())
 		$('#spinner').show();
 		var spinner = createSpinner('spinner');
 	
-		var API = GetAPIURL("status/GetHouseStatus");
-		$.getJSON(API)
+		$.getJSON(GetAPIURL("status/GetHouseStatus"))
 			.done(function(data) {
 
 				refreshControls(data);
@@ -138,6 +112,22 @@ if ($r = $res->fetch_assoc())
 	{
 		formatTemp($('#inside'), data.climate.inTemp);
 		formatTemp($('#outside'), data.climate.outTemp);
+
+		formatTemp($('#MIN_INT_H24'), data.tempStat.day.inside.min);
+		formatTemp($('#AVG_INT_H24'), data.tempStat.day.inside.avg);
+		formatTemp($('#MAX_INT_H24'), data.tempStat.day.inside.max);
+
+		formatTemp($('#MIN_EXT_H24'), data.tempStat.day.outside.min);
+		formatTemp($('#AVG_EXT_H24'), data.tempStat.day.outside.avg);
+		formatTemp($('#MAX_EXT_H24'), data.tempStat.day.outside.max);
+		
+		formatTemp($('#MIN_INT_D30'), data.tempStat.month.inside.min);
+		formatTemp($('#AVG_INT_D30'), data.tempStat.month.inside.avg);
+		formatTemp($('#MAX_INT_D30'), data.tempStat.month.inside.max);
+
+		formatTemp($('#MIN_EXT_D30'), data.tempStat.month.outside.min);
+		formatTemp($('#AVG_EXT_D30'), data.tempStat.month.outside.avg);
+		formatTemp($('#MAX_EXT_D30'), data.tempStat.month.outside.max);
 		
 		var modeBtn = $('#modeBtn');
 		var statusHdr = $('#statusHdr');

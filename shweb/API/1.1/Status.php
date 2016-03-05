@@ -1,6 +1,6 @@
 <?php
 require_once ('../../include/db.inc');
-
+//require_once ('Heating.php');
 
 /** 
  *	House status API endpoint. This API is primarely works with overall house status, including status snaps for remote
@@ -26,7 +26,8 @@ Class Status
 
 		$outsideTemp = (float)`cat /home/den/Shden/appliances/outsideTemp`;
 		$bedRoomTemp = (float)`cat /home/den/Shden/appliances/bedRoomTemp`;
-
+		
+		$heating = new Heating;
 		
 		return array(
 					"climate" => array(
@@ -36,6 +37,10 @@ Class Status
 					"mode" => array(
 						"presence"	=> $isin,
 						"starting"	=> $starting
+					),
+					"tempStat" => array(
+						"day" 	=> $heating->GetTempStatistics(1),
+						"month" => $heating->GetTempStatistics(30)
 					)
 				);
 	}

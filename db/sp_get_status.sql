@@ -13,16 +13,16 @@ BEGIN
 		MAX(h24.control) AS MAX_INT_H24, 
 		MIN(h24.control) AS MIN_INT_H24, 
 		AVG(h24.control) AS AVG_INT_H24,
-		d30.MAX_EXT_D30,
-                d30.MIN_EXT_D30,
-                d30.AVG_EXT_D30,
-                d30.MAX_INT_D30,
-                d30.MIN_INT_D30,
-                d30.AVG_INT_D30,
-		current.external AS CUR_EXT, 
-		current.control AS CUR_INT,
-		presence.time AS PRESENCE_TIME,
-		presence.isin AS PRESENCE_ISIN
+		MAX(d30.MAX_EXT_D30) AS MAX_EXT_D30,
+                MIN(d30.MIN_EXT_D30) AS MIN_EXT_D30,
+                AVG(d30.AVG_EXT_D30) AS AVG_EXT_D30,
+                MAX(d30.MAX_INT_D30) AS MAX_INT_D30,
+                MIN(d30.MIN_INT_D30) AS MIN_INT_D30,
+                AVG(d30.AVG_INT_D30) AS AVG_INT_D30,
+		AVG(current.external) AS CUR_EXT, 
+		AVG(current.control) AS CUR_INT,
+		MAX(presence.time) AS PRESENCE_TIME,
+		MAX(presence.isin) AS PRESENCE_ISIN
 	FROM 	heating h24 
 	JOIN   	(SELECT h.external, h.control FROM heating h ORDER BY time desc LIMIT 1) current
 	JOIN	(SELECT	p.time, p.isin FROM presence p ORDER BY time desc LIMIT 1) presence

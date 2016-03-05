@@ -14,8 +14,28 @@
 </head>
 <body>
 
+<style>
 
-<?php include 'menu.php';
+	.temp-big
+	{
+		font-size: 48px;
+	}
+
+	.temp-warm
+	{
+		color: green;
+	}
+
+	.temp-cold
+	{
+		color: blue;
+	}
+</style>
+
+<?php 
+include 'menu.php';
+include 'include/js.php';
+
 require_once ('include/db.inc');
 
 function TF($tempVal)
@@ -31,12 +51,6 @@ function TF($tempVal)
 	return $strTemp;
 }
 
-if (isset($_REQUEST['changeStatusTo'])) 
-{	
-	$changeStatusTo = $_REQUEST['changeStatusTo'];
-	$conn->query("CALL SP_CHANGE_PRESENCE($changeStatusTo);");
-}
-
 $res = $conn->query("CALL SP_GET_STATUS();");
 
 $isin = 0;
@@ -49,48 +63,141 @@ if ($r = $res->fetch_assoc())
 ?>
 <div class="jumbotron">
 	<div class="container" align="center">
-		<h1>Режим <?=($isin) ? "присутствия" : "ожидания"?></h1>
-		<p>В доме: <font size="30"><?=TF($r["CUR_INT"])?></font> На&nbsp;улице:&nbsp;<font size="30"><?=TF($r["CUR_EXT"])?></font></p>
-		<a href="?changeStatusTo=<?=($isin) ? 0 : 1?>" class="btn <?=($isin) ? "btn-primary" : "btn-danger"?> btn-lg" role="button">
-			В режим <?=($isin) ? "ожидания" : "присутствия"?>
-		</a>
+		<h1 id="statusHdr"></h1>
+		<p>
+			В доме: <span id="inside" class="temp-big">--.--</span>
+			На улице: <span id="outside" class="temp-big">--.--</span>
+			<a role="button" class="btn btn-default" href="javascript:updateForm();">
+				<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+			</a>
+		</p>
+		<a id="modeBtn" class="btn btn-lg" role="button"></a>
 	</div>
 </div>
 <div class="row" align="center">
   	<div class="col-md-6" align=center>
-	<table>
-		<tr>
-			<td><b>24 часа:</b></td>
-			<td><small>[min/avg/max] <a href="heating.php?days=1">Подробнее >></a></small></td>
-		</tr>
-		<tr>
-			<td>&nbsp;в доме</td>
-			<td><?=TF($r["MIN_INT_H24"])?>/<?=TF($r["AVG_INT_H24"])?>/<?=TF($r["MAX_INT_H24"])?></td>
-		</tr>
-		<tr>
-			<td>&nbsp;на улице</td>
-			<td><?=TF($r["MIN_EXT_H24"])?>/<?=TF($r["AVG_EXT_H24"])?>/<?=TF($r["MAX_EXT_H24"])?></td>
-		</tr>
-	</table>
+		<table>
+			<tr>
+				<td><b>24 часа:</b></td>
+				<td><small>[min/avg/max] <a href="heating.php?days=1">Подробнее >></a></small></td>
+			</tr>
+			<tr>
+				<td>&nbsp;в доме</td>
+				<td><?=TF($r["MIN_INT_H24"])?>/<?=TF($r["AVG_INT_H24"])?>/<?=TF($r["MAX_INT_H24"])?></td>
+			</tr>
+			<tr>
+				<td>&nbsp;на улице</td>
+				<td><?=TF($r["MIN_EXT_H24"])?>/<?=TF($r["AVG_EXT_H24"])?>/<?=TF($r["MAX_EXT_H24"])?></td>
+			</tr>
+		</table>
 	</div>
   	<div class="col-md-6" align="center">
-	<table>
-		<tr>
-			<td><b>30 дней:</b></td>
-			<td><small>[min/avg/max] <a href="heating.php?days=30">Подробнее >></a></small></td>
-		</tr>
-		<tr>
-			<td>&nbsp;в доме</td>
-			<td><?=TF($r["MIN_INT_D30"])?>/<?=TF($r["AVG_INT_D30"])?>/<?=TF($r["MAX_INT_D30"])?></td>
-		</tr>
-		<tr>
-			<td>&nbsp;на улице</td>
-			<td><?=TF($r["MIN_EXT_D30"])?>/<?=TF($r["AVG_EXT_D30"])?>/<?=TF($r["MAX_EXT_D30"])?></td>
-		</tr>
-	</table>
+		<table>
+			<tr>
+				<td><b>30 дней:</b></td>
+				<td><small>[min/avg/max] <a href="heating.php?days=30">Подробнее >></a></small></td>
+			</tr>
+			<tr>
+				<td>&nbsp;в доме</td>
+				<td><?=TF($r["MIN_INT_D30"])?>/<?=TF($r["AVG_INT_D30"])?>/<?=TF($r["MAX_INT_D30"])?></td>
+			</tr>
+			<tr>
+				<td>&nbsp;на улице</td>
+				<td><?=TF($r["MIN_EXT_D30"])?>/<?=TF($r["AVG_EXT_D30"])?>/<?=TF($r["MAX_EXT_D30"])?></td>
+			</tr>
+		</table>
+	</div>
 </div>
-</div>
+<div id="spinner" class="spinner">
 
-<?php include 'include/js.php';?>
+<script>
+	$(document).ready(function() {
+		updateForm();
+	});
+
+	function updateForm() 
+	{	
+		$('#spinner').show();
+		var spinner = createSpinner('spinner');
+	
+		var API = GetAPIURL("status/GetHouseStatus");
+		$.getJSON(API)
+			.done(function(data) {
+
+				refreshControls(data);
+				
+				spinner.stop();
+				$('#spinner').hide();
+			})
+			.fail(function() {
+				alert('Ошибка вызова GetHouseStatus.');
+			});
+	}
+	
+	function refreshControls(data) 
+	{
+		formatTemp($('#inside'), data.climate.inTemp);
+		formatTemp($('#outside'), data.climate.outTemp);
+		
+		var modeBtn = $('#modeBtn');
+		var statusHdr = $('#statusHdr');
+		
+		if (data.mode.presence == 1) {
+			statusHdr.html('Режим присутствия');
+			modeBtn.html('В режим ожидания');
+			modeBtn.addClass('btn-primary').removeClass('btn-danger');
+			modeBtn.attr('href', 'javascript:SetHouseMode(0)');
+		}
+		else if (data.mode.presence == 0) {
+			statusHdr.html('Режим ожидания');
+			modeBtn.html('В режим присутствия');
+			modeBtn.addClass('btn-danger').removeClass('btn-primary');
+			modeBtn.attr('href', 'javascript:SetHouseMode(1)');
+		}
+	}
+	
+	function formatTemp(control, value) 
+	{
+		var strValue = numeral(value).format('0.0') + '&nbsp;&deg;C';
+		if (value > 0) strValue = '+' + strValue;
+		if (value < 0) strValue = '-' + strValue;
+		
+		control.html(strValue);
+		
+		if (value > +2.0) control.addClass('temp-warm').removeClass('temp-cold');
+		if (value < -2.0) control.addClass('temp-cold').removeClass('temp-warm');
+	}
+	
+	function SetHouseMode(mode) 
+	{
+		$('#spinner').show();
+		var spinner = createSpinner('spinner');
+	
+		var API = GetAPIURL("status/SetHouseMode");
+		$.ajax({
+		    url: API + '/' + mode,
+		    type: 'PUT',
+		    success: function(data) {
+				data = jQuery.parseJSON(data);
+				refreshControls(data);
+
+				spinner.stop();
+				$('#spinner').hide();
+				
+				if (data.mode.presence == mode)
+				{
+					alert('Дом переведен в режим ' + ((mode == 0) ? 'ожидания.' : 'присутствия.'));
+				}
+				else
+				{
+					alert('Ошибка: режим не изменился.');
+				}
+		    },
+			error: function(xhr, status, error) {
+				alert('Ошибка: ' + error);
+			}
+		});		
+	}
+</script>
 </body>
 </html>

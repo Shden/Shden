@@ -1,10 +1,13 @@
-<?php
-function RenderChart($dataSourceURL, $yAxisTitle)
-{
-?>	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 
-	<script type='text/javascript'>
+<script type='text/javascript'>
+
+// Append SVG chart to display data from URL provided using D3.js library.
+function DisplayChart(dataSourceURL, yAxisTitle)
+{
+	$('#spinner').show();
+	var spinner = createSpinner('spinner');
+
 	var margin = {top: 20, right: 80, bottom: 30, left: 50},
 	    width = 960 - margin.left - margin.right,
 	    height = 420 - margin.top - margin.bottom;
@@ -27,15 +30,17 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 	    .scale(y)
 	    .innerTickSize(width)
 	    .orient("right");
-
+	
 	var line = d3.svg.line()
 	    .interpolate("basis")
 	    .x(function(d) { return x(d.date); })
 	    .y(function(d) { return y(d.temperature); });
 
+	d3.select(".chart").remove();
+	    
 	var svg = d3.select("body")
 	  .append("div")
-    	.attr("align", "center")
+	    .attr("align", "center")
 	    .attr("class", "chart")
 	  .append("svg")
 	    .attr("width", width + margin.left + margin.right)
@@ -43,7 +48,7 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 	  .append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.json("<?=$dataSourceURL?>", function(error, data) {
+	d3.json(dataSourceURL, function(error, data) {
 
 	  color.domain(d3.keys(data[0]).sort(d3.descending).filter(function(key) { return key !== "date"; }));
   
@@ -83,7 +88,7 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 	      .attr("y", "-14")
 	      .attr("dy", ".71em")
 	      .style("text-anchor", "end")
-	      .text("<?=$yAxisTitle?>");
+	      .text(yAxisTitle);
 
 	  var sensor = svg.selectAll(".sensor")
 	      .data(sensors)
@@ -101,9 +106,9 @@ function RenderChart($dataSourceURL, $yAxisTitle)
 	      .attr("x", 23)
 	      .attr("dy", ".35em")
 	      .text(function(d) { return d.name; });
-	});
 
-	</script>
-<?php
+	  spinner.stop();
+	  $('#spinner').hide();
+	});
 }
-?>
+</script>

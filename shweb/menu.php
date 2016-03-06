@@ -20,7 +20,7 @@
 		  			<li><a href="schedule.php">Таймер отопления</a></li>
 		  			<li><a href="logview.php?log=heating.log">Лог</a></li>
 		  			<li><a href="temperature.php">Температурный график</a></li>
-		  			<li><a href="summary.php">Потребление</a></li>
+		  			<li><a href="heatingConsumption.php">Потребление</a></li>
               		  		<li class="divider"></li>
 		  			<li><a href="config.php">Настройки</a></li>
             			</ul>

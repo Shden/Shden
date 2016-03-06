@@ -30,9 +30,10 @@ Class Heating
 		$arrival_date->setTime($controller_config[schedule][arrive_hour], 0);
 		$departure_date->setTime($controller_config[schedule][dep_hour], 0);
 		
+		// Use ::ATOM as ::ISO8601 is not ISO8601 compatible =|. That's the beauty of PHP
 		return array(
-					"from" 	=> $arrival_date->format(DateTime::ISO8601),
-					"to" => $departure_date->format(DateTime::ISO8601),
+					"from" 	=> $arrival_date->format(DateTime::ATOM),
+					"to" => $departure_date->format(DateTime::ATOM),
 					"active" => $departure_date > new DateTime(now, $time_zone) ? 1 : 0
 				);
 	}

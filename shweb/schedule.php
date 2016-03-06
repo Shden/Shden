@@ -11,137 +11,232 @@
 	
 	<!-- Shweb cutom styles -->
 	<link rel="stylesheet" href="css/shweb.css">
-	<link rel="stylesheet" href="css/datepicker.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
 	
 	<style>
 	#alert {
 		display: none;
 	}
-	.form-schedule {
-		max-width: 640px;
-		padding: 15px;
-		margin: 0 auto;
-	}
-	.form-schedule input[type=text] {
-	  	width: 160px;
-		height: 18;
-	}
-	.form-schedule select {
-	  	width: 160px;
-		height: 18;
-		font-size: 12px;
-	}
-	</style>
-	
-	<?php include 'include/js.php';?>
-	
-    <script src="js/bootstrap-datepicker.js"></script>
-	
-  	<script type="text/javascript">     
-	
-	    $(document).ready(function() {
-			$('#arrive_date').datepicker({
-				format: 'dd.mm.yyyy'
-			});     
-			$('#dep_date').datepicker({
-				format: 'dd.mm.yyyy'
-			});			
-
-			/* Setting default start and end dates to the next weekend (Friday to Sunday) */
-	        var startDate = new Date(); 
-	        while (startDate.getDay() != 5)
-	            startDate.setDate(startDate.getDate() + 1);
-	        $("#arrive_date").datepicker("setValue", startDate);
-	        
-			var endDate = new Date();
-	        endDate.setDate((startDate.getDate() + 2));
-	        $("#dep_date").datepicker("setValue", endDate);
-
-			/* Dates validation handlers */
-			$('#arrive_date').datepicker()
-				.on('changeDate', function(ev){
-					if (ev.date.valueOf() > endDate.valueOf()){
-						$('#alert').show().find('strong').text('Предупреждение: дата прибытия должна быть раньше даты отъезда.');
-					} else {
-						$('#alert').hide();
-						startDate = new Date(ev.date);
-					}
-					$('#arrive_date').datepicker('hide');
-				});
-			$('#dep_date').datepicker()
-				.on('changeDate', function(ev){
-					if (ev.date.valueOf() < startDate.valueOf()){
-						$('#alert').show().find('strong').text('Предупреждение: дата отъезда должна быть после даты прибытия.');
-					} else {
-						$('#alert').hide();
-						endDate = new Date(ev.date);
-					}
-					$('#dep_date').datepicker('hide');
-				});
-
-			//$.datepicker.setDefaults($.datepicker.regional['ru']);
-	    });
-	</script>                                                               
+	</style>                                                     
 </head> 
 <body>
-    <?php include 'include/ini.php';
-   
-    $controller_config = parse_ini_file($controller_ini, true);
-    
-    //print_r($controller_config);
-    
-    if (isset($_REQUEST[arrive_date]) && isset($_REQUEST[arrive_hour]) &&
-        isset($_REQUEST[dep_date]) && isset($_REQUEST[dep_hour]))
-    {
-        $controller_config[schedule][arrive_date] = $_REQUEST[arrive_date];
-        $controller_config[schedule][arrive_hour] = $_REQUEST[arrive_hour];
-        $controller_config[schedule][dep_date] = $_REQUEST[dep_date];
-        $controller_config[schedule][dep_hour] = $_REQUEST[dep_hour];
-        
-        //print_r($controller_config);
-        
-        write_ini_file($controller_ini, $controller_config);
-    }
-    
+    <?php 
+	//include 'include/ini.php';
+	//
+    // $controller_config = parse_ini_file($controller_ini, true);
+    //
+    // //print_r($controller_config);
+    //
+    // if (isset($_REQUEST[arrive_date]) && isset($_REQUEST[arrive_hour]) &&
+    //     isset($_REQUEST[dep_date]) && isset($_REQUEST[dep_hour]))
+    // {
+    //     $controller_config[schedule][arrive_date] = $_REQUEST[arrive_date];
+    //     $controller_config[schedule][arrive_hour] = $_REQUEST[arrive_hour];
+    //     $controller_config[schedule][dep_date] = $_REQUEST[dep_date];
+    //     $controller_config[schedule][dep_hour] = $_REQUEST[dep_hour];
+    //
+    //     //print_r($controller_config);
+    //
+    //     write_ini_file($controller_ini, $controller_config);
+    // }
+    //
 	include 'menu.php';?>
 	
-	<div class="container" align="center">
+	<div class="container">
 		<h2>Таймер отопления</h2>
-		<form role="form" class="form-schedule">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Состояние:</label>
+			    <div class="col-sm-8">
+			       <div class="checkbox">
+			         <label>
+			           <input type="checkbox" id="timerActive" onchange="enableContols();">Таймер активен
+			         </label>
+			       </div>
+			     </div>
+			</div>
 			<div class="alert alert-warning" id="alert">
-				<strong>Oh snap!</strong>
+				<strong></strong>
 			</div>
-			<div>
-				<label for="arrive_date">Приедем:</label>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="arrive_date">Приедем:</label>
+				<div class="date col-sm-8">
+					<input type="text" class="form-control" id="arrive_date"
+						data-date-week-start="1" data-date-language="ru"
+						data-date-autoclose="true" data-date-days-of-week-highlighted="0,6"
+						data-date-format="DD, d MM yyyy"/> 
+				</div>
 			</div>
-			<div>
-				<input type="text" id="arrive_date" name="arrive_date"/> 
-				<select name="arrive_hour" id="arrive_hour">
-	                <option value="2">Ночью, к 2 часам</option>
-	                <option value="12">Утром, к 12 часам</option>
-	                <option value="16" selected>Днем, к 16 часам</option>
-	                <option value="20">Вечером, к 20 часам</option>
-	                <option value="23">Поздно вечером, к 23 часам</option>
-	            </select>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-8">
+					<select class="form-control" id="arrive_hour"></select>
+				</div>
 			</div>
-			<div>
-				<label for="dep_date">Уедем:</label>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="dep_date">Уедем:</label>
+				<div class="date col-sm-8">
+					<input type="text" class="form-control" id="dep_date" 
+						data-date-week-start="1" data-date-language="ru"
+						data-date-autoclose="true" data-date-days-of-week-highlighted="0,6"
+						data-date-format="DD, d MM yyyy"/> 
+ 				</div>
 			</div>
-			<div>
-				<input type="text" id="dep_date" name="dep_date"/> 
-				<select name="dep_hour" id="dep_hour">
-                    <option value="9">Утром, в 9 часов</option>
-                    <option value="12">Утром, в 12 часов</option>
-                    <option value="17" selected>Вечером, в 17 часов</option>
-                    <option value="21">Вечером, в 21 час</option>
-                </select>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-8">
+					<select class="form-control" id="dep_hour"></select>
+				</div>
 			</div>
-			<div>
-				<br/><input type="submit" class="btn btn-primary" value="Установить программу"/>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<a class="btn btn-primary" href="javascript:updateSchedule()">Обновить настройки таймера</a>
+				</div>
 			</div>
 		</form>
 	</div>
+	<div id="spinner" class="spinner">
+		
+	<?php include 'include/js.php';?>
 	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.ru.min.js"></script>
+	
+  	<script type="text/javascript">     
+	
+	    $(document).ready(function() 
+		{
 
+			initForm();
+			loadFormData();
+	    });
+		
+		function initForm()
+		{
+			$('#arrive_date').datepicker('setDate', new Date);
+			$('#dep_date').datepicker('setDate', new Date);
+			
+			/* Dates validation handlers */
+			$('#arrive_date').datepicker()
+				.on('changeDate', function(ev) {
+					if (ev.date.valueOf() > $('#dep_date').datepicker('getDate').valueOf()) {
+						$('#alert').show().find('strong').text('Предупреждение: дата прибытия должна быть раньше даты отъезда.');
+					} else {
+						$('#alert').hide();
+					}
+				});
+			$('#dep_date').datepicker()
+				.on('changeDate', function(ev) {
+					if (ev.date.valueOf() < $('#arrive_date').datepicker('getDate').valueOf()) {
+						$('#alert').show().find('strong').text('Предупреждение: дата отъезда должна быть после даты прибытия.');
+					} else {
+						$('#alert').hide();
+					}
+				});
+
+			for (var hour=0; hour<24; hour++)
+			{
+				$('#arrive_hour').append($('<option>', {
+				    value: hour,
+				    text: hour + ':00'
+				}));
+				$('#dep_hour').append($('<option>', {
+				    value: hour,
+				    text: hour + ':00'
+				}));
+			}
+		}
+		
+		function loadFormData()
+		{
+			$('#spinner').show();
+			var spinner = createSpinner('spinner');
+	
+			$.getJSON(GetAPIURL("heating/GetSchedule"))
+				.done(function(data) {
+
+					refreshControls(data);
+				
+					spinner.stop();
+					$('#spinner').hide();
+				})
+				.fail(function() {
+					alert('Ошибка вызова GetSchedule.');
+				});
+		}
+		
+		function refreshControls(data)
+		{
+			$('#timerActive').prop('checked', data.active == 1);
+			
+			var arrivalDate, departureDate;
+			
+			if (data.active == 1)
+			{
+				var arrivalDate = new Date(data.from);
+				var departureDate = new Date(data.to);			
+			}
+			else
+			{
+				/* Setting default start and end dates to the next weekend (Friday to Sunday) */
+		        arrivalDate = new Date();
+		        while (arrivalDate.getDay() != 5)
+		            arrivalDate.setDate(arrivalDate.getDate() + 1);
+		        
+				var departureDate = new Date();
+		        departureDate.setDate((arrivalDate.getDate() + 2));
+
+				arrivalDate.setHours(18);
+				departureDate.setHours(21);
+			}
+			
+			$('#arrive_date').datepicker('setDate', arrivalDate).datepicker('update');
+			$('#dep_date').datepicker('setDate', departureDate).datepicker('update');
+		
+			$('#arrive_hour').val(arrivalDate.getHours()).attr('selected', 'selected');
+			$('#dep_hour').val(departureDate.getHours()).attr('selected', 'selected');
+			
+			enableContols();
+		}
+		
+		function enableContols()
+		{
+			var active = $('#timerActive').prop('checked');
+			
+			$('#arrive_date').prop('disabled', !active);
+			$('#arrive_hour').prop('disabled', !active);
+			$('#dep_date').prop('disabled', !active);
+			$('#dep_hour').prop('disabled', !active);
+		}
+		
+		function updateSchedule()
+		{
+			var arr = $('#arrive_date').datepicker('getDate');
+			var dep = $('#dep_date').datepicker('getDate');
+			
+			arr.setHours($('#arrive_hour').val());
+			dep.setHours($('#dep_hour').val());
+			
+			var URL = ($('#timerActive').prop('checked'))
+				? GetAPIURL("heating/SetSchedule/" + 
+					arr.getFullYear() + '/' + (arr.getMonth() + 1) + '/' + arr.getDate() + '/' + arr.getHours() + '/' +
+					dep.getFullYear() + '/' + (dep.getMonth() + 1) + '/' + dep.getDate() + '/' + dep.getHours())
+				: GetAPIURL("heating/ResetSchedule");
+
+			$('#spinner').show();
+			var spinner = createSpinner('spinner');
+
+	        $.ajax({
+				url: URL,
+				type: 'PUT',    
+				dataType: 'json',
+				success: function(data) {
+				 
+					refreshControls(data)
+
+					spinner.stop();
+					$('#spinner').hide();					
+				}
+			});
+		}
+	</script>    
 </body>
 </html>

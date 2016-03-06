@@ -20,27 +20,7 @@
 	</style>                                                     
 </head> 
 <body>
-    <?php 
-	//include 'include/ini.php';
-	//
-    // $controller_config = parse_ini_file($controller_ini, true);
-    //
-    // //print_r($controller_config);
-    //
-    // if (isset($_REQUEST[arrive_date]) && isset($_REQUEST[arrive_hour]) &&
-    //     isset($_REQUEST[dep_date]) && isset($_REQUEST[dep_hour]))
-    // {
-    //     $controller_config[schedule][arrive_date] = $_REQUEST[arrive_date];
-    //     $controller_config[schedule][arrive_hour] = $_REQUEST[arrive_hour];
-    //     $controller_config[schedule][dep_date] = $_REQUEST[dep_date];
-    //     $controller_config[schedule][dep_hour] = $_REQUEST[dep_hour];
-    //
-    //     //print_r($controller_config);
-    //
-    //     write_ini_file($controller_ini, $controller_config);
-    // }
-    //
-	include 'menu.php';?>
+    <?php include 'menu.php';?>
 	
 	<div class="container">
 		<h2>Таймер отопления</h2>
@@ -104,7 +84,6 @@
 	
 	    $(document).ready(function() 
 		{
-
 			initForm();
 			loadFormData();
 	    });

@@ -11,47 +11,9 @@
 
 	<!-- Shweb custom styles -->
 	<link rel="stylesheet" href="css/shweb.css">
+	<link rel="stylesheet" href="css/datatable.css">
 </head>
 <body>
-	
-	<style>
-	.datatable .error {
-	    background-color: yellow;
-	}
-	.datatable .failure {
-	    background-color: red;
-	}
-	.datatable {
-		width: 100%;
-        border-collapse: collapse;
-        border: 2px solid black;
-	}
-	.datatable .leftalign {
-		text-align: left;
-	}
-	.datatable .centeralign {
-		text-align: center;
-	}
-	.datatable tr {
-		text-align: right;
-	}
-    .datatable td {
-		border: 1px solid black;
-    }
-	.datatable th {
-		border: 1px solid black;
-		text-align: right;
-	}
-	.datatable .lb {
-		border-left: 2px solid black;
-	}
-	.datatable .rb {
-		border-right: 2px solid black;
-	}
-	.datatable .bb {
-		border-bottom: 2px solid black;
-	}
-	</style>
 
 	<?php 
 	include 'menu.php';

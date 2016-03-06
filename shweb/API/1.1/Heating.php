@@ -1,5 +1,6 @@
 <?php
 require_once '../../include/ini.php';
+require_once ('../../include/sql2js.php');
 
 define(TZ, "MSK");
 
@@ -147,6 +148,26 @@ Class Heating
 			);
 		}
 		return null;
+	}
+	
+	/**
+	 *	Returns heating system electricity consumption for the time period requested.
+	 *
+	 *	@param $days - period length from now to the past in days.
+	 *
+	 *	@url GET /GetHeatingConsumption/$days
+	 */
+	public function GetHeatingConsumption($days)
+	{
+		if (!ctype_digit((string)$days) || $days < 1 || $days > 1000)
+			throw new RestException(400, "Invalid request parameter: $days");
+
+		$d = $days - 1;
+		date_default_timezone_set("Europe/Moscow");
+		$startDate = Date("Y-m-d", strtotime("-$d days"));
+		$endDate = Date("Y-m-d", strtotime("+1 days"));
+
+		return SQL2Array("CALL SP_HEATING_CONSUMPTION('$startDate', '$endDate');");
 	}
 	
 	/**

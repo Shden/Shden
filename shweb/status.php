@@ -166,8 +166,8 @@ include 'include/js.php';
 		$.ajax({
 		    url: API + '/' + mode,
 		    type: 'PUT',
+			dataType: 'json',
 		    success: function(data) {
-				data = jQuery.parseJSON(data);
 				refreshControls(data);
 
 				spinner.stop();

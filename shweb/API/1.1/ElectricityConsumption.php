@@ -1,5 +1,5 @@
 <?php
-require_once ('../../datasource/sql2js.php');
+require_once ('../../include/sql2js.php');
 	
 /**
  *	Electricity consumption API, including power meter data, aggregated consumption data and 

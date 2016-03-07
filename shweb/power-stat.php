@@ -34,31 +34,31 @@
 	
 	<table class="datatable">
 		<tr>
-			<th rowspan="2" class="bb leftalign">Дата</th>
+			<th rowspan="2" class="leftalign">Дата</th>
 			<th colspan="4" class="centeralign lb">Фаза 1</th>
 			<th colspan="4" class="centeralign lb">Фаза 2</th>
 			<th colspan="4" class="centeralign lb">Фаза 3</th>
 			<th colspan="3" class="centeralign lb">Ошибки (минут)</th>
 		</tr>
 		<tr>
-			<th class="bb lb">Min (V)</th>
-			<th class="bb">Max (V)</th>
-			<th class="bb">Avg (V)</th>
-			<th class="bb rb">STD</th>
+			<th>Min (V)</th>
+			<th>Max (V)</th>
+			<th>Avg (V)</th>
+			<th class="rb">STD</th>
 			
-			<th class="bb lb">Min (V)</th>
-			<th class="bb">Max (V)</th>
-			<th class="bb">Avg (V)</th>
-			<th class="bb rb">STD</th>
+			<th>Min (V)</th>
+			<th>Max (V)</th>
+			<th>Avg (V)</th>
+			<th class="rb">STD</th>
 			
-			<th class="bb lb">Min (V)</th>
-			<th class="bb">Max (V)</th>
-			<th class="bb">Avg (V)</th>
-			<th class="bb rb">STD</th>
+			<th>Min (V)</th>
+			<th>Max (V)</th>
+			<th>Avg (V)</th>
+			<th class="rb">STD</th>
 			
-			<th class="bb">Низк.</th>
-			<th class="bb">Выс.</th>
-			<th class="bb">Откл.</th>
+			<th>Низк.</th>
+			<th>Выс.</th>
+			<th>Откл.</th>
 		</tr>
 	</table>
 
@@ -68,7 +68,7 @@
 	<script>
 
 	$(document).ready(function() {
-		refreshForm(14);
+		refreshForm(7);
 	});
 	
 	function refreshForm(days)

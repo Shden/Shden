@@ -33,11 +33,11 @@
 	
 	<table class="datatable">
 		<tr>
-			<th class="bb leftalign">Дата</th>
-			<th class="bb centeralign lb" colspan="3">Снаружи, &deg;C (средняя/мин/макс)</th>
-			<th class="bb centeralign lb">Внутри, &deg;C</th>
-			<th class="bb centeralign lb" colspan="3">Время обогрева, ч (всего/ночь/день)</th>
-			<th class="bb centeralign lb" colspan="3">Стоимость, руб (всего/ночь/день)</th>
+			<th class="leftalign">Дата</th>
+			<th class="centeralign lb" colspan="3">Снаружи, &deg;C (средняя/мин/макс)</th>
+			<th class="centeralign lb">Внутри, &deg;C</th>
+			<th class="centeralign lb" colspan="3">Время обогрева, ч (всего/ночь/день)</th>
+			<th class="centeralign lb" colspan="3">Стоимость, руб (всего/ночь/день)</th>
 		</tr>
 	</table>
 
@@ -48,7 +48,7 @@
 	<script>
 
 	$(document).ready(function() {
-		refreshForm(14);
+		refreshForm(7);
 	});
 	
 	function refreshForm(days)

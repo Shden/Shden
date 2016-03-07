@@ -30,7 +30,7 @@
 	        			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Электросеть <b class="caret"></b></a>
 	        			<ul class="dropdown-menu">
 					<li><a href="mains.php">Электропитание дома</a></li>
-					<li><a href="power.php">Состояние сети</a></li>
+					<li><a href="power-meter.php">Состояние сети</a></li>
 					<li><a href="power-stat.php">Статистика</a></li>
 				</ul>
 			</li>

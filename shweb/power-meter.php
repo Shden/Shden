@@ -14,26 +14,19 @@
 </head>
 <body>
 	<style>
-		.datatable {
+		.table {
 			width: 70%;
-	        border-collapse: collapse;
-	        border: 2px solid black;
 		}
 
-		.datatable th {
+		.table th {
 			text-align: right;
-			border: 1px solid black;
-			padding: 2px;
-			background-color: #c0c0c0;
 		}
 	
-		.datatable td {
+		.table td {
 			text-align: right;
-			border: 1px solid black;
-			padding: 2px;
 		}
 	
-		.datatable .first {
+		.table .first {
 			text-align: left;
 		}
 	</style>
@@ -43,7 +36,7 @@
 	<div class="container" align="center">
 		<h2>Электросеть</h2>
 		<h3>Мгновенные значения:</h3>
-		<table class="datatable">
+		<table class="table table-striped table-condensed">
 			<thead>
 				<th class="first">Параметр</th>
 				<th>Фаза 1</th>
@@ -99,7 +92,7 @@
 		</table>
 		<br/>
 		<h3>Накопленные значения:</h3>
-		<table class="datatable">
+		<table class="table table-striped table-condensed">
 			<thead>
 				<th class="first">Потребление энергии</th>
 				<th>Значение по счетчику</th>

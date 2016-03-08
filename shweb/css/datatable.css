@@ -1,44 +1,23 @@
-.datatable .error {
-    background-color: yellow;
-}
-.datatable .failure {
-    background-color: red;
-}
-
-.datatable {
-	width: 100%;
-    border-collapse: collapse;
-    border: 2px solid black;
-}
-
-.datatable .leftalign {
+.table .leftalign {
 	text-align: left;
 }
 
-.datatable .centeralign {
+.table .centeralign {
 	text-align: center;
 }
 
-.datatable tr {
+.table tr {
 	text-align: right;
 }
 
-.datatable td {
-	border: 1px solid black;
-	padding: 2px;
-}
-
-.datatable th {
-	border: 1px solid black;
+.table th {
 	text-align: right;
-	padding: 2px;
-	background-color: #c0c0c0;
 }
 
-.datatable .lb {
-	border-left: 2px solid black;
+.table .lb {
+	border-left: 1px solid rgb(221, 221, 221);
 }
 
-.datatable .rb {
-	border-right: 2px solid black;
+.table .rb {
+	border-right: 1px solid rgb(221, 221, 221);
 }

@@ -30,15 +30,16 @@
 		<a href="javascript:refreshForm(31)" class="btn btn-default">Месяц</a> 
 	</div>
 	<br/><br/>
-	
-	<table class="datatable">
-		<tr>
+	<table class="table table-striped table-condensed">
+		<thead>
 			<th class="leftalign">Дата</th>
 			<th class="centeralign lb" colspan="3">Снаружи, &deg;C (средняя/мин/макс)</th>
 			<th class="centeralign lb">Внутри, &deg;C</th>
 			<th class="centeralign lb" colspan="3">Время обогрева, ч (всего/ночь/день)</th>
 			<th class="centeralign lb" colspan="3">Стоимость, руб (всего/ночь/день)</th>
-		</tr>
+		</thead>
+		<tbody>
+		</tbody>
 	</table>
 
 	<div id="spinner" class="spinner"></div>
@@ -58,7 +59,7 @@
 		
 		$('#daysCount').html(days);
 
-		var table = d3.select(".datatable");
+		var table = d3.select(".table");
 	
 		$.getJSON(GetAPIURL("heating/GetHeatingConsumption/" + days))
 			.done(function(data) {
@@ -67,8 +68,8 @@
 				$('#spinner').hide();
 
 				table.selectAll(".datarow").remove();
-				
-				var row = table.selectAll("row")
+
+				var row = table.select("tbody").selectAll("row")
 					.data(data)
 					.enter()
 					.append("tr")

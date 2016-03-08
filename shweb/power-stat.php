@@ -32,34 +32,38 @@
 	</div>
 	<br/><br/>
 	
-	<table class="datatable">
-		<tr>
-			<th rowspan="2" class="leftalign">Дата</th>
-			<th colspan="4" class="centeralign lb">Фаза 1</th>
-			<th colspan="4" class="centeralign lb">Фаза 2</th>
-			<th colspan="4" class="centeralign lb">Фаза 3</th>
-			<th colspan="3" class="centeralign lb">Ошибки (минут)</th>
-		</tr>
-		<tr>
-			<th>Min (V)</th>
-			<th>Max (V)</th>
-			<th>Avg (V)</th>
-			<th class="rb">STD</th>
+	<table class="table table-striped table-condensed">
+		<thead>
+			<tr>
+				<th rowspan="2" class="leftalign">Дата</th>
+				<th colspan="4" class="centeralign lb">Фаза 1</th>
+				<th colspan="4" class="centeralign lb">Фаза 2</th>
+				<th colspan="4" class="centeralign lb">Фаза 3</th>
+				<th colspan="3" class="centeralign lb">Ошибки (минут)</th>
+			</tr>
+			<tr>
+				<th>Min (V)</th>
+				<th>Max (V)</th>
+				<th>Avg (V)</th>
+				<th class="rb">STD</th>
 			
-			<th>Min (V)</th>
-			<th>Max (V)</th>
-			<th>Avg (V)</th>
-			<th class="rb">STD</th>
+				<th>Min (V)</th>
+				<th>Max (V)</th>
+				<th>Avg (V)</th>
+				<th class="rb">STD</th>
 			
-			<th>Min (V)</th>
-			<th>Max (V)</th>
-			<th>Avg (V)</th>
-			<th class="rb">STD</th>
+				<th>Min (V)</th>
+				<th>Max (V)</th>
+				<th>Avg (V)</th>
+				<th class="rb">STD</th>
 			
-			<th>Низк.</th>
-			<th>Выс.</th>
-			<th>Откл.</th>
-		</tr>
+				<th>Низк.</th>
+				<th>Выс.</th>
+				<th>Откл.</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
 	</table>
 
 	<div id="spinner" class="spinner"></div>
@@ -82,7 +86,7 @@
 		// var table = d3.select(".container")
 		// 	.append("table")
 		// 		.attr("class", "datatable");
-		var table = d3.select(".datatable");
+		var table = d3.select(".table");
 	
 		// var head = table.append("tr");
 		// head.append("th").attr("rowspan", 2).attr("class", "bb leftalign").text("Дата");
@@ -112,12 +116,12 @@
 
 				table.selectAll(".datarow").remove();
 				
-				var row = table.selectAll("row")
+				var row = table.select("tbody").selectAll("row")
 					.data(data)
 					.enter()
 					.append("tr");
 			
-				row.attr("class", function(d) { return d.CutoffMinutes > 0 ? "failure datarow" : "datarow"; })
+				row.attr("class", function(d) { return (d.CutoffMinutes > 0 ? "danger datarow" : "datarow"); })
 		
 				row.append("td").attr("class", "leftalign rb").text(function(d) { return d.DATE; });
 
@@ -141,7 +145,7 @@
 	
 	function checkVal(value, defaultClass)
 	{
-		return (value >= 230 * 0.9 && value <= 230 * 1.1) ? defaultClass : "error";
+		return (value >= 230 * 0.9 && value <= 230 * 1.1) ? defaultClass : "warning";
 	}
 	</script>
 	

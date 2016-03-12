@@ -22,12 +22,22 @@
 	?>
 	
 	<h2>Температурный график, интервал в днях: <span id="days"></span></h2>
-	<div class="btn-group" role="group">
-		<a href="javascript:updateChart(1)" class="btn btn-default">Сутки</a>
-		<a href="javascript:updateChart(2)" class="btn btn-default">Двое суток</a>
-		<a href="javascript:updateChart(7)" class="btn btn-default">Неделя</a>
-		<a href="javascript:updateChart(14)" class="btn btn-default">2 недели</a>
-		<a href="javascript:updateChart(31)" class="btn btn-default">Месяц</a> 
+	<div class="btn-group" data-toggle="buttons">
+		<label onclick="updateChart(1)" class="btn btn-primary active">
+		  <input type="radio" name="options" id="option1" autocomplete="off" checked>Сутки
+		</label>
+		<label onclick="updateChart(2)" class="btn btn-primary">
+		  <input type="radio" name="options" id="option2" autocomplete="off">Двое суток
+		</label>
+		<label onclick="updateChart(7)" class="btn btn-primary">
+		  <input type="radio" name="options" id="option3" autocomplete="off">Неделя
+		</label>
+		<label onclick="updateChart(14)" class="btn btn-primary">
+		  <input type="radio" name="options" id="option3" autocomplete="off">2 недели
+		</label>
+		<label onclick="updateChart(31)" class="btn btn-primary">
+		  <input type="radio" name="options" id="option3" autocomplete="off">Месяц
+		</label>
 	</div>
 
 	<div id="spinner" class="spinner">

@@ -21,13 +21,22 @@
 
 	<h2>Энергопотребление системы отопления, интервал в днях: <span id="daysCount">...</span></h2>
 
-	<div class="btn-group" role="group">
-		<a href="javascript:refreshForm(1)" class="btn btn-default">Сутки</a>
-		<a href="javascript:refreshForm(2)" class="btn btn-default">Двое суток</a>
-		<a href="javascript:refreshForm(7)" class="btn btn-default">Неделя</a>
-		<a href="javascript:refreshForm(14)" class="btn btn-default">2 недели</a>
-		<a href="javascript:refreshForm(21)" class="btn btn-default">3 недели</a>
-		<a href="javascript:refreshForm(31)" class="btn btn-default">Месяц</a> 
+	<div class="btn-group" data-toggle="buttons">
+		<label onclick="refreshForm(1)" class="btn btn-primary">
+		  <input type="radio" name="options" id="option1" autocomplete="off">Сутки
+		</label>
+		<label onclick="refreshForm(2)" class="btn btn-primary">
+		  <input type="radio" name="options" id="option2" autocomplete="off">Двое суток
+		</label>
+		<label onclick="refreshForm(7)" class="btn btn-primary active">
+		  <input type="radio" name="options" id="option3" autocomplete="off" checked>Неделя
+		</label>
+		<label onclick="refreshForm(14)" class="btn btn-primary">
+		  <input type="radio" name="options" id="option3" autocomplete="off">2 недели
+		</label>
+		<label onclick="refreshForm(31)" class="btn btn-primary">
+		  <input type="radio" name="options" id="option3" autocomplete="off">Месяц
+		</label>
 	</div>
 	<br/><br/>
 	<table class="table table-striped table-condensed">

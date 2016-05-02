@@ -39,6 +39,7 @@ struct ConfigT
 	float		standbyTargetNightTemp;			/* Target temp when nobody at home (night) */
 	float		tempDelta;				/* Histeresis */
 	float 		stopPumpTempDelta;			/* Temperature differeince across the house to stop pump */
+	float		saunaFloorTemp;				/* Target sauna floor temperature */
 
 	/* The next two parameters both control how electric heater is turned off when oven is on: */
 	float		fluidElectricHeaterOffTemp;		/* Outgoing fluid temperature O2 to off electic heater */
@@ -74,6 +75,7 @@ const int nightTariffEndHour		= 7;
 #define		PUMP_OFF_VALUE		"stoppumptempdelta"
 #define		HEATER_OFF_VALUE	"fluidelectricheaterofftemp"
 #define		HEATER_DELTA_OFF_VALUE	"ovenextraelectricheaterofftemp"
+#define		SAUNA_FLOOR_VALUE	"saunaFloorTemp"
 
 #define		ARRIVE_DATE_VALUE	"arrive_date"
 #define		ARRIVE_HOUR_VALUE	"arrive_hour"
@@ -214,6 +216,10 @@ void loadSettings()
 					else if (!strcmp(varName, HEATER_DELTA_OFF_VALUE))
 					{
 						sscanf(varValue, "%f", &configuration.ovenExtraElectricHeaterOffTemp);
+					}
+					else if (!strcmp(varName, SAUNA_FLOOR_VALUE))
+					{
+						sscanf(varValue, "%f", &configuration.saunaFloorTemp);
 					}
 					else if (!strcmp(varName, ARRIVE_DATE_VALUE))
 					{
@@ -465,6 +471,18 @@ int controlHeater(float controlTemp, float heaterTemp, float outgoingFluidTemp)
 }
 
 /*
+ *	Sauna floor control procedure.
+ */
+int controlSaunaFloor(float currentFloorTemp, float targetFloorTemp)
+{
+	if (isPresence())
+	{
+		return ON;
+	}
+	return OFF;
+}
+
+/*
  *	Pump control procedure
  *	tempVector - vector of temperatures across the house
  *	size - length of the vector
@@ -536,9 +554,14 @@ int main(int argc, const char** args)
 	float bathroomTemp = getT(bathRoomSensor);
 	float sashaBedroomTemp = getT(childrenSmallSensor); 
 	float targetTemp = getTargetTemp();
+	
+	float saunaFloorTemp = getT(saunaFloorSensor);
 
 	// -- Control heater and pump
 	int heaterState = controlHeater(controlTemp, electricHeaterTemp, outgoingFluidTemp);
+	
+	// -- Control sauna floor temp
+	int saunaFloorHeatingOn = controlSaunaFloor(saunaFloorTemp, configuration.saunaFloorTemp);
 
 	// -- Initizlize temp vector (no paritcular order)
 	float tv[10];
@@ -564,7 +587,7 @@ int main(int argc, const char** args)
 	getDateTimeStr(nowStr, TBL, time(NULL));
 	getDateTimeStr(onStr, TBL, getHeatingStartTime());
 
-	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%c|%c|%4.1f|%s|\r\n",
+	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%c|%c|%4.1f|%s||%4.2f|%d|\r\n",
 		nowStr,
 		electricHeaterTemp,
 		ingoingFluidTemp,
@@ -582,7 +605,9 @@ int main(int argc, const char** args)
 		(isPresence() ? 'P' : 'S'),
 		(isSaving() ? 'N' : 'D'),
 		targetTemp,
-		onStr
+		onStr,
+		saunaFloorTemp,
+		saunaFloorHeatingOn
 	);
 
 	return EXIT_OK;

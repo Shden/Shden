@@ -68,6 +68,9 @@
                 <td>Отключаем ТЭН, если котел нагревает воду до:</td>
                 <td><input type="text" name="fluidElectricHeaterOffTemp" value="<?=$controller_config['heating']['fluidelectricheaterofftemp']?>"/>&deg;С
             </tr>
+			<tr>
+				<td>Температура теплого пола в сауне:</td>
+				<td><input type="text" name="saunaFloorTemp"> value="<?=$controller_config['heating']['saunaFloorTemp']?>"/>&deg;C</td>
             <tr>
                 <td>Начало режима комфортного сна:</td>
                 <td><input type="text" name="sleep_mode_start_hour" value="<?=$controller_config['comfort_sleep']['sleep_mode_start_hour']?>"/>час.

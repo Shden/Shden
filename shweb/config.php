@@ -30,6 +30,8 @@
         $controller_config[heating][tempdelta] = $_REQUEST[tempDelta];
         $controller_config[heating][stoppumptempdelta] = $_REQUEST[stopPumpTempDelta];
         $controller_config[heating][fluidelectricheaterofftemp] = $_REQUEST[fluidElectricHeaterOffTemp];
+        $controller_config[heating][saunaFloorTemp] = $_REQUEST[saunaFloorTemp];
+		
         $controller_config[comfort_sleep][sleep_mode_start_hour] = $_REQUEST[sleep_mode_start_hour];
         $controller_config[comfort_sleep][sleep_mode_end_hour] = $_REQUEST[sleep_mode_end_hour];
         $controller_config[comfort_sleep][sleep_target_temp] = $_REQUEST[sleep_target_temp];
@@ -70,7 +72,7 @@
             </tr>
 			<tr>
 				<td>Температура теплого пола в сауне:</td>
-				<td><input type="text" name="saunaFloorTemp"> value="<?=$controller_config['heating']['saunaFloorTemp']?>"/>&deg;C</td>
+				<td><input type="text" name="saunaFloorTemp" value="<?=$controller_config['heating']['saunaFloorTemp']?>"/>&deg;C</td>
             <tr>
                 <td>Начало режима комфортного сна:</td>
                 <td><input type="text" name="sleep_mode_start_hour" value="<?=$controller_config['comfort_sleep']['sleep_mode_start_hour']?>"/>час.

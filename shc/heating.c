@@ -1,5 +1,5 @@
 /*
- *	Smart house controller module.
+ *	Smart house heating controller module.
  *
  *	14-Nov-2010: 	- pump is controlled separately from heater allowing other heaters to work effectively.
  *			- overheating control implemented.
@@ -17,6 +17,7 @@
  *	08-SEP-2013:	- pump differential algorithm to keep temperature the same when heating is off.
  *	13-NOV-2013:	- night tariff is back to 11pm to 7am period.
  *	24-OCT-2014:	- comfort sleep mode added, no per room control yet.
+ *	02-MAY-2016:	- sauna floor temperature control.
  */
 #include <stdio.h>
 #include <time.h>
@@ -309,12 +310,17 @@ int isSaving()
 
 void setHeater(int ison)
 {
-	return changeSwitch(heaterSwitch, ison);
+	changeSwitch(heaterSwitch, ison);
 }
 
 void setPump(int ison)
 {
-	return changeSwitch(pumpSwitch, ison);
+	changeSwitch(pumpSwitch, ison);
+}
+
+void setSaunaFloor(int ison)
+{
+	changeSwitch(saunaFloorSwitch, ison);
 }
 
 int getHeaterState()
@@ -477,7 +483,9 @@ int controlSaunaFloor(float currentFloorTemp, float targetFloorTemp)
 {
 	if (isPresence())
 	{
-		return ON;
+		int floorHeatingON = currentFloorTemp < targetFloorTemp;
+		setSaunaFloor(floorHeatingON);
+		return floorHeatingON;
 	}
 	return OFF;
 }
@@ -555,13 +563,14 @@ int main(int argc, const char** args)
 	float sashaBedroomTemp = getT(childrenSmallSensor); 
 	float targetTemp = getTargetTemp();
 	
-	float saunaFloorTemp = getT(saunaFloorSensor);
 
 	// -- Control heater and pump
 	int heaterState = controlHeater(controlTemp, electricHeaterTemp, outgoingFluidTemp);
 	
 	// -- Control sauna floor temp
-	int saunaFloorHeatingOn = controlSaunaFloor(saunaFloorTemp, configuration.saunaFloorTemp);
+	float saunaFloorTemp = getT(saunaFloorSensor);
+	float saunaFloorTargetTemp = configuration.saunaFloorTemp;
+	int saunaFloorHeatingOn = controlSaunaFloor(saunaFloorTemp, saunaFloorTargetTemp);
 
 	// -- Initizlize temp vector (no paritcular order)
 	float tv[10];
@@ -587,7 +596,7 @@ int main(int argc, const char** args)
 	getDateTimeStr(nowStr, TBL, time(NULL));
 	getDateTimeStr(onStr, TBL, getHeatingStartTime());
 
-	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%c|%c|%4.1f|%s||%4.2f|%d|\r\n",
+	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%c|%c|%4.1f|%s|%4.2f|%4.2f|%d|\r\n",
 		nowStr,
 		electricHeaterTemp,
 		ingoingFluidTemp,
@@ -607,6 +616,7 @@ int main(int argc, const char** args)
 		targetTemp,
 		onStr,
 		saunaFloorTemp,
+		saunaFloorTargetTemp,
 		saunaFloorHeatingOn
 	);
 

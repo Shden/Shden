@@ -19,6 +19,7 @@
 #define bathVentilationSpeed1		"/mnt/1wire/3A.599403000000/PIO.A"
 #define bathVentilationSpeed2		"/mnt/1wire/3A.599403000000/PIO.B"
 #define usMice				"/mnt/1wire/3A.C19703000000/PIO.B"
+#define saunaFloorSwitch		"/mnt/1wire/3A.14280D000000/PIO.B"
 
 #define bathRoomHumiditySensor		"26.140A56010000"
 

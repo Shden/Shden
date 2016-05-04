@@ -570,7 +570,7 @@ int main(int argc, const char** args)
 	// -- Control sauna floor temp
 	float saunaFloorTemp = getT(saunaFloorSensor);
 	float saunaFloorTargetTemp = configuration.saunaFloorTemp;
-	int saunaFloorHeatingOn = controlSaunaFloor(saunaFloorTemp, saunaFloorTargetTemp);
+	int saunaFloorHeatingState = controlSaunaFloor(saunaFloorTemp, saunaFloorTargetTemp);
 
 	// -- Initizlize temp vector (no paritcular order)
 	float tv[10];
@@ -596,7 +596,7 @@ int main(int argc, const char** args)
 	getDateTimeStr(nowStr, TBL, time(NULL));
 	getDateTimeStr(onStr, TBL, getHeatingStartTime());
 
-	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%c|%c|%4.1f|%s|%4.2f|%4.2f|%d|\r\n",
+	printf("%s|%4.2f|%4.2f|%4.2f| %4.2f |%4.2f|%4.2f|%4.2f|%4.2f| %4.2f|%4.2f |%4.2f|%d|%d|%4.2f|%d|%c|%c|%4.1f|%4.1f|%s\r\n",
 		nowStr,
 		electricHeaterTemp,
 		ingoingFluidTemp,
@@ -611,13 +611,13 @@ int main(int argc, const char** args)
 		controlTemp,
 		heaterState,
 		pumpState,
+		saunaFloorTemp,
+		saunaFloorHeatingState,
 		(isPresence() ? 'P' : 'S'),
 		(isSaving() ? 'N' : 'D'),
 		targetTemp,
-		onStr,
-		saunaFloorTemp,
 		saunaFloorTargetTemp,
-		saunaFloorHeatingOn
+		onStr
 	);
 
 	return EXIT_OK;

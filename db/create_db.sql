@@ -13,6 +13,8 @@ CREATE TABLE heating (
 	control 	DECIMAL(5,2),
 	heating		INT,
 	pump		INT,
+	sauna_floor	DECIMAL(5,2),
+	sauna_heating	INT,
 	PRIMARY KEY(time));
 
 CREATE TABLE tariff (

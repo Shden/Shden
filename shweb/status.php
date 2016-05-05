@@ -31,59 +31,61 @@
 	}
 </style>
 
-<?php 
-include 'menu.php';
-include 'include/js.php';
-?>
+<div class="container">
+	<?php 
+	include 'menu.php';
+	include 'include/js.php';
+	?>
 
-<div class="jumbotron">
-	<div class="container" align="center">
-		<h1 id="statusHdr"></h1>
-		<p>
-			В доме: <span id="inside" class="temp-big">--.--</span>
-			На улице: <span id="outside" class="temp-big">--.--</span>
-			<a role="button" class="btn btn-default" href="javascript:updateForm();">
-				<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-			</a>
-		</p>
-		<a id="modeBtn" class="btn btn-lg" role="button"></a>
+	<div class="jumbotron">
+		<div class="container" align="center">
+			<h1 id="statusHdr"></h1>
+			<p>
+				В доме: <span id="inside" class="temp-big">--.--</span>
+				На улице: <span id="outside" class="temp-big">--.--</span>
+				<a role="button" class="btn btn-default" href="javascript:updateForm();">
+					<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+				</a>
+			</p>
+			<a id="modeBtn" class="btn btn-lg" role="button"></a>
+		</div>
 	</div>
+	<div class="row" align="center">
+	  	<div class="col-md-6" align=center>
+			<table>
+				<tr>
+					<td><b>24 часа:</b></td>
+					<td><small>[min/avg/max] <a href="temperature.php?days=1">Подробнее >></a></small></td>
+				</tr>
+				<tr>
+					<td>&nbsp;в доме</td>
+					<td><span id="MIN_INT_H24"></span>/<span id="AVG_INT_H24"></span>/<span id="MAX_INT_H24"></span></td>
+				</tr>
+				<tr>
+					<td>&nbsp;на улице</td>
+					<td><span id="MIN_EXT_H24"></span>/<span id="AVG_EXT_H24"></span>/<span id="MAX_EXT_H24"></span></td>
+				</tr>
+			</table>
+		</div>
+	  	<div class="col-md-6" align="center">
+			<table>
+				<tr>
+					<td><b>30 дней:</b></td>
+					<td><small>[min/avg/max] <a href="temperature.php?days=30">Подробнее >></a></small></td>
+				</tr>
+				<tr>
+					<td>&nbsp;в доме</td>
+					<td><span id="MIN_INT_D30"></span>/<span id="AVG_INT_D30"></span>/<span id="MAX_INT_D30"></span></td>
+				</tr>
+				<tr>
+					<td>&nbsp;на улице</td>
+					<td><span id="MIN_EXT_D30"></span>/<span id="AVG_EXT_D30"></span>/<span id="MAX_EXT_D30"></span></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="spinner" class="spinner"/>
 </div>
-<div class="row" align="center">
-  	<div class="col-md-6" align=center>
-		<table>
-			<tr>
-				<td><b>24 часа:</b></td>
-				<td><small>[min/avg/max] <a href="temperature.php?days=1">Подробнее >></a></small></td>
-			</tr>
-			<tr>
-				<td>&nbsp;в доме</td>
-				<td><span id="MIN_INT_H24"></span>/<span id="AVG_INT_H24"></span>/<span id="MAX_INT_H24"></span></td>
-			</tr>
-			<tr>
-				<td>&nbsp;на улице</td>
-				<td><span id="MIN_EXT_H24"></span>/<span id="AVG_EXT_H24"></span>/<span id="MAX_EXT_H24"></span></td>
-			</tr>
-		</table>
-	</div>
-  	<div class="col-md-6" align="center">
-		<table>
-			<tr>
-				<td><b>30 дней:</b></td>
-				<td><small>[min/avg/max] <a href="temperature.php?days=30">Подробнее >></a></small></td>
-			</tr>
-			<tr>
-				<td>&nbsp;в доме</td>
-				<td><span id="MIN_INT_D30"></span>/<span id="AVG_INT_D30"></span>/<span id="MAX_INT_D30"></span></td>
-			</tr>
-			<tr>
-				<td>&nbsp;на улице</td>
-				<td><span id="MIN_EXT_D30"></span>/<span id="AVG_EXT_D30"></span>/<span id="MAX_EXT_D30"></span></td>
-			</tr>
-		</table>
-	</div>
-</div>
-<div id="spinner" class="spinner">
 
 <script>
 	$(document).ready(function() {

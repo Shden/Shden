@@ -130,10 +130,10 @@ Class Heating
 		if ($days <= 2)
 		{
 			// all datapoints for shorter time periods
-			$query = "SELECT DATE(time) as Date, bathroom " .
+			$query = "SELECT time, bathroom " .
 						"FROM humidity " .
 						"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
-						"ORDER BY DATE(time);";
+						"ORDER BY time;";
 		}
 		else
 		{

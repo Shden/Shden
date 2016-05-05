@@ -127,12 +127,24 @@ Class Heating
 		global $conn;
 		$time_zone = new DateTimeZone(TZ);
 		
-		$res = $conn->query(
-			"SELECT DATE(time) as Date, HOUR(time) as Hour, AVG(bathroom) as bathroom " .
-			"FROM humidity " .
-			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
-			"GROUP BY HOUR(time), DATE(time) " .
-			"ORDER BY DATE(time), HOUR(time);");
+		if ($days <= 2)
+		{
+			// all datapoints for shorter time periods
+			$query = "SELECT DATE(time) as Date, bathroom " .
+						"FROM humidity " .
+						"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
+						"ORDER BY DATE(time);"
+		}
+		else
+		{
+			// avg by hours for longer time periods
+			$query = "SELECT DATE(time) as Date, HOUR(time) as Hour, AVG(bathroom) as bathroom " .
+						"FROM humidity " .
+						"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
+						"GROUP BY HOUR(time), DATE(time) " .
+						"ORDER BY DATE(time), HOUR(time);"
+		}
+		$res = $conn->query($query);
 		
 		$arr = array();
 		while($r = $res->fetch_assoc())

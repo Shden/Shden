@@ -133,7 +133,7 @@ Class Heating
 			$query = "SELECT DATE(time) as Date, bathroom " .
 						"FROM humidity " .
 						"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
-						"ORDER BY DATE(time);"
+						"ORDER BY DATE(time);";
 		}
 		else
 		{
@@ -142,7 +142,7 @@ Class Heating
 						"FROM humidity " .
 						"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 						"GROUP BY HOUR(time), DATE(time) " .
-						"ORDER BY DATE(time), HOUR(time);"
+						"ORDER BY DATE(time), HOUR(time);";
 		}
 		$res = $conn->query($query);
 		

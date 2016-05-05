@@ -130,7 +130,7 @@ Class Heating
 		if ($days <= 2)
 		{
 			// all datapoints for shorter time periods
-			$query = "SELECT time, bathroom " .
+			$query = "SELECT DATE(time) as Date, HOUR(time) as Hour, MINUTE(time) as Minute, bathroom " .
 						"FROM humidity " .
 						"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 						"ORDER BY time;";
@@ -138,7 +138,7 @@ Class Heating
 		else
 		{
 			// avg by hours for longer time periods
-			$query = "SELECT DATE(time) as Date, HOUR(time) as Hour, AVG(bathroom) as bathroom " .
+			$query = "SELECT DATE(time) as Date, HOUR(time) as Hour, 0 as Minute, AVG(bathroom) as bathroom " .
 						"FROM humidity " .
 						"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 						"GROUP BY HOUR(time), DATE(time) " .
@@ -150,7 +150,7 @@ Class Heating
 		while($r = $res->fetch_assoc())
 		{
 			$moment = DateTime::createFromFormat("Y-m-d", $r["Date"], $time_zone);
-			$moment->setTime($r["Hour"], 0);
+			$moment->setTime($r["Hour"], $r["Minute"]);
 				
 			$arr[] = array(
 				"date" 		=> $moment->format(DateTime::ISO8601),

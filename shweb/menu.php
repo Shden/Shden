@@ -15,13 +15,14 @@
         	<ul class="nav navbar-nav">
           		<li><a href="status.php">Состояние дома</a></li>
           	  	<li class="dropdown">
-            			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Отопление <b class="caret"></b></a>
+            			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Климат <b class="caret"></b></a>
             			<ul class="dropdown-menu">
 		  			<li><a href="schedule.php">Таймер отопления</a></li>
 		  			<li><a href="logview.php?log=heating.log">Лог</a></li>
 		  			<li><a href="temperature.php">Температурный график</a></li>
-		  			<li><a href="heatingConsumption.php">Потребление</a></li>
-              		  		<li class="divider"></li>
+		  			<li><a href="heatingConsumption.php">Расход энергии на отопление</a></li>
+		  			<li><a href="humidity.php">Уровень влажности</a></li>
+              		<li class="divider"></li>
 		  			<li><a href="config.php">Настройки</a></li>
             			</ul>
           	  	</li>

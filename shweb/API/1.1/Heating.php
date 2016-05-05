@@ -113,6 +113,42 @@ Class Heating
 	}
 	
 	/**
+	 *	Return humidity history hourly for the depth specified.
+	 *
+	 *	@param $days - history depth in days
+	 *
+	 *	@url GET /GetHumidityHistory/$days
+	 */
+	public function GetHumidityHistory($days)
+	{
+		if (!ctype_digit((string)$days) || $days < 1 || $days > 300)
+			throw new RestException(400, "Invalid request parameter: $days.");
+		
+		global $conn;
+		$time_zone = new DateTimeZone(TZ);
+		
+		$res = $conn->query(
+			"SELECT DATE(time) as Date, HOUR(time) as Hour, AVG(bathroom) as bathroom " .
+			"FROM humidity " .
+			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
+			"GROUP BY HOUR(time), DATE(time) " .
+			"ORDER BY DATE(time), HOUR(time);");
+		
+		$arr = array();
+		while($r = $res->fetch_assoc())
+		{
+			$moment = DateTime::createFromFormat("Y-m-d", $r["Date"], $time_zone);
+			$moment->setTime($r["Hour"], 0);
+				
+			$arr[] = array(
+				"date" 		=> $moment->format(DateTime::ISO8601),
+				"bathroom" 	=> (float) $r["bathroom"]
+			);
+		}
+		return $arr;		
+	}
+
+	/**
 	 *	Returns inside/outside min/avg/max values for the time period requested.
 	 *
 	 *	@param $days - period length from now to the past in days.

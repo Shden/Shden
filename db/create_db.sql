@@ -11,10 +11,10 @@ CREATE TABLE heating (
 	kitchen 	DECIMAL(5,2),
 	bathroom 	DECIMAL(5,2),
 	control 	DECIMAL(5,2),
-	heating		INT,
-	pump		INT,
+	heating		TINYINT,
+	pump		TINYINT,
 	sauna_floor	DECIMAL(5,2),
-	sauna_heating	INT,
+	sauna_heating	TINYINT,
 	PRIMARY KEY(time));
 
 CREATE TABLE tariff (

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Электроэнергия</title>
+	<title>Данные электросчетчика</title>
 
 	<?php include 'include/css.php';?>
 
@@ -34,7 +34,7 @@
 	<?php include 'menu.php';?>
 
 	<div class="container" align="center">
-		<h2>Электросеть</h2>
+		<h2>Данные электросчетчика</h2>
 		<h3>Мгновенные значения:</h3>
 		<table class="table table-striped table-condensed">
 			<thead>

@@ -1,4 +1,3 @@
-<div class="container">
 
     <!-- Static navbar -->
 	<div class="navbar navbar-default navbar-inverse" role="navigation">
@@ -32,7 +31,7 @@
         			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Электроэнергия <b class="caret"></b></a>
         			<ul class="dropdown-menu">
 						<li><a href="mains.php">Электропитание дома</a></li>
-						<li><a href="power-meter.php">Состояние сети</a></li>
+						<li><a href="power-meter.php">Электросчетчик</a></li>
 						<li><a href="power-stat.php">Статистика</a></li>
 				  		<li><a href="heatingConsumption.php">Расход на отопление</a></li>
 					</ul>

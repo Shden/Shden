@@ -10,18 +10,20 @@
 	<?php include 'include/css.php';?>
 </head>
 <body>
-	<?php 
-	include 'menu.php';
-	$log = $_REQUEST['log'];
-	?>
-	<h2><?=$log?></h2>
+	<div class="container">
+		<?php 
+		include 'menu.php';
+		$log = $_REQUEST['log'];
+		?>
+		<h2><?=$log?></h2>
 	
-	<?php
-	$output = `tail /home/den/Shden/shc/log/$log -n10`;
-	print "<pre>$output</pre>";
-	?>
+		<?php
+		$output = `tail /home/den/Shden/shc/log/$log -n10`;
+		print "<pre>$output</pre>";
+		?>
 	
-	<?php include 'include/js.php';?>
+		<?php include 'include/js.php';?>
+	</div>
 </body>
 </html>
 

@@ -13,46 +13,48 @@
 	<link rel="stylesheet" href="css/datatable.css">
 </head>
 <body>
+	<div class="container">
 
-	<?php 
-	include 'menu.php';
-	include 'include/js.php';
-	?>
+		<?php 
+		include 'menu.php';
+		include 'include/js.php';
+		?>
 
-	<h2>Энергопотребление системы отопления, интервал в днях: <span id="daysCount">...</span></h2>
+		<h2>Энергопотребление системы отопления, интервал в днях: <span id="daysCount">...</span></h2>
 
-	<div class="btn-group" data-toggle="buttons">
-		<label onclick="refreshForm(1)" class="btn btn-primary">
-		  <input type="radio" name="options" id="option1" autocomplete="off">Сутки
-		</label>
-		<label onclick="refreshForm(2)" class="btn btn-primary">
-		  <input type="radio" name="options" id="option2" autocomplete="off">Двое суток
-		</label>
-		<label onclick="refreshForm(7)" class="btn btn-primary active">
-		  <input type="radio" name="options" id="option3" autocomplete="off" checked>Неделя
-		</label>
-		<label onclick="refreshForm(14)" class="btn btn-primary">
-		  <input type="radio" name="options" id="option3" autocomplete="off">2 недели
-		</label>
-		<label onclick="refreshForm(31)" class="btn btn-primary">
-		  <input type="radio" name="options" id="option3" autocomplete="off">Месяц
-		</label>
+		<div class="btn-group" data-toggle="buttons">
+			<label onclick="refreshForm(1)" class="btn btn-primary">
+			  <input type="radio" name="options" id="option1" autocomplete="off">Сутки
+			</label>
+			<label onclick="refreshForm(2)" class="btn btn-primary">
+			  <input type="radio" name="options" id="option2" autocomplete="off">Двое суток
+			</label>
+			<label onclick="refreshForm(7)" class="btn btn-primary active">
+			  <input type="radio" name="options" id="option3" autocomplete="off" checked>Неделя
+			</label>
+			<label onclick="refreshForm(14)" class="btn btn-primary">
+			  <input type="radio" name="options" id="option3" autocomplete="off">2 недели
+			</label>
+			<label onclick="refreshForm(31)" class="btn btn-primary">
+			  <input type="radio" name="options" id="option3" autocomplete="off">Месяц
+			</label>
+		</div>
+		<br/><br/>
+		<table class="table table-striped table-condensed">
+			<thead>
+				<th class="leftalign">Дата</th>
+				<th class="centeralign lb" colspan="3">Снаружи, &deg;C (средняя/мин/макс)</th>
+				<th class="centeralign lb">Внутри, &deg;C</th>
+				<th class="centeralign lb" colspan="3">Время обогрева, ч (всего/ночь/день)</th>
+				<th class="centeralign lb" colspan="3">Стоимость, руб (всего/ночь/день)</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+
+		<div id="spinner" class="spinner"></div>
 	</div>
-	<br/><br/>
-	<table class="table table-striped table-condensed">
-		<thead>
-			<th class="leftalign">Дата</th>
-			<th class="centeralign lb" colspan="3">Снаружи, &deg;C (средняя/мин/макс)</th>
-			<th class="centeralign lb">Внутри, &deg;C</th>
-			<th class="centeralign lb" colspan="3">Время обогрева, ч (всего/ночь/день)</th>
-			<th class="centeralign lb" colspan="3">Стоимость, руб (всего/ночь/день)</th>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-
-	<div id="spinner" class="spinner"></div>
-
+	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 
 	<script>

@@ -13,42 +13,44 @@
 	<link rel="stylesheet" href="css/shweb.css">
 </head>
 <body>
-	<?php include 'menu.php';?>
+	<div class="container">
+		<?php include 'menu.php';?>
 
-	<style>
-		td
-		{
-			padding: 4px;
-			text-align: right;
-		}
-	</style>
+		<style>
+			td
+			{
+				padding: 4px;
+				text-align: right;
+			}
+		</style>
 		
-	<div class="container" align="center">
-		<h2>Управление освещением</h2>
-		<table>
-			<tr>
-				<td>Уличный фонарь около дороги (250W):</td>
-				<td><button id="streetLight250" class="btn btn-lg">...</button></a>
-			</tr>
-			<tr>
-				<td>Уличный фонарь на озеро (150W):</td>
-				<td><button id="streetLight150" class="btn btn-lg">...</button></a>
-			</tr>
-			<tr>
-				<td>Свет на балконе 2-го этажа:</td>
-				<td><button id="balkonLight" class="btn btn-lg">...</button></a>
-			</tr>
-		</table>
-		<div id="spinner" class="spinner">
+		<div class="container" align="center">
+			<h2>Управление освещением</h2>
+			<table>
+				<tr>
+					<td>Уличный фонарь около дороги (250W):</td>
+					<td><button id="streetLight250" class="btn btn-lg">...</button></a>
+				</tr>
+				<tr>
+					<td>Уличный фонарь на озеро (150W):</td>
+					<td><button id="streetLight150" class="btn btn-lg">...</button></a>
+				</tr>
+				<tr>
+					<td>Свет на балконе 2-го этажа:</td>
+					<td><button id="balkonLight" class="btn btn-lg">...</button></a>
+				</tr>
+			</table>
+			<div id="spinner" class="spinner">
+		</div>
 	</div>
 
 	<?php include 'include/js.php';?>
-	
+
 	<script>
 		$(document).ready(function() {
 			refreshForm();
 		});
-		
+	
 		function refreshForm()
 		{
 			$('#spinner').show();
@@ -59,19 +61,19 @@
 				.done(function(data) {
 
 					refreshButtons(data);
-					
+				
 					spinner.stop();
 					$('#spinner').hide();					
 			    });			
 		}
-		
+	
 		function refreshButtons(data)
 		{
 			refreshButtonView('streetLight250', data['streetLight250']);
 			refreshButtonView('streetLight150', data['streetLight150']);
 			refreshButtonView('balkonLight', data['balkonLight']);
 		}
-		
+	
 		function refreshButtonView(applianceId, applianceStatus)
 		{
 			var button = $('#' + applianceId);
@@ -89,11 +91,11 @@
 				button.click({ applianceId: applianceId, newStatus: 0 }, applianceStatusUpdate);
 			}
 		}
-		
+	
 		function applianceStatusUpdate(event)
 		{
 			var URL = "/API/1.1/lighting/ChangeStatus/" + event.data.applianceId + "/" + event.data.newStatus;
-			
+		
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');
 
@@ -102,7 +104,7 @@
 				type: 'PUT',    
 				dataType: 'json',
 				success: function(data) {
-					 
+				 
 					refreshButtons(data)
 
 					spinner.stop();

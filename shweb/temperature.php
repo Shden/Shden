@@ -13,13 +13,14 @@
 </head>
 
 <body>
-	<?php 
-	include 'menu.php';
-	include 'include/js.php';
-	include 'include/chartHelper.php';
+	<div class="container">
+		<?php 
+		include 'menu.php';
+		include 'include/js.php';
+		include 'include/chartHelper.php';
 	
-	RenderChartWithIntervals("Температурный график, интервал в днях:", "Температура (С)", "heating/GetTempHistory/");
-	?>
-
+		RenderChartWithIntervals("Температурный график, интервал в днях:", "Температура (С)", "heating/GetTempHistory/");
+		?>
+	</div>
 </body>
 </html>

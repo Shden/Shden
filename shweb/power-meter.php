@@ -31,104 +31,106 @@
 		}
 	</style>
 	
-	<?php include 'menu.php';?>
+	<div class="container">
+		<?php include 'menu.php';?>
 
-	<div class="container" align="center">
-		<h2>Данные электросчетчика</h2>
-		<h3>Мгновенные значения:</h3>
-		<table class="table table-striped table-condensed">
-			<thead>
-				<th class="first">Параметр</th>
-				<th>Фаза 1</th>
-				<th>Фаза 2</th>
-				<th>Фаза 3</th>
-				<th>Всего</th>
-			</thead>
-			<tr>
-				<td class="first">Напряжение сети (В):</td>
-				<td id="U-p1"/>
-				<td id="U-p2"/>
-				<td id="U-p3"/>
-				<td></td>
-			</tr>
-			<tr>
-				<td  class="first">Ток потребления (А):</td>
-				<td id="I-p1"/>
-				<td id="I-p2"/>
-				<td id="I-p3"/>
-				<td></td>
-			<tr>
-				<td class="first">Коэффициент мощности (cos(f)):</td>
-				<td id="CosF-p1"/>
-				<td id="CosF-p2"/>
-				<td id="CosF-p3"/>
-				<td id="CosF-sum"/>
-			</tr>
-			<tr>
-				<td class="first">Угол сдвига фаз:</td>
-				<td id="A-p1"/>
-				<td id="A-p2"/>
-				<td id="A-p3"/>
-				<td></td>
-			</tr>
-			<tr>
-				<td class="first">Текущая активная мощность (Вт):</td>
-				<td id="P-p1"/>
-				<td id="P-p2"/>
-				<td id="P-p3"/>
-				<td id="P-sum"/>
-			</tr>
-			<tr>
-				<td class="first">Текущая реактивная мощность (Вт):</td>
-				<td id="S-p1"/>
-				<td id="S-p2"/>
-				<td id="S-p3"/>
-				<td id="S-sum"/>
-			</tr>
-			<tr>
-				<td class="first">Частота сети (Гц):</td>
-				<td colspan="4" id="F"/>
-			</tr>
-		</table>
-		<br/>
-		<h3>Накопленные значения:</h3>
-		<table class="table table-striped table-condensed">
-			<thead>
-				<th class="first">Потребление энергии</th>
-				<th>Значение по счетчику</th>
-				<th>Накопленное значение</th>
-			</thead>
-			<tr>
-				<td class="first">Всего:</td>
-				<td><span id="PR-ap">...</span>&nbsp;кВт</td>
-				<td><span id="PR-ap2">...</span>&nbsp;кВт</td>
-			</tr>
-			<tr>
-				<td class="first">&nbsp;&nbsp;из них по дневному тарифу:</td>
-				<td><span id="PR-day-ap">...</span>&nbsp;кВт</td>
-				<td><span id="PR-day-ap2">...</span>&nbsp;кВт</td>
-			</tr>
-			<tr>
-				<td class="first">&nbsp;&nbsp;из них по ночному тарифу:</td>
-				<td><span id="PR-night-ap">...</span>&nbsp;кВт</td>
-				<td><span id="PR-night-ap2">...</span>&nbsp;кВт</td>
-			</tr>
-			<tr>
-				<td class="first">Вчера:</td>
-				<td><span id="PY-ap">...</span>&nbsp;кВт</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td class="first">Сегодня:</td>
-				<td><span id="PT-ap">...</span>&nbsp;кВт</td>
-				<td></td>
-			</tr>
-		</table>
-		<br/>
-		<a href="javascript:refreshForm();" class="btn btn-primary" role="button">Обновить</a>
-		<div id="spinner" class="spinner">
+		<div class="container" align="center">
+			<h2>Данные электросчетчика</h2>
+			<h3>Мгновенные значения:</h3>
+			<table class="table table-striped table-condensed">
+				<thead>
+					<th class="first">Параметр</th>
+					<th>Фаза 1</th>
+					<th>Фаза 2</th>
+					<th>Фаза 3</th>
+					<th>Всего</th>
+				</thead>
+				<tr>
+					<td class="first">Напряжение сети (В):</td>
+					<td id="U-p1"/>
+					<td id="U-p2"/>
+					<td id="U-p3"/>
+					<td></td>
+				</tr>
+				<tr>
+					<td  class="first">Ток потребления (А):</td>
+					<td id="I-p1"/>
+					<td id="I-p2"/>
+					<td id="I-p3"/>
+					<td></td>
+				<tr>
+					<td class="first">Коэффициент мощности (cos(f)):</td>
+					<td id="CosF-p1"/>
+					<td id="CosF-p2"/>
+					<td id="CosF-p3"/>
+					<td id="CosF-sum"/>
+				</tr>
+				<tr>
+					<td class="first">Угол сдвига фаз:</td>
+					<td id="A-p1"/>
+					<td id="A-p2"/>
+					<td id="A-p3"/>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="first">Текущая активная мощность (Вт):</td>
+					<td id="P-p1"/>
+					<td id="P-p2"/>
+					<td id="P-p3"/>
+					<td id="P-sum"/>
+				</tr>
+				<tr>
+					<td class="first">Текущая реактивная мощность (Вт):</td>
+					<td id="S-p1"/>
+					<td id="S-p2"/>
+					<td id="S-p3"/>
+					<td id="S-sum"/>
+				</tr>
+				<tr>
+					<td class="first">Частота сети (Гц):</td>
+					<td colspan="4" id="F"/>
+				</tr>
+			</table>
+			<br/>
+			<h3>Накопленные значения:</h3>
+			<table class="table table-striped table-condensed">
+				<thead>
+					<th class="first">Потребление энергии</th>
+					<th>Значение по счетчику</th>
+					<th>Накопленное значение</th>
+				</thead>
+				<tr>
+					<td class="first">Всего:</td>
+					<td><span id="PR-ap">...</span>&nbsp;кВт</td>
+					<td><span id="PR-ap2">...</span>&nbsp;кВт</td>
+				</tr>
+				<tr>
+					<td class="first">&nbsp;&nbsp;из них по дневному тарифу:</td>
+					<td><span id="PR-day-ap">...</span>&nbsp;кВт</td>
+					<td><span id="PR-day-ap2">...</span>&nbsp;кВт</td>
+				</tr>
+				<tr>
+					<td class="first">&nbsp;&nbsp;из них по ночному тарифу:</td>
+					<td><span id="PR-night-ap">...</span>&nbsp;кВт</td>
+					<td><span id="PR-night-ap2">...</span>&nbsp;кВт</td>
+				</tr>
+				<tr>
+					<td class="first">Вчера:</td>
+					<td><span id="PY-ap">...</span>&nbsp;кВт</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="first">Сегодня:</td>
+					<td><span id="PT-ap">...</span>&nbsp;кВт</td>
+					<td></td>
+				</tr>
+			</table>
+			<br/>
+			<a href="javascript:refreshForm();" class="btn btn-primary" role="button">Обновить</a>
+			<div id="spinner" class="spinner">
+		</div>
 	</div>
-
+	
 	<?php include 'include/js.php';?>
 		
 	<script>

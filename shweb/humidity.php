@@ -13,12 +13,14 @@
 </head>
 
 <body>
-	<?php 
-	include 'menu.php';
-	include 'include/js.php';
-	include 'include/chartHelper.php';
+	<div class="container">
+		<?php 
+		include 'menu.php';
+		include 'include/js.php';
+		include 'include/chartHelper.php';
 	
-	RenderChartWithIntervals("Уровень влажности, интервал в днях:", "Влажность (%)", "heating/GetHumidityHistory/");
-	?>
+		RenderChartWithIntervals("Уровень влажности, интервал в днях:", "Влажность (%)", "heating/GetHumidityHistory/");
+		?>
+	</div>
 </body>
 </html>

@@ -20,9 +20,10 @@
 	</style>                                                     
 </head> 
 <body>
+	<div class="container">
+
     <?php include 'menu.php';?>
 	
-	<div class="container">
 		<h2>Таймер отопления</h2>
 		<form class="form-horizontal">
 			<div class="form-group">

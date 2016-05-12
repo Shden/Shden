@@ -20,14 +20,22 @@ configuration.EMA = EMA(configuration.EMA_steps, configuration.EMA, humidity);
 // Log format:
 // 2016-05-12 22:42:03|43.73|0
 console.log(
-	new Date().toISOString() + '|' + 
-	humidity.toPrecision(4) + '|' + 
+	getDateFormatted() + '|' + 
+	humidity.toFixed(2) + '|' + 
 	controlBathVentilation(humidity) + '|' +
-	configuration.EMA.toPrecision(4)
+	configuration.EMA.toFixed(2)
 );
 	
 // update configuration file with new EMA humidity
 fs.writeFileSync(configurationFileName, JSON.stringify(configuration, null, 4));
+
+// format string like 2016-05-12 22:42:03
+function getDateFormatted()
+{
+	var d = new Date();
+	return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' +
+		d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+}
 
 function getHumidity()
 {

@@ -5,6 +5,9 @@
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
 	
-	<script src="//spin.js.org/spin.min.js"></script>
+	<!-- CDN disabled due to https certificate issues @ spin.js.org -->
+	<!-- Should be checked after a while if they fixed it -->
+	<!--script src="//spin.js.org/spin.min.js"></script-->
+	<script src="include/spin.min.js"></script>
 	<script src="include/spinner.js"></script>
 	<script src="include/api.js"></script>

@@ -1,4 +1,4 @@
-CREATE TABLE heating (
+CREATE TABLE IF NOT EXISTS heating (
 	time 		DATETIME,
 	heater 		DECIMAL(5,2),
 	fluid_in 	DECIMAL(5,2),
@@ -17,23 +17,23 @@ CREATE TABLE heating (
 	sauna_heating	TINYINT,
 	PRIMARY KEY(time));
 
-CREATE TABLE tariff (
+CREATE TABLE IF NOT EXISTS tariff (
 	date		DATE,
 	day		DECIMAL(5,2),
 	night		DECIMAL(5,2),
 	PRIMARY KEY(date));
 
-CREATE TABLE presence (
+CREATE TABLE IF NOT EXISTS presence (
 	time		DATETIME,
 	isin		INT,
 	PRIMARY KEY(time));
 	
-CREATE TABLE humidity (
+CREATE TABLE IF NOT EXISTS humidity (
 	time		DATETIME,
 	bathroom	DECIMAL(5,2),
 	PRIMARY KEY(time));
 	
-CREATE TABLE power (
+CREATE TABLE IF NOT EXISTS power (
 	time		DATETIME,
 	U1		DECIMAL(5,2),
 	U2		DECIMAL(5,2),

@@ -51,6 +51,8 @@ CREATE TABLE power (
 	SS		DECIMAL(7,2),
 	PRIMARY KEY(time));
 
+/*
+	
 CREATE TABLE switch (
 	id		SMALLINT,
 	address		CHAR(15),
@@ -81,3 +83,5 @@ CREATE TABLE switch_schedule (
 	switch_id	SMALLINT,
 	to_state	TINYINT
 	);
+
+*/

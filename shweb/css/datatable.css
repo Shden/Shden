@@ -1,0 +1,23 @@
+.table .leftalign {
+	text-align: left;
+}
+
+.table .centeralign {
+	text-align: center;
+}
+
+.table tr {
+	text-align: right;
+}
+
+.table th {
+	text-align: right;
+}
+
+.table .lb {
+	border-left: 1px solid rgb(221, 221, 221);
+}
+
+.table .rb {
+	border-right: 1px solid rgb(221, 221, 221);
+}

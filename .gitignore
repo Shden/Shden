@@ -1,0 +1,5 @@
+.htaccess
+/secure
+/shc/heating_config/controller.ini
+/shc/bin
+TodayConfiguration.swift

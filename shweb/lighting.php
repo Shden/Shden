@@ -7,82 +7,111 @@
 
 	<title>Управление освещением</title>
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<?php include 'include/css.php';?>
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
-
-	<!-- Shweb cutom styles -->
+	<!-- Shweb custom styles -->
 	<link rel="stylesheet" href="css/shweb.css">
 </head>
 <body>
-	<?php include 'menu.php';
+	<div class="container">
+		<?php include 'menu.php';?>
 
-	if (isset($_REQUEST['changeStreetLight250StatusTo'])) 
-	{
-		$newStatus = $_REQUEST['changeStreetLight250StatusTo'];
-		`echo $newStatus >> /home/den/Shden/appliances/streetLight250`;
-	}
-	if (isset($_REQUEST['changeStreetLight150StatusTo'])) 
-	{
-		$newStatus = $_REQUEST['changeStreetLight150StatusTo'];
-		`echo $newStatus >> /home/den/Shden/appliances/streetLight150`;
-	}
-	if (isset($_REQUEST['changeBalkonLightStatusTo'])) 
-	{
-		$newStatus = $_REQUEST['changeBalkonLightStatusTo'];
-		`echo $newStatus >> /home/den/Shden/appliances/balkonLight`;
-	}
-
-	$streetLight250Status = (int)`cat /home/den/Shden/appliances/streetLight250`;
-	$streetLight150Status = (int)`cat /home/den/Shden/appliances/streetLight150`;
-	$balkonLightStatus = (int)`cat /home/den/Shden/appliances/balkonLight`;
-	?>
-
-	<div class="container" align="center">
-		<h2>Управление освещением</h2>
-		<table>
-			<tr>
-				<td>
-					Уличный фонарь около дороги (250W):
-				</td>
-				<td>
-					<a href="?changeStreetLight250StatusTo=<?=($streetLight250Status == 1) ? 0 : 1?>" 
-						class="btn <?=($streetLight250Status == 1) ? "btn-default" : "btn-warning"?> btn-lg" role="button">
-						<?=($streetLight250Status == 1) ? "Погасить" : "Зажечь"?> 
-					</a>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Уличный фонарь на озеро (150W):
-				</td>
-				<td>
-					<a href="?changeStreetLight150StatusTo=<?=($streetLight150Status == 1) ? 0 : 1?>" 
-						class="btn <?=($streetLight150Status == 1) ? "btn-default" : "btn-warning"?> btn-lg" role="button">
-						<?=($streetLight150Status == 1) ? "Погасить" : "Зажечь"?> 
-					</a>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Свет на балконе 2-го этажа:
-				</td>
-				<td>
-					<a href="?changeBalkonLightStatusTo=<?=($balkonLightStatus == 1) ? 0 : 1?>" 
-						class="btn <?=($balkonLightStatus == 1) ? "btn-default" : "btn-warning"?> btn-lg" role="button">
-						<?=($balkonLightStatus == 1) ? "Погасить" : "Зажечь"?> 
-					</a>
-				</td>
-			</tr>
-		</table>
-			
+		<style>
+			td
+			{
+				padding: 4px;
+				text-align: right;
+			}
+		</style>
+		
+		<div class="container" align="center">
+			<h2>Управление освещением</h2>
+			<table>
+				<tr>
+					<td>Уличный фонарь около дороги (250W):</td>
+					<td><button id="streetLight250" class="btn btn-lg">...</button></a>
+				</tr>
+				<tr>
+					<td>Уличный фонарь на озеро (150W):</td>
+					<td><button id="streetLight150" class="btn btn-lg">...</button></a>
+				</tr>
+				<tr>
+					<td>Свет на балконе 2-го этажа:</td>
+					<td><button id="balkonLight" class="btn btn-lg">...</button></a>
+				</tr>
+			</table>
+			<div id="spinner" class="spinner">
+		</div>
 	</div>
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<?php include 'include/js.php';?>
+
+	<script>
+		$(document).ready(function() {
+			refreshForm();
+		});
+	
+		function refreshForm()
+		{
+			$('#spinner').show();
+			var spinner = createSpinner('spinner');
+
+			var API = "/API/1.1/lighting/GetStatus";
+			$.getJSON(API)
+				.done(function(data) {
+
+					refreshButtons(data);
+				
+					spinner.stop();
+					$('#spinner').hide();					
+			    });			
+		}
+	
+		function refreshButtons(data)
+		{
+			refreshButtonView('streetLight250', data['streetLight250']);
+			refreshButtonView('streetLight150', data['streetLight150']);
+			refreshButtonView('balkonLight', data['balkonLight']);
+		}
+	
+		function refreshButtonView(applianceId, applianceStatus)
+		{
+			var button = $('#' + applianceId);
+			button.off('click');
+			if (applianceStatus == 0)
+			{
+				button.addClass('btn-warning').removeClass('btn-default');
+				button.html('Зажечь');
+				button.click({ applianceId: applianceId, newStatus: 1 }, applianceStatusUpdate);
+			}
+			else if (applianceStatus == 1)
+			{
+				button.addClass('btn-default').removeClass('btn-warning');
+				button.html('Погасить');				
+				button.click({ applianceId: applianceId, newStatus: 0 }, applianceStatusUpdate);
+			}
+		}
+	
+		function applianceStatusUpdate(event)
+		{
+			var URL = "/API/1.1/lighting/ChangeStatus/" + event.data.applianceId + "/" + event.data.newStatus;
+		
+			$('#spinner').show();
+			var spinner = createSpinner('spinner');
+
+	        $.ajax({
+				url: URL,
+				type: 'PUT',    
+				dataType: 'json',
+				success: function(data) {
+				 
+					refreshButtons(data)
+
+					spinner.stop();
+					$('#spinner').hide();					
+				}
+			});
+		}
+	</script>	
 </body>
 </html>

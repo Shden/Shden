@@ -7,137 +7,158 @@
 
 	<title>Статистика электросети</title>
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-	
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+	<?php include 'include/css.php';?>
+
+	<!-- Shweb custom styles -->
+	<link rel="stylesheet" href="css/shweb.css">
+	<link rel="stylesheet" href="css/datatable.css">
 </head>
 <body>
-	
-	<style>
-	.datatable .error {
-	    background-color: yellow;
-	}
-	.datatable .failure {
-	    background-color: red;
-	}
-	.datatable {
-		width: 100%;
-        border-collapse: collapse;
-        border: 2px solid black;
-	}
-	.datatable .leftalign {
-		text-align: left;
-	}
-	
-	.datatable .centeralign {
-		text-align: center;
-	}
-	.datatable tr {
-		text-align: right;
-	}
-    .datatable td {
-		border: 1px solid black;
-    }
-	.datatable th {
-		border: 1px solid black;
-		text-align: right;
-	}
-	.datatable .f1 {
-		background-color: #e0e0e0;
-	}
-	.datatable .f2 {
-		background-color: #c0c0c0;
-	}
-	.datatable .f3 {
-		background-color: #a0a0a0;
-	}
-	.datatable .lb {
-		border-left: 2px solid black;
-	}
-	.datatable .rb {
-		border-right: 2px solid black;
-	}
-	.datatable .bb {
-		border-bottom: 2px solid black;
-	}
-	</style>
+	<div class="container">
 
-	<?php 
-	include 'menu.php';
+		<?php 
+		include 'menu.php';
+		include 'include/js.php';
+		?>
 
-	$days = (isset($_REQUEST[days])) ? $_REQUEST[days] : 1;
-	?>
-	<h2>Статистика электросети, интервал в днях: <?=$days?></h2>
-	<a href="?days=1">Сутки</a> |
-	<a href="?days=2">Двое суток</a> |
-	<a href="?days=7">Неделя</a> |
-	<a href="?days=14">2 недели</a> |
-	<a href="?days=21">3 недели</a> |
-	<a href="?days=31">Месяц</a> 
+		<h2>Статистика электросети, интервал в днях: <span id="daysCount">...</span></h2>
 
-	<script src="http://d3js.org/d3.v3.js"></script>
-	<script type='text/javascript'>
-	var table = d3.select(".container")
-		.append("table")
-			.attr("class", "datatable");
+		<div class="btn-group" data-toggle="buttons">
+			<label onclick="refreshForm(1)" class="btn btn-primary">
+			  <input type="radio" name="options" id="option1" autocomplete="off">Сутки
+			</label>
+			<label onclick="refreshForm(2)" class="btn btn-primary">
+			  <input type="radio" name="options" id="option2" autocomplete="off">Двое суток
+			</label>
+			<label onclick="refreshForm(7)" class="btn btn-primary active">
+			  <input type="radio" name="options" id="option3" autocomplete="off" checked>Неделя
+			</label>
+			<label onclick="refreshForm(14)" class="btn btn-primary">
+			  <input type="radio" name="options" id="option3" autocomplete="off">2 недели
+			</label>
+			<label onclick="refreshForm(31)" class="btn btn-primary">
+			  <input type="radio" name="options" id="option3" autocomplete="off">Месяц
+			</label>
+		</div>
+		<br/><br/>
 	
-	var head = table.append("tr");
-	head.append("th").attr("rowspan", 2).attr("class", "bb leftalign").text("Дата");
-	for (var i=1; i<=3; i++)
-		head.append("th").attr("colspan", 4).attr("class", "centeralign lb f"+i).text("Фаза "+i);
-	head.append("th").attr("colspan", 3).attr("class", "centeralign lb").text("Ошибки (минут)");
-	
-	var head = table.append("tr");
-	
-	for (var i=1; i<=3; i++)
-	{
-		head.append("th").attr("class", "bb lb f"+i).text("Min (V)");
-		head.append("th").attr("class", "bb f"+i).text("Max (V)");
-		head.append("th").attr("class", "bb f"+i).text("Avg (V)");
-		head.append("th").attr("class", "bb rb f"+i).text("STD");
-	}
-	head.append("th").attr("class", "bb").text("Низк.");
-	head.append("th").attr("class", "bb").text("Выс.");
-	head.append("th").attr("class", "bb").text("Откл.");
-	
-	d3.json("../datasource/powerstat.php?days=<?=$days?>", function(error, data) {
-		var row = table.selectAll("row")
-				.data(data)
-			.enter().append("tr");
+		<table class="table table-striped table-condensed">
+			<thead>
+				<tr>
+					<th rowspan="2" class="leftalign">Дата</th>
+					<th colspan="4" class="centeralign lb">Фаза 1</th>
+					<th colspan="4" class="centeralign lb">Фаза 2</th>
+					<th colspan="4" class="centeralign lb">Фаза 3</th>
+					<th colspan="3" class="centeralign lb">Ошибки (минут)</th>
+				</tr>
+				<tr>
+					<th>Min (V)</th>
+					<th>Max (V)</th>
+					<th>Avg (V)</th>
+					<th class="rb">STD</th>
 			
-		row.attr("class", function(d) { return d.CutoffMinutes > 0 ? "failure" : ""; })
-		
-		row.append("td").attr("class", "leftalign rb").text(function(d) { return d.DATE; });
+					<th>Min (V)</th>
+					<th>Max (V)</th>
+					<th>Avg (V)</th>
+					<th class="rb">STD</th>
+			
+					<th>Min (V)</th>
+					<th>Max (V)</th>
+					<th>Avg (V)</th>
+					<th class="rb">STD</th>
+			
+					<th>Низк.</th>
+					<th>Выс.</th>
+					<th>Откл.</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	
+	<div id="spinner" class="spinner"></div>
 
-		for (i=1; i<=3; i++)
-		{
-			row.append("td")
-				.attr("class", function(d) { return checkVal(230 * 0.9, 230 * 1.1, d["U"+i+"_MIN"], "lb f"+i); })
-				.text(function(d) { return d["U"+i+"_MIN"]; });
-			row.append("td")
-				.attr("class", function(d) { return checkVal(230 * 0.9, 230 * 1.1, d["U"+i+"_MAX"], "f"+i); })
-				.text(function(d) { return d["U"+i+"_MAX"]; });
-			row.append("td").attr("class", "f"+i).text(function(d) { return d["U"+i+"_AVG"]; });
-			row.append("td").attr("class", "rb f"+i).text(function(d) { return d["U"+i+"_STD"]; });
-		}
+	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+	<script>
 
-		row.append("td").text(function(d) { return d.LowVMinutes; });
-		row.append("td").text(function(d) { return d.HighVMinutes; });
-		row.append("td").text(function(d) { return d.CutoffMinutes; });
+	$(document).ready(function() {
+		refreshForm(7);
 	});
 	
-	function checkVal(min, max, actual, defaultClass)
+	function refreshForm(days)
+	{	
+		$('#spinner').show();
+		var spinner = createSpinner('spinner');
+		
+		$('#daysCount').html(days);
+
+		// $('.datatable').remove();
+		// var table = d3.select(".container")
+		// 	.append("table")
+		// 		.attr("class", "datatable");
+		var table = d3.select(".table");
+	
+		// var head = table.append("tr");
+		// head.append("th").attr("rowspan", 2).attr("class", "bb leftalign").text("Дата");
+		// for (var i=1; i<=3; i++)
+		// 	head.append("th").attr("colspan", 4).attr("class", "centeralign lb f"+i).text("Фаза "+i);
+		// head.append("th").attr("colspan", 3).attr("class", "centeralign lb").text("Ошибки (минут)");
+		//
+		// var head = table.append("tr");
+		//
+		// for (var i=1; i<=3; i++)
+		// {
+		// 	head.append("th").attr("class", "bb lb f"+i).text("Min (V)");
+		// 	head.append("th").attr("class", "bb f"+i).text("Max (V)");
+		// 	head.append("th").attr("class", "bb f"+i).text("Avg (V)");
+		// 	head.append("th").attr("class", "bb rb f"+i).text("STD");
+		// }
+		// head.append("th").attr("class", "bb").text("Низк.");
+		// head.append("th").attr("class", "bb").text("Выс.");
+		// head.append("th").attr("class", "bb").text("Откл.");
+	
+		var API = GetAPIURL("consumption/electricity/GetPowerStatistics/") + days;
+		$.getJSON(API)
+			.done(function(data) {
+	
+				spinner.stop();
+				$('#spinner').hide();
+
+				table.selectAll(".datarow").remove();
+				
+				var row = table.select("tbody").selectAll("row")
+					.data(data)
+					.enter()
+					.append("tr");
+			
+				row.attr("class", function(d) { return (d.CutoffMinutes > 0 ? "danger datarow" : "datarow"); })
+		
+				row.append("td").attr("class", "leftalign rb").text(function(d) { return d.DATE; });
+
+				for (i=1; i<=3; i++)
+				{
+					row.append("td")
+						.attr("class", function(d) { return checkVal(d["U"+i+"_MIN"], "lb"); })
+						.text(function(d) { return d["U"+i+"_MIN"]; });
+					row.append("td")
+						.attr("class", function(d) { return checkVal(d["U"+i+"_MAX"], ""); })
+						.text(function(d) { return d["U"+i+"_MAX"]; });
+					row.append("td").text(function(d) { return d["U"+i+"_AVG"]; });
+					row.append("td").attr("class", "rb").text(function(d) { return d["U"+i+"_STD"]; });
+				}
+
+				row.append("td").text(function(d) { return d.LowVMinutes; });
+				row.append("td").text(function(d) { return d.HighVMinutes; });
+				row.append("td").text(function(d) { return d.CutoffMinutes; });
+			});
+	}
+	
+	function checkVal(value, defaultClass)
 	{
-		return (actual >= min && actual <= max) ? defaultClass : "error";
+		return (value >= 230 * 0.9 && value <= 230 * 1.1) ? defaultClass : "warning";
 	}
 	</script>
 	
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
 </body>
 </html>

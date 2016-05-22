@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9oK-B0-pzJ">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Таймер отопления-->
+        <scene sceneID="fRn-MY-3bV">
+            <objects>
+                <tableViewController id="HOj-QV-YBR" userLabel="Таймер отопления" customClass="HeatingTimerController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="vOz-Xg-67X">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="Q2r-m9-vsR">
+                            <rect key="frame" x="0.0" y="195" width="320" height="323"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nha-hx-9b2">
+                                    <rect key="frame" x="150" y="111" width="20" height="20"/>
+                                </activityIndicatorView>
+                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rc6-dR-tcn" customClass="HouseStatusButton" customModule="Брод" customModuleProvider="target">
+                                    <rect key="frame" x="41" y="29" width="239" height="42"/>
+                                    <state key="normal" title="Обновить настройки таймера"/>
+                                    <connections>
+                                        <action selector="timerUpdatePressed:" destination="HOj-QV-YBR" eventType="primaryActionTriggered" id="Yjn-Rl-SG7"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="Rc6-dR-tcn" firstAttribute="centerX" secondItem="Q2r-m9-vsR" secondAttribute="centerX" id="TTk-hp-RM8"/>
+                            </constraints>
+                        </view>
+                        <sections>
+                            <tableViewSection id="KU3-cm-6yd">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="11" rowHeight="43" id="PPA-Xa-tMf">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="43"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PPA-Xa-tMf" id="Oya-96-iMH">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="42"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbd-xe-J6Z">
+                                                    <rect key="frame" x="255" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="timerIsActiveChanged:" destination="HOj-QV-YBR" eventType="valueChanged" id="fOA-UX-RJq"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Таймер отопления" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNB-T9-SNM">
+                                                    <rect key="frame" x="15" y="11" width="190" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="kbd-xe-J6Z" secondAttribute="trailing" constant="8" id="DnY-sM-CoR"/>
+                                                <constraint firstItem="kbd-xe-J6Z" firstAttribute="centerY" secondItem="RNB-T9-SNM" secondAttribute="centerY" id="U1Y-GM-Yyx"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="n78-jG-DhV" detailTextLabel="yOB-lU-W8F" style="IBUITableViewCellStyleValue1" id="eLT-HW-sRu">
+                                        <rect key="frame" x="0.0" y="107" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eLT-HW-sRu" id="hFT-3M-UBq">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Приедем:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="n78-jG-DhV">
+                                                    <rect key="frame" x="15" y="12" width="75" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yOB-lU-W8F">
+                                                    <rect key="frame" x="243" y="12" width="42" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="fRR-LD-7Pp" kind="show" identifier="StartDateSegue" id="zhc-Uf-8Vm"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="DJc-xy-jTH" detailTextLabel="fOz-1C-UDV" style="IBUITableViewCellStyleValue1" id="hUB-2A-UsU">
+                                        <rect key="frame" x="0.0" y="151" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hUB-2A-UsU" id="n3r-lf-uoy">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Уедем:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DJc-xy-jTH">
+                                                    <rect key="frame" x="15" y="12" width="53" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fOz-1C-UDV">
+                                                    <rect key="frame" x="243" y="12" width="42" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="fRR-LD-7Pp" kind="show" identifier="FinishDateSegue" id="3Aq-el-S2N"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="HOj-QV-YBR" id="68Y-BP-xKP"/>
+                            <outlet property="delegate" destination="HOj-QV-YBR" id="Wr7-0D-9dd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Таймер" id="boy-YE-H5d"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="3b5-Z0-3cM">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
+                    <connections>
+                        <outlet property="endDate" destination="fOz-1C-UDV" id="6WO-8j-Hta"/>
+                        <outlet property="progressIndicator" destination="nha-hx-9b2" id="jd6-Qy-xUI"/>
+                        <outlet property="startDate" destination="yOB-lU-W8F" id="pLX-0y-wgb"/>
+                        <outlet property="timerFinishRow" destination="hUB-2A-UsU" id="hzc-WK-vyJ"/>
+                        <outlet property="timerStartRow" destination="eLT-HW-sRu" id="5sz-aD-TIr"/>
+                        <outlet property="timerSwitch" destination="kbd-xe-J6Z" id="uLF-2K-su2"/>
+                        <outlet property="updateButton" destination="Rc6-dR-tcn" id="wbR-hc-NW1"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7wl-Yt-tU3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1204" y="2294"/>
+        </scene>
+        <!--Температурный график-->
+        <scene sceneID="5nm-jw-cjR">
+            <objects>
+                <tableViewController title="Температурный график" id="G2i-1z-U1l" customClass="HeatingChartController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="cxW-wX-abS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="zpt-zp-889" userLabel="Cell Container">
+                            <rect key="frame" x="0.0" y="64" width="320" height="446"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdP-6a-oaY" customClass="LineChartView" customModule="Charts">
+                                    <rect key="frame" x="8" y="52" width="304" height="386"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xRD-HL-Jxp">
+                                    <rect key="frame" x="68" y="8" width="185" height="29"/>
+                                    <segments>
+                                        <segment title="Сутки"/>
+                                        <segment title="Неделя"/>
+                                        <segment title="Месяц"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="timeSpanChanged:" destination="G2i-1z-U1l" eventType="primaryActionTriggered" id="2da-5I-JTg"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="tdP-6a-oaY" firstAttribute="centerX" secondItem="zpt-zp-889" secondAttribute="centerX" id="JEc-2Q-unb"/>
+                                <constraint firstAttribute="trailing" secondItem="tdP-6a-oaY" secondAttribute="trailing" constant="8" id="LFJ-Iu-uBN"/>
+                                <constraint firstItem="tdP-6a-oaY" firstAttribute="top" secondItem="xRD-HL-Jxp" secondAttribute="bottom" constant="16" id="RqL-gb-nU3"/>
+                                <constraint firstItem="xRD-HL-Jxp" firstAttribute="top" secondItem="zpt-zp-889" secondAttribute="top" constant="8" id="nfc-Dh-Feb"/>
+                                <constraint firstItem="tdP-6a-oaY" firstAttribute="leading" secondItem="zpt-zp-889" secondAttribute="leading" constant="8" id="oZf-jz-2Ft"/>
+                                <constraint firstItem="tdP-6a-oaY" firstAttribute="bottom" secondItem="zpt-zp-889" secondAttribute="bottomMargin" id="wks-Hb-wh1"/>
+                                <constraint firstItem="xRD-HL-Jxp" firstAttribute="centerX" secondItem="zpt-zp-889" secondAttribute="centerX" id="xSx-JR-4Nb"/>
+                            </constraints>
+                        </view>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="G2i-1z-U1l" id="7Ei-gg-557"/>
+                            <outlet property="delegate" destination="G2i-1z-U1l" id="xa1-zs-tUZ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="График" id="zcc-7V-Ca4"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="zkU-rl-YCp">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
+                    <connections>
+                        <outlet property="lineChart" destination="tdP-6a-oaY" id="nks-58-cvK"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0rG-PS-t6o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1204" y="1635"/>
+        </scene>
+        <!--Дата-->
+        <scene sceneID="JG1-BC-P1b">
+            <objects>
+                <viewController id="fRR-LD-7Pp" userLabel="Дата" customClass="DatePickerController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qN6-0X-mqB"/>
+                        <viewControllerLayoutGuide type="bottom" id="ugo-k7-XWO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Mpe-km-dyt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="CyI-lb-Ec8">
+                                <rect key="frame" x="0.0" y="66" width="320" height="266"/>
+                                <date key="date" timeIntervalSinceReferenceDate="472092916.57121801">
+                                    <!--2015-12-18 00:55:16 +0000-->
+                                </date>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJh-Uc-PFc">
+                                <rect key="frame" x="112" y="349" width="96" height="30"/>
+                                <state key="normal" title="Ok"/>
+                                <connections>
+                                    <action selector="OkPressed:" destination="fRR-LD-7Pp" eventType="primaryActionTriggered" id="l0w-Mp-X0z"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Дата и время [назначение]" id="gKA-gd-1g9"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="datePicker" destination="CyI-lb-Ec8" id="4J0-Nh-hhC"/>
+                        <outlet property="navigation" destination="gKA-gd-1g9" id="HkO-ei-HHp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OIC-Xv-ZzA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1743" y="2294"/>
+        </scene>
+        <!--Меню отопление-->
+        <scene sceneID="bBa-Zc-W6b">
+            <objects>
+                <tableViewController id="WBd-Hg-LG0" userLabel="Меню отопление" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="n5T-Rr-hIn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="3m1-GN-ZtI">
+                            <rect key="frame" x="0.0" y="196" width="320" height="323"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <sections>
+                            <tableViewSection id="3Fd-J3-7am">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="4Yx-Uy-jU0" style="IBUITableViewCellStyleDefault" id="63u-BO-wMV">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" tableViewCell="63u-BO-wMV" id="yeC-bS-hjK">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Установить таймер отопления" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4Yx-Uy-jU0">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="HOj-QV-YBR" kind="show" id="35G-OP-ve3"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="m2Z-gH-VUt" style="IBUITableViewCellStyleDefault" id="EqA-zj-XFR">
+                                        <rect key="frame" x="0.0" y="108" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EqA-zj-XFR" id="vMN-4l-xQQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Температурный график" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m2Z-gH-VUt">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="G2i-1z-U1l" kind="show" id="dVp-ym-nI0"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="wVM-8V-xd4" style="IBUITableViewCellStyleDefault" id="sFw-Au-jRc">
+                                        <rect key="frame" x="0.0" y="152" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sFw-Au-jRc" id="h94-38-R9l">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Энергопотребление отопления" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wVM-8V-xd4">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="WBd-Hg-LG0" id="4FU-Vp-AQo"/>
+                            <outlet property="delegate" destination="WBd-Hg-LG0" id="baS-Dj-iPS"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Отопление" id="jHt-Mu-fWS"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AGi-qD-nl5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="715" y="2077"/>
+        </scene>
+        <!--Освещение-->
+        <scene sceneID="wey-iF-1R3">
+            <objects>
+                <tableViewController id="lXl-Af-baL" userLabel="Освещение" customClass="LightingContoller" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="cjC-Kz-t9j">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="qL0-ed-JAZ">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NAo-62-9in">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NAo-62-9in" id="9O8-WG-ygp">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Фонарь около дороги:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXb-1m-2o4">
+                                                    <rect key="frame" x="8" y="11" width="179" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k7w-ar-Law">
+                                                    <rect key="frame" x="246" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="switchChanged:" destination="lXl-Af-baL" eventType="primaryActionTriggered" id="ySi-7c-diY"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="uJq-VK-VMN">
+                                        <rect key="frame" x="0.0" y="108" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uJq-VK-VMN" id="eMi-f9-NeV">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Фонарь на озеро:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOm-3A-Afc">
+                                                    <rect key="frame" x="8" y="11" width="141" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vnn-iB-ko9">
+                                                    <rect key="frame" x="246" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="switchChanged:" destination="lXl-Af-baL" eventType="valueChanged" id="ghC-Hf-ISp"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="BAT-oU-JEs">
+                                        <rect key="frame" x="0.0" y="152" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BAT-oU-JEs" id="FOH-Bs-bGh">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Свет на балконе:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYw-ob-kGc">
+                                                    <rect key="frame" x="8" y="11" width="137" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b8V-pz-1nn">
+                                                    <rect key="frame" x="246" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="switchChanged:" destination="lXl-Af-baL" eventType="valueChanged" id="ojU-Hd-kql"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="lXl-Af-baL" id="Jxi-F6-oj5"/>
+                            <outlet property="delegate" destination="lXl-Af-baL" id="gqc-zK-wUM"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Освещение" id="L51-bC-s5b" userLabel="Освещение"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Rcj-sO-O4m">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
+                    <connections>
+                        <outlet property="balkonLight" destination="b8V-pz-1nn" id="raD-3X-Ne8"/>
+                        <outlet property="streetLight150" destination="Vnn-iB-ko9" id="KW4-Uj-1pC"/>
+                        <outlet property="streetLight250" destination="k7w-ar-Law" id="blk-B1-jvo"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i24-TM-Iwn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="741" y="685"/>
+        </scene>
+        <!--Освещение Navigation Controller-->
+        <scene sceneID="yGx-bv-arw">
+            <objects>
+                <navigationController id="vc0-5R-8yT" userLabel="Освещение Navigation Controller" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Освещение" id="w27-rB-liP"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ke5-qn-99x">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lXl-Af-baL" kind="relationship" relationship="rootViewController" id="Wyl-JN-M9c"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Njg-rK-qjy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="238" y="685"/>
+        </scene>
+        <!--Состояние-->
+        <scene sceneID="XUk-e7-sky">
+            <objects>
+                <viewController id="uT5-rS-zvs" customClass="HouseStatusController" customModule="Брод" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qzo-bC-aAO"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Qc-Aj-FpO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wlH-GU-To7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LDb-I3-1zf">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="Состояние" id="fdl-n2-9CW">
+                                        <barButtonItem key="rightBarButtonItem" style="plain" id="NdC-qK-Fjt">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uN5-vD-Htz">
+                                                <rect key="frame" x="233" y="7" width="71" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Обновить"/>
+                                                <connections>
+                                                    <action selector="onRefreshBtnClick:" destination="uT5-rS-zvs" eventType="primaryActionTriggered" id="cc8-EE-Dnn"/>
+                                                </connections>
+                                            </button>
+                                            <connections>
+                                                <action selector="onRefreshClick:" destination="uT5-rS-zvs" id="Iun-Lh-uag"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Установка соединения..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywY-TP-Job">
+                                <rect key="frame" x="20" y="89" width="280" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="NNk-A7-ZW2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hGP-fB-Zy5">
+                                <rect key="frame" x="150" y="413" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iR7-1q-Kls" customClass="HouseStatusButton" customModule="Брод" customModuleProvider="target">
+                                <rect key="frame" x="62" y="446" width="196" height="42"/>
+                                <inset key="contentEdgeInsets" minX="20" minY="12" maxX="20" maxY="12"/>
+                                <state key="normal" title="В режим присутствия"/>
+                                <connections>
+                                    <action selector="modeChange:" destination="uT5-rS-zvs" eventType="primaryActionTriggered" id="tS8-qL-13B"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="В доме:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kMQ-Lg-qWE">
+                                <rect key="frame" x="20" y="142" width="62" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="На улице:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQ7-F6-wHy">
+                                <rect key="frame" x="20" y="176" width="79" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="79" id="agM-LD-Lx5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--.- С" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGM-i0-cDi">
+                                <rect key="frame" x="194" y="142" width="106" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--.- С" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8m-b9-YSG">
+                                <rect key="frame" x="194" y="176" width="106" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Версия 1.2 от 14.02.2016" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Yr-uA-Mvr">
+                                <rect key="frame" x="20" y="498" width="280" height="13"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a5E-dn-PV1">
+                                <rect key="frame" x="18" y="132" width="285" height="73"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="73" id="CSM-wb-gio"/>
+                                </constraints>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kMQ-Lg-qWE" firstAttribute="baseline" secondItem="dGM-i0-cDi" secondAttribute="baseline" id="0Tg-BM-kKE"/>
+                            <constraint firstItem="iR7-1q-Kls" firstAttribute="centerX" secondItem="ywY-TP-Job" secondAttribute="centerX" id="2uw-Vf-hez"/>
+                            <constraint firstItem="0Yr-uA-Mvr" firstAttribute="trailing" secondItem="ywY-TP-Job" secondAttribute="trailing" id="4dT-2c-jWo"/>
+                            <constraint firstItem="0Yr-uA-Mvr" firstAttribute="trailing" secondItem="dGM-i0-cDi" secondAttribute="trailing" id="7mI-Ok-JBM"/>
+                            <constraint firstItem="0Yr-uA-Mvr" firstAttribute="trailing" secondItem="y8m-b9-YSG" secondAttribute="trailing" id="AOx-N0-QDl"/>
+                            <constraint firstItem="0Yr-uA-Mvr" firstAttribute="leading" secondItem="ywY-TP-Job" secondAttribute="leading" id="B3m-Pv-5G5"/>
+                            <constraint firstItem="0Yr-uA-Mvr" firstAttribute="leading" secondItem="bQ7-F6-wHy" secondAttribute="leading" id="GIa-ku-adm"/>
+                            <constraint firstItem="LDb-I3-1zf" firstAttribute="leading" secondItem="wlH-GU-To7" secondAttribute="leading" id="Gzq-N7-Qte"/>
+                            <constraint firstAttribute="trailing" secondItem="LDb-I3-1zf" secondAttribute="trailing" id="JLG-C1-Pc3"/>
+                            <constraint firstItem="a5E-dn-PV1" firstAttribute="leading" secondItem="wlH-GU-To7" secondAttribute="leadingMargin" constant="2" id="KRc-c2-dV2"/>
+                            <constraint firstItem="LDb-I3-1zf" firstAttribute="top" secondItem="Qzo-bC-aAO" secondAttribute="bottom" id="Knq-XW-y1E"/>
+                            <constraint firstItem="ywY-TP-Job" firstAttribute="centerX" secondItem="LDb-I3-1zf" secondAttribute="centerX" id="Liy-kL-HLH"/>
+                            <constraint firstItem="a5E-dn-PV1" firstAttribute="top" secondItem="ywY-TP-Job" secondAttribute="bottom" constant="8" symbolic="YES" id="OXK-tD-Jdj"/>
+                            <constraint firstItem="bQ7-F6-wHy" firstAttribute="baseline" secondItem="y8m-b9-YSG" secondAttribute="baseline" id="Oef-Rd-thG"/>
+                            <constraint firstItem="ywY-TP-Job" firstAttribute="top" secondItem="LDb-I3-1zf" secondAttribute="bottom" constant="25" id="RfC-Ct-q0X"/>
+                            <constraint firstItem="kMQ-Lg-qWE" firstAttribute="top" secondItem="ywY-TP-Job" secondAttribute="bottom" constant="18" id="Vjd-XF-iDJ"/>
+                            <constraint firstItem="0Yr-uA-Mvr" firstAttribute="centerX" secondItem="hGP-fB-Zy5" secondAttribute="centerX" id="Yqf-UM-jW9"/>
+                            <constraint firstItem="iR7-1q-Kls" firstAttribute="top" secondItem="hGP-fB-Zy5" secondAttribute="bottom" constant="13" id="aPu-dz-PGA"/>
+                            <constraint firstItem="a5E-dn-PV1" firstAttribute="centerX" secondItem="ywY-TP-Job" secondAttribute="centerX" id="f5i-Hm-Sh1"/>
+                            <constraint firstItem="0Yr-uA-Mvr" firstAttribute="top" secondItem="iR7-1q-Kls" secondAttribute="bottom" constant="10" id="gAg-7V-WgX"/>
+                            <constraint firstItem="0Yr-uA-Mvr" firstAttribute="leading" secondItem="kMQ-Lg-qWE" secondAttribute="leading" id="jxh-6O-geF"/>
+                            <constraint firstItem="bQ7-F6-wHy" firstAttribute="top" secondItem="kMQ-Lg-qWE" secondAttribute="bottom" constant="13" id="q4L-rE-3Gi"/>
+                            <constraint firstItem="8Qc-Aj-FpO" firstAttribute="top" secondItem="0Yr-uA-Mvr" secondAttribute="bottom" constant="8" symbolic="YES" id="rK7-W6-GlF"/>
+                            <constraint firstItem="y8m-b9-YSG" firstAttribute="leading" secondItem="dGM-i0-cDi" secondAttribute="leading" id="ssn-ME-qrC"/>
+                            <constraint firstItem="ywY-TP-Job" firstAttribute="leading" secondItem="wlH-GU-To7" secondAttribute="leadingMargin" constant="4" id="uRi-qB-sNO" userLabel="Presence Label.leading = leadingMargin"/>
+                            <constraint firstItem="8Qc-Aj-FpO" firstAttribute="top" secondItem="iR7-1q-Kls" secondAttribute="bottom" constant="31" id="uhR-eO-UBX"/>
+                            <constraint firstItem="a5E-dn-PV1" firstAttribute="centerX" secondItem="hGP-fB-Zy5" secondAttribute="centerX" id="v07-KV-GvD"/>
+                            <constraint firstItem="y8m-b9-YSG" firstAttribute="leading" secondItem="bQ7-F6-wHy" secondAttribute="trailing" constant="95" id="wk1-ZN-NQJ"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="a5E-dn-PV1"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Состояние" id="vss-lf-NRN"/>
+                    <connections>
+                        <outlet property="insideTemp" destination="dGM-i0-cDi" id="tVB-Se-J75"/>
+                        <outlet property="outsideTemp" destination="y8m-b9-YSG" id="NwU-UQ-Sds"/>
+                        <outlet property="presenceLabel" destination="ywY-TP-Job" id="4qx-0q-NHJ"/>
+                        <outlet property="presenceModeBtn" destination="iR7-1q-Kls" id="4yt-EM-1fS"/>
+                        <outlet property="progress" destination="hGP-fB-Zy5" id="9C8-5W-7mG"/>
+                        <outlet property="refreshBtn" destination="uN5-vD-Htz" id="xpB-bt-SVQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GCY-Hq-eAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="238" y="1381"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="JgZ-B3-SQi">
+            <objects>
+                <tabBarController id="9oK-B0-pzJ" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="s4I-qO-Esj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="uT5-rS-zvs" kind="relationship" relationship="viewControllers" id="vP1-2P-j79"/>
+                        <segue destination="Oco-QA-D4j" kind="relationship" relationship="viewControllers" id="C4K-tb-1cR"/>
+                        <segue destination="vc0-5R-8yT" kind="relationship" relationship="viewControllers" id="7f7-Ii-2pf"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QS3-jO-4jd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationItem title="Title" id="XWE-Dj-NtQ"/>
+            </objects>
+            <point key="canvasLocation" x="-366" y="1737"/>
+        </scene>
+        <!--Отопление Navigation Controller-->
+        <scene sceneID="qBY-vZ-Xux">
+            <objects>
+                <navigationController title="titutii" automaticallyAdjustsScrollViewInsets="NO" id="Oco-QA-D4j" userLabel="Отопление Navigation Controller" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Отопление" id="OJr-wD-taC"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jma-iE-6HR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="WBd-Hg-LG0" kind="relationship" relationship="rootViewController" id="0tr-RY-hJA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XUZ-Lf-FWC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="238" y="2077"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="zhc-Uf-8Vm"/>
+    </inferredMetricsTieBreakers>
+</document>

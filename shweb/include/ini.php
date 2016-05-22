@@ -5,13 +5,13 @@
  */
 $controller_ini = $_SERVER['DOCUMENT_ROOT'] . "/../shc/heating_config/controller.ini";
 
-function write_ini_file($file, array $options){
+function write_ini_file($file, array $options) {
     $tmp = '';
-    foreach($options as $section => $values){
+    foreach($options as $section => $values) {
         $tmp .= "[$section]\n";
-        foreach($values as $key => $val){
+        foreach($values as $key => $val) {
             if(is_array($val)){
-                foreach($val as $k =>$v){
+                foreach($val as $k =>$v) {
                     $tmp .= "{$key}[$k] = \"$v\"\n";
                 }
             }

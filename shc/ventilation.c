@@ -10,26 +10,20 @@
 
 int controlBathVentilation(float humidity)
 {
-	if (humidity < 65.0)
+	if (humidity < 60.0)
 	{
-		// -- all off
-		changeSwitch(bathVentilationSpeed1, OFF);
-		changeSwitch(bathVentilationSpeed2, OFF);
+		// -- off
+		changeSwitch(bathVentilation, OFF);
 		return 0;
 	}
-	else if (humidity < 75.0)
+	else if (humidity > 65.0)
 	{
-		// -- speed 1
-		changeSwitch(bathVentilationSpeed1, ON);
-		changeSwitch(bathVentilationSpeed2, OFF);
+		// -- on
+		changeSwitch(bathVentilation, ON);
 		return 1;
 	}
-	else
-	{
-		changeSwitch(bathVentilationSpeed1, OFF);
-		changeSwitch(bathVentilationSpeed2, ON);
-		return 2;
-	}
+	// No change
+	return 2;
 }
 
 int main(int argc, const char** args)

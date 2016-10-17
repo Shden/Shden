@@ -1,104 +1,277 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title>Настройки</title>
 
 	<?php include 'include/css.php';?>
+
+	<!-- Shweb cutom styles -->
+	<link rel="stylesheet" href="css/shweb.css">
 </head>
 
 <html>
-<head>    
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />     
-</head>
-<body>
-	<div class="container">
-	    <?php
-	    include 'include/ini.php';
-   
-	    $controller_config = parse_ini_file($controller_ini, true);
-    
-	    //print_r($controller_config);
-    
-	    if (isset($_REQUEST['standby']) && isset($_REQUEST['presenсe']))
-	    {
-	        $controller_config[heating][standby] = $_REQUEST[standby];
-	        $controller_config[heating][standby_night] = $_REQUEST[standby_night];
-	        $controller_config[heating][presence] = $_REQUEST[presenсe];
-	        $controller_config[heating][tempdelta] = $_REQUEST[tempDelta];
-	        $controller_config[heating][stoppumptempdelta] = $_REQUEST[stopPumpTempDelta];
-	        $controller_config[heating][fluidelectricheaterofftemp] = $_REQUEST[fluidElectricHeaterOffTemp];
-	        $controller_config[heating][saunaFloorTemp] = $_REQUEST[saunaFloorTemp];
-		
-	        $controller_config[comfort_sleep][sleep_mode_start_hour] = $_REQUEST[sleep_mode_start_hour];
-	        $controller_config[comfort_sleep][sleep_mode_end_hour] = $_REQUEST[sleep_mode_end_hour];
-	        $controller_config[comfort_sleep][sleep_target_temp] = $_REQUEST[sleep_target_temp];
-        
-	        //print_r($controller_config);
-        
-	        write_ini_file($controller_ini, $controller_config);
-	    }
-    
-	    ?>
-	    <?php include 'menu.php';?>
-	    <h2>Текущие параметры настройки</h2>
-	    <form method="POST">
-	        <table>
-	            <tr>
-	                <td>Температура в режиме ожидания, день:</td>
-	                <td><input type="text" name="standby" value="<?=$controller_config['heating']['standby']?>"/>&deg;С
-	            </tr>
-	            <tr>
-	                <td>Температура в режиме ожидания, ночь:</td>
-	                <td><input type="text" name="standby_night" value="<?=$controller_config['heating']['standby_night']?>"/>&deg;С
-	            </tr>
-	            <tr>
-	                <td>Температура в режиме присутствия:</td>
-	                <td><input type="text" name="presenсe" value="<?=$controller_config['heating']['presence']?>"/>&deg;С
-	            </tr>
-	            <tr>
-	                <td>Точность поддержания температуры:</td>
-	                <td><input type="text" name="tempDelta" value="<?=$controller_config['heating']['tempdelta']?>"/>&deg;С
-	            </tr>
-	            <tr>
-	                <td>Помпа отключается при разнице температур по контуру менее:</td>
-	                <td><input type="text" name="stopPumpTempDelta" value="<?=$controller_config['heating']['stoppumptempdelta']?>"/>&deg;С
-	            </tr>
-	            <tr>
-	                <td>Отключаем ТЭН, если котел нагревает воду до:</td>
-	                <td><input type="text" name="fluidElectricHeaterOffTemp" value="<?=$controller_config['heating']['fluidelectricheaterofftemp']?>"/>&deg;С
-	            </tr>
-				<tr>
-					<td>Температура теплого пола в сауне:</td>
-					<td><input type="text" name="saunaFloorTemp" value="<?=$controller_config['heating']['saunaFloorTemp']?>"/>&deg;C</td>
-	            <tr>
-	                <td>Начало режима комфортного сна:</td>
-	                <td><input type="text" name="sleep_mode_start_hour" value="<?=$controller_config['comfort_sleep']['sleep_mode_start_hour']?>"/>час.
-	            </tr>
-	            <tr>
-	                <td>Окончание режима комфортного сна:</td>
-	                <td><input type="text" name="sleep_mode_end_hour" value="<?=$controller_config['comfort_sleep']['sleep_mode_end_hour']?>"/>час.
-	            </tr>
-	            <tr>
-	                <td>Температура в спальнях в режиме комфортного сна:</td>
-	                <td><input type="text" name="sleep_target_temp" value="<?=$controller_config['comfort_sleep']['sleep_target_temp']?>"/>&deg;С
-	            </tr>
-	            <tr>
-	                <td colspan="2">
-	                    <input type="submit" value="Сохранить настройки" class="btn btn-primary" />
-	                </td>
-	            </tr>
-	        </table>
-	    </form>
-	    <?php $output = `cat $controller_ini`;?>
-		<pre><?=$output?></pre>
-	
-		<?php include 'include/js.php';?>
-	</div>
-</body>
+	<body>
+		<div class="container">
+			<?php
+			include 'menu.php';
+			include 'include/js.php';
+			?>
+
+			<h2>Настройки системы отопления:</h2>
+			<form  class="form-horizontal">
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="standbyTemperature">
+						Температура в режиме ожидания, день (&deg;С):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="standbyTemperature"
+							format="0.0"/>
+					</div>
+					<label class="control-label col-sm-3" id="standbyTemperatureAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="standbyNightTemperature">
+						ночь (&deg;С):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="standbyNightTemperature"
+							format="0.0"/>
+					</div>
+					<label class="control-label col-sm-3" id="standbyNightTemperatureAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="presenceTemperature">
+						Температура в режиме присутствия (&deg;С):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="presenceTemperature"
+							format="0.0"/>
+					</div>
+					<label class="control-label col-sm-3" id="presenceTemperatureAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="tempDelta">
+						Точность поддержания температуры (&deg;С):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="tempDelta"
+							format="0.00"/>
+					</div>
+					<label class="control-label col-sm-3" id="tempDeltaAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="stopPumpTempDelta">
+						Помпа отключается при разнице температур по контуру менее (&deg;С):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="stopPumpTempDelta"
+							format="0.00"/>
+					</div>
+					<label class="control-label col-sm-3" id="stopPumpTempDeltaAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="electricHeaterOffTemp">
+						Отключаем ТЭН, если котел нагревает воду до (&deg;С):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="electricHeaterOffTemp"
+							format="0.0"/>
+					</div>
+					<label class="control-label col-sm-3" id="electricHeaterOffTempAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="saunaFloorTemp">
+						Температура теплого пола в сауне (&deg;С):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="saunaFloorTemp"
+							format="0.0"/>
+					</div>
+					<label class="control-label col-sm-3" id="saunaFloorTempAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="comfortSleepStartHour">
+						Режима комфортного сна, начало (часов):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="comfortSleepStartHour"
+							format="0"/>
+					</div>
+					<label class="control-label col-sm-3" id="comfortSleepStartHourAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="comfortSleepEndHour">
+						окончание (часов):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="comfortSleepEndHour"
+							format="0"/>
+					</div>
+					<label class="control-label col-sm-3" id="comfortSleepEndHourAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-6 control-label" for="comfortSleepTargetTemperature">
+						Температура в спальнях в режиме комфортного сна (&deg;С):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="comfortSleepTargetTemperature"
+							format="0.0"/>
+					</div>
+					<label class="control-label col-sm-3" id="comfortSleepTargetTemperatureAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-6 col-sm-10">
+						<a class="btn btn-primary"
+							href="javascript:updateConfiguration()">
+							Сохранить настройки</a>
+					</div>
+				</div>
+				<h3>heating.json:</h3>
+				<div class="form-group">
+					<div class="col-sm-offset-1 col-sm-9">
+					<pre id="json"></pre>
+				</div>
+				</div>
+			</form>
+
+
+		</div>
+		<div id="spinner" class="spinner"/>
+
+		<script type="text/javascript">
+
+			var configuration;
+			const endPointURL = GetAPIURL("heating/Configuration");
+
+			$(document).ready(function()
+			{
+				loadFormData();
+			});
+
+			function loadFormData()
+			{
+				$('#spinner').show();
+				var spinner = createSpinner('spinner');
+
+				$.getJSON(endPointURL)
+					.done(function(data) {
+
+						configuration = data;
+
+						updateControls();
+
+						spinner.stop();
+						$('#spinner').hide();
+					})
+					.fail(function() {
+						alert('Ошибка вызова Get Configuration.');
+					});
+			}
+
+			// Configuration -> form.
+			// All input controls mapped to configuration data
+			// object using id as a key.
+			function updateControls()
+			{
+				updateJSON();
+
+				$('input[type=text]').each(function() {
+					var key = $(this).attr('id');
+					var fmt = $(this).attr('format');
+					$(this).val(numeral(configuration.heating[key]).format(fmt));
+					$(this).change(validateForm);
+				});
+				validateForm();
+			}
+
+			function validateForm()
+			{
+				const hasErrorClass = 'has-error';
+				var isValid = true;
+				$('input[type=text]').each(function() {
+					var key = $(this).attr('id');
+					var val = $(this).val();
+
+					var input = $(this);
+					var alert = $('#' + key + 'Alert');
+
+					if (isNaN(parseFloat(val)))
+					{
+						$(alert).show().find('strong').text('Неверные данные (формат числа).');
+						$(alert).parent().addClass(hasErrorClass);
+						isValid = false;
+					}
+					else {
+						$(alert).hide();
+						$(alert).parent().removeClass(hasErrorClass);
+					}
+				});
+				return isValid;
+			}
+
+			// Form -> configuration.
+			function updateConfiguration()
+			{
+				if (!validateForm()) {
+					alert('Невозможно сохранить форму: неверные данные.');
+					return false;
+				}
+
+				$('#spinner').show();
+				var spinner = createSpinner('spinner');
+
+				$('input[type=text]').each(function() {
+					var key = $(this).attr('id');
+					configuration.heating[key] = $(this).val();
+				});
+
+				updateJSON();
+
+				$.ajax({
+					url: endPointURL,
+					type: 'PUT',
+					contentType: 'application/json',
+					data: JSON.stringify(configuration, null, 8),
+					success: function(data) {
+						spinner.stop();
+						$('#spinner').hide();
+					},
+					error: function(info, err, more) {
+						alert(more);
+					}
+				});
+			}
+
+			// Display preformatted JSON
+			function updateJSON()
+			{
+				$('#json').text(JSON.stringify(configuration, null, 8));
+			}
+
+		</script>
+	</body>
 </html>
-
-

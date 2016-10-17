@@ -262,7 +262,7 @@ describe('Heating Module Tests', function() {
 
 			// To clean up alarm temperature flag from configuration.
 			after(function() {
-				const configurationFileName = __dirname + '/../heating_config/heating.json';
+				const configurationFileName = __dirname + '/../config/heating.json';
 				var cfg = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
 				delete cfg.error;
 				fs.writeFileSync(configurationFileName, JSON.stringify(cfg, null, 4));

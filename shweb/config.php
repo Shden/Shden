@@ -246,7 +246,7 @@
 
 				$('input[type=text]').each(function() {
 					var key = $(this).attr('id');
-					configuration.heating[key] = $(this).val();
+					configuration.heating[key] = parseFloat($(this).val());
 				});
 
 				updateJSON();

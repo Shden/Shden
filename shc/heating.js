@@ -3,7 +3,7 @@ var fs = require('fs');
 var ow = require('./onewire');
 
 // -- configuration constants:
-const configurationFileName = __dirname + '/heating_config/heating.json';
+const configurationFileName = __dirname + '/config/heating.json';
 
 const heaterCutOffTemp		= 95.0;			/* Heater failure temperature */
 const EXIT_OK			= 0;

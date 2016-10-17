@@ -1,0 +1,30 @@
+{
+    "heating": {
+        "standbyTemperature": 2,
+        "presenceTemperature": 22.5,
+        "tempDelta": 0.05,
+        "stopPumpTempDelta": 2.5,
+        "electricHeaterOffTemp": 70,
+        "ovenExtraOffTemp": 2,
+        "standbyNightTemperature": 7,
+        "saunaFloorTemp": 28,
+        "nightTariffStartHour": 21,
+        "nightTariffEndHour": 23,
+        "comfortSleepStartHour": 21,
+        "comfortSleepEndHour": 23,
+        "comfortSleepTargetTemperature": 20
+    },
+    "schedule": {
+        "arrival": "2016-10-15 22:57:36",
+        "departure": "2016-10-16 22:57:36"
+    },
+    "roomControlDescriptors": [
+        {
+            "sensorAddress": "28.CFE58D020000",
+            "switch": {
+                "address": "3A.CB9703000000",
+                "channel": "PIO.A"
+            }
+        }
+    ]
+}

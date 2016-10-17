@@ -13,8 +13,7 @@ Class Heating
 	private function GetConfigurationFileName()
 	{
 		return
-			$_SERVER['DOCUMENT_ROOT'] .
-			"/../shc/heating_config/heating.json";
+			$_SERVER['DOCUMENT_ROOT'] . "/../shc/config/heating.json";
 	}
 
 	/**

@@ -9,6 +9,7 @@ define(TZ, "MSK");
  */
 Class Heating
 {
+	// Fully qualified name of the configuration .json file.
 	private function GetConfigurationFileName()
 	{
 		return

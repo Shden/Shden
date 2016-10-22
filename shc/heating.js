@@ -11,14 +11,17 @@ const heaterCutOffTemp		= 95.0;		/* Heater failure temperature */
 const EXIT_OK			= 0;
 const EXIT_FAILURE		= 1;
 
+const MAX_POWER			= 17250;	/* 25 * 230 * 3 */
+const HEATER_POWER		= 12000;
+
 // -- Start handling --
 // --------------------
-// read configuration from configuration file
 global.OWDebugMode = true;
 
-console.log('Controller build:\t0.2');
+console.log('Controller build:\t0.3');
 console.log(`Debug mode:\t\t${global.OWDebugMode}`);
 
+// read configuration file
 var configuration = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
 
 if (wasOverheated())
@@ -29,45 +32,58 @@ if (wasOverheated())
 	return EXIT_FAILURE;
 }
 
-// -- Measure current temperatures and set out the target
-var controlTemp = getControlTemperature();
-var outgoingFluidTemp = ow.getT(ow.sensors.outputSensor);
-var ingoingFluidTemp = ow.getT(ow.sensors.inputSensor);
-var electricHeaterTemp = ow.getT(ow.sensors.heaterSensor);
-var kitchenTemp = ow.getT(ow.sensors.kitchenSensor);
-var bathroomTemp = ow.getT(ow.sensors.bathRoomSensor);
-var childrenSmallTemp = ow.getT(ow.sensors.childrenSmallSensor);
-var targetTemp = getTargetTemp();
+// -- Measure current temperatures and set out the target temperature
+Promise.all([
+	getControlTemperature(),
+	ow.getT(ow.sensors.outputSensor),
+	ow.getT(ow.sensors.inputSensor),
+	ow.getT(ow.sensors.heaterSensor),
+	ow.getT(ow.sensors.kitchenSensor),
+	ow.getT(ow.sensors.bathRoomSensor),
+	ow.getT(ow.sensors.childrenSmallSensor),
+	ow.getT(ow.sensors.saunaFloorSensor),
+	getTargetTemp(),
+	getCurrentPowerConsumption()
+	])
+.then(results => {
+	var controlTemp = results[0];
+	var outgoingFluidTemp = results[1];
+	var ingoingFluidTemp = results[2];
+	var electricHeaterTemp = results[3];
+	var kitchenTemp = results[4];
+	var bathroomTemp = results[5];
+	var childrenSmallTemp = results[6];
+	var saunaFloorTemp = results[7];
+	var targetTemp = results[8];
+	var consumption = results[9];
 
-console.log(`Target temperature:\t${numeral(targetTemp).format('0.0')}\u00B0C`);
-console.log(`Control temperature:\t${numeral(controlTemp).format('0.0')}\u00B0C`);
+	console.log(`Target temperature:\t${numeral(targetTemp).format('0.0')}\u00B0C`);
+	console.log(`Control temperature:\t${numeral(controlTemp).format('0.0')}\u00B0C`);
+	console.log(`Power consumption:\t${numeral(consumption).format('0,0')}W`);
 
-// Check current power consumption
-getCurrentPowerConsumption()
-	.then(consumption => {
-		console.log(consumption);
+	// -- Control heater
+	controlHeater(
+		controlTemp, electricHeaterTemp, outgoingFluidTemp, consumption)
+	.then(heaterState => {
+		console.log(`Heater:\t\t\t${heaterState ? "ON" : "OFF"}`);
 	});
-// -- Control heater
-var heaterState =
-	controlHeater(controlTemp, electricHeaterTemp, outgoingFluidTemp);
-console.log(`Heater:\t\t\t${heaterState ? "ON" : "OFF"}`);
 
-// -- Control sauna floor temp
-var saunaFloorTemp = ow.getT(ow.sensors.saunaFloorSensor);
-var saunaFloorTargetTemp = configuration.heating.saunaFloorTemp;
-var saunaFloorHeatingState =
-	controlSaunaFloor(saunaFloorTemp, saunaFloorTargetTemp);
-console.log(`Sauna floor:\t\t${saunaFloorHeatingState ? "ON" : "OFF"}`);
+	// -- Control sauna floor temp
+	var saunaFloorTargetTemp = configuration.heating.saunaFloorTemp;
+	controlSaunaFloor(saunaFloorTemp, saunaFloorTargetTemp)
+	.then(saunaFloorHeatingState => {
+		console.log(`Sauna floor:\t\t${saunaFloorHeatingState ? "ON" : "OFF"}`);
+	});
 
-// -- Control pump
-var pumpState = controlPump([controlTemp, electricHeaterTemp, ingoingFluidTemp,
-	outgoingFluidTemp, bathroomTemp, kitchenTemp, childrenSmallTemp]);
-console.log(`Pump:\t\t\t${pumpState ? "ON" : "OFF"}`);
+	// -- Control pump
+	var pumpState = controlPump([controlTemp, electricHeaterTemp, ingoingFluidTemp,
+		outgoingFluidTemp, bathroomTemp, kitchenTemp, childrenSmallTemp]);
+	console.log(`Pump:\t\t\t${pumpState ? "ON" : "OFF"}`);
 
-// -- Individual rooms control
-for (var r in configuration.roomControlDescriptors)
-	controlRoom(configuration.roomControlDescriptors[r], targetTemp);
-
+	// // -- Individual rooms control
+	// for (var r in configuration.roomControlDescriptors)
+	// 	controlRoom(configuration.roomControlDescriptors[r], targetTemp);
+});
 
 // -- End handling
 // -- Ancillary methods
@@ -114,55 +130,83 @@ function getPumpState()
 	return ow.getSwitchState(sw.address, sw.channel);
 }
 
-// Current target temperature, depending on configuration setting and time
+// Will eventually bring current target temperature,
+// depending on configuration setting and time.
 function getTargetTemp()
 {
-	// -- Check precence time
-	if (isPresenceHeating())
-	{
-		/* TMP solution for comfort sleep. Once per room valves are installed, this code should be gone
-		to controlRoom() function. */
-		if (checkIfNowWithinInterval(
-			configuration.heating.comfortSleepStartHour, 0,
-			configuration.heating.comfortSleepEndHour, 0))
-			return configuration.heating.comfortSleepTargetTemperature;
-		else
-			return configuration.heating.presenceTemperature;
-	}
+	return new Promise((resolved, rejected) => {
 
-	// -- If in standby, check day/night targets to save power
-	if (isSaving())
-	{
-		return configuration.heating.standbyNightTemperature;
-	}
+		// -- Check if it is presence heating mode now
+		isPresenceHeating()
+			.then(isPresence => {
+				if (isPresence)
+				{
+					/* TMP solution for comfort sleep. Once per room valves
+					   are installed, this code should be gone
+					   to controlRoom() function. */
+					if (checkIfNowWithinInterval(
+						configuration.heating.comfortSleepStartHour, 0,
+						configuration.heating.comfortSleepEndHour, 0))
+						resolved(configuration.heating.comfortSleepTargetTemperature);
+					else
+						resolved(configuration.heating.presenceTemperature);
+				}
 
-	return configuration.heating.standbyTemperature;
+				// -- If in standby, check day/night targets to save power
+				if (isSaving())
+				{
+					resolved(configuration.heating.standbyNightTemperature);
+				}
+
+				resolved(configuration.heating.standbyTemperature);
+			});
+	});
 }
 
-// TRUE if presence heating mode or FALSE if standby heating mode
+// Will eventually bring TRUE if presence heating mode
+// or FALSE if standby heating mode
 function isPresenceHeating()
 {
-	// -- Check precence time
-	var now = new Date();
-	var presenceStart = getHeatingStartTime();
-	var presenceFinish = new Date(configuration.schedule.departure);
-
-	return now >= presenceStart && now <= presenceFinish;
+	return new Promise((resolved, rejected) => {
+		getHeatingStartTime()
+			.then(presenceStart => {
+				var now = new Date();
+				var presenceFinish = new Date(configuration.schedule.departure);
+				var isPresence = now >= presenceStart && now <= presenceFinish;
+				resolved(isPresence);
+			});
+	});
 }
 
-// Time (in hours) required to heat up the house to presence temperature.
+// Will eventually bring the time (in hours) required to heat up the house
+// to presence temperature.
 function getHeatingTime()
 {
- 	const heatingSpeed = 1.0;	// speed of heating up, C/hour.
-	var currentTemperature = getControlTemperature();
- 	return (configuration.heating.presenceTemperature - currentTemperature) / heatingSpeed; // hours
+	return new Promise((resolved, rejected) => {
+		getControlTemperature()
+			.then(currentTemperature => {
+				const heatingSpeed = 1.0;	// speed of heating up, C/hour.
+				var heatingTime =
+					(configuration.heating.presenceTemperature -
+					currentTemperature) / heatingSpeed; // hours
+				resolved(heatingTime);
+			});
+	});
 }
 
 // Time to start heating so that house is heated by arrival
 function getHeatingStartTime()
 {
-	var arrival = new Date(configuration.schedule.arrival);
-	return new Date(arrival - getHeatingTime() * 60 * 60 * 1000); // hours to milliseconds
+	return new Promise((resolved, rejected) => {
+		getHeatingTime()
+			.then(heatingTime => {
+				var arrival = new Date(configuration.schedule.arrival);
+				var startTime = new Date(
+					arrival - heatingTime *
+					60 * 60 * 1000); // hours to milliseconds
+				resolved(startTime);
+			});
+	});
 }
 
 // TRUE if saving (night) tariff is on or FALSE otherwise
@@ -203,18 +247,20 @@ function checkIfNowWithinInterval(startHour, startMin, endHour, endMin)
  */
 function controlRoom(roomDescr, targetTemp)
 {
-	var roomTemp = ow.getT(roomDescr.sensorAddress);
-	if (roomTemp > targetTemp + configuration.heating.tempDelta) {
-		ow.changeSwitch(
-			roomDescr.switch.address,
-			roomDescr.switch.channel,
-			0);
-	} else {
-		ow.changeSwitch(
-			roomDescr.switch.address,
-			roomDescr.switch.channel,
-			1);
-	}
+	return new Promise((resolved, rejected) => {
+		ow.getT(roomDescr.sensorAddress)
+			.then(roomTemp => {
+				var switchState =
+					(roomTemp > targetTemp +
+						configuration.heating.tempDelta)
+					? 0 : 1;
+				ow.changeSwitch(
+					roomDescr.switch.address,
+					roomDescr.switch.channel,
+					switchState);
+					resolved();
+			});
+	});
 }
 
 /** Heater control routine.
@@ -222,16 +268,20 @@ function controlRoom(roomDescr, targetTemp)
  *	heaterTemp - current electric heater temperature to control (ref: O1)
  *	outgoingFluidTemp - current outgoing temperature of the fluid
  *			    (oven + electric heater, ref: O2)
+ *	currentPowerConsumption - total current power consumption from powher
+ *				meter.
  */
-function controlHeater(controlTemp, heaterTemp, outgoingFluidTemp)
+function controlHeater(
+	controlTemp, heaterTemp, outgoingFluidTemp, currentPowerConsumption)
 {
-	/* First check heater for overheat */
+	/* First, immediately check heater for overheat */
 	if (heaterTemp >= heaterCutOffTemp)
 	{
 		setHeater(0);
 		setPump(1);
 
-		configuration.error = `${new Date().toLocaleString()}: Heater failure detected t=${heaterTemp}C.`;
+		configuration.error =
+			`${new Date().toLocaleString()}: Heater failure detected t=${heaterTemp}C.`;
 
 		fs.writeFileSync(configurationFileName, JSON.stringify(configuration, null, 4));
 		console.log(configuration.error);
@@ -239,27 +289,57 @@ function controlHeater(controlTemp, heaterTemp, outgoingFluidTemp)
 		throw configuration.error;
 	}
 
-	if (outgoingFluidTemp > configuration.heating.electricHeaterOffTemp &&
-	    outgoingFluidTemp - heaterTemp > configuration.heating.ovenExtraOffTemp)
-	{
-		// Oven heater is providing enough heat, no need to run electricity
-		setHeater(0);
-		return 0;
-	}
-	else if (controlTemp < getTargetTemp())
-	{
-		setHeater(1);
-		return 1;
-	}
-	else if (controlTemp > getTargetTemp() + configuration.heating.tempDelta)
-	{
-		setHeater(0);
-		// Dont stop pump until fluid temp will go down
-		// Other heat sources may still be on
-		return 0;
-	}
-	// return current state
-	return getHeaterState();
+	return new Promise((resolved, rejected) => {
+
+		// Then check if oven provides enough heating
+		if (outgoingFluidTemp > configuration.heating.electricHeaterOffTemp &&
+		    outgoingFluidTemp - heaterTemp > configuration.heating.ovenExtraOffTemp)
+		{
+			// Oven heater is providing enough heat, no need to run electricity
+			setHeater(0);
+			resolved(0);
+		}
+
+		Promise.all([
+			getHeaterState(),
+			getTargetTemp()
+		])
+		.then(results => {
+			var heaterState = results[0];
+			var targetTemp = results[1];
+
+			// Check power consumption limit
+			if ((heaterState == 1 && currentPowerConsumption > MAX_POWER) ||
+			    (heaterState == 0 && currentPowerConsumption > MAX_POWER - HEATER_POWER))
+			{
+				if (heaterState == 1)
+				{
+					setHeater(0);
+				}
+				resolved(0);
+			}
+
+			// Third go to electrc heater control and see if action needed
+			else if (controlTemp < targetTemp)
+			{
+				setHeater(1);
+				resolved(1);
+			}
+			else if (controlTemp > targetTemp + configuration.heating.tempDelta)
+			{
+				setHeater(0);
+				// Dont stop pump until fluid temp will go down
+				// Other heat sources may still be on
+				resolved(0);
+			}
+
+			// Finally if nothing needed to be changed,
+			// just return the current status.
+			else {
+				resolved(heaterState);
+			}
+		});
+	});
 }
 
 /*
@@ -267,13 +347,17 @@ function controlHeater(controlTemp, heaterTemp, outgoingFluidTemp)
  */
 function controlSaunaFloor(currentFloorTemp, targetFloorTemp)
 {
-	var floorHeatingON = 0;
-	if (isPresenceHeating() && currentFloorTemp < targetFloorTemp)
-	{
-		floorHeatingON = 1;
-	}
-	setSaunaFloor(floorHeatingON);
-	return floorHeatingON;
+	return new Promise((resolved, rejected) => {
+		isPresenceHeating()
+			.then(isPresence => {
+				var floorHeatingON =
+					(isPresence &&
+					currentFloorTemp < targetFloorTemp)
+					? 1 : 0;
+				setSaunaFloor(floorHeatingON);
+				resolved(floorHeatingON);
+			});
+	});
 }
 
 /*

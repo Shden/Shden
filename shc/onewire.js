@@ -76,12 +76,18 @@ function getT(sensorAddress)
 // Get floating point value from a sensor
 function getFV(sensorAddress, valueName)
 {
-	if (!global.OWDebugMode) {
-		var valuePath = `/mnt/1wire/${sensorAddress}/${valueName}`;
-		return parseFloat(fs.readFileSync(valuePath, 'utf8'));
-	} else {
-		return getStubNet()[sensorAddress][valueName];
-	}
+	return new Promise((resolved, rejected) => {
+		if (!global.OWDebugMode) {
+			var valuePath = `/mnt/1wire/${sensorAddress}/${valueName}`;
+			fs.readFile(valuePath, (err, data) => {
+				if (err)
+					rejected(err);
+				resolved(parseFloat(data));
+			});
+		} else {
+			resolved(getStubNet()[sensorAddress][valueName]);
+		}
+	});
 }
 
 // Change switch state

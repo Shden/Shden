@@ -5,84 +5,86 @@ var should = require('should');
 
 global.OWDebugMode = true;
 
-describe('Heating Module Tests', function() {
+describe('Heating Module Tests:', function() {
 
 	const T = 12.44;
 
-	describe('Check preset', function() {
+	describe('Check preset:', function() {
 		it(`44.2 на ТЭН (${ow.sensors.heaterSensor})`, function() {
-			ow.getT(ow.sensors.heaterSensor).should.equal(44.2);
+			ow.getT(ow.sensors.heaterSensor).should.be.eventually.equal(44.2);
 		});
 		it(`${T} в спальне (${ow.sensors.bedroomSensor})`, function() {
-			ow.getT(ow.sensors.bedroomSensor).should.equal(T);
+			ow.getT(ow.sensors.bedroomSensor).should.be.eventually.equal(T);
 		});
 		it(`getControlTemperature() is ${T}`, function() {
-			h.getControlTemperature().should.equal(T);
+			h.getControlTemperature().should.be.eventually.equal(T);
 		});
 	});
 
-	describe('Switches are working', function() {
+	describe('Switches are working:', function() {
 		it('Heater', function() {
 			h.setHeater(1);
-			h.getHeaterState().should.be.equal(1);
+			h.getHeaterState().should.be.eventually.equal(1);
 			h.setHeater(0);
-			h.getHeaterState().should.be.equal(0);
+			h.getHeaterState().should.be.eventually.equal(0);
 			(function() { h.setHeater(333); }).should.throw();
 		});
 		it('Pump', function() {
 			h.setPump(1);
-			h.getPumpState().should.be.equal(1);
+			h.getPumpState().should.be.eventually.equal(1);
 			h.setPump(0);
-			h.getPumpState().should.be.equal(0);
+			h.getPumpState().should.be.eventually.equal(0);
 			(function() { h.setPump(333); }).should.throw();
 		});
 	});
 
-	describe('Check heating time calculations', function() {
+	describe('Check heating time calculations:', function() {
 		it(`Heating duration in hours for current: ${T}C and target ${h.configuration.heating.presenceTemperature}C is 10.06 hours`,
 			function() {
-				h.getHeatingTime().should.equal(10.06);
+				h.getHeatingTime().should.be.eventually.equal(10.06);
 			});
 
 		it(`Heating start should be 2016-09-30 23:56:24 for arrival at 2016-10-01 10:00`,
 			function() {
 				h.configuration.schedule.arrival = '2016-10-01 10:00';
-				h.getHeatingStartTime().should.eql(
+				h.getHeatingStartTime().should.eventually.eql(
 					new Date(2016, 08, 30, 23, 56, 24)
 				);
 			});
 		it('Heating start and finish moments handling check', function() {
 
-			var heatingTime = h.getHeatingTime();
-			var hoursToMs = 60 * 60 * 1000;
+			const hoursToMs = 60 * 60 * 1000;
+			h.getHeatingTime()
+				.then(heatingTime => {
 
-			// just 1 minute before heating started, should be OFF
-			h.configuration.schedule.arrival =
-				new Date(Date.now() + heatingTime * hoursToMs + 1 * 60 * 1000).toLocaleString();
-			h.configuration.schedule.departure =
-				new Date(Date.now() + 24 * hoursToMs).toLocaleString();
-			h.isPresenceHeating().should.be.equal(false);
+					// just 1 minute before heating started, should be OFF
+					h.configuration.schedule.arrival =
+						new Date(Date.now() + heatingTime * hoursToMs + 1 * 60 * 1000).toLocaleString();
+					h.configuration.schedule.departure =
+						new Date(Date.now() + 24 * hoursToMs).toLocaleString();
+					h.isPresenceHeating().should.be.equal(false);
 
-			// 1 minute after heating started, should be ON
-			h.configuration.schedule.arrival =
-				new Date(Date.now() + heatingTime * hoursToMs - 1 * 60 * 1000).toLocaleString();
-			h.configuration.schedule.departure =
-				new Date(Date.now() + 24 * hoursToMs).toLocaleString();
-			h.isPresenceHeating().should.be.equal(true);
+					// 1 minute after heating started, should be ON
+					h.configuration.schedule.arrival =
+						new Date(Date.now() + heatingTime * hoursToMs - 1 * 60 * 1000).toLocaleString();
+					h.configuration.schedule.departure =
+						new Date(Date.now() + 24 * hoursToMs).toLocaleString();
+					h.isPresenceHeating().should.be.equal(true);
 
-			// just 1 minute before heating finished, should be ON
-			h.configuration.schedule.arrival =
-				new Date(Date.now() - 1 * hoursToMs).toLocaleString();
-			h.configuration.schedule.departure =
-				new Date(Date.now() + 1 * 60 * 1000).toLocaleString();
-			h.isPresenceHeating().should.be.equal(true);
+					// just 1 minute before heating finished, should be ON
+					h.configuration.schedule.arrival =
+						new Date(Date.now() - 1 * hoursToMs).toLocaleString();
+					h.configuration.schedule.departure =
+						new Date(Date.now() + 1 * 60 * 1000).toLocaleString();
+					h.isPresenceHeating().should.be.equal(true);
 
-			// 1 minute after heating finished, should be OFF
-			h.configuration.schedule.arrival =
-				new Date(Date.now() - 1 * hoursToMs).toLocaleString();
-			h.configuration.schedule.departure =
-				new Date(Date.now() - 1 * 60 * 1000).toLocaleString();
-			h.isPresenceHeating().should.be.equal(false);
+					// 1 minute after heating finished, should be OFF
+					h.configuration.schedule.arrival =
+						new Date(Date.now() - 1 * hoursToMs).toLocaleString();
+					h.configuration.schedule.departure =
+						new Date(Date.now() - 1 * 60 * 1000).toLocaleString();
+					h.isPresenceHeating().should.be.equal(false);
+				});
 		});
 	});
 
@@ -115,7 +117,7 @@ describe('Heating Module Tests', function() {
 		h.configuration.schedule.departure = _1dayBefore.toLocaleString();
 	}
 
-	describe('Helper functions testing', function() {
+	describe('Helper functions testing:', function() {
 
 		it('checkIfNowWithinInterval positive test', function() {
 			h.checkIfNowWithinInterval(
@@ -140,15 +142,15 @@ describe('Heating Module Tests', function() {
 		});
 	});
 
-	describe('Target temperature', function() {
+	describe('Target temperature testing:', function() {
 
-		describe('Target temperature testing in presence mode', function() {
+		describe('Target temperature testing in presence mode:', function() {
 
 			before(function() {
 				toPresenceMode();
 			});
 
-			describe('Presence heating day time check', function() {
+			describe('Presence heating day time check:', function() {
 				// day time
 				before(function() {
 					h.configuration.heating.comfortSleepStartHour = _1hourAfter.getHours();
@@ -156,13 +158,13 @@ describe('Heating Module Tests', function() {
 				});
 
 				it('Presence temperature during a day time', function() {
-					h.getTargetTemp().should.be.equal(
+					h.getTargetTemp().should.be.eventually.equal(
 						h.configuration.heating.presenceTemperature
 					);
 				});
 			});
 
-			describe('Presence heating sleep time check', function() {
+			describe('Presence heating sleep time check:', function() {
 				// sleep time
 				before(function() {
 					h.configuration.heating.comfortSleepStartHour = _1hourBefore.getHours();
@@ -170,20 +172,20 @@ describe('Heating Module Tests', function() {
 				});
 
 				it('Presence temperature during a sleep time', function() {
-					h.getTargetTemp().should.be.equal(
+					h.getTargetTemp().should.be.eventually.equal(
 						h.configuration.heating.comfortSleepTargetTemperature
 					);
 				});
 			});
 		});
 
-		describe('Target temperature testing in standby mode', function () {
+		describe('Target temperature testing in standby mode:', function () {
 
 			before(function() {
 				toStandbyMode();
 			});
 
-			describe('Standby day time check', function() {
+			describe('Standby day time check:', function() {
 				// set day tariff for now
 				before(function() {
 					h.configuration.heating.nightTariffStartHour = _1hourAfter.getHours();
@@ -191,13 +193,13 @@ describe('Heating Module Tests', function() {
 				});
 
 				it('Standby temperature for day tariff time', function() {
-					h.getTargetTemp().should.be.equal(
+					h.getTargetTemp().should.be.eventually.equal(
 						h.configuration.heating.standbyTemperature
 					)
 				});
 			});
 
-			describe('Standby night time check', function() {
+			describe('Standby night time check:', function() {
 				// set night tariff for now
 				before(function() {
 					h.configuration.heating.nightTariffStartHour = _1hourBefore.getHours();
@@ -205,7 +207,7 @@ describe('Heating Module Tests', function() {
 				});
 
 				it('Standby temperature for night tariff time', function() {
-					h.getTargetTemp().should.be.equal(
+					h.getTargetTemp().should.be.eventually.equal(
 						h.configuration.heating.standbyNightTemperature
 					)
 				});
@@ -213,48 +215,50 @@ describe('Heating Module Tests', function() {
 		});
 	});
 
-	describe('Room control', function() {
-		it('Switch is on while temperature lower than the target', function() {
+	describe('Room control:', function() {
+		it('Valve switch is ON while temperature lower than the target', function() {
 			ow.getStubNet()[ow.sensors.childrenSmallSensor].temperature = 10.0;
 			h.controlRoom(
 				h.configuration.roomControlDescriptors[0],
 				20.0
-			);
-			ow.getSwitchState(
-				ow.switches.childrenSmallSwitch.address,
-				ow.switches.childrenSmallSwitch.channel
-			).should.be.equal(1);
+			).then(() => {
+				ow.getSwitchState(
+					ow.switches.childrenSmallSwitch.address,
+					ow.switches.childrenSmallSwitch.channel
+				).should.be.eventually.equal(1);
+			});
 		});
-		it('Switch is off when temperature is above the target', function() {
+		it('Valve switch is OFF when temperature is above the target', function() {
 			ow.getStubNet()[ow.sensors.childrenSmallSensor].temperature = 25.0;
 			h.controlRoom(
 				h.configuration.roomControlDescriptors[0],
 				20.0
-			);
-			ow.getSwitchState(
-				ow.switches.childrenSmallSwitch.address,
-				ow.switches.childrenSmallSwitch.channel
-			).should.be.equal(0);
+			).then(() => {
+				ow.getSwitchState(
+					ow.switches.childrenSmallSwitch.address,
+					ow.switches.childrenSmallSwitch.channel
+				).should.be.eventually.equal(0);
+			});
 		});
 	});
 
-	describe('Heating control', function() {
+	describe('Heating control:', function() {
 
-		describe('Throws and reports on overheat', function() {
+		describe('Throws and reports on overheat:', function() {
 
 
 			it('More than 95C is a failire', function(done) {
-				(function() { h.controlHeater(22.0, 96.0, 25.0) }).should.throw();
+				(function() { h.controlHeater(22.0, 96.0, 25.0, 0) }).should.throw();
 				h.configuration.should.have.property("error");
-				h.getPumpState().should.be.equal(1);
-				h.getHeaterState().should.be.equal(0);
+				h.getPumpState().should.be.eventually.equal(1);
+				h.getHeaterState().should.be.eventually.equal(0);
 				h.wasOverheated().should.be.equal(true);
 				done();
 			});
 
 			it('Less than 95C is OK', function(done) {
 				delete h.configuration.error;
-				(function() { h.controlHeater(22.0, 94.0, 25.0) }).should.not.throw();
+				(function() { h.controlHeater(22.0, 94.0, 25.0, 0) }).should.not.throw();
 				h.configuration.should.not.have.property("error");
 				h.wasOverheated().should.be.equal(false);
 				done();
@@ -269,36 +273,52 @@ describe('Heating Module Tests', function() {
 			})
 		});
 
-		describe('Oven offs heating', function() {
+		describe('Oven offs heating:', function() {
 
 			it('Small extra temperature from oven does not off heating', function() {
-				h.controlHeater(1.0, 85.0, 86.0);
-				h.getHeaterState().should.be.equal(1);
+				h.controlHeater(1.0, 85.0, 86.0, 0);
+				h.getHeaterState().should.be.eventually.equal(1);
 			});
 
 			it('More extra temperature from oven offs heating', function() {
-				h.controlHeater(1.0, 71.0, 79.0);
-				h.getHeaterState().should.be.equal(0);
+				h.controlHeater(1.0, 71.0, 79.0, 0);
+				h.getHeaterState().should.be.eventually.equal(0);
 			});
 		});
 
-		describe('Temperature control', function() {
+		describe('Temperature control:', function() {
 
-			it('Heating is ON when under target', function() {
+			it('Heating is ON when colder than target temperature', function() {
 				var targetTemp = h.getTargetTemp();
-				h.controlHeater(targetTemp - 0.25, 40.0, 40.0);
-				h.getHeaterState().should.be.equal(1);
+				h.controlHeater(targetTemp - 0.25, 40.0, 40.0, 0)
+					.then((heaterState) => {
+						h.getHeaterState().should.be.eventually.equal(1);
+					});
 			});
 
-			it('Heating is OFF when upper target', function() {
+			it('Heating is OFF when hoter than target temperature', function() {
 				var targetTemp = h.getTargetTemp();
-				h.controlHeater(targetTemp + 0.25, 40.0, 40.0);
-				h.getHeaterState().should.be.equal(0);
+				h.controlHeater(targetTemp + 0.25, 40.0, 40.0, 0)
+				.then((heaterState) => {
+					h.getHeaterState().should.be.eventually.equal(0);
+				});
 			});
 		});
+
+		describe('Power consumption considered:', function() {
+
+			it('Heating is OFF even when colder than needed ' +
+			   'but power consumption is high', function() {
+				var targetTemp = h.getTargetTemp();
+				h.controlHeater(targetTemp - 0.25, 40.0, 40.0, 18000)
+					.then((heaterState) => {
+						h.getHeaterState().should.be.eventually.equal(0);
+					});
+			});
+		})
 	});
 
-	describe('Sauna floor', function() {
+	describe('Sauna floor:', function() {
 
 		describe('Off in standby', function() {
 
@@ -307,10 +327,10 @@ describe('Heating Module Tests', function() {
 			});
 
 			it('Off when temperature is lower', function() {
-				h.controlSaunaFloor(10, 20).should.be.equal(0);
+				h.controlSaunaFloor(10, 20).should.be.eventually.equal(0);
 			});
 			it('Off when temperature is higher', function() {
-				h.controlSaunaFloor(20, 10).should.be.equal(0);
+				h.controlSaunaFloor(20, 10).should.be.eventually.equal(0);
 			});
 		});
 		describe('Control in presence', function() {
@@ -320,10 +340,10 @@ describe('Heating Module Tests', function() {
 			});
 
 			it('On when temperature is lower', function() {
-				h.controlSaunaFloor(10, 20).should.be.equal(1);
+				h.controlSaunaFloor(10, 20).should.be.eventually.equal(1);
 			});
 			it('Off when temperature is higher', function() {
-				h.controlSaunaFloor(20, 10).should.be.equal(0);
+				h.controlSaunaFloor(20, 10).should.be.eventually.equal(0);
 			});
 		});
 	});

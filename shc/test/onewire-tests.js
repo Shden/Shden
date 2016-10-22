@@ -33,19 +33,19 @@ describe('Onewire filesystem testing', function() {
 		});
 
 		it('getT', function() {
-			ow.getT(ow.sensors.heaterSensor).should.be.equal(44.2);
-			ow.getT(ow.sensors.bedroomSensor).should.be.a.Number();
-			ow.getT(ow.sensors.externalSensor).should.be.a.Number();
+			ow.getT(ow.sensors.heaterSensor).should.be.eventually.equal(44.2);
+			ow.getT(ow.sensors.bedroomSensor).should.be.eventually.a.Number();
+			ow.getT(ow.sensors.externalSensor).should.be.eventually.a.Number();
 		});
 
 		it('Switching', function() {
 			for (var sw in ow.switches) {
 				s = ow.switches[sw];
 				ow.changeSwitch(s.address, s.channel, 0);
-				ow.getSwitchState(s.address, s.channel).should.be.equal(0);
+				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(0);
 
 				ow.changeSwitch(s.address, s.channel, 1);
-				ow.getSwitchState(s.address, s.channel).should.be.equal(1);
+				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(1);
 			}
 		});
 	});

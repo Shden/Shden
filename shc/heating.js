@@ -1,11 +1,13 @@
 // Node.js port of heating controller logic.
 var fs = require('fs');
 var ow = require('./onewire');
+var http = require('http');
+var numeral = require('numeral');
 
 // -- configuration constants:
 const configurationFileName = __dirname + '/config/heating.json';
 
-const heaterCutOffTemp		= 95.0;			/* Heater failure temperature */
+const heaterCutOffTemp		= 95.0;		/* Heater failure temperature */
 const EXIT_OK			= 0;
 const EXIT_FAILURE		= 1;
 
@@ -14,7 +16,7 @@ const EXIT_FAILURE		= 1;
 // read configuration from configuration file
 global.OWDebugMode = true;
 
-console.log('Heating controller v0.1');
+console.log('Controller build:\t0.2');
 console.log(`Debug mode:\t\t${global.OWDebugMode}`);
 
 var configuration = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
@@ -36,8 +38,15 @@ var kitchenTemp = ow.getT(ow.sensors.kitchenSensor);
 var bathroomTemp = ow.getT(ow.sensors.bathRoomSensor);
 var childrenSmallTemp = ow.getT(ow.sensors.childrenSmallSensor);
 var targetTemp = getTargetTemp();
-console.log(`Target temperature:\t${targetTemp}C`);
 
+console.log(`Target temperature:\t${numeral(targetTemp).format('0.0')}\u00B0C`);
+console.log(`Control temperature:\t${numeral(controlTemp).format('0.0')}\u00B0C`);
+
+// Check current power consumption
+getCurrentPowerConsumption()
+	.then(consumption => {
+		console.log(consumption);
+	});
 // -- Control heater
 var heaterState =
 	controlHeater(controlTemp, electricHeaterTemp, outgoingFluidTemp);
@@ -290,6 +299,48 @@ function wasOverheated()
 	return configuration.error != null;
 }
 
+// What is the current house power consumption. To stay within power limit.
+function getCurrentPowerConsumption()
+{
+	return new Promise((resolved, rejected) => {
+		getPowerMeterData()
+			.then(result => {
+				resolved(result.P.sum)
+			})
+			.catch(err => {
+				console.log(err);
+				rejected(err);
+			});
+
+	})
+}
+
+// Returns promise to bring current power meter data.
+function getPowerMeterData()
+{
+	return new Promise((resolved, rejected) => {
+		http.get({
+			host: 'localhost',
+			path: '/API/1.1/consumption/electricity/GetPowerMeterData'
+		}, function(responce) {
+			if (responce.statusCode != 200)
+				rejected(responce.statusCode);
+
+			var data = '';
+			responce.on('data', function(b) {
+				data += b;
+			});
+			responce.on('end', function() {
+				var powerInfo = JSON.parse(data);
+				resolved(powerInfo);
+			});
+			responce.on('error', function(err) {
+				rejected(err);
+			});
+		});
+	});
+}
+
 // -- Exports for testing
 // If we're running under Node,
 if (typeof exports !== 'undefined')
@@ -311,6 +362,8 @@ if (typeof exports !== 'undefined')
 	exports.controlSaunaFloor = controlSaunaFloor;
 	exports.controlPump = controlPump;
 	exports.wasOverheated = wasOverheated;
+	exports.getPowerMeterData = getPowerMeterData;
+	exports.getCurrentPowerConsumption = getCurrentPowerConsumption;
 
 	// data
 	exports.configuration = configuration;

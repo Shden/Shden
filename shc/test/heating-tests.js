@@ -341,4 +341,24 @@ describe('Heating Module Tests', function() {
 		});
 
 	});
+
+	describe('Power meter link', function() {
+
+		it('Check power meter data retrival', function() {
+			return h.getPowerMeterData()
+				.then(function(res) {
+					res.should.have.property("U");
+					res.should.have.property("I");
+					res.should.have.property("CosF");
+				});
+
+		});
+
+		it('Check power consumption can be retrieved', function() {
+			return h.getCurrentPowerConsumption()
+				.then(res => {
+					res.should.be.a.Number();
+				});
+		});
+	});
 });

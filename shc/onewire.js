@@ -37,7 +37,6 @@ function getStubNet()
 			if (sensors.hasOwnProperty(sensor)) {
 				stubnet[sensors[sensor]] = new Object();
 				stubnet[sensors[sensor]].temperature = 0;
-
 			}
 		}
 

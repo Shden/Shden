@@ -4,8 +4,10 @@ require_once ('../../include/sql2js.php');
 define(TZ, "MSK");
 
 /**
- *	House heating API endpoint. This API is desginged to control most of the heating system parameters including
- *	different heating schedules for various house modes, schedules etc.
+ *	House climate API endpoint. This API is desginged to control heating
+ * 	system parameters including different heating schedules for various
+ *	house modes, schedules etc.
+ *	Also it provides humidity data access methods.
  */
 Class Heating
 {
@@ -17,9 +19,9 @@ Class Heating
 	}
 
 	/**
-	 * Return heating schedule information.
+	 *	Return heating schedule information.
 	 *
-	 * @url GET /GetSchedule
+	 * 	@url GET /GetSchedule
 	 */
 	public function GetSchedule()
 	{
@@ -119,6 +121,17 @@ Class Heating
 			);
 		}
 		return $arr;
+	}
+
+	/**
+	 *	Report heating data point.
+	 *	Data point information is posted in JSON.
+	 *
+	 *	@url POST /data/heating
+	 */
+	public function PostHeatingDataPoint()
+	{
+		return "123";
 	}
 
 	/**

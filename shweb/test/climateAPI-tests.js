@@ -2,14 +2,14 @@ var should = require('should');
 var http = require('http');
 var moment = require('moment');
 
-describe('/API/1.1/heating testing:', function() {
+describe('/API/1.1/climate testing:', function() {
 
 	describe('Schedule testing:', function() {
 
 		it('GetSchedule', function(done) {
 			http.get({
 				host: 'localhost',
-				path: '/API/1.1/heating/GetSchedule'
+				path: '/API/1.1/climate/GetSchedule'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
 				var data = '';
@@ -32,7 +32,7 @@ describe('/API/1.1/heating testing:', function() {
 		it('SetSchedule', function(done) {
 			var req = http.request({
 				host: 'localhost',
-				path: '/API/1.1/heating/SetSchedule/2016/10/1/19/2016/10/2/21',
+				path: '/API/1.1/climate/SetSchedule/2016/10/1/19/2016/10/2/21',
 				method: 'PUT'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
@@ -59,7 +59,7 @@ describe('/API/1.1/heating testing:', function() {
 		it('ResetSchedule', function(done) {
 			var req = http.request({
 				host: 'localhost',
-				path: '/API/1.1/heating/ResetSchedule',
+				path: '/API/1.1/climate/ResetSchedule',
 				method: 'PUT'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
@@ -106,7 +106,7 @@ describe('/API/1.1/heating testing:', function() {
 		it('Get heating configuration', function(done) {
 			http.get({
 				host: 'localhost',
-				path: '/API/1.1/heating/Configuration'
+				path: '/API/1.1/climate/Configuration'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
 				var data = '';
@@ -126,7 +126,7 @@ describe('/API/1.1/heating testing:', function() {
 		it('Put heating configuration', function(done) {
 			var req = http.request({
 				host: 'localhost',
-				path: '/API/1.1/heating/Configuration',
+				path: '/API/1.1/climate/Configuration',
 				method: 'PUT'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);

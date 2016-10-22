@@ -81,8 +81,11 @@ Promise.all([
 	console.log(`Pump:\t\t\t${pumpState ? "ON" : "OFF"}`);
 
 	// // -- Individual rooms control
-	// for (var r in configuration.roomControlDescriptors)
-	// 	controlRoom(configuration.roomControlDescriptors[r], targetTemp);
+	Promise.all(
+		configuration.roomControlDescriptors.map(function(item) {
+			return controlRoom(item, targetTemp);
+		})
+	);
 });
 
 // -- End handling

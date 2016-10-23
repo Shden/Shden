@@ -143,4 +143,45 @@ describe('/API/1.1/climate testing:', function() {
 			req.end();
 		});
 	});
+
+	describe('Heating data reporing:', function() {
+
+		it('Post heating data point', function(done) {
+			var request = http.request({
+				host: 'localhost',
+				path: '/API/1.1/climate/data/heating',
+				method: 'POST'
+			}, function(responce) {
+				var data = '';
+
+				responce.on('data', function(b) {
+					data += b;
+				});
+				responce.on('end', function() {
+					responce.statusCode.should.be.equal(200, data);
+					done();
+				});
+			});
+			request.write(
+				JSON.stringify({
+					heater			: 22,
+					fluid_in		: 38.5,
+					fluid_out		: 42.19,
+					external		: -3.8,
+					am_bedroom		: 21,
+					bedroom			: 22,
+					cabinet			: 20.8,
+					child_bedroom		: 22.6,
+					kitchen			: 23.16,
+					bathroom_1		: 24.9,
+					bathroom_1_floor	: 27.96,
+					control			: 22,
+					heating			: 1,
+					pump			: 1,
+					bathroom_1_heating	: 1
+				}, null, 4),
+				encoding='utf8');
+			request.end();
+		});
+	});
 });

@@ -13,7 +13,7 @@ $server = new RestServer($mode);
 // $server->refreshCache(); // uncomment momentarily to clear the cache if classes change in production mode
 
 $server->addClass('Status', '/status');
-$server->addClass('Heating', '/climate');
+$server->addClass('Climate', '/climate');
 $server->addClass('Lighting', '/lighting');
 $server->addClass('ElectricityConsumption', '/consumption/electricity');
 

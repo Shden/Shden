@@ -9,7 +9,7 @@ define(TZ, "MSK");
  *	house modes, schedules etc.
  *	Also it provides humidity data access methods.
  */
-Class Heating
+Class Climate
 {
 	// Fully qualified name of the configuration .json file.
 	private function GetConfigurationFileName()
@@ -120,6 +120,8 @@ Class Heating
 				"outTemp" 	=> (float) $r["outTemp"]
 			);
 		}
+		$res->free();
+
 		return $arr;
 	}
 
@@ -129,9 +131,77 @@ Class Heating
 	 *
 	 *	@url POST /data/heating
 	 */
-	public function PostHeatingDataPoint()
+	public function PostHeatingDataPoint($data)
 	{
-		return "123";
+		// Data validation
+		if (!is_numeric($data->heater))
+			throw new RestException(400,
+				"Invalid heater temperature: $data->heater.");
+		if (!is_numeric($data->fluid_in))
+			throw new RestException(400,
+				"Invalid incoming fluid temperature: $data->fluid_in.");
+		if (!is_numeric($data->fluid_out))
+			throw new RestException(400,
+				"Invalid outgoing fluid temperature: $data->fluid_out.");
+		if (!is_numeric($data->external))
+			throw new RestException(400,
+				"Invalid external temperature: $data->external.");
+		if (!is_numeric($data->am_bedroom))
+			throw new RestException(400,
+				"Invalid am_bedroom temperature: $data->am_bedroom.");
+		if (!is_numeric($data->bedroom))
+			throw new RestException(400,
+				"Invalid bedroom temperature: $data->bedroom.");
+		if (!is_numeric($data->cabinet))
+			throw new RestException(400,
+				"Invalid cabinet temperature: $data->cabinet.");
+		if (!is_numeric($data->child_bedroom))
+			throw new RestException(400,
+				"Invalid child_bedroom temperature: $data->child_bedroom.");
+		if (!is_numeric($data->kitchen))
+			throw new RestException(400,
+				"Invalid kitchen temperature: $data->kitchen.");
+		if (!is_numeric($data->bathroom_1))
+			throw new RestException(400,
+				"Invalid bathroom_1 temperature: $data->bathroom_1.");
+		if (!is_numeric($data->control))
+			throw new RestException(400,
+				"Invalid control temperature: $data->control.");
+		if (!is_numeric($data->bathroom_1_floor))
+			throw new RestException(400,
+				"Invalid bathroom_1_floor temperature: $data->bathroom_1_floor.");
+		if (!is_numeric($data->heating) ||
+			($data->heating != 0 && $data->heating != 1))
+			throw new RestException(400,
+				"Invalid heating state: $data->heating.");
+		if (!is_numeric($data->pump) ||
+			($data->pump != 0 && $data->pump != 1))
+			throw new RestException(400,
+				"Invalid pump state: $data->pump.");
+		if (!is_numeric($data->bathroom_1_heating) ||
+			($data->bathroom_1_heating != 0 && $data->bathroom_1_heating != 1))
+			throw new RestException(400,
+				"Invalid bathroom_1_heating state: $data->bathroom_1_heating.");
+
+		global $conn;
+		if (!$conn->query(
+			"INSERT INTO HEATING " .
+			"(time, heater, fluid_in, fluid_out, external, " .
+			"am_bedroom, bedroom, cabinet, sasha_bedroom, " .
+			"kitchen, bathroom, sauna_floor, control, heating, " .
+			"pump, sauna_heating) " .
+			"VALUES (NOW(), " .
+			"$data->heater, $data->fluid_in, $data->fluid_out, " .
+			"$data->external, $data->am_bedroom, $data->bedroom, " .
+			"$data->cabinet, $data->child_bedroom, " .
+			"$data->kitchen, $data->bathroom_1, " .
+			"$data->bathroom_1_floor, $data->control, " .
+			"$data->heating, $data->pump, " .
+			"$data->bathroom_1_heating)"))
+		{
+			throw new RestException(400,
+				"DB error: " . $conn->error);
+		}
 	}
 
 	/**
@@ -263,8 +333,8 @@ Class Heating
 		$json = json_decode($configurationStr, true);
 
 		# DD.MM.YYYY
-	        $json["schedule"]["arrival"] = $arrival->format('Y-m-d H:i:s');
-	        $json["schedule"]["departure"] = $departure->format('Y-m-d H:i:s');
+		$json["schedule"]["arrival"] = $arrival->format('Y-m-d H:i:s');
+		$json["schedule"]["departure"] = $departure->format('Y-m-d H:i:s');
 
 		file_put_contents($configFileName, json_encode($json, JSON_PRETTY_PRINT));
 	}

@@ -130,7 +130,7 @@
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');
 
-			$.getJSON(GetAPIURL("heating/GetSchedule"))
+			$.getJSON(GetAPIURL("climate/GetSchedule"))
 				.done(function(data) {
 
 					refreshControls(data);
@@ -196,10 +196,10 @@
 			dep.setHours($('#dep_hour').val());
 
 			var URL = ($('#timerActive').prop('checked'))
-				? GetAPIURL("heating/SetSchedule/" +
+				? GetAPIURL("climate/SetSchedule/" +
 					arr.getFullYear() + '/' + (arr.getMonth() + 1) + '/' + arr.getDate() + '/' + arr.getHours() + '/' +
 					dep.getFullYear() + '/' + (dep.getMonth() + 1) + '/' + dep.getDate() + '/' + dep.getHours())
-				: GetAPIURL("heating/ResetSchedule");
+				: GetAPIURL("climate/ResetSchedule");
 
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');

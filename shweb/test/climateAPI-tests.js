@@ -151,7 +151,7 @@ describe('/API/1.1/climate testing:', function() {
 				host: 'localhost',
 				path: '/API/1.1/climate/data/heating',
 				method: 'POST'
-			}, function(responce) {
+			}, responce => {
 				var data = '';
 
 				responce.on('data', function(b) {

@@ -359,10 +359,9 @@ describe('Heating Module Tests:', function() {
 		it('On for bigger deviations', function() {
 			h.controlPump([0.0, 2.0, 3.8, 2.99, 2.1, 0.5]).should.be.equal(1);
 		});
-
 	});
 
-	describe('Power meter link', function() {
+	describe('Power meter link:', function() {
 
 		it('Check power meter data retrival', function() {
 			return h.getPowerMeterData()
@@ -371,7 +370,6 @@ describe('Heating Module Tests:', function() {
 					res.should.have.property("I");
 					res.should.have.property("CosF");
 				});
-
 		});
 
 		it('Check power consumption can be retrieved', function() {
@@ -379,6 +377,54 @@ describe('Heating Module Tests:', function() {
 				.then(res => {
 					res.should.be.a.Number();
 				});
+		});
+	});
+
+	describe('Posting heating data:', function() {
+
+		it('Invalid data points rejected', function() {
+			return h.postDataPoint()
+				.then(
+					res => {
+						true.should.be.not.ok(
+							'Should have been error.'
+						);
+					},
+					err => {
+						// Error expected
+						true.should.be.ok();
+					}
+				);
+		});
+
+		it('Valid data points accepted', function() {
+			return h.postDataPoint(
+				{
+					heater			: 44,
+					fluid_in		: 20,
+					fluid_out		: 30,
+					external		: -10,
+					am_bedroom		: 21,
+					bedroom			: 22,
+					cabinet			: 23,
+					child_bedroom		: 24,
+					kitchen			: 25,
+					bathroom_1		: 26,
+					bathroom_1_floor	: 27,
+					control			: 22,
+					heating			: 1,
+					pump			: 1,
+					bathroom_1_heating	: 1
+				}).then(
+					res => {
+						// Succeess expected
+						true.should.be.ok();
+					},
+					err => {
+						console.log(err);
+						true.should.be.not.ok(err);
+					}
+				);
 		});
 	});
 });

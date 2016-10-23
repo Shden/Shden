@@ -14,81 +14,137 @@ const EXIT_FAILURE		= 1;
 const MAX_POWER			= 17250;	/* 25 * 230 * 3 */
 const HEATER_POWER		= 12000;
 
-// -- Start handling --
-// --------------------
-global.OWDebugMode = true;
-
-console.log('Controller build:\t0.3');
-console.log(`Debug mode:\t\t${global.OWDebugMode}`);
-
 // read configuration file
 var configuration = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
+console.log('Controller build:\t0.3');
 
-if (wasOverheated())
+if (require.main === module)
 {
-	setHeater(0);
-	setPump(1);
-	console.log('Previous heater failure detected. Cannot run.');
-	return EXIT_FAILURE;
+	main();
 }
 
-// -- Measure current temperatures and set out the target temperature
-Promise.all([
-	getControlTemperature(),
-	ow.getT(ow.sensors.outputSensor),
-	ow.getT(ow.sensors.inputSensor),
-	ow.getT(ow.sensors.heaterSensor),
-	ow.getT(ow.sensors.kitchenSensor),
-	ow.getT(ow.sensors.bathRoomSensor),
-	ow.getT(ow.sensors.childrenSmallSensor),
-	ow.getT(ow.sensors.saunaFloorSensor),
-	getTargetTemp(),
-	getCurrentPowerConsumption()
-	])
-.then(results => {
-	var controlTemp = results[0];
-	var outgoingFluidTemp = results[1];
-	var ingoingFluidTemp = results[2];
-	var electricHeaterTemp = results[3];
-	var kitchenTemp = results[4];
-	var bathroomTemp = results[5];
-	var childrenSmallTemp = results[6];
-	var saunaFloorTemp = results[7];
-	var targetTemp = results[8];
-	var consumption = results[9];
+function main()
+{
+	console.log('Started:\t\t' + new Date().toLocaleString());
 
-	console.log(`Target temperature:\t${numeral(targetTemp).format('0.0')}\u00B0C`);
-	console.log(`Control temperature:\t${numeral(controlTemp).format('0.0')}\u00B0C`);
-	console.log(`Power consumption:\t${numeral(consumption).format('0,0')}W`);
+	// -- Start handling --
+	// --------------------
+	global.OWDebugMode = true;
 
-	// -- Control heater
-	controlHeater(
-		controlTemp, electricHeaterTemp, outgoingFluidTemp, consumption)
-	.then(heaterState => {
-		console.log(`Heater:\t\t\t${heaterState ? "ON" : "OFF"}`);
+	console.log(`Debug mode:\t\t${global.OWDebugMode}`);
+
+	if (wasOverheated())
+	{
+		setHeater(0);
+		setPump(1);
+		console.log('Previous heater failure detected. Cannot run.');
+		return EXIT_FAILURE;
+	}
+
+	// -- Measure current temperatures and set out the target temperature
+	Promise.all([
+		getControlTemperature(),
+		ow.getT(ow.sensors.outputSensor),
+		ow.getT(ow.sensors.inputSensor),
+		ow.getT(ow.sensors.heaterSensor),
+		ow.getT(ow.sensors.kitchenSensor),
+		ow.getT(ow.sensors.bathRoomSensor),
+		ow.getT(ow.sensors.childrenSmallSensor),
+		ow.getT(ow.sensors.saunaFloorSensor),
+		getTargetTemp(),
+		getCurrentPowerConsumption(),
+		ow.getT(ow.sensors.externalSensor),
+		ow.getT(ow.sensors.amSensor),
+		ow.getT(ow.sensors.bedroomSensor),
+		ow.getT(ow.sensors.cabinetSensor)
+		])
+	.then(results => {
+		var idx = 0;
+		var controlTemp 	= results[idx++];
+		var outgoingFluidTemp 	= results[idx++];
+		var ingoingFluidTemp 	= results[idx++];
+		var electricHeaterTemp	= results[idx++];
+		var kitchenTemp 	= results[idx++];
+		var bathroomTemp 	= results[idx++];
+		var childrenSmallTemp 	= results[idx++];
+		var saunaFloorTemp 	= results[idx++];
+		var targetTemp 		= results[idx++];
+		var consumption 	= results[idx++];
+		var externalTemp 	= results[idx++];
+		var amBedroomTemp 	= results[idx++];
+		var bedroomTemp		= results[idx++];
+		var cabinetTemp		= results[idx++];
+
+		console.log(`Target temperature:\t${numeral(targetTemp).format('0.0')}\u00B0C`);
+		console.log(`Control temperature:\t${numeral(controlTemp).format('0.0')}\u00B0C`);
+		console.log(`Power consumption:\t${numeral(consumption).format('0,0')}W`);
+
+
+		// -- Control everything
+		Promise.all([
+
+			// -- Control heater
+			controlHeater(
+				controlTemp, electricHeaterTemp,
+				outgoingFluidTemp, consumption),
+
+			// -- Control sauna floor temp
+			controlSaunaFloor(saunaFloorTemp,
+				configuration.heating.saunaFloorTemp),
+
+			// -- Individual rooms control
+			configuration.roomControlDescriptors.map(function(item) {
+				return controlRoom(item, targetTemp);
+			})
+		])
+		.then(results => {
+			var heaterState = results[0];
+			var saunaFloorHeatingState = results[1];
+
+			console.log(`Heater:\t\t\t${heaterState ? "ON" : "OFF"}`);
+			console.log(`Sauna floor:\t\t${saunaFloorHeatingState ? "ON" : "OFF"}`);
+
+			// -- Control pump
+			var pumpState = controlPump([controlTemp, electricHeaterTemp, ingoingFluidTemp,
+				outgoingFluidTemp, bathroomTemp, kitchenTemp, childrenSmallTemp]);
+			console.log(`Pump:\t\t\t${pumpState ? "ON" : "OFF"}`);
+
+			// -- Post data point
+			postDataPoint(
+				{
+					heater			: electricHeaterTemp,
+					fluid_in		: ingoingFluidTemp,
+					fluid_out		: outgoingFluidTemp,
+					external		: externalTemp,
+					am_bedroom		: amBedroomTemp,
+					bedroom			: bedroomTemp,
+					cabinet			: cabinetTemp,
+					child_bedroom		: childrenSmallTemp,
+					kitchen			: kitchenTemp,
+					bathroom_1		: bathroomTemp,
+					bathroom_1_floor	: saunaFloorTemp,
+					control			: controlTemp,
+					heating			: heaterState,
+					pump			: pumpState,
+					bathroom_1_heating	: saunaFloorHeatingState
+				})
+				.then(() => {
+					console.log('Completed:\t\t' + new Date().toLocaleString());
+				});
+		});
+
+		// .then(() => {
+		// 	Promise.all(
+		// 	)
+		// })
+	})
+	.catch(err => {
+		console.log('Execution failed:');
+		console.log(err);
 	});
+}
+// -- End main
 
-	// -- Control sauna floor temp
-	var saunaFloorTargetTemp = configuration.heating.saunaFloorTemp;
-	controlSaunaFloor(saunaFloorTemp, saunaFloorTargetTemp)
-	.then(saunaFloorHeatingState => {
-		console.log(`Sauna floor:\t\t${saunaFloorHeatingState ? "ON" : "OFF"}`);
-	});
-
-	// -- Control pump
-	var pumpState = controlPump([controlTemp, electricHeaterTemp, ingoingFluidTemp,
-		outgoingFluidTemp, bathroomTemp, kitchenTemp, childrenSmallTemp]);
-	console.log(`Pump:\t\t\t${pumpState ? "ON" : "OFF"}`);
-
-	// // -- Individual rooms control
-	Promise.all(
-		configuration.roomControlDescriptors.map(function(item) {
-			return controlRoom(item, targetTemp);
-		})
-	);
-});
-
-// -- End handling
 // -- Ancillary methods
 
 // Returnes the temperature to be controlled.
@@ -409,22 +465,57 @@ function getPowerMeterData()
 		http.get({
 			host: 'localhost',
 			path: '/API/1.1/consumption/electricity/GetPowerMeterData'
-		}, function(responce) {
+		}, responce => {
 			if (responce.statusCode != 200)
 				rejected(responce.statusCode);
 
 			var data = '';
-			responce.on('data', function(b) {
+			responce.on('data', b => {
 				data += b;
 			});
-			responce.on('end', function() {
+			responce.on('end', () => {
 				var powerInfo = JSON.parse(data);
 				resolved(powerInfo);
 			});
-			responce.on('error', function(err) {
+			responce.on('error', err => {
+				console.log(err);
 				rejected(err);
 			});
 		});
+	});
+}
+
+// Post data point to keep historical data.
+function postDataPoint(dataPoint)
+{
+	return new Promise((resolved, rejected) => {
+		var request = http.request({
+			host: 'localhost',
+			path: '/API/1.1/climate/data/heating',
+			method: 'POST'
+		}, responce => {
+
+			var data = '';
+			responce.on('data', b => {
+				data += b;
+			});
+			responce.on('end', () => {
+				if (responce.statusCode === 200)
+					resolved();
+				else {
+					console.log(data);
+					rejected(responce.statusCode);
+				}
+			});
+			responce.on('error', err => {
+				console.log(err);
+				rejected(err);
+			});
+		});
+		request.write(
+			JSON.stringify(dataPoint, null, 4),
+			encoding='utf8');
+		request.end();
 	});
 }
 
@@ -451,6 +542,7 @@ if (typeof exports !== 'undefined')
 	exports.wasOverheated = wasOverheated;
 	exports.getPowerMeterData = getPowerMeterData;
 	exports.getCurrentPowerConsumption = getCurrentPowerConsumption;
+	exports.postDataPoint = postDataPoint;
 
 	// data
 	exports.configuration = configuration;

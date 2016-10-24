@@ -3,6 +3,7 @@ var fs = require('fs');
 var ow = require('./onewire');
 var http = require('http');
 var numeral = require('numeral');
+var pad = require('pad');
 
 // -- configuration constants:
 const configurationFileName = __dirname + '/config/heating.json';
@@ -14,24 +15,32 @@ const EXIT_FAILURE		= 1;
 const MAX_POWER			= 17250;	/* 25 * 230 * 3 */
 const HEATER_POWER		= 12000;
 
+const CELCIUS			= '\u00B0C';
+const BUILD			= '0.4';
+
+const OutputMode = {
+	CONSOLE : 0,
+	LOG : 1
+};
+
 // read configuration file
 var configuration = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
-console.log('Controller build:\t0.3');
 
 if (require.main === module)
 {
 	main();
 }
 
+// Main logic
 function main()
 {
-	console.log('Started:\t\t' + new Date().toLocaleString());
+	var printMode = OutputMode.CONSOLE;
+	printOutKV(printMode, 'Controller build', BUILD);
+	printOutKV(printMode, 'Started', new Date());
 
 	// -- Start handling --
-	// --------------------
 	global.OWDebugMode = true;
-
-	console.log(`Debug mode:\t\t${global.OWDebugMode}`);
+	printOutKV(printMode, 'Debug mode', global.OWDebugMode);
 
 	if (wasOverheated())
 	{
@@ -75,9 +84,14 @@ function main()
 		var bedroomTemp		= results[idx++];
 		var cabinetTemp		= results[idx++];
 
-		console.log(`Target temperature:\t${numeral(targetTemp).format('0.0')}\u00B0C`);
-		console.log(`Control temperature:\t${numeral(controlTemp).format('0.0')}\u00B0C`);
-		console.log(`Power consumption:\t${numeral(consumption).format('0,0')}W`);
+		printOutKV(printMode, 'Target temperature',
+			numeral(targetTemp).format('0.0') + CELCIUS);
+		printOutKV(printMode, 'Control temperature',
+			numeral(controlTemp).format('0.0') + CELCIUS);
+		printOutKV(printMode, 'Sauna floor temperature',
+			numeral(saunaFloorTemp).format('0.0') + CELCIUS);
+		printOutKV(printMode, 'Power consumption',
+			numeral(consumption).format('0,0') + 'W');
 
 
 		// -- Control everything
@@ -101,13 +115,16 @@ function main()
 			var heaterState = results[0];
 			var saunaFloorHeatingState = results[1];
 
-			console.log(`Heater:\t\t\t${heaterState ? "ON" : "OFF"}`);
-			console.log(`Sauna floor:\t\t${saunaFloorHeatingState ? "ON" : "OFF"}`);
+			printOutKV(printMode, 'Heater', OnOff(heaterState));
+			printOutKV(printMode, 'Sauna floor',
+				OnOff(saunaFloorHeatingState));
 
 			// -- Control pump
-			var pumpState = controlPump([controlTemp, electricHeaterTemp, ingoingFluidTemp,
-				outgoingFluidTemp, bathroomTemp, kitchenTemp, childrenSmallTemp]);
-			console.log(`Pump:\t\t\t${pumpState ? "ON" : "OFF"}`);
+			var pumpState = controlPump([controlTemp,
+				electricHeaterTemp, ingoingFluidTemp,
+				outgoingFluidTemp, bathroomTemp, kitchenTemp,
+				childrenSmallTemp]);
+			printOutKV(printMode, 'Pump', OnOff(pumpState));
 
 			// -- Post data point
 			postDataPoint(
@@ -129,22 +146,41 @@ function main()
 					bathroom_1_heating	: saunaFloorHeatingState
 				})
 				.then(() => {
-					console.log('Completed:\t\t' + new Date().toLocaleString());
+					printOutKV(printMode, 'Completed', new Date());
+					printOutKV(printMode, '', '');
 				});
 		});
-
-		// .then(() => {
-		// 	Promise.all(
-		// 	)
-		// })
 	})
 	.catch(err => {
-		console.log('Execution failed:');
-		console.log(err);
+		printOutKV(printMode, 'Execution failed', err);
 	});
 }
 // -- End main
 
+// Key-value pair print out, format depends on mode param.
+function printOutKV(mode, key, value)
+{
+	if (mode === OutputMode.CONSOLE && (key != '' || value != ''))
+	{
+		process.stdout.write(pad(25, key));
+		process.stdout.write(' : ');
+		process.stdout.write(pad(40, ' '+ value.toLocaleString(), '.'));
+		process.stdout.write('\n');
+	}
+	else if (mode === OutputMode.LOG)
+	{
+		if (value != '')
+			process.stdout.write(value.toLocaleString() + '|')
+		else
+			process.stdout.write('\n');
+
+	}
+}
+
+function OnOff(value)
+{
+	return value ? "ON" : "OFF";
+}
 // -- Ancillary methods
 
 // Returnes the temperature to be controlled.

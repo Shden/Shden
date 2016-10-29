@@ -37,16 +37,43 @@ describe('Onewire filesystem testing', function() {
 			ow.getT(ow.sensors.bedroomSensor).should.be.eventually.a.Number();
 			ow.getT(ow.sensors.externalSensor).should.be.eventually.a.Number();
 		});
+	});
 
-		it('Switching', function() {
+	describe('Switches:', function() {
+
+		before(function() {
+			global.dryRun = false;
+		});
+
+		it('Switches work when dryRun=false', function() {
 			for (var sw in ow.switches) {
-				s = ow.switches[sw];
+				var s = ow.switches[sw];
 				ow.changeSwitch(s.address, s.channel, 0);
 				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(0);
 
 				ow.changeSwitch(s.address, s.channel, 1);
 				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(1);
 			}
+		});
+
+		before(function() {
+			global.dryRun = true;
+		});
+
+		it('Switches blocked when dryRun=false', function() {
+			for (var sw in ow.switches) {
+				var s = ow.switches[sw];
+				var x = ow.getSwitchState(s.address, s.channel);
+				ow.changeSwitch(s.address, s.channel, 0);
+				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(x);
+
+				ow.changeSwitch(s.address, s.channel, 1);
+				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(x);
+			}
+		});
+
+		after(function() {
+			global.dryRun = false;
 		});
 	});
 });

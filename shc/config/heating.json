@@ -8,15 +8,15 @@
         "ovenExtraOffTemp": 2,
         "standbyNightTemperature": 7,
         "saunaFloorTemp": 28,
-        "nightTariffStartHour": 22,
-        "nightTariffEndHour": 0,
-        "comfortSleepStartHour": 22,
-        "comfortSleepEndHour": 0,
+        "nightTariffStartHour": 19,
+        "nightTariffEndHour": 21,
+        "comfortSleepStartHour": 19,
+        "comfortSleepEndHour": 21,
         "comfortSleepTargetTemperature": 20
     },
     "schedule": {
-        "arrival": "2016-10-21 23:29:15",
-        "departure": "2016-10-22 23:29:15"
+        "arrival": "2016-10-27 20:50:51",
+        "departure": "2016-10-28 20:50:51"
     },
     "roomControlDescriptors": [
         {

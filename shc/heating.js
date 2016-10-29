@@ -18,6 +18,14 @@ const HEATER_POWER		= 12000;
 const CELCIUS			= '\u00B0C';
 const BUILD			= '0.4';
 
+const ON			= 1;
+const OFF			= 0;
+
+const CMD_DEBUG			= 'debug';
+const CMD_DRY_RUN		= 'dryRun';
+const CMD_HELP			= 'help';
+const CMD_CSV			= 'csv';
+
 const OutputMode = {
 	CONSOLE : 0,
 	LOG : 1
@@ -34,21 +42,33 @@ if (require.main === module)
 // Main logic
 function main()
 {
-	var printMode = OutputMode.CONSOLE;
+	if (wasOverheated())
+	{
+		setHeater(OFF);
+		setPump(ON);
+		console.log('Previous heater failure detected. Cannot run.');
+		return EXIT_FAILURE;
+	}
+
+	// -- Check the command line options
+	var cmdOptions = parseCommandLine(process.argv);
+	if (cmdOptions.help)
+	{
+		printUsage();
+		return EXIT_OK;
+	}
+	global.OWDebugMode = cmdOptions.debug;
+	global.OWDryRun = cmdOptions.dryRun;
+
+	var printMode = cmdOptions.csv ? OutputMode.LOG : OutputMode.CONSOLE;
+
 	printOutKV(printMode, 'Controller build', BUILD);
 	printOutKV(printMode, 'Started', new Date());
 
 	// -- Start handling --
-	global.OWDebugMode = true;
-	printOutKV(printMode, 'Debug mode', global.OWDebugMode);
+	printOutKV(printMode, 'OW Debug mode', global.OWDebugMode);
+	printOutKV(printMode, 'OW Dry run mode', global.OWDryRun);
 
-	if (wasOverheated())
-	{
-		setHeater(0);
-		setPump(1);
-		console.log('Previous heater failure detected. Cannot run.');
-		return EXIT_FAILURE;
-	}
 
 	// -- Measure current temperatures and set out the target temperature
 	Promise.all([
@@ -85,14 +105,13 @@ function main()
 		var cabinetTemp		= results[idx++];
 
 		printOutKV(printMode, 'Target temperature',
-			numeral(targetTemp).format('0.0') + CELCIUS);
+			numeral(targetTemp).format('0.00') + CELCIUS);
 		printOutKV(printMode, 'Control temperature',
-			numeral(controlTemp).format('0.0') + CELCIUS);
+			numeral(controlTemp).format('0.00') + CELCIUS);
 		printOutKV(printMode, 'Sauna floor temperature',
-			numeral(saunaFloorTemp).format('0.0') + CELCIUS);
+			numeral(saunaFloorTemp).format('0.00') + CELCIUS);
 		printOutKV(printMode, 'Power consumption',
 			numeral(consumption).format('0,0') + 'W');
-
 
 		// -- Control everything
 		Promise.all([
@@ -147,7 +166,7 @@ function main()
 				})
 				.then(() => {
 					printOutKV(printMode, 'Completed', new Date());
-					printOutKV(printMode, '', '');
+					console.log('');
 				});
 		});
 	})
@@ -156,6 +175,29 @@ function main()
 	});
 }
 // -- End main
+
+function printUsage()
+{
+	console.log('Usage:');
+	console.log('  node heating.js [options]');
+	console.log('  options:');
+	console.log(`    --${CMD_DEBUG}\t- to use 1wire stub instad of real network.`);
+	console.log(`    --${CMD_DRY_RUN}\t- run logic but do not change anything.`);
+	console.log(`    --${CMD_CSV}\t- output format: CSV.`);
+	console.log(`    --${CMD_HELP}\t- to print this screen.`);
+}
+
+function parseCommandLine(argv)
+{
+	var options = [CMD_DEBUG, CMD_DRY_RUN, CMD_HELP, CMD_CSV];
+	var result = new Object();
+	options.forEach((item) => {
+		// slice(2) to skip the first two items (node and script)
+		result[item] = argv.slice(2).indexOf('--' + item) != -1;
+	} );
+
+	return result;
+}
 
 // Key-value pair print out, format depends on mode param.
 function printOutKV(mode, key, value)
@@ -169,11 +211,7 @@ function printOutKV(mode, key, value)
 	}
 	else if (mode === OutputMode.LOG)
 	{
-		if (value != '')
-			process.stdout.write(value.toLocaleString() + '|')
-		else
-			process.stdout.write('\n');
-
+		process.stdout.write(value.toLocaleString() + '|');
 	}
 }
 
@@ -348,7 +386,7 @@ function controlRoom(roomDescr, targetTemp)
 				var switchState =
 					(roomTemp > targetTemp +
 						configuration.heating.tempDelta)
-					? 0 : 1;
+					? OFF : ON;
 				ow.changeSwitch(
 					roomDescr.switch.address,
 					roomDescr.switch.channel,
@@ -372,8 +410,8 @@ function controlHeater(
 	/* First, immediately check heater for overheat */
 	if (heaterTemp >= heaterCutOffTemp)
 	{
-		setHeater(0);
-		setPump(1);
+		setHeater(OFF);
+		setPump(ON);
 
 		configuration.error =
 			`${new Date().toLocaleString()}: Heater failure detected t=${heaterTemp}C.`;
@@ -391,8 +429,8 @@ function controlHeater(
 		    outgoingFluidTemp - heaterTemp > configuration.heating.ovenExtraOffTemp)
 		{
 			// Oven heater is providing enough heat, no need to run electricity
-			setHeater(0);
-			resolved(0);
+			setHeater(OFF);
+			resolved(OFF);
 		}
 
 		Promise.all([
@@ -409,23 +447,23 @@ function controlHeater(
 			{
 				if (heaterState == 1)
 				{
-					setHeater(0);
+					setHeater(OFF);
 				}
-				resolved(0);
+				resolved(OFF);
 			}
 
 			// Third go to electrc heater control and see if action needed
 			else if (controlTemp < targetTemp)
 			{
-				setHeater(1);
-				resolved(1);
+				setHeater(ON);
+				resolved(ON);
 			}
 			else if (controlTemp > targetTemp + configuration.heating.tempDelta)
 			{
-				setHeater(0);
+				setHeater(OFF);
 				// Dont stop pump until fluid temp will go down
 				// Other heat sources may still be on
-				resolved(0);
+				resolved(OFF);
 			}
 
 			// Finally if nothing needed to be changed,
@@ -448,7 +486,7 @@ function controlSaunaFloor(currentFloorTemp, targetFloorTemp)
 				var floorHeatingON =
 					(isPresence &&
 					currentFloorTemp < targetFloorTemp)
-					? 1 : 0;
+					? ON : OFF;
 				setSaunaFloor(floorHeatingON);
 				resolved(floorHeatingON);
 			});
@@ -467,7 +505,8 @@ function controlPump(temperatureVector)
 	    maxT = Math.max.apply(null, temperatureVector);
 
 	var pumpState =
-		(maxT - minT > configuration.heating.stopPumpTempDelta) ? 1 : 0;
+		(maxT - minT > configuration.heating.stopPumpTempDelta)
+		? ON : OFF;
 	setPump(pumpState);
 	return pumpState;
 }
@@ -579,6 +618,7 @@ if (typeof exports !== 'undefined')
 	exports.getPowerMeterData = getPowerMeterData;
 	exports.getCurrentPowerConsumption = getCurrentPowerConsumption;
 	exports.postDataPoint = postDataPoint;
+	exports.parseCommandLine = parseCommandLine;
 
 	// data
 	exports.configuration = configuration;

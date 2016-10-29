@@ -427,4 +427,20 @@ describe('Heating Module Tests:', function() {
 				);
 		});
 	});
+
+	describe('Command line options:', function() {
+
+		it('Valid option recognised', function() {
+			var x = h.parseCommandLine(
+				['', '', '--debug', '--dryRun', '--help']);
+			x.debug.should.be.equal(true);
+			x.dryRun.should.be.equal(true);
+			x.help.should.be.equal(true);
+			var y = h.parseCommandLine(
+				['', '', '--debug']);
+			y.debug.should.be.equal(true);
+			y.dryRun.should.be.equal(false);
+			y.help.should.be.equal(false);
+		});
+	});
 });

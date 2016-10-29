@@ -95,11 +95,13 @@ function changeSwitch(switchAddress, switchChannel, switchStatus)
 	if (switchStatus != 0 && switchStatus != 1)
 		throw "Invalid switch status: " + switchStatus;
 
-	if (!global.OWDebugMode) {
-		var valuePath = `/mnt/1wire/${switchAddress}/${switchChannel}`;
-		fs.writeFileSync(valuePath, switchStatus);
-	} else {
-		getStubNet()[switchAddress][switchChannel] = switchStatus;
+	if (!global.OWDryRun) {
+		if (!global.OWDebugMode) {
+			var valuePath = `/mnt/1wire/${switchAddress}/${switchChannel}`;
+			fs.writeFileSync(valuePath, switchStatus);
+		} else {
+			getStubNet()[switchAddress][switchChannel] = switchStatus;
+		}
 	}
 }
 

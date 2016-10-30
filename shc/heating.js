@@ -52,6 +52,13 @@ function main()
 
 	// -- Check the command line options
 	var cmdOptions = parseCommandLine(process.argv);
+	if (cmdOptions.invalid != null)
+	{
+		console.log('Error: Invalid command line options: ' +
+			cmdOptions.invalid);
+		printUsage();
+		return EXIT_FAILURE;
+	}
 	if (cmdOptions.help)
 	{
 		printUsage();
@@ -191,10 +198,25 @@ function parseCommandLine(argv)
 {
 	var options = [CMD_DEBUG, CMD_DRY_RUN, CMD_HELP, CMD_CSV];
 	var result = new Object();
+
+	// pass 1: check what from options in argv
 	options.forEach((item) => {
 		// slice(2) to skip the first two items (node and script)
 		result[item] = argv.slice(2).indexOf('--' + item) != -1;
-	} );
+	});
+
+	// pass 2: chech if there are any unrecoginsed items
+	argv.slice(2).forEach((item) => {
+
+		// each cmd line opton should follow the format
+		var xx = item.match(/-{2}(\S+)/);
+
+		if (xx == null || xx.length < 1 || options.indexOf(xx[1]) == -1) {
+			if (result.invalid == null)
+				result.invalid = new Array();
+			result.invalid.push(item);
+		}
+	});
 
 	return result;
 }

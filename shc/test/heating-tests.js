@@ -436,11 +436,23 @@ describe('Heating Module Tests:', function() {
 			x.debug.should.be.equal(true);
 			x.dryRun.should.be.equal(true);
 			x.help.should.be.equal(true);
+			x.should.not.have.property('invalid');
 			var y = h.parseCommandLine(
 				['', '', '--debug']);
 			y.debug.should.be.equal(true);
 			y.dryRun.should.be.equal(false);
 			y.help.should.be.equal(false);
+			y.should.not.have.property('invalid');
+		});
+
+		it('Invalid options reported', function() {
+			var x = h.parseCommandLine(
+				['', '', '--debug', 'wrongItem']
+			);
+			x.debug.should.be.equal(true);
+			x.dryRun.should.be.equal(false);
+			x.help.should.be.equal(false);
+			x.should.have.property('invalid');
 		});
 	});
 });

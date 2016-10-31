@@ -112,13 +112,13 @@ function main()
 		var cabinetTemp		= results[idx++];
 
 		printOutKV(printMode, 'Target temperature',
-			numeral(targetTemp).format('0.00') + CELCIUS);
+			numeral(targetTemp).format('0.00'), CELCIUS);
 		printOutKV(printMode, 'Control temperature',
-			numeral(controlTemp).format('0.00') + CELCIUS);
+			numeral(controlTemp).format('0.00'), CELCIUS);
 		printOutKV(printMode, 'Sauna floor temperature',
-			numeral(saunaFloorTemp).format('0.00') + CELCIUS);
+			numeral(saunaFloorTemp).format('0.00'), CELCIUS);
 		printOutKV(printMode, 'Power consumption',
-			numeral(consumption).format('0,0') + 'W');
+			numeral(consumption).format('0,0'), 'W');
 
 		// -- Control everything
 		Promise.all([
@@ -222,13 +222,16 @@ function parseCommandLine(argv)
 }
 
 // Key-value pair print out, format depends on mode param.
-function printOutKV(mode, key, value)
+function printOutKV(mode, key, value, unit)
 {
 	if (mode === OutputMode.CONSOLE && (key != '' || value != ''))
 	{
 		process.stdout.write(pad(25, key));
 		process.stdout.write(' : ');
-		process.stdout.write(pad(40, ' '+ value.toLocaleString(), '.'));
+		process.stdout.write(
+			pad(40, (' ' +
+				value.toLocaleString() +
+				((typeof(unit) !== 'undefined') ? unit : '')), '.'));
 		process.stdout.write('\n');
 	}
 	else if (mode === OutputMode.LOG)

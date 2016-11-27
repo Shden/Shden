@@ -39,7 +39,7 @@ describe('Heating Module Tests:', function() {
 	});
 
 	describe('Check heating time calculations:', function() {
-		
+
 		it(`Heating duration in hours for current: ${T}C and target ${h.configuration.heating.presenceTemperature}C is 10.06 hours`,
 			function() {
 				h.getHeatingTime().should.be.eventually.equal(10.06);
@@ -174,32 +174,24 @@ describe('Heating Module Tests:', function() {
 				toPresenceMode();
 			});
 
-			describe('Presence heating day time check:', function() {
+			it('Presence temperature during a day time', function() {
 				// day time
-				before(function() {
-					h.configuration.heating.comfortSleepStartHour = _1hourAfter.getHours();
-					h.configuration.heating.comfortSleepEndHour = _2hoursAfter.getHours();
-				});
+				h.configuration.heating.comfortSleepStartHour = _1hourAfter.getHours();
+				h.configuration.heating.comfortSleepEndHour = _2hoursAfter.getHours();
 
-				it('Presence temperature during a day time', function() {
-					h.getTargetTemp().should.be.eventually.equal(
-						h.configuration.heating.presenceTemperature
-					);
-				});
+				h.getTargetTemp().should.be.eventually.equal(
+					h.configuration.heating.presenceTemperature
+				);
 			});
 
-			describe('Presence heating sleep time check:', function() {
+			it('Presence temperature during a sleep time', function() {
 				// sleep time
-				before(function() {
-					h.configuration.heating.comfortSleepStartHour = _1hourBefore.getHours();
-					h.configuration.heating.comfortSleepEndHour = _1hourAfter.getHours();
-				});
+				h.configuration.heating.comfortSleepStartHour = _1hourBefore.getHours();
+				h.configuration.heating.comfortSleepEndHour = _1hourAfter.getHours();
 
-				it('Presence temperature during a sleep time', function() {
-					h.getTargetTemp().should.be.eventually.equal(
-						h.configuration.heating.comfortSleepTargetTemperature
-					);
-				});
+				h.getTargetTemp().should.be.eventually.equal(
+					h.configuration.heating.comfortSleepTargetTemperature
+				);
 			});
 		});
 
@@ -209,32 +201,24 @@ describe('Heating Module Tests:', function() {
 				toStandbyMode();
 			});
 
-			describe('Standby day time check:', function() {
+			it('Standby temperature for day tariff time', function() {
 				// set day tariff for now
-				before(function() {
-					h.configuration.heating.nightTariffStartHour = _1hourAfter.getHours();
-					h.configuration.heating.nightTariffEndHour = _2hoursAfter.getHours();
-				});
+				h.configuration.heating.nightTariffStartHour = _1hourAfter.getHours();
+				h.configuration.heating.nightTariffEndHour = _2hoursAfter.getHours();
 
-				it('Standby temperature for day tariff time', function() {
-					h.getTargetTemp().should.be.eventually.equal(
-						h.configuration.heating.standbyTemperature
-					)
-				});
+				h.getTargetTemp().should.be.eventually.equal(
+					h.configuration.heating.standbyTemperature
+				);
 			});
 
-			describe('Standby night time check:', function() {
+			it('Standby temperature for night tariff time', function() {
 				// set night tariff for now
-				before(function() {
-					h.configuration.heating.nightTariffStartHour = _1hourBefore.getHours();
-					h.configuration.heating.nightTariffEndHour = _1hourAfter.getHours();
-				});
+				h.configuration.heating.nightTariffStartHour = _1hourBefore.getHours();
+				h.configuration.heating.nightTariffEndHour = _1hourAfter.getHours();
 
-				it('Standby temperature for night tariff time', function() {
-					h.getTargetTemp().should.be.eventually.equal(
-						h.configuration.heating.standbyNightTemperature
-					)
-				});
+				h.getTargetTemp().should.be.eventually.equal(
+					h.configuration.heating.standbyNightTemperature
+				);
 			});
 		});
 	});

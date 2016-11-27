@@ -8,6 +8,7 @@ describe('Onewire filesystem testing', function() {
 	});
 
 	describe('Stub net checks', function() {
+
 		it('stubnet created', function() {
 			ow.getStubNet().should.be.not.null();
 		});
@@ -26,6 +27,7 @@ describe('Onewire filesystem testing', function() {
 	});
 
 	describe('Temperature sensors', function() {
+		
 		it('Temperature is numeric', function() {
 			ow.getStubNet()[ow.sensors.heaterSensor].should.have.property("temperature").which.is.a.Number();
 			ow.getStubNet()[ow.sensors.bedroomSensor].should.have.property("temperature").which.is.a.Number();

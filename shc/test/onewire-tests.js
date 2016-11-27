@@ -25,7 +25,7 @@ describe('Onewire filesystem testing', function() {
 		});
 	});
 
-	describe('Temperature senors', function() {
+	describe('Temperature sensors', function() {
 		it('Temperature is numeric', function() {
 			ow.getStubNet()[ow.sensors.heaterSensor].should.have.property("temperature").which.is.a.Number();
 			ow.getStubNet()[ow.sensors.bedroomSensor].should.have.property("temperature").which.is.a.Number();
@@ -41,39 +41,74 @@ describe('Onewire filesystem testing', function() {
 
 	describe('Switches:', function() {
 
-		before(function() {
-			global.dryRun = false;
+		it('Switches changeable to ON when dryRun=false:', function() {
+
+			global.OWDryRun = false;
+			var p = new Array();
+
+			for (var sw in ow.switches) {
+				var s = ow.switches[sw];
+				ow.changeSwitch(s.address, s.channel, 1);
+				p.push(ow.getSwitchState(s.address, s.channel));
+			}
+
+			return Promise.all(p).
+				then((result) => {
+					result.forEach((switchValue) => {
+						switchValue.should.be.equal(1);
+					})
+				});
 		});
 
-		it('Switches work when dryRun=false', function() {
+		it('Switches changeable to OFF when dryRun=false:', function() {
+
+			global.OWDryRun = false;
+			var p = new Array();
+
 			for (var sw in ow.switches) {
 				var s = ow.switches[sw];
 				ow.changeSwitch(s.address, s.channel, 0);
-				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(0);
-
-				ow.changeSwitch(s.address, s.channel, 1);
-				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(1);
+				p.push(ow.getSwitchState(s.address, s.channel));
 			}
+
+			return Promise.all(p).
+				then((result) => {
+					result.forEach((switchValue) => {
+						switchValue.should.be.equal(0);
+					})
+				});
 		});
 
-		before(function() {
-			global.dryRun = true;
-		});
 
-		it('Switches blocked when dryRun=false', function() {
+		it('Switches blocked when dryRun=true', function() {
+
+			// set all to 0
+			global.OWDryRun = false;
 			for (var sw in ow.switches) {
 				var s = ow.switches[sw];
-				var x = ow.getSwitchState(s.address, s.channel);
 				ow.changeSwitch(s.address, s.channel, 0);
-				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(x);
-
-				ow.changeSwitch(s.address, s.channel, 1);
-				ow.getSwitchState(s.address, s.channel).should.be.eventually.equal(x);
 			}
+
+			// try set all to 1 in dry mode
+			global.OWDryRun = true;
+			var p = new Array();
+
+			for (var sw in ow.switches) {
+				var s = ow.switches[sw];
+				ow.changeSwitch(s.address, s.channel, 1);
+				p.push(ow.getSwitchState(s.address, s.channel));
+			}
+
+			return Promise.all(p).
+				then((result) => {
+					result.forEach((switchValue) => {
+						switchValue.should.be.equal(0);
+					})
+				});
 		});
 
 		after(function() {
-			global.dryRun = false;
+			global.OWDryRun = false;
 		});
 	});
 });

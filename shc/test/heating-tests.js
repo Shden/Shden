@@ -39,52 +39,76 @@ describe('Heating Module Tests:', function() {
 	});
 
 	describe('Check heating time calculations:', function() {
+		
 		it(`Heating duration in hours for current: ${T}C and target ${h.configuration.heating.presenceTemperature}C is 10.06 hours`,
 			function() {
 				h.getHeatingTime().should.be.eventually.equal(10.06);
 			});
 
-		it(`Heating start should be 2016-09-30 23:56:24 for arrival at 2016-10-01 10:00`,
+		it('Heating start should be 2016-09-30 23:56:24 for arrival at 2016-10-01 10:00',
 			function() {
 				h.configuration.schedule.arrival = '2016-10-01 10:00';
 				h.getHeatingStartTime().should.eventually.eql(
 					new Date(2016, 08, 30, 23, 56, 24)
 				);
 			});
-		it('Heating start and finish moments handling check', function() {
+
+		describe('Heating start and finish moments handling check', function() {
 
 			const hoursToMs = 60 * 60 * 1000;
-			h.getHeatingTime()
-				.then(heatingTime => {
 
-					// just 1 minute before heating started, should be OFF
-					h.configuration.schedule.arrival =
-						new Date(Date.now() + heatingTime * hoursToMs + 1 * 60 * 1000).toLocaleString();
-					h.configuration.schedule.departure =
-						new Date(Date.now() + 24 * hoursToMs).toLocaleString();
-					h.isPresenceHeating().should.be.equal(false);
+			var heatingTime;
 
-					// 1 minute after heating started, should be ON
-					h.configuration.schedule.arrival =
-						new Date(Date.now() + heatingTime * hoursToMs - 1 * 60 * 1000).toLocaleString();
-					h.configuration.schedule.departure =
-						new Date(Date.now() + 24 * hoursToMs).toLocaleString();
-					h.isPresenceHeating().should.be.equal(true);
+			before(function() {
+				return h.getHeatingTime().
+					then(time => {
+						heatingTime = time;
+					});
+			});
 
-					// just 1 minute before heating finished, should be ON
-					h.configuration.schedule.arrival =
-						new Date(Date.now() - 1 * hoursToMs).toLocaleString();
-					h.configuration.schedule.departure =
-						new Date(Date.now() + 1 * 60 * 1000).toLocaleString();
-					h.isPresenceHeating().should.be.equal(true);
+			it('just 1 minute before heating started, should be OFF', function() {
+				h.configuration.schedule.arrival =
+					new Date(Date.now() + heatingTime * hoursToMs + 1 * 60 * 1000).toLocaleString();
+				h.configuration.schedule.departure =
+					new Date(Date.now() + 24 * hoursToMs).toLocaleString();
+				return h.isPresenceHeating().
+					then(res => {
+						res.should.be.equal(false);
+					});
+			});
 
-					// 1 minute after heating finished, should be OFF
-					h.configuration.schedule.arrival =
-						new Date(Date.now() - 1 * hoursToMs).toLocaleString();
-					h.configuration.schedule.departure =
-						new Date(Date.now() - 1 * 60 * 1000).toLocaleString();
-					h.isPresenceHeating().should.be.equal(false);
-				});
+			it('1 minute after heating started, should be ON', function() {
+				h.configuration.schedule.arrival =
+					new Date(Date.now() + heatingTime * hoursToMs - 1 * 60 * 1000).toLocaleString();
+				h.configuration.schedule.departure =
+					new Date(Date.now() + 24 * hoursToMs).toLocaleString();
+				return h.isPresenceHeating().
+					then(res => {
+						res.should.be.equal(true);
+					});
+			});
+
+			it('just 1 minute before heating finished, should be ON', function() {
+				h.configuration.schedule.arrival =
+					new Date(Date.now() - 1 * hoursToMs).toLocaleString();
+				h.configuration.schedule.departure =
+					new Date(Date.now() + 1 * 60 * 1000).toLocaleString();
+				return h.isPresenceHeating().
+					then(res => {
+						res.should.be.equal(true);
+					});
+			});
+
+			it('1 minute after heating finished, should be OFF', function() {
+				h.configuration.schedule.arrival =
+					new Date(Date.now() - 1 * hoursToMs).toLocaleString();
+				h.configuration.schedule.departure =
+					new Date(Date.now() - 1 * 60 * 1000).toLocaleString();
+				return h.isPresenceHeating().
+					then(res => {
+						res.should.be.equal(false);
+					});
+			});
 		});
 	});
 
@@ -276,31 +300,39 @@ describe('Heating Module Tests:', function() {
 		describe('Oven offs heating:', function() {
 
 			it('Small extra temperature from oven does not off heating', function() {
-				h.controlHeater(1.0, 85.0, 86.0, 0);
-				h.getHeaterState().should.be.eventually.equal(1);
+				h.controlHeater(1.0, 85.0, 86.0, 0)
+				.then(() => {
+					h.getHeaterState().should.be.eventually.equal(1);
+				});
 			});
 
 			it('More extra temperature from oven offs heating', function() {
-				h.controlHeater(1.0, 71.0, 79.0, 0);
-				h.getHeaterState().should.be.eventually.equal(0);
+				h.controlHeater(1.0, 71.0, 79.0, 0)
+				.then(() => {
+					h.getHeaterState().should.be.eventually.equal(0);
+				});
 			});
 		});
 
 		describe('Temperature control:', function() {
 
 			it('Heating is ON when colder than target temperature', function() {
-				var targetTemp = h.getTargetTemp();
-				h.controlHeater(targetTemp - 0.25, 40.0, 40.0, 0)
+				h.getTargetTemp()
+				.then((targetTemp) => {
+					h.controlHeater(targetTemp - 0.25, 40.0, 40.0, 0)
 					.then((heaterState) => {
 						h.getHeaterState().should.be.eventually.equal(1);
 					});
+				});
 			});
 
 			it('Heating is OFF when hoter than target temperature', function() {
-				var targetTemp = h.getTargetTemp();
-				h.controlHeater(targetTemp + 0.25, 40.0, 40.0, 0)
-				.then((heaterState) => {
-					h.getHeaterState().should.be.eventually.equal(0);
+				h.getTargetTemp()
+				.then((targetTemp) => {
+					h.controlHeater(targetTemp + 0.25, 40.0, 40.0, 0)
+					.then((heaterState) => {
+						h.getHeaterState().should.be.eventually.equal(0);
+					});
 				});
 			});
 		});

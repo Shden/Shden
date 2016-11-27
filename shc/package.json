@@ -1,0 +1,22 @@
+{
+  "name": "shc",
+  "version": "1.0.0",
+  "description": "Brod Smart House Controllers",
+  "main": "heating.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "numeral": "^1.5.3",
+    "pad": "^1.0.2",
+    "should": "^11.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.1.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "den@dataart.com",
+  "license": "ISC"
+}

@@ -14,6 +14,7 @@ class APILocalTests: XCTestCase {
     let houseStatusAPI = HouseStatusAPI(config: LocalRun_NoProxy_HTTP())
     let heatingAPI = HeatingAPI(config: LocalRun_NoProxy_HTTP())
     let lightingAPI = LightingAPI(config: LocalRun_NoProxy_HTTP())
+    let electricityConsumptionAPI = ElectricityConsumptionAPI(config: LocalRun_NoProxy_HTTP())
     
 //    override func setUp() {
 //        super.setUp()
@@ -166,6 +167,19 @@ class APILocalTests: XCTestCase {
         self.lightingAPI.ChangeStatus("streetLight250", newStatus: 0, completionHandler: {
             (error, dict) -> Void in
             
+            XCTAssertNil(error)
+            XCTAssertNotNil(dict)
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testGetPowerMeterData() {
+        
+        let expectation = expectationWithDescription("ElectricityConsumption.GetPowerMeterData() request will be done in less than 10 seconds.")
+        
+        self.electricityConsumptionAPI.GetPowerMeterData({
+            (error, dict) -> Void in
             XCTAssertNil(error)
             XCTAssertNotNil(dict)
             expectation.fulfill()

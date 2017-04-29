@@ -1,6 +1,5 @@
 <?php
 require_once ('../../include/db.inc');
-require_once ('Climate.php');
 
 /**
  *	House status API endpoint. This API is primarely works with overall house status, including status snaps for remote

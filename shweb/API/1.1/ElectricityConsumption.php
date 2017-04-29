@@ -19,7 +19,9 @@ Class ElectricityConsumption
 		$oldPowerMeterNight = 11438;
 
 		$gateExecutable = $this->GetPowerMeterGateFileName();
-		$commandLine = $gateExecutable . " /dev/ttyUSB0 --json --testRun";
+
+		// add  --testRun for local debug
+		$commandLine = $gateExecutable . " /dev/ttyUSB0 --json";
 
 		exec($commandLine, $screenArray, $exitCode);
 		$mercuryStr = implode('', $screenArray);

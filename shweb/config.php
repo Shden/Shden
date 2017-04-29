@@ -165,7 +165,7 @@
 		<script type="text/javascript">
 
 			var configuration;
-			const endPointURL = GetAPIURL("heating/Configuration");
+			const endPointURL = GetAPIURL("climate/Configuration");
 
 			$(document).ready(function()
 			{

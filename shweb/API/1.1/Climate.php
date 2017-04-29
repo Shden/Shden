@@ -185,7 +185,7 @@ Class Climate
 
 		global $conn;
 		if (!$conn->query(
-			"INSERT INTO HEATING " .
+			"INSERT INTO heating " .
 			"(time, heater, fluid_in, fluid_out, external, " .
 			"am_bedroom, bedroom, cabinet, sasha_bedroom, " .
 			"kitchen, bathroom, sauna_floor, control, heating, " .

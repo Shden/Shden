@@ -8,18 +8,18 @@
 	<title>Температурный график</title>
 
 	<?php include 'include/css.php';?>
-	
+
 	<link rel="stylesheet" href="css/chart.css">
 </head>
 
 <body>
 	<div class="container">
-		<?php 
+		<?php
 		include 'menu.php';
 		include 'include/js.php';
 		include 'include/chartHelper.php';
-	
-		RenderChartWithIntervals("Температурный график, интервал в днях:", "Температура (С)", "heating/GetTempHistory/");
+
+		RenderChartWithIntervals("Температурный график, интервал в днях:", "Температура (С)", "climate/GetTempHistory/");
 		?>
 	</div>
 </body>

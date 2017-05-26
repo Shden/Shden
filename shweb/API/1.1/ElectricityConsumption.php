@@ -14,10 +14,6 @@ Class ElectricityConsumption
 	 */
 	public function GetPowerMeterData()
 	{
-		// Old power meter final values to sum up
-		$oldPowerMeterDay = 21127;
-		$oldPowerMeterNight = 11438;
-
 		$gateExecutable = $this->GetPowerMeterGateFileName();
 
 		// add  --testRun for local debug
@@ -32,14 +28,6 @@ Class ElectricityConsumption
 
 		//$mercuryStr = `$gateExecutable /dev/ttyUSB0 --json --testRun`;
 		$mercuryData = json_decode($mercuryStr, true);
-
-		// Enrich data to contain sum consumption with previous power meter. This is actually a temp thing.
-		if ($mercuryData != null)
-		{
-			$mercuryData["PR-night"]["ap2"] = $mercuryData["PR-night"]["ap"] + $oldPowerMeterNight;
-			$mercuryData["PR-day"]["ap2"] = $mercuryData["PR-day"]["ap"] + $oldPowerMeterDay;
-			$mercuryData["PR"]["ap2"] = $mercuryData["PR-night"]["ap2"] + $mercuryData["PR-day"]["ap2"];
-		}
 
 		return $mercuryData;
 	}

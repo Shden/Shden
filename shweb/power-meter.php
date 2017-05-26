@@ -97,32 +97,26 @@
 				<thead>
 					<th class="first">Потребление энергии</th>
 					<th>Значение по счетчику</th>
-					<th>Накопленное значение</th>
 				</thead>
 				<tr>
 					<td class="first">Всего:</td>
 					<td><span id="PR-ap">...</span>&nbsp;кВт</td>
-					<td><span id="PR-ap2">...</span>&nbsp;кВт</td>
 				</tr>
 				<tr>
 					<td class="first">&nbsp;&nbsp;из них по дневному тарифу:</td>
 					<td><span id="PR-day-ap">...</span>&nbsp;кВт</td>
-					<td><span id="PR-day-ap2">...</span>&nbsp;кВт</td>
 				</tr>
 				<tr>
 					<td class="first">&nbsp;&nbsp;из них по ночному тарифу:</td>
 					<td><span id="PR-night-ap">...</span>&nbsp;кВт</td>
-					<td><span id="PR-night-ap2">...</span>&nbsp;кВт</td>
 				</tr>
 				<tr>
 					<td class="first">Вчера:</td>
 					<td><span id="PY-ap">...</span>&nbsp;кВт</td>
-					<td></td>
 				</tr>
 				<tr>
 					<td class="first">Сегодня:</td>
 					<td><span id="PT-ap">...</span>&nbsp;кВт</td>
-					<td></td>
 				</tr>
 			</table>
 			<br/>
@@ -185,7 +179,7 @@
 
 					refreshValue('PY', 'ap', data);
 					refreshValue('PT', 'ap', data);
-					
+
 					spinner.stop();
 					$('#spinner').hide();
 

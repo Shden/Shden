@@ -405,5 +405,18 @@ Class Climate
 			$this->GetConfigurationFileName(),
 			json_encode($data, JSON_PRETTY_PRINT));
 	}
+
+	/**
+	 *	Turn on bath ventilation for a period of time.
+	 *
+	 *	@param duration - time (minutes) for ventilation.
+	 *
+	 *	@url PUT /SetBathVentilationOn/$duration
+	 */
+	public function SetBathVentilationOn($duration)
+	{
+		// so far just set it on until next controller run
+		`echo 1 >> /home/den/Shden/appliances/bathVentilationSwitch`;
+	}
 }
 ?>

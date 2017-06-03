@@ -2,7 +2,7 @@ var fs = require('fs');
 
 // -- configuration constants:
 var bathRoomHumiditySensor = '/mnt/1wire/26.140A56010000/humidity';
-var bathVentilationSwitch = '/mnt/1wire/3A.14280D000000/PIO.A';
+var bathVentilationSwitch = '/home/den/Shden/appliances/bathVentilationSwitch';
 // var bathRoomHumiditySensor = __dirname + '/test/humidity.dat';
 // var bathVentilationSwitch = __dirname + '/test/switch.dat';
 var configurationFileName = __dirname + '/config/ventilation.json';

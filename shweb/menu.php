@@ -19,6 +19,7 @@
 			  			<li><a href="schedule.php">Таймер отопления</a></li>
 			  			<li><a href="temperature.php">Температурный график</a></li>
 			  			<li><a href="humidity.php">Уровень влажности</a></li>
+						<li><a href="ventilation.php">Вентиляция</a></li>
 	              		<li class="divider"></li>
 			  			<li><a href="logview.php?log=heating.log">Лог отопления</a></li>
 			  			<li><a href="logview.php?log=ventilation.log">Лог влажности</a></li>
@@ -39,4 +40,3 @@
         	</ul>
       	</div><!--/.nav-collapse -->
     </div>
-

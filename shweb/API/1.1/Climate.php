@@ -417,6 +417,7 @@ Class Climate
 	{
 		// so far just set it on until next controller run
 		`echo 1 >> /home/den/Shden/appliances/bathVentilationSwitch`;
+		return 1;
 	}
 }
 ?>

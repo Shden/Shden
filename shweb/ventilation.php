@@ -30,7 +30,7 @@
 				<tr>
 					<td>Вентилятор в ванной:</td>
 					<td><button id="streetLight250"
-						class="btn btn-lg"
+						class="btn btn-lg btn-primary"
 						onclick="setBathVentilationOn()">Включить ненадолго</button></a>
 				</tr>
 			</table>

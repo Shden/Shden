@@ -456,6 +456,7 @@ function controlHeater(
 			// Oven heater is providing enough heat, no need to run electricity
 			setHeater(OFF);
 			resolved(OFF);
+			return;
 		}
 
 		Promise.all([

@@ -45,7 +45,7 @@
 
 		function setBathVentilationOn(event)
 		{
-			var URL = "/API/1.1/climate/SetBathVentilationOn/3";
+			var URL = GetAPIURL("climate/SetBathVentilationOn/3");
 
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');

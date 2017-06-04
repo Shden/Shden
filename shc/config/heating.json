@@ -1,22 +1,22 @@
 {
     "heating": {
         "standbyTemperature": 2,
-        "presenceTemperature": 22.5,
+        "presenceTemperature": 22,
         "tempDelta": 0.05,
         "stopPumpTempDelta": 2.5,
-        "electricHeaterOffTemp": 70,
+        "electricHeaterOffTemp": 65,
         "ovenExtraOffTemp": 2,
         "standbyNightTemperature": 7,
         "saunaFloorTemp": 28,
-        "nightTariffStartHour": 22,
-        "nightTariffEndHour": 0,
-        "comfortSleepStartHour": 22,
-        "comfortSleepEndHour": 0,
-        "comfortSleepTargetTemperature": 20
+        "nightTariffStartHour": 8,
+        "nightTariffEndHour": 10,
+        "comfortSleepStartHour": 8,
+        "comfortSleepEndHour": 10,
+        "comfortSleepTargetTemperature": 21.5
     },
     "schedule": {
-        "arrival": "2016-11-24 23:18:33",
-        "departure": "2016-11-25 23:18:33"
+        "arrival": "6/2/2017, 9:57:54 AM",
+        "departure": "6/3/2017, 9:57:54 AM"
     },
     "roomControlDescriptors": [
         {

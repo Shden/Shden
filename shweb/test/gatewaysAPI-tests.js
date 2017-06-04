@@ -16,8 +16,8 @@ describe('/API/1.1/gateways testing:', function() {
 			});
 			responce.on('end', function() {
 				var status = JSON.parse(data);
-				info.should.have.property("parking");
-				info.should.have.property("territory");
+				status.should.have.property("parking");
+				status.should.have.property("territory");
 				done();
 			});
 		});

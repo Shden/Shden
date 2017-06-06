@@ -3,8 +3,6 @@ var http = require('http');
 
 describe('/API/1.1/repellers testing:', function() {
 
-	this.timeout(5000);
-
 	it('GetStatus', function(done) {
 		http.get({
 			host: 'localhost',
@@ -77,10 +75,7 @@ describe('/API/1.1/repellers testing:', function() {
 			path: '/API/1.1/repellers/RefreshPulse'
 		}, function(responce) {
 			responce.statusCode.should.be.equal(200);
-
-			responce.on('end', function() {
-				done();
-			});
+			done();
 		});
 	});
 });

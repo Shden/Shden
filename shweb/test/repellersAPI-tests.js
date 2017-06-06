@@ -3,6 +3,8 @@ var http = require('http');
 
 describe('/API/1.1/repellers testing:', function() {
 
+	this.timeout(5000);
+
 	it('GetStatus', function(done) {
 		http.get({
 			host: 'localhost',

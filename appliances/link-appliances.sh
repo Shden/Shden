@@ -8,3 +8,4 @@ ln -s /mnt/1wire/3A.843C0D000000/PIO.B mainsSwitch
 ln -s /mnt/1wire/28.0FF26D020000/temperature outsideTemp
 ln -s /mnt/1wire/28.99C68D020000/temperature bedRoomTemp
 ln -s /mnt/1wire/3A.14280D000000/PIO.A bathVentilationSwitch
+ln -s /mnt/1wire/3A.C19703000000/PIO.B rodentsRepellerSwitch

@@ -1,11 +1,4 @@
 Notes:
 
-controller.ini should be chmod 777 to allow web access. It will be 
-eventually modified over web.
-
-How to build
-
-make controller 
-	to rebuild.
-make clean 
-	to cleanup.
+config/heating.json should be chmod 777 (too relaxed?) to allow web access.
+It will be modified by webUI.

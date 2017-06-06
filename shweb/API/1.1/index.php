@@ -6,6 +6,7 @@ require 'Climate.php';
 require 'Lighting.php';
 require 'ElectricityConsumption.php';
 require 'Gateways.php';
+require 'Repellers.php';
 
 spl_autoload_register(); // don't load our classes unless we use them
 
@@ -18,6 +19,7 @@ $server->addClass('Climate', '/climate');
 $server->addClass('Lighting', '/lighting');
 $server->addClass('ElectricityConsumption', '/consumption/electricity');
 $server->addClass('Gateways', '/gateways');
+$server->addClass('Repellers', '/repellers');
 
 $server->handle();
 

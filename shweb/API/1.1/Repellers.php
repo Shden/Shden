@@ -43,7 +43,9 @@ Class Repellers
 	/**
 	 *	Endpoint to refresh status from persisten state (DB).
 	 *	This will be called by cron regularly to make sure
-	 *	switch restored after power outage.
+	 *	switch restored after power outage:
+	 *
+	 *	$ curl localhost/API/1.1/repellers/RefreshPulse
 	 *
 	 *	@url GET /RefreshPulse
 	 */

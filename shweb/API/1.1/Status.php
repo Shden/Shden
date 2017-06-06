@@ -1,7 +1,7 @@
 <?php
 require_once ('../../include/db.inc');
-require 'Repellers.php';
-require 'Lighting.php';
+require_once ('Repellers.php');
+require_once ('Lighting.php');
 
 /**
  *	House status API endpoint. This API is primarely works with overall house status, including status snaps for remote
@@ -82,7 +82,6 @@ Class Status
 			$lighting->ChangeStatus('streetLight250', 0);
 			$lighting->ChangeStatus('streetLight150', 0);
 			$lighting->ChangeStatus('balkonLight', 0);
-
 		}
 
 		return $this->GetHouseStatus();
@@ -102,7 +101,6 @@ Class Status
 		}
 		else
 			throw new RestException(400, 'Invalid mains status.');
-
 	}
 }
 

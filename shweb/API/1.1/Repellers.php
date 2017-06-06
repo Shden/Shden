@@ -56,7 +56,10 @@ Class Repellers
 		{
 			$isin = (integer)$r["isin"];
 			$this->SetStatus($isin);
+
+			return 1;
 		}
+		return 0;
 	}
 }
 

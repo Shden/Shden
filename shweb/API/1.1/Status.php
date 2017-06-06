@@ -1,7 +1,7 @@
 <?php
 require_once ('../../include/db.inc');
-require_once ('Repellers.php');
-require_once ('Lighting.php');
+//require_once ('Repellers.php');
+//require_once ('Lighting.php');
 
 /**
  *	House status API endpoint. This API is primarely works with overall house status, including status snaps for remote
@@ -39,7 +39,7 @@ Class Status
 			"mode" => array(
 				"presence"	=> $isin,
 				"starting"	=> $starting,
-				"mains"		=> $mainsSwitch
+				"mains"		=> $mainsStatus
 			),
 			"tempStat" => array(
 				"day" 	=> $climate->GetTempStatistics(1),

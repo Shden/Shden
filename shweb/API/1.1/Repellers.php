@@ -57,7 +57,14 @@ Class Repellers
 		if ($r = $res->fetch_assoc())
 		{
 			$isin = (integer)$r["isin"];
-			$this->SetStatus($isin);
+			if ($isin == 1)
+			{
+				$this->SetStatus(0);
+			}
+			else
+			{
+				$this->SetStatus(1);
+			}
 
 			return 1;
 		}

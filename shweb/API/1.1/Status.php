@@ -52,6 +52,7 @@ Class Status
 	 *	Change house mode to the mode provided.
 	 *
 	 *	@url PUT /SetHouseMode/$changeStatusTo
+	 *	$changeStatusTo: 1 - presence mode, 0 - standby mode
 	 */
 	public function SetHouseMode($changeStatusTo)
 	{
@@ -70,6 +71,8 @@ Class Status
 		{
 			// for presence mode:
 			$repellers->SetStatus(0);
+			
+			$this->SetMains(1);
 		}
 		else
 		{
@@ -82,6 +85,8 @@ Class Status
 			$lighting->ChangeStatus('streetLight250', 0);
 			$lighting->ChangeStatus('streetLight150', 0);
 			$lighting->ChangeStatus('balkonLight', 0);
+
+			$this->SetMains(0);
 		}
 
 		return $this->GetHouseStatus();
@@ -92,7 +97,7 @@ Class Status
 	 *
 	 *	@param $mainsStatus - mains status to set.
 	 */
-	public function SetMains($mainsStatus)
+	private function SetMains($mainsStatus)
 	{
 		if ($mainsStatus == 0 || $mainsStatus == 1)
 		{

@@ -71,7 +71,7 @@ Class Status
 		{
 			// for presence mode:
 			$repellers->SetStatus(0);
-			
+
 			$this->SetMains(1);
 		}
 		else
@@ -102,7 +102,6 @@ Class Status
 		if ($mainsStatus == 0 || $mainsStatus == 1)
 		{
 			`echo $mainsStatus >> /home/den/Shden/appliances/mainsSwitch`;
-			return $this->GetStatus();
 		}
 		else
 			throw new RestException(400, 'Invalid mains status.');

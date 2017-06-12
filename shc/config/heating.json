@@ -10,13 +10,13 @@
         "saunaFloorTemp": 28,
         "nightTariffStartHour": 8,
         "nightTariffEndHour": 10,
-        "comfortSleepStartHour": 8,
-        "comfortSleepEndHour": 10,
+        "comfortSleepStartHour": 0,
+        "comfortSleepEndHour": 6,
         "comfortSleepTargetTemperature": 21.5
     },
     "schedule": {
-        "arrival": "6/2/2017, 9:57:54 AM",
-        "departure": "6/3/2017, 9:57:54 AM"
+        "arrival": "2017-06-10 01:00:00",
+        "departure": "2017-06-13 12:00:00"
     },
     "roomControlDescriptors": [
         {

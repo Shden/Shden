@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS heating (
 	kitchen 	DECIMAL(5,2),
 	bathroom 	DECIMAL(5,2),
 	control 	DECIMAL(5,2),
+	sauna_floor	DECIMAL(5,2),
 	heating		TINYINT,
 	pump		TINYINT,
-	sauna_floor	DECIMAL(5,2),
 	sauna_heating	TINYINT,
 	PRIMARY KEY(time));
 
@@ -27,12 +27,12 @@ CREATE TABLE IF NOT EXISTS presence (
 	time		DATETIME,
 	isin		INT,
 	PRIMARY KEY(time));
-	
+
 CREATE TABLE IF NOT EXISTS humidity (
 	time		DATETIME,
 	bathroom	DECIMAL(5,2),
 	PRIMARY KEY(time));
-	
+
 CREATE TABLE IF NOT EXISTS power (
 	time		DATETIME,
 	U1		DECIMAL(5,2),
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS power (
 	PRIMARY KEY(time));
 
 /*
-	
+
 CREATE TABLE switch (
 	id		SMALLINT,
 	address		CHAR(15),
@@ -63,7 +63,7 @@ CREATE TABLE switch (
 	description	NVARCHAR(64),
 	PRIMARY KEY(id)
 	);
-	
+
 INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1200, '3A.C19703000000', 'PIO.B', 0, 10, 60, N'Ультразвук от грызунов');
 INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1201, '3A.843C0D000000', 'PIO.B', 0, 10, 20, N'Ключ управления электропитанием');
 INSERT INTO switch (id, address, channel, ison, max_per_hour, max_per_day, description) VALUES(1202, '3A.4A370D000000', 'PIO.B', 0, 10, 20, N'Уличный фонарь на озеро');
@@ -77,7 +77,7 @@ CREATE TABLE switch_operations (
 	switch_id	SMALLINT,
 	new_state	TINYINT
 	);
-	
+
 CREATE TABLE switch_schedule (
 	time		DATETIME,
 	switch_id	SMALLINT,

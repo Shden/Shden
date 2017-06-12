@@ -2,10 +2,10 @@ var fs = require('fs');
 
 // -- configuration constants:
 var bathRoomHumiditySensor = '/mnt/1wire/26.140A56010000/humidity';
-var bathVentilationSwitch = '/mnt/1wire/3A.14280D000000/PIO.A';
+var bathVentilationSwitch = '/home/den/Shden/appliances/bathVentilationSwitch';
 // var bathRoomHumiditySensor = __dirname + '/test/humidity.dat';
 // var bathVentilationSwitch = __dirname + '/test/switch.dat';
-var configurationFileName = __dirname + '/ventilation_config/ventilation.json';
+var configurationFileName = __dirname + '/config/ventilation.json';
 
 // read configuration from configuration file
 var configuration = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
@@ -20,12 +20,12 @@ configuration.EMA = EMA(configuration.EMA_steps, configuration.EMA, humidity);
 // Log format:
 // 2016-05-12 22:42:03|43.73|0
 console.log(
-	getDateFormatted() + '|' + 
-	humidity.toFixed(2) + '|' + 
+	getDateFormatted() + '|' +
+	humidity.toFixed(2) + '|' +
 	controlBathVentilation(humidity) + '|' +
 	configuration.EMA.toFixed(2)
 );
-	
+
 // update configuration file with new EMA humidity
 fs.writeFileSync(configurationFileName, JSON.stringify(configuration, null, 4));
 
@@ -64,7 +64,7 @@ function changeSwitch(switchAddress, switchStatus)
 {
 	if (switchStatus != 0 && switchStatus != 1)
 		throw "Invalid switch status: " + switchStatus;
-	
+
 	fs.writeFileSync(switchAddress, switchStatus);
 }
 

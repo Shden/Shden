@@ -23,7 +23,7 @@
 				text-align: right;
 			}
 		</style>
-		
+
 		<div class="container" align="center">
 			<h2>Управление освещением</h2>
 			<table>
@@ -50,30 +50,30 @@
 		$(document).ready(function() {
 			refreshForm();
 		});
-	
+
 		function refreshForm()
 		{
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');
 
-			var API = "/API/1.1/lighting/GetStatus";
+			var API = GetAPIURL("lighting/GetStatus");
 			$.getJSON(API)
 				.done(function(data) {
 
 					refreshButtons(data);
-				
+
 					spinner.stop();
-					$('#spinner').hide();					
-			    });			
+					$('#spinner').hide();
+			    });
 		}
-	
+
 		function refreshButtons(data)
 		{
 			refreshButtonView('streetLight250', data['streetLight250']);
 			refreshButtonView('streetLight150', data['streetLight150']);
 			refreshButtonView('balkonLight', data['balkonLight']);
 		}
-	
+
 		function refreshButtonView(applianceId, applianceStatus)
 		{
 			var button = $('#' + applianceId);
@@ -87,31 +87,31 @@
 			else if (applianceStatus == 1)
 			{
 				button.addClass('btn-default').removeClass('btn-warning');
-				button.html('Погасить');				
+				button.html('Погасить');
 				button.click({ applianceId: applianceId, newStatus: 0 }, applianceStatusUpdate);
 			}
 		}
-	
+
 		function applianceStatusUpdate(event)
 		{
-			var URL = "/API/1.1/lighting/ChangeStatus/" + event.data.applianceId + "/" + event.data.newStatus;
-		
+			var URL = GetAPIURL("lighting/ChangeStatus") + "/" + event.data.applianceId + "/" + event.data.newStatus;
+
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');
 
-	        $.ajax({
+	        	$.ajax({
 				url: URL,
-				type: 'PUT',    
+				type: 'PUT',
 				dataType: 'json',
 				success: function(data) {
-				 
+
 					refreshButtons(data)
 
 					spinner.stop();
-					$('#spinner').hide();					
+					$('#spinner').hide();
 				}
 			});
 		}
-	</script>	
+	</script>
 </body>
 </html>

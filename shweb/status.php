@@ -8,7 +8,7 @@
 	<title>House status</title>
 
 	<?php include 'include/css.php';?>
-	
+
 	<!-- Shweb cutom styles -->
 	<link rel="stylesheet" href="css/shweb.css">
 </head>
@@ -29,25 +29,53 @@
 	{
 		color: blue;
 	}
+	.mains-on
+	{
+		font-size: 24px;
+		color: green;
+	}
+	.mains-off
+	{
+		font-size: 24px;
+		color: red;
+	}
+	.power-val
+	{
+		font-size: 24px;
+		color: black;
+	}
+	.status-val
+	{
+		font-size: 36px;
+		font-weight: normal;
+	}
 </style>
 
 <div class="container">
-	<?php 
+	<?php
 	include 'menu.php';
 	include 'include/js.php';
 	?>
 
-	<div class="jumbotron">
-		<div class="container" align="center">
-			<h1 id="statusHdr"></h1>
-			<p>
-				В доме: <span id="inside" class="temp-big">--.--</span>
-				На улице: <span id="outside" class="temp-big">--.--</span>
+	<div class="container" align="center">
+		<div class="page-header">
+			<h1>
+				Режим:
+				<span id="statusHdr" class="status-val">---</span>
 				<a role="button" class="btn btn-default" href="javascript:updateForm();">
 					<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 				</a>
-			</p>
+			</h1>
 			<a id="modeBtn" class="btn btn-lg" role="button"></a>
+		</div>
+		<div class="page-header">
+			В доме: <span id="inside" class="temp-big">--.--</span>
+			На улице: <span id="outside" class="temp-big">--.--</span>
+		</div>
+		<div class="page-header">
+			Электропитание: <span id="mains">----</span>
+			Потребление: <span id="power_now" class="power-val">---.-</span>
+			Сегодня: <span id="power_today" class="power-val">--</span>
 		</div>
 	</div>
 	<div class="row" align="center">
@@ -92,16 +120,16 @@
 		updateForm();
 	});
 
-	function updateForm() 
-	{	
+	function updateForm()
+	{
 		$('#spinner').show();
 		var spinner = createSpinner('spinner');
-	
+
 		$.getJSON(GetAPIURL("status/GetHouseStatus"))
 			.done(function(data) {
 
 				refreshControls(data);
-				
+
 				spinner.stop();
 				$('#spinner').hide();
 			})
@@ -109,11 +137,33 @@
 				alert('Ошибка вызова GetHouseStatus.');
 			});
 	}
-	
-	function refreshControls(data) 
+
+	function refreshControls(data)
 	{
 		formatTemp($('#inside'), data.climate.inTemp);
 		formatTemp($('#outside'), data.climate.outTemp);
+
+		var mainsGlyphon = $('#mains');
+		if (data.mode.mains == 1)
+		{
+			mainsGlyphon
+				.addClass('mains-on')
+				.removeClass('mains-off')
+				.html('Вкл.');
+		}
+		else
+		{
+			mainsGlyphon
+				.addClass('mains-off')
+				.removeClass('mains-on')
+				.html('Выкл.');
+		}
+
+		var power_now = $('#power_now');
+		var power_today = $('#power_today');
+
+		power_now.html(numeral(0).format('0,0.0') + ' кВт/ч');
+		power_today.html(numeral(0).format('0') + ' кВт');
 
 		formatTemp($('#MIN_INT_H24'), data.tempStat.day.inside.min);
 		formatTemp($('#AVG_INT_H24'), data.tempStat.day.inside.avg);
@@ -122,7 +172,7 @@
 		formatTemp($('#MIN_EXT_H24'), data.tempStat.day.outside.min);
 		formatTemp($('#AVG_EXT_H24'), data.tempStat.day.outside.avg);
 		formatTemp($('#MAX_EXT_H24'), data.tempStat.day.outside.max);
-		
+
 		formatTemp($('#MIN_INT_D30'), data.tempStat.month.inside.min);
 		formatTemp($('#AVG_INT_D30'), data.tempStat.month.inside.avg);
 		formatTemp($('#MAX_INT_D30'), data.tempStat.month.inside.max);
@@ -130,40 +180,41 @@
 		formatTemp($('#MIN_EXT_D30'), data.tempStat.month.outside.min);
 		formatTemp($('#AVG_EXT_D30'), data.tempStat.month.outside.avg);
 		formatTemp($('#MAX_EXT_D30'), data.tempStat.month.outside.max);
-		
+
 		var modeBtn = $('#modeBtn');
 		var statusHdr = $('#statusHdr');
-		
+		var statusAlert = $('#statusAlert');
+
 		if (data.mode.presence == 1) {
-			statusHdr.html('Режим присутствия');
+			statusHdr.html('Присутствие');
 			modeBtn.html('В режим ожидания');
 			modeBtn.addClass('btn-primary').removeClass('btn-danger');
 			modeBtn.attr('href', 'javascript:SetHouseMode(0)');
 		}
 		else if (data.mode.presence == 0) {
-			statusHdr.html('Режим ожидания');
+			statusHdr.html('Ожидание');
 			modeBtn.html('В режим присутствия');
 			modeBtn.addClass('btn-danger').removeClass('btn-primary');
 			modeBtn.attr('href', 'javascript:SetHouseMode(1)');
 		}
 	}
-	
-	function formatTemp(control, value) 
+
+	function formatTemp(control, value)
 	{
 		var strValue = numeral(value).format('0.0') + '&nbsp;&deg;C';
 		if (value > 0) strValue = '+' + strValue;
-		
+
 		control.html(strValue);
-		
+
 		if (value > +2.0) control.addClass('temp-warm').removeClass('temp-cold');
 		if (value < -2.0) control.addClass('temp-cold').removeClass('temp-warm');
 	}
-	
-	function SetHouseMode(mode) 
+
+	function SetHouseMode(mode)
 	{
 		$('#spinner').show();
 		var spinner = createSpinner('spinner');
-	
+
 		var API = GetAPIURL("status/SetHouseMode");
 		$.ajax({
 		    url: API + '/' + mode,
@@ -174,7 +225,7 @@
 
 				spinner.stop();
 				$('#spinner').hide();
-				
+
 				if (data.mode.presence == mode)
 				{
 					alert('Дом переведен в режим ' + ((mode == 0) ? 'ожидания.' : 'присутствия.'));
@@ -187,7 +238,7 @@
 			error: function(xhr, status, error) {
 				alert('Ошибка: ' + error);
 			}
-		});		
+		});
 	}
 </script>
 </body>

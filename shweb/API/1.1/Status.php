@@ -1,7 +1,5 @@
 <?php
 require_once ('../../include/db.inc');
-//require_once ('Repellers.php');
-//require_once ('Lighting.php');
 
 /**
  *	House status API endpoint. This API is primarely works with overall house status, including status snaps for remote
@@ -30,6 +28,7 @@ Class Status
 		$mainsStatus = (int)`cat /home/den/Shden/appliances/mainsSwitch`;
 
 		$climate = new Climate;
+		$electricity = new ElectricityConsumption;
 
 		return array(
 			"climate" => array(
@@ -41,6 +40,7 @@ Class Status
 				"starting"	=> $starting,
 				"mains"		=> $mainsStatus
 			),
+			"power" => $electricity->GetPowerMeterData(),
 			"tempStat" => array(
 				"day" 	=> $climate->GetTempStatistics(1),
 				"month" => $climate->GetTempStatistics(30)

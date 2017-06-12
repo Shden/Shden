@@ -8,18 +8,18 @@
 	<title>Уровень влажности</title>
 
 	<?php include 'include/css.php';?>
-	
+
 	<link rel="stylesheet" href="css/chart.css">
 </head>
 
 <body>
 	<div class="container">
-		<?php 
+		<?php
 		include 'menu.php';
 		include 'include/js.php';
 		include 'include/chartHelper.php';
-	
-		RenderChartWithIntervals("Уровень влажности, интервал в днях:", "Влажность (%)", "heating/GetHumidityHistory/");
+
+		RenderChartWithIntervals("Уровень влажности, интервал в днях:", "Влажность (%)", "climate/GetHumidityHistory/");
 		?>
 	</div>
 </body>

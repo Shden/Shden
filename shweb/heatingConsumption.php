@@ -15,7 +15,7 @@
 <body>
 	<div class="container">
 
-		<?php 
+		<?php
 		include 'menu.php';
 		include 'include/js.php';
 		?>
@@ -54,7 +54,7 @@
 
 		<div id="spinner" class="spinner"></div>
 	</div>
-	
+
 	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 
 	<script>
@@ -62,19 +62,19 @@
 	$(document).ready(function() {
 		refreshForm(7);
 	});
-	
+
 	function refreshForm(days)
-	{	
+	{
 		$('#spinner').show();
 		var spinner = createSpinner('spinner');
-		
+
 		$('#daysCount').html(days);
 
 		var table = d3.select(".table");
-	
-		$.getJSON(GetAPIURL("heating/GetHeatingConsumption/" + days))
+
+		$.getJSON(GetAPIURL("climate/GetHeatingConsumption/" + days))
 			.done(function(data) {
-	
+
 				spinner.stop();
 				$('#spinner').hide();
 
@@ -85,7 +85,7 @@
 					.enter()
 					.append("tr")
 					.attr("class", "datarow");
-			
+
 				row.append("td").text(function(d) { return d.Date; }).attr("class", "leftalign rb");
 				row.append("td").text(function(d) { return numeral(d.AvgOutside).format('0.0'); });
 				row.append("td").text(function(d) { return numeral(d.MinOutside).format('0.0'); });

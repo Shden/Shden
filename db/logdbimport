@@ -5,11 +5,11 @@ sleep 30
 
 # heating data import
 heatinglog=/home/den/Shden/shc/log/heating.log
-tmp=/home/den/Shden/shc/log/heating.tmp
+#tmp=/home/den/Shden/shc/log/heating.tmp
 
-mv $heatinglog $tmp -f
-mysqlimport -L -u root -pexpress --fields-terminated-by="|" SHDEN $tmp
-rm $tmp -f
+#mv $heatinglog $tmp -f
+#mysqlimport -L -u root -pexpress --fields-terminated-by="|" SHDEN $tmp
+rm $heatinglog -f
 
 # humidity data import
 humiditylog=/home/den/Shden/shc/log/ventilation.log

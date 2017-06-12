@@ -21,16 +21,16 @@
 		.table th {
 			text-align: right;
 		}
-	
+
 		.table td {
 			text-align: right;
 		}
-	
+
 		.table .first {
 			text-align: left;
 		}
 	</style>
-	
+
 	<div class="container">
 		<?php include 'menu.php';?>
 
@@ -97,32 +97,26 @@
 				<thead>
 					<th class="first">Потребление энергии</th>
 					<th>Значение по счетчику</th>
-					<th>Накопленное значение</th>
 				</thead>
 				<tr>
 					<td class="first">Всего:</td>
 					<td><span id="PR-ap">...</span>&nbsp;кВт</td>
-					<td><span id="PR-ap2">...</span>&nbsp;кВт</td>
 				</tr>
 				<tr>
 					<td class="first">&nbsp;&nbsp;из них по дневному тарифу:</td>
 					<td><span id="PR-day-ap">...</span>&nbsp;кВт</td>
-					<td><span id="PR-day-ap2">...</span>&nbsp;кВт</td>
 				</tr>
 				<tr>
 					<td class="first">&nbsp;&nbsp;из них по ночному тарифу:</td>
 					<td><span id="PR-night-ap">...</span>&nbsp;кВт</td>
-					<td><span id="PR-night-ap2">...</span>&nbsp;кВт</td>
 				</tr>
 				<tr>
 					<td class="first">Вчера:</td>
 					<td><span id="PY-ap">...</span>&nbsp;кВт</td>
-					<td></td>
 				</tr>
 				<tr>
 					<td class="first">Сегодня:</td>
 					<td><span id="PT-ap">...</span>&nbsp;кВт</td>
-					<td></td>
 				</tr>
 			</table>
 			<br/>
@@ -130,14 +124,14 @@
 			<div id="spinner" class="spinner">
 		</div>
 	</div>
-	
+
 	<?php include 'include/js.php';?>
-		
+
 	<script>
 		$(document).ready(function() {
 			refreshForm();
 		});
-		
+
 		function refreshForm()
 		{
 			$('#spinner').show();
@@ -172,26 +166,26 @@
 					refreshValue('S', 'p2', data);
 					refreshValue('S', 'p3', data);
 					refreshValue('S', 'sum', data);
-					
+
 					refreshValue1('F', data);
 
 					refreshValue('PR', 'ap', data);
 					refreshValue('PR-day', 'ap', data);
 					refreshValue('PR-night', 'ap', data);
-					
+
 					refreshValue('PR', 'ap2', data);
 					refreshValue('PR-day', 'ap2', data);
 					refreshValue('PR-night', 'ap2', data);
-					
+
 					refreshValue('PY', 'ap', data);
 					refreshValue('PT', 'ap', data);
-					
+
 					spinner.stop();
 					$('#spinner').hide();
-					
-			    });			
+
+			});
 		}
-		
+
 		function refreshValue(selector1, selector2, data)
 		{
 			$('#' + selector1 + '-' + selector2).html(numeral(data[selector1][selector2]).format('0,0.00'));
@@ -202,6 +196,6 @@
 			$('#' + selector).html(numeral(data[selector]).format('0,0.00'));
 		}
 	</script>
-	
+
 </body>
 </html>

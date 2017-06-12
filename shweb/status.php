@@ -162,7 +162,7 @@
 		var power_now = $('#power_now');
 		var power_today = $('#power_today');
 
-		power_now.html(numeral(data.power.S.sum).format('0,0.0') + ' кВт/ч');
+		power_now.html(numeral(data.power.S.sum/1000).format('0.00') + ' кВт/ч');
 		power_today.html(numeral(data.power.PT.ap).format('0.0') + ' кВт');
 
 		formatTemp($('#MIN_INT_H24'), data.tempStat.day.inside.min);

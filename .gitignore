@@ -1,3 +1,5 @@
 .htaccess
 /secure
 /shc/bin
+node_modules
+shc/config

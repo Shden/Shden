@@ -13,7 +13,7 @@ const sensors = {
 	kitchenSensor          : "28.AAC56D020000",	/* кухня */
 	childrenSmallSensor    : "28.CFE58D020000",	/* детская (Аг) */
 	bathRoomSensor         : "10.AEFF8F020800",	/* ванная на 1-м этаже */
-	saunaFloorSensor       : "28.E76AB4040000"	/* датчик температуры пола (душ) */
+	saunaFloorSensor       : "28.FF3545511603"	/* датчик температуры пола (душ) */
 };
 
 /* Switches */

@@ -313,7 +313,10 @@ function getTargetTemp()
 				// -- If in standby, check day/night targets to save power
 				if (isSaving())
 				{
-					resolved(configuration.heating.standbyNightTemperature);
+					if (isAdvanceNightHeating())
+						resolved(configuration.heating.presenceTemperature)
+					else
+						resolved(configuration.heating.standbyNightTemperature);
 				}
 
 				resolved(configuration.heating.standbyTemperature);
@@ -327,13 +330,31 @@ function isPresenceHeating()
 {
 	return new Promise((resolved, rejected) => {
 		getHeatingStartTime()
-			.then(presenceStart => {
+			.then(heatingStart => {
 				var now = new Date();
 				var presenceFinish = new Date(configuration.schedule.departure);
-				var isPresence = now >= presenceStart && now <= presenceFinish;
+				var isPresence = now >= heatingStart && now <= presenceFinish;
+
 				resolved(isPresence);
 			});
 	});
+}
+
+// Advance night heating time is taken as (configuration.heating.advanceNightHeating)
+// hours from (configuration.heating.arrival). This is to simplify testing and
+// logic.
+function isAdvanceNightHeating()
+{
+	var now = new Date();
+	var arrival = new Date(configuration.schedule.arrival);
+	var advanceNightHeatingStart = new Date(
+		arrival -
+		configuration.heating.advanceNightHeating * 60 * 60 * 1000
+	);
+
+	return isSaving() &&
+		now  >= advanceNightHeatingStart &&
+		now <= arrival;
 }
 
 // Will eventually bring the time (in hours) required to heat up the house
@@ -627,6 +648,7 @@ if (typeof exports !== 'undefined')
 	// methods
 	exports.getControlTemperature = getControlTemperature;
 	exports.isPresenceHeating = isPresenceHeating;
+	exports.isAdvanceNightHeating = isAdvanceNightHeating;
 	exports.getTargetTemp = getTargetTemp;
 	exports.getHeatingTime = getHeatingTime;
 	exports.getHeatingStartTime = getHeatingStartTime;

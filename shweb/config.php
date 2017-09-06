@@ -144,6 +144,18 @@
 					</label>
 				</div>
 				<div class="form-group">
+					<label class="col-sm-6 control-label" for="advanceNightHeating">
+						Ночной предварительный подогрев заранее (часов):</label>
+					<div class="date col-sm-1">
+						<input type="text" class="form-control"
+							id="advanceNightHeating"
+							format="0"/>
+					</div>
+					<label class="control-label col-sm-3" id="advanceNightHeatingAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group">
 					<div class="col-sm-offset-6 col-sm-10">
 						<a class="btn btn-primary"
 							href="javascript:updateConfiguration()">

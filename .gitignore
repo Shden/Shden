@@ -1,3 +1,4 @@
 .htaccess
 /secure
 /shc/config
+/node_modules

@@ -19,6 +19,9 @@ describe('Heating Module Tests:', function() {
 		it(`getControlTemperature() is ${T}`, function() {
 			h.getControlTemperature().should.be.eventually.equal(T);
 		});
+		it('presenceTemperature is configured at 22.5', function() {
+			h.configuration.heating.presenceTemperature.should.be.equal(22.5);
+		});
 	});
 
 	describe('Switches are working:', function() {
@@ -53,7 +56,7 @@ describe('Heating Module Tests:', function() {
 				);
 			});
 
-		describe('Heating start and finish moments handling check', function() {
+		describe('isPresenceHeating() boundary moments handling check', function() {
 
 			const hoursToMs = 60 * 60 * 1000;
 
@@ -66,7 +69,7 @@ describe('Heating Module Tests:', function() {
 					});
 			});
 
-			it('just 1 minute before heating started, should be OFF', function() {
+			it('1 minute BEFORE start heating is OFF', function() {
 				h.configuration.schedule.arrival =
 					new Date(Date.now() + heatingTime * hoursToMs + 1 * 60 * 1000).toLocaleString();
 				h.configuration.schedule.departure =
@@ -77,7 +80,7 @@ describe('Heating Module Tests:', function() {
 					});
 			});
 
-			it('1 minute after heating started, should be ON', function() {
+			it('1 minute AFTER start heating is ON', function() {
 				h.configuration.schedule.arrival =
 					new Date(Date.now() + heatingTime * hoursToMs - 1 * 60 * 1000).toLocaleString();
 				h.configuration.schedule.departure =
@@ -88,7 +91,7 @@ describe('Heating Module Tests:', function() {
 					});
 			});
 
-			it('just 1 minute before heating finished, should be ON', function() {
+			it('1 minute BEFORE finish heating is ON', function() {
 				h.configuration.schedule.arrival =
 					new Date(Date.now() - 1 * hoursToMs).toLocaleString();
 				h.configuration.schedule.departure =
@@ -99,7 +102,7 @@ describe('Heating Module Tests:', function() {
 					});
 			});
 
-			it('1 minute after heating finished, should be OFF', function() {
+			it('1 minute AFTER finish heating is OFF', function() {
 				h.configuration.schedule.arrival =
 					new Date(Date.now() - 1 * hoursToMs).toLocaleString();
 				h.configuration.schedule.departure =
@@ -110,19 +113,75 @@ describe('Heating Module Tests:', function() {
 					});
 			});
 		});
+
+		describe('isAdvanceNightHeating() tests', function() {
+
+			describe('Day time', function() {
+
+				before(function() {
+					toDayTariff();
+				});
+
+				it('NO advance heating for day time', function() {
+					return h.isAdvanceNightHeating().should.be.equal(false);
+				});
+			});
+
+			describe('Night time tests', function() {
+
+				before(function() {
+					toNightTariff();
+					h.configuration.heating.advanceNightHeating = 1;
+				});
+
+				it('1 minute before advance night start heating is OFF', function() {
+					var _61minPastNow = new Date(Date.now() + 61 * msPerMin);
+					h.configuration.schedule.arrival = _61minPastNow.toLocaleString();
+					h.configuration.schedule.departure = _2hoursAfter.toLocaleString();
+					return h.isAdvanceNightHeating().should.be.equal(false);
+				});
+
+				it('1 minute past advance night start heating is ON', function() {
+					var _59minPastNow = new Date(Date.now() + 59 * msPerMin);
+					h.configuration.schedule.arrival = _59minPastNow.toLocaleString();
+					h.configuration.schedule.departure = _2hoursAfter.toLocaleString();
+					return h.isAdvanceNightHeating().should.be.equal(true);
+				});
+
+				it('1 minute before arrival heating is ON', function() {
+					h.configuration.schedule.arrival = _1minAfter.toLocaleString();
+					h.configuration.schedule.departure = _2hoursAfter.toLocaleString();
+					return h.isAdvanceNightHeating().should.be.equal(true);
+				});
+
+				it('1 minute past arrival heating is OFF', function() {
+					h.configuration.schedule.arrival = _1minBefore.toLocaleString();
+					h.configuration.schedule.departure = _2hoursAfter.toLocaleString();
+					return h.isAdvanceNightHeating().should.be.equal(false);
+				});
+			});
+
+			after(function() {
+				h.configuration.heating.nightTariffStartHour = 23;
+				h.configuration.heating.nightTariffEndHour = 7;
+				h.configuration.heating.advanceNightHeating = 24;
+			});
+
+		});
 	});
 
-	const msPerMin = 60 * 1000;
+	const msPerMin  = 60 * 1000;
+	const msPerHour = 60 * msPerMin;
+	const msPerDay  = 24 * msPerHour;
+
 	var _1minBefore = new Date(Date.now() - 1 * msPerMin);
 	var _1minAfter  = new Date(Date.now() + 1 * msPerMin);
 	var _2minsAfter = new Date(Date.now() + 2 * msPerMin);
 
-	const msPerDay = 24 * 60 * 60 * 1000;
 	var _1dayBefore  = new Date(Date.now() - 1 * msPerDay);
 	var _2daysBefore = new Date(Date.now() - 2 * msPerDay);
 	var _1dayAfter   = new Date(Date.now() + 1 * msPerDay);
 
-	const msPerHour = 60 * 60 * 1000;
 	var _1hourBefore = new Date(Date.now() - 1 * msPerHour);
 	var _1hourAfter  = new Date(Date.now() + 1 * msPerHour);
 	var _2hoursAfter = new Date(Date.now() + 2 * msPerHour);
@@ -139,6 +198,20 @@ describe('Heating Module Tests:', function() {
 	{
 		h.configuration.schedule.arrival = _2daysBefore.toLocaleString();
 		h.configuration.schedule.departure = _1dayBefore.toLocaleString();
+	}
+
+	function toDayTariff()
+	{
+		// from 25 to 26 hours i.e. no saving time
+		h.configuration.heating.nightTariffStartHour = 25;
+		h.configuration.heating.nightTariffEndHour = 26;
+	}
+
+	function toNightTariff()
+	{
+		// 0 to 24 i.e. always saving tariff
+		h.configuration.heating.nightTariffStartHour = 0;
+		h.configuration.heating.nightTariffEndHour = 24;
 	}
 
 	describe('Helper functions testing:', function() {
@@ -193,6 +266,11 @@ describe('Heating Module Tests:', function() {
 					h.configuration.heating.comfortSleepTargetTemperature
 				);
 			});
+
+			after(function() {
+				h.configuration.heating.comfortSleepStartHour = 0;
+				h.configuration.heating.comfortSleepEndHour = 6;
+			})
 		});
 
 		describe('Target temperature testing in standby mode:', function () {
@@ -220,6 +298,11 @@ describe('Heating Module Tests:', function() {
 					h.configuration.heating.standbyNightTemperature
 				);
 			});
+
+			after(function() {
+				h.configuration.heating.nightTariffStartHour = 23;
+				h.configuration.heating.nightTariffEndHour = 7;
+			})
 		});
 	});
 

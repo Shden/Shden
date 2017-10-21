@@ -1,6 +1,6 @@
 <?php
-include 'include/chart.js';	
-	
+include 'include/chart.js';
+
 function RenderChartWithIntervals($chartHeader, $axisTitle, $dataSourceURI)
 {
 ?>
@@ -23,21 +23,22 @@ function RenderChartWithIntervals($chartHeader, $axisTitle, $dataSourceURI)
 		  <input type="radio" name="options" id="option3" autocomplete="off">Месяц
 		</label>
 	</div>
+	<div id="chart"></div>
 
 	<div id="spinner" class="spinner">
-	
+
 	<script>
 		$(document).ready(function() {
 			updateChart(1);
 		});
-	
+
 		function updateChart(days)
 		{
 			$('#days').html(days);
 			DisplayChart(GetAPIURL('<?=$dataSourceURI?>' + days), '<?=$axisTitle?>');
 		}
 	</script>
-		
+
 <?php
 }
 ?>

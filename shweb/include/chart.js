@@ -20,12 +20,28 @@ function DisplayChart(dataSourceURL, yAxisTitle)
 				keys: {
 					x: 'date',
 					value: ['inTemp', 'outTemp']
+				},
+				type: 'spline'
+			},
+			grid: {
+				x: {
+					show: true
+				},
+				y: {
+					show: true,
+					lines: [
+						{ value: 0, text: '0' },
+						{ value: 22.5, text: '22.5' },
+					]
 				}
 			},
 			axis: {
 				x: {
 					type: 'timeseries',
 					tick: {
+						culling: {
+							max: 6 // the number of tick texts will be adjusted to less than this value
+						},
 						format: '%d %b %H:%M' // Jan 19 20:40
 					}
 				}

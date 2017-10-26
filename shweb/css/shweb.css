@@ -1,22 +1,22 @@
 .jumbotron {
-  padding: 10px;
-  margin-bottom: 10px;
+	padding: 10px;
+	margin-bottom: 100px;
 }
 
 .jumbotron p {
-  line-height: 1.1;
+	line-height: 1.1;
 }
 
 .spinner {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 80px;
-    height: 80px;
-    margin-top: -40px; /*set to a negative number 1/2 of your height*/
-    margin-left: -40px; /*set to a negative number 1/2 of your width*/
-    border: 1px solid #ccc;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 80px;
+	height: 80px;
+	margin-top: -40px; /*set to a negative number 1/2 of your height*/
+	margin-left: -40px; /*set to a negative number 1/2 of your width*/
+	border: 1px solid #ccc;
 	border-radius: 8px;
-    background-color: #f3f3f3;
+	background-color: #f3f3f3;
 	display: none;
 }

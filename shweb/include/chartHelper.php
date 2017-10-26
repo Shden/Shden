@@ -23,9 +23,9 @@ function RenderChartWithIntervals($chartHeader, $axisTitle, $dataSourceURI)
 		  <input type="radio" name="options" id="option3" autocomplete="off">Месяц
 		</label>
 	</div>
-	<div id="chart"></div>
+	<div id="chart" />
 
-	<div id="spinner" class="spinner">
+	<div id="spinner" class="spinner"/>
 
 	<script>
 		$(document).ready(function() {

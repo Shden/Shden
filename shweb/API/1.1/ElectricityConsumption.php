@@ -62,7 +62,7 @@ Class ElectricityConsumption
 
 		$res = $conn->query(
 			"SELECT DATE(time) as Date, HOUR(time) as Hour, " .
-			"AVG(SS)/1000 as ssPower" .
+			"AVG(SS)/1000 as ssPower " .
 			"FROM power " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 			"GROUP BY HOUR(time), DATE(time) " .

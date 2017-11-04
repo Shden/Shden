@@ -19,7 +19,46 @@
 		include 'include/js.php';
 		include 'include/chartHelper.php';
 
-		RenderChartWithIntervals("Уровень влажности, интервал в днях:", "Влажность (%)", "climate/GetHumidityHistory/");
+		RenderChartWithIntervals(
+			'Уровень влажности, интервал в днях:',
+			'climate/GetHumidityHistory/',
+			'{
+				bindto: "#chart",
+				data: {
+					xFormat: "%Y-%m-%dT%H:%M:%S%Z",
+					keys: {
+						x: "date",
+						value: ["bathroom"]
+					},
+					type: "spline",
+					names: {
+						bathroom: "влажность в сауне"
+					}
+				},
+				grid: {
+					x: {
+						show: true
+					},
+					y: {
+						show: true
+					}
+				},
+				axis: {
+					x: {
+						type: "timeseries",
+						tick: {
+							culling: {
+								max: 6 // the number of tick texts will be adjusted to less than this value
+							},
+							format: "%d %b %H:%M" // Jan 19 20:40
+						},
+						label: "Время"
+					},
+					y: {
+						label: "Влажность"
+					}
+				}
+			}');
 		?>
 	</div>
 </body>

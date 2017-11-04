@@ -19,7 +19,53 @@
 		include 'include/js.php';
 		include 'include/chartHelper.php';
 
-		RenderChartWithIntervals("Температурный график, интервал в днях:", "Температура (С)", "climate/GetTempHistory/");
+		RenderChartWithIntervals(
+			'Температурный график, интервал в днях:',
+			'climate/GetTempHistory/',
+			'{
+				bindto: "#chart",
+				data: {
+					xFormat: "%Y-%m-%dT%H:%M:%S%Z",
+					keys: {
+						x: "date",
+						value: ["inTemp", "outTemp"]
+					},
+					type: "spline",
+					names: {
+						inTemp: "температура в доме",
+						outTemp: "температура на улице"
+					}
+				},
+				grid: {
+					x: {
+						show: true
+					},
+					y: {
+						show: true,
+						lines: [
+							{ value: 0 },
+							{ value: 2 },
+							{ value: 7 },
+							{ value: 22.5 },
+						]
+					}
+				},
+				axis: {
+					x: {
+						type: "timeseries",
+						tick: {
+							culling: {
+								max: 6 // the number of tick texts will be adjusted to less than this value
+							},
+							format: "%d %b %H:%M" // Jan 19 20:40
+						},
+						label: "Время"
+					},
+					y: {
+						label: "Температура"
+					}
+				}
+			}');
 		?>
 	</div>
 </body>

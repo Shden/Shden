@@ -7,7 +7,7 @@ function GetAPIURL(methodURI)
 		version: '1.1'
 	};
 
-	var debugMode = false;
+	var debugMode = true;
 
 	var subSegments = '/' + APIOptions.subdomain + '/' + APIOptions.version + '/' + methodURI;
 	return debugMode

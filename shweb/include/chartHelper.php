@@ -23,7 +23,8 @@ function RenderChartWithIntervals($chartHeader, $dataSourceURI, $c3formatiing)
 			<input type="radio" name="options" id="option3" autocomplete="off">Месяц
 		</label>
 	</div>
-	<div id="chart" />
+
+	<div id="chart" style="height:75vh;" />
 
 	<div id="spinner" class="spinner"/>
 

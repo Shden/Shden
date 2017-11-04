@@ -28,15 +28,15 @@
 					xFormat: "%Y-%m-%dT%H:%M:%S%Z",
 					keys: {
 						x: "date",
-						value: ["inTemp", "outTemp"]
+						value: ["inTemp", "outTemp", "heaterIn", "heaterOut", "saunaFloor"]
 					},
 					type: "spline",
 					names: {
 						inTemp: "температура в доме",
 						outTemp: "температура на улице",
-						heaterIn: "t на входе котла",
-						heaterOur: "t на выходе котла",
-						saunaFloor: "t пола в сауне"
+						heaterIn: "t вход котла",
+						heaterOut: "t выход котла",
+						saunaFloor: "t пол в сауне"
 					},
 					hide: ["heaterIn", "heaterOut", "saunaFloor"]
 				},

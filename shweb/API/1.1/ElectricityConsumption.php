@@ -62,7 +62,7 @@ Class ElectricityConsumption
 
 		$res = $conn->query(
 			"SELECT DATE(time) as Date, HOUR(time) as Hour, " .
-			"AVG(SS)/1000 as ssPower " .
+			"SUM(SS)/60/1000 as ssPower " .
 			"FROM power " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 			"GROUP BY HOUR(time), DATE(time) " .
@@ -100,7 +100,7 @@ Class ElectricityConsumption
 
 		$res = $conn->query(
 			"SELECT DATE(time) as Date, " .
-			"AVG(SS)/1000 as ssPower " .
+			"SUM(SS)/60/1000 as ssPower " .
 			"FROM power " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 			"GROUP BY DATE(time) " .
@@ -110,6 +110,7 @@ Class ElectricityConsumption
 		while($r = $res->fetch_assoc())
 		{
 			$moment = DateTime::createFromFormat("Y-m-d", $r["Date"], $time_zone);
+			$moment->setTime(0, 0);
 
 			$arr[] = array(
 				"date" 		=> $moment->format(DateTime::ISO8601),

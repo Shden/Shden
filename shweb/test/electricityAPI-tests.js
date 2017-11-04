@@ -32,4 +32,23 @@ describe('/API/1.1/electricity/consumption testing:', function() {
 			});
 		});
 	});
+
+	it('GetPowerConsumptionByHours', function(done) {
+		http.get({
+			host: 'localhost',
+			path: '/API/1.1/consumption/electricity/GetPowerConsumptionByHours/1'
+		}, function(responce) {
+			responce.statusCode.should.be.equal(200);
+			var data = '';
+
+			responce.on('data', function(b) {
+				data += b;
+			});
+
+			responce.on('end', function() {
+				// TODO: add resulting data validation.
+				done();
+			});
+		});
+	});
 });

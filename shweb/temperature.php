@@ -34,7 +34,11 @@
 					names: {
 						inTemp: "температура в доме",
 						outTemp: "температура на улице"
-					}
+					},
+					hide: ["inTemp"]
+				},
+				zoom: {
+					enabled: true
 				},
 				grid: {
 					x: {

@@ -102,7 +102,10 @@ Class Climate
 		$time_zone = new DateTimeZone(TZ);
 
 		$res = $conn->query(
-			"SELECT DATE(time) as Date, HOUR(time) as Hour, AVG(external) as outTemp, AVG(bedroom) as inTemp " .
+			"SELECT DATE(time) as Date, HOUR(time) as Hour, " .
+			"AVG(external) as outTemp, AVG(bedroom) as inTemp " .
+			"AVG(fluid_in) as heaterIn, AVG(fluid_out) as heaterOut " .
+			"AVG(sauna_floor) as saunaFloor " .
 			"FROM heating " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 			"GROUP BY HOUR(time), DATE(time) " .

@@ -120,7 +120,10 @@ Class Climate
 			$arr[] = array(
 				"date" 		=> $moment->format(DateTime::ISO8601),
 				"inTemp"	=> (float) $r["inTemp"],
-				"outTemp" 	=> (float) $r["outTemp"]
+				"outTemp" 	=> (float) $r["outTemp"],
+				"heaterIn"	=> (float) $r["heaterIn"],
+				"heaterOut"	=> (float) $r["heaterOut"],
+				"saunaFloor"	=> (float) $r["saunaFloor"]
 			);
 		}
 		$res->free();

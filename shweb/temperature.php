@@ -33,9 +33,12 @@
 					type: "spline",
 					names: {
 						inTemp: "температура в доме",
-						outTemp: "температура на улице"
+						outTemp: "температура на улице",
+						heaterIn: "t на входе котла",
+						heaterOur: "t на выходе котла",
+						saunaFloor: "t пола в сауне"
 					},
-					hide: ["inTemp"]
+					hide: ["heaterIn", "heaterOut", "saunaFloor"]
 				},
 				zoom: {
 					enabled: true

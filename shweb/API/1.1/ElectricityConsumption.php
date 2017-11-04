@@ -84,6 +84,43 @@ Class ElectricityConsumption
 		return $arr;
 	}
 
+	/**
+	 *	Returns power consumption (kWh) by days for the period of
+	 *	$days specified.
+	 *
+	 *	@url GET /GetPowerConsumptionByDays/$days
+	 */
+	public function GetPowerConsumptionByDays($days)
+	{
+		if (!ctype_digit((string)$days) || $days < 1 || $days > 300)
+			throw new RestException(400, "Invalid request parameter: $days.");
+
+		global $conn;
+		$time_zone = new DateTimeZone(TZ);
+
+		$res = $conn->query(
+			"SELECT DATE(time) as Date, " .
+			"AVG(SS)/1000 as ssPower " .
+			"FROM power " .
+			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
+			"GROUP BY DATE(time) " .
+			"ORDER BY DATE(time);");
+
+		$arr = array();
+		while($r = $res->fetch_assoc())
+		{
+			$moment = DateTime::createFromFormat("Y-m-d", $r["Date"], $time_zone);
+
+			$arr[] = array(
+				"date" 		=> $moment->format(DateTime::ISO8601),
+				"ssPower"	=> (float) $r["ssPower"]
+			);
+		}
+		$res->free();
+
+		return $arr;
+	}
+
 	// Fully qualified name of the power meter gate executable.
 	private function GetPowerMeterGateFileName()
 	{

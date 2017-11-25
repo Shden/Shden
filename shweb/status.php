@@ -77,40 +77,41 @@
 			Потребление: <span id="power_now" class="power-val">---.-</span>
 			Сегодня: <span id="power_today" class="power-val">--</span>
 		</div>
-	</div>
-	<div class="row" align="center">
-	  	<div class="col-md-6" align=center>
-			<table>
-				<tr>
-					<td><b>24 часа:</b></td>
-					<td><small>[min/avg/max] <a href="temperature.php?days=1">Подробнее >></a></small></td>
-				</tr>
-				<tr>
-					<td>&nbsp;в доме</td>
-					<td><span id="MIN_INT_H24"></span>/<span id="AVG_INT_H24"></span>/<span id="MAX_INT_H24"></span></td>
-				</tr>
-				<tr>
-					<td>&nbsp;на улице</td>
-					<td><span id="MIN_EXT_H24"></span>/<span id="AVG_EXT_H24"></span>/<span id="MAX_EXT_H24"></span></td>
-				</tr>
-			</table>
+		<div>
+			<div class="col-md-6">
+				<table>
+					<tr>
+						<td><b>24 часа:</b></td>
+						<td><small>[min/avg/max] <a href="temperature.php?days=1">Подробнее >></a></small></td>
+					</tr>
+					<tr>
+						<td>&nbsp;в доме</td>
+						<td><span id="MIN_INT_H24"></span>/<span id="AVG_INT_H24"></span>/<span id="MAX_INT_H24"></span></td>
+					</tr>
+					<tr>
+						<td>&nbsp;на улице</td>
+						<td><span id="MIN_EXT_H24"></span>/<span id="AVG_EXT_H24"></span>/<span id="MAX_EXT_H24"></span></td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-md-6">
+				<table>
+					<tr>
+						<td><b>30 дней:</b></td>
+						<td><small>[min/avg/max] <a href="temperature.php?days=30">Подробнее >></a></small></td>
+					</tr>
+					<tr>
+						<td>&nbsp;в доме</td>
+						<td><span id="MIN_INT_D30"></span>/<span id="AVG_INT_D30"></span>/<span id="MAX_INT_D30"></span></td>
+					</tr>
+					<tr>
+						<td>&nbsp;на улице</td>
+						<td><span id="MIN_EXT_D30"></span>/<span id="AVG_EXT_D30"></span>/<span id="MAX_EXT_D30"></span></td>
+					</tr>
+				</table>
+			</div>
 		</div>
-	  	<div class="col-md-6" align="center">
-			<table>
-				<tr>
-					<td><b>30 дней:</b></td>
-					<td><small>[min/avg/max] <a href="temperature.php?days=30">Подробнее >></a></small></td>
-				</tr>
-				<tr>
-					<td>&nbsp;в доме</td>
-					<td><span id="MIN_INT_D30"></span>/<span id="AVG_INT_D30"></span>/<span id="MAX_INT_D30"></span></td>
-				</tr>
-				<tr>
-					<td>&nbsp;на улице</td>
-					<td><span id="MIN_EXT_D30"></span>/<span id="AVG_EXT_D30"></span>/<span id="MAX_EXT_D30"></span></td>
-				</tr>
-			</table>
-		</div>
+		<a id="modeBtn" class="btn btn-lg btn-warning" role="button" href="javascript:Kettle();">Чайник!</a>
 	</div>
 	<div id="spinner" class="spinner"/>
 </div>
@@ -239,6 +240,27 @@
 				alert('Ошибка: ' + error);
 			}
 		});
+	}
+
+	function Kettle()
+	{
+		$('#spinner').show();
+		var spinner = createSpinner('spinner');
+
+		var API = GetAPIURL('consumption/electricity/DropPowerConsumption');
+		$.ajax({
+			url: API,
+			type: 'PUT',
+			dataType: 'json',
+			success: function(data) {
+				spinner.stop();
+				$('#spinner').hide();
+			},
+			error: function(xhr, status, error) {
+				alert('Ошибка: ' + error);
+			}
+		});
+
 	}
 </script>
 </body>

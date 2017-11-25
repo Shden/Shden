@@ -50,7 +50,7 @@
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');
 
-	        	$.ajax({
+			$.ajax({
 				url: URL,
 				type: 'PUT',
 				dataType: 'json',

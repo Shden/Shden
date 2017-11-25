@@ -122,6 +122,22 @@ Class ElectricityConsumption
 		return $arr;
 	}
 
+	/**
+	 *	Temporary thing. Reduce power consumption immediately to
+	 *	avoid fuse blow.
+	 *
+	 *	@url PUT /DropPowerConsumption
+	 */
+	public function DropPowerConsumption()
+	{
+		// turn off main heater (12 kWh) immediately
+		// (next minute controller will re-evaluate consumption and
+		// temperature and update heater state accordingly).
+		`echo 0 >> /home/den/Shden/appliances/mainHeater`;
+		return 1;
+	}
+
+
 	// Fully qualified name of the power meter gate executable.
 	private function GetPowerMeterGateFileName()
 	{

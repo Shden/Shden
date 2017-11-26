@@ -14,6 +14,10 @@
 
 	<!-- Shweb cutom styles -->
 	<link rel="stylesheet" href="css/shweb.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.css" integrity="sha256-4RzAUGJSSgMc9TaVEml6THMrB96T28MR6/2FJ3RCHBQ=" crossorigin="anonymous" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.js" integrity="sha256-8Roi9vOs6/KPNbW4O/JoZZoNFI/iM36Ekn0sklwEZa0=" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -76,8 +80,8 @@
 		</div>
 		<div class="page-header">
 			Электропитание: <span id="mains">----</span>
-			Потребление: <span id="power_now" class="power-val">---.-</span>
-			Сегодня: <span id="power_today" class="power-val">--</span>
+			Расход сегодня: <span id="power_today" class="power-val">--</span>
+			<div id="chart" />
 		</div>
 		<div>
 			<div class="col-md-6">
@@ -165,8 +169,8 @@
 		var power_now = $('#power_now');
 		var power_today = $('#power_today');
 
-		power_now.html(numeral(data.power.S.sum/1000).format('0.00') + ' кВт/ч');
 		power_today.html(numeral(data.power.PT.ap).format('0.0') + ' кВт');
+		renderPowerGauge(data.power.S.sum/1000);
 
 		formatTemp($('#MIN_INT_H24'), data.tempStat.day.inside.min);
 		formatTemp($('#AVG_INT_H24'), data.tempStat.day.inside.avg);
@@ -200,6 +204,41 @@
 			modeBtn.addClass('btn-danger').removeClass('btn-primary');
 			modeBtn.attr('href', 'javascript:SetHouseMode(1)');
 		}
+	}
+
+	function renderPowerGauge(powerConsumption)
+	{
+		var chart = c3.generate({
+			data: {
+				columns: [
+					['data', powerConsumption]
+				],
+				type: 'gauge'
+			},
+			gauge: {
+				label: {
+					format: function(value, ratio) {
+						return numeral(value).format('0.00') + ' кВт/ч';
+					},
+					show: true // to turn off the min/max labels.
+				},
+				min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+				max: 17.5, // 100 is default
+				units: 'Нагрузка',
+			//    width: 39 // for adjusting arc thickness
+			},
+			color: {
+				pattern: [ '#60B044', '#F6C600', '#F97600', '#FF0000'], // the three color levels for the percentage values.
+				threshold: {
+					//            unit: 'value', // percentage is default
+					//            max: 200, // 100 is default
+					values: [3, 6, 9, 12]
+				}
+			},
+			size: {
+				height: 180
+			}
+		});
 	}
 
 	function formatTemp(control, value)
@@ -257,6 +296,7 @@
 			success: function(data) {
 				spinner.stop();
 				$('#spinner').hide();
+				updateForm();
 			},
 			error: function(xhr, status, error) {
 				alert('Ошибка: ' + error);

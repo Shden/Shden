@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title>House status</title>
 
-	<?php include 'include/css.php';?>
+	<?php
+	include 'include/css.php';
+	include 'include/js.php';
+	?>
 
 	<!-- Shweb cutom styles -->
 	<link rel="stylesheet" href="css/shweb.css">
@@ -54,7 +57,6 @@
 <div class="container">
 	<?php
 	include 'menu.php';
-	include 'include/js.php';
 	?>
 
 	<div class="container" align="center">

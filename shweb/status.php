@@ -72,16 +72,22 @@
 					<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 				</a>
 			</h1>
+			<h2>
+				Электропитание: <span id="mains">----</span>
+			</h2>
 			<a id="modeBtn" class="btn btn-lg" role="button"></a>
+		</div>
+		<div class="page-header">
+			Расход сегодня: <span id="power_today" class="power-val">--</span>
+			<div id="chart" />
+		</div>
+		<div>
+			<br/>
+			<a id="modeBtn" class="btn btn-lg btn-warning" role="button" href="javascript:Kettle();">Чайник!</a>
 		</div>
 		<div class="page-header">
 			В доме: <span id="inside" class="temp-big">--.--</span>
 			На улице: <span id="outside" class="temp-big">--.--</span>
-		</div>
-		<div class="page-header">
-			Электропитание: <span id="mains">----</span>
-			Расход сегодня: <span id="power_today" class="power-val">--</span>
-			<div id="chart" />
 		</div>
 		<div>
 			<div class="col-md-6">
@@ -117,7 +123,6 @@
 				</table>
 			</div>
 		</div>
-		<a id="modeBtn" class="btn btn-lg btn-warning" role="button" href="javascript:Kettle();">Чайник!</a>
 	</div>
 	<div id="spinner" class="spinner"/>
 </div>
@@ -140,7 +145,7 @@
 				spinner.stop();
 				$('#spinner').hide();
 			})
-			.fail(function() {
+			.fail(function(err) {
 				alert('Ошибка вызова GetHouseStatus.');
 			});
 	}
@@ -169,7 +174,7 @@
 		var power_now = $('#power_now');
 		var power_today = $('#power_today');
 
-		power_today.html(numeral(data.power.PT.ap).format('0.0') + ' кВт');
+		power_today.html(numeral(data.power.PT.ap).format('0.0') + ' кВт/ч');
 		renderPowerGauge(data.power.S.sum/1000);
 
 		formatTemp($('#MIN_INT_H24'), data.tempStat.day.inside.min);
@@ -218,12 +223,12 @@
 			gauge: {
 				label: {
 					format: function(value, ratio) {
-						return numeral(value).format('0.00') + ' кВт/ч';
+						return numeral(value).format('0.00') + ' кВт';
 					},
 					show: true // to turn off the min/max labels.
 				},
 				min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
-				max: 17.5, // 100 is default
+				max: 20, // 100 is default
 				units: 'Нагрузка',
 			//    width: 39 // for adjusting arc thickness
 			},
@@ -232,7 +237,7 @@
 				threshold: {
 					//            unit: 'value', // percentage is default
 					//            max: 200, // 100 is default
-					values: [3, 6, 9, 12]
+					values: [3, 6, 9, 17]
 				}
 			},
 			size: {

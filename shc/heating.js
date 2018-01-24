@@ -617,7 +617,7 @@ function addAuthorizationHeader(request)
 	if (APIcredentials.authorizationReqired)
 	{
 		// need authorization, add header
-		var headers: {
+		var headers = {
 			'Authorization': 'Basic ' +
 			new Buffer(
 				APIcredentials.userName + ':' +

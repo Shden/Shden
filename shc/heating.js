@@ -7,6 +7,7 @@ var pad = require('pad');
 
 // -- configuration constants:
 const configurationFileName = __dirname + '/config/heating.json';
+const APIcredentialsFileName = __dirname + '/config/api-credentials.json';
 
 const heaterCutOffTemp		= 95.0;		/* Heater failure temperature */
 const EXIT_OK			= 0;
@@ -33,6 +34,9 @@ const OutputMode = {
 
 // read configuration file
 var configuration = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
+
+// read credentials file
+var APIcredentials = require(APIcredentialsFileName);
 
 if (require.main === module)
 {
@@ -584,10 +588,10 @@ function getCurrentPowerConsumption()
 function getPowerMeterData()
 {
 	return new Promise((resolved, rejected) => {
-		http.get({
+		http.get(addAuthorizationHeader({
 			host: 'localhost',
 			path: '/API/1.1/consumption/electricity/GetPowerMeterData'
-		}, responce => {
+		}), responce => {
 			if (responce.statusCode != 200)
 				rejected(responce.statusCode);
 
@@ -607,15 +611,35 @@ function getPowerMeterData()
 	});
 }
 
+// Auxilary method creating adding authorization header to request if required.
+function addAuthorizationHeader(request)
+{
+	if (APIcredentials.authorizationReqired)
+	{
+		// need authorization, add header
+		var headers: {
+			'Authorization': 'Basic ' +
+			new Buffer(
+				APIcredentials.userName + ':' +
+				APIcredentials.password).toString('base64')
+		}
+		return Object.assign(request, headers);
+	}
+	else {
+		// no authorization required, just return request as is
+		return request;
+	}
+}
+
 // Post data point to keep historical data.
 function postDataPoint(dataPoint)
 {
 	return new Promise((resolved, rejected) => {
-		var request = http.request({
+		var request = http.request(addAuthorizationHeader({
 			host: 'localhost',
 			path: '/API/1.1/climate/data/heating',
 			method: 'POST'
-		}, responce => {
+		}), responce => {
 
 			var data = '';
 			responce.on('data', b => {

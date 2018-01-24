@@ -617,12 +617,12 @@ function addAuthorizationHeader(request)
 	if (APIcredentials.authorizationReqired)
 	{
 		// need authorization, add header
-		var headers = {
+		var headers = { 'headers' : {
 			'Authorization': 'Basic ' +
 			new Buffer(
 				APIcredentials.userName + ':' +
 				APIcredentials.password).toString('base64')
-		}
+		}}
 		return Object.assign(request, headers);
 	}
 	else {

@@ -13,11 +13,11 @@
         "comfortSleepStartHour": 0,
         "comfortSleepEndHour": 6,
         "comfortSleepTargetTemperature": 21.5,
-        "advanceNightHeating": 24
+        "advanceNightHeating": 36
     },
     "schedule": {
-        "arrival": "2017-9-4 15:46:04",
-        "departure": "2017-9-5 15:46:04"
+        "arrival": "1990-01-01 00:00:00",
+        "departure": "1990-01-01 00:00:00"
     },
     "roomControlDescriptors": [
         {

@@ -53,7 +53,7 @@
 							{ value: 0 },
 							{ value: 2 },
 							{ value: 7 },
-							{ value: 22.5 },
+							{ value: 21.5 },
 						]
 					}
 				},

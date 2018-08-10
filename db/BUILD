@@ -25,6 +25,7 @@
 	mysql -uroot -p******* -DSHDEN < sp_heating_consumption.sql;
 	mysql -uroot -p******* -DSHDEN < sp_change_presence.sql;
 	mysql -uroot -p******* -DSHDEN < sp_get_statistics.sql;
+	mysql -uroot -p******* -DSHDEN < sp_update_sensor.sql;
 
 4. Create webuser to access DB
 

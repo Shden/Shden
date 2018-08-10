@@ -146,7 +146,7 @@ describe('/API/1.1/climate testing:', function() {
 
 	describe('Heating data reporing:', function() {
 
-		it('Post heating data point', function(done) {
+		it('Post heating data point (deprecate)', function(done) {
 			var request = http.request({
 				host: 'localhost',
 				path: '/API/1.1/climate/data/heating',
@@ -179,6 +179,59 @@ describe('/API/1.1/climate testing:', function() {
 					heating			: 1,
 					pump			: 1,
 					bathroom_1_heating	: 1
+				}, null, 4),
+				encoding='utf8');
+			request.end();
+		});
+	});
+
+	describe('Temperature sensors data reporting:', function() {
+
+		it('Post valid temperature data', function(done) {
+			var request = http.request({
+				host: 'localhost',
+				path: '/API/1.1/climate/data/temperature',
+				method: 'POST'
+			}, responce => {
+				var data = '';
+
+				responce.on('data', function(b) {
+					data += b;
+				});
+				responce.on('end', function() {
+					responce.statusCode.should.be.equal(200, data);
+					done();
+				});
+			});
+			request.write(
+				JSON.stringify({
+					temperature	: 22,
+					sensor		: 'DS1820_ID'
+				}, null, 4),
+				encoding='utf8');
+			request.end();
+		});
+
+		it('Post invalid temperature data', function(done) {
+			var request = http.request({
+				host: 'localhost',
+				path: '/API/1.1/climate/data/temperature',
+				method: 'POST'
+			}, responce => {
+				var data = '';
+
+				responce.on('data', function(b) {
+					data += b;
+				});
+				responce.on('end', function() {
+					responce.statusCode.should.be.equal(400, data);
+					done();
+				});
+			});
+			request.write(
+				JSON.stringify({
+					temperature	: 999,
+					sensor		: 'DS1820_ID'
 				}, null, 4),
 				encoding='utf8');
 			request.end();

@@ -16,7 +16,7 @@ Class Status
 	{
 		global $conn;
 
-		$res = $conn->query("SELECT time, isin FROM presence ORDER BY time desc LIMIT 1;");
+		$res = $conn->query("SELECT time, isin FROM presence ORDER BY time desc LIMIT 1;") or die($conn->error);
 		if ($r = $res->fetch_assoc())
 		{
 			$isin = (integer)$r["isin"];

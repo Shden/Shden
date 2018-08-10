@@ -11,6 +11,9 @@ define(TZ, "MSK");
  */
 Class Climate
 {
+	const HTTP_BAD_REQUEST = 400;
+	const HTTP_NOT_ACCEPTABLE = 406;
+
 	// Fully qualified name of the configuration .json file.
 	private function GetConfigurationFileName()
 	{
@@ -96,7 +99,8 @@ Class Climate
 	public function GetTempHistory($days)
 	{
 		if (!ctype_digit((string)$days) || $days < 1 || $days > 300)
-			throw new RestException(400, "Invalid request parameter: $days.");
+			throw new RestException(self::HTTP_BAD_REQUEST,
+				"Invalid request parameter: $days.");
 
 		global $conn;
 		$time_zone = new DateTimeZone(TZ);
@@ -131,9 +135,48 @@ Class Climate
 		return $arr;
 	}
 
+	//private static $temp = array();
+
+	/**
+	 *	ESP autonomous temperature sensor data feed endpoint.
+	 *	This will eventually replace PostHeatingDataPoint($data)
+	 *
+	 *	Curl positive test:
+	 *
+	 *	curl -X POST http://localhost/API/1.1/climate/data/temperature --data '[{ "temperature" : 21.5, "sensorId": "28FF72BF47160342" }]'
+	 *
+	 *	@url POST /data/temperature
+	 */
+	public function PostTemperatureData($data)
+	{
+		global $conn;
+
+		foreach ($data as $sensorInfo)
+		{
+			// Data validation
+			if (!is_numeric($sensorInfo->temperature) ||
+				($sensorInfo->temperature < -50.0) ||
+				($sensorInfo->temperature > 120.0))
+			{
+				throw new RestException(self::HTTP_BAD_REQUEST,
+					"Invalid temperature: $sensorInfo->temperature.");
+			}
+
+			if (!array_key_exists("sensorId", $sensorInfo))
+				throw new RestException(self::HTTP_BAD_REQUEST,
+					"No sensor ID provided");
+
+			if (!$conn->query("CALL SP_UPDATE_SENSOR('$sensorInfo->sensorId', $sensorInfo->temperature);"))
+				throw new RestException(self::HTTP_NOT_ACCEPTABLE,
+					$conn->error);
+		}
+	}
+
 	/**
 	 *	Report heating data point.
-	 *	Data point information is posted in JSON.
+	 *	Data point information is posted in JSON by shc/heating.js
+	 *
+	 *	Will deprecate after migrated to new ESP temperature sensors.
 	 *
 	 *	@url POST /data/heating
 	 */
@@ -141,55 +184,59 @@ Class Climate
 	{
 		// Data validation
 		if (!is_numeric($data->heater))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid heater temperature: $data->heater.");
 		if (!is_numeric($data->fluid_in))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid incoming fluid temperature: $data->fluid_in.");
 		if (!is_numeric($data->fluid_out))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid outgoing fluid temperature: $data->fluid_out.");
 		if (!is_numeric($data->external))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid external temperature: $data->external.");
 		if (!is_numeric($data->am_bedroom))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid am_bedroom temperature: $data->am_bedroom.");
 		if (!is_numeric($data->bedroom))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid bedroom temperature: $data->bedroom.");
 		if (!is_numeric($data->cabinet))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid cabinet temperature: $data->cabinet.");
 		if (!is_numeric($data->child_bedroom))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid child_bedroom temperature: $data->child_bedroom.");
 		if (!is_numeric($data->kitchen))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid kitchen temperature: $data->kitchen.");
 		if (!is_numeric($data->bathroom_1))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid bathroom_1 temperature: $data->bathroom_1.");
 		if (!is_numeric($data->control))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid control temperature: $data->control.");
 		if (!is_numeric($data->bathroom_1_floor))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid bathroom_1_floor temperature: $data->bathroom_1_floor.");
 		if (!is_numeric($data->heating) ||
 			($data->heating != 0 && $data->heating != 1))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid heating state: $data->heating.");
 		if (!is_numeric($data->pump) ||
 			($data->pump != 0 && $data->pump != 1))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid pump state: $data->pump.");
 		if (!is_numeric($data->bathroom_1_heating) ||
 			($data->bathroom_1_heating != 0 && $data->bathroom_1_heating != 1))
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid bathroom_1_heating state: $data->bathroom_1_heating.");
 
 		global $conn;
+
+		// TODO: handle if record alreay created by PostTemperatureData endpoint!
+		// This would be better go to a separate SP similar to SP_UPDATE_SENSOR
+		// with INSERT/UPDATE logic
 		if (!$conn->query(
 			"INSERT INTO heating " .
 			"(time, heater, fluid_in, fluid_out, external, " .
@@ -205,7 +252,7 @@ Class Climate
 			"$data->heating, $data->pump, " .
 			"$data->bathroom_1_heating)"))
 		{
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"DB error: " . $conn->error);
 		}
 	}
@@ -220,7 +267,8 @@ Class Climate
 	public function GetHumidityHistory($days)
 	{
 		if (!ctype_digit((string)$days) || $days < 1 || $days > 300)
-			throw new RestException(400, "Invalid request parameter: $days.");
+			throw new RestException(self::HTTP_BAD_REQUEST,
+				"Invalid request parameter: $days.");
 
 		global $conn;
 		$time_zone = new DateTimeZone(TZ);
@@ -268,7 +316,8 @@ Class Climate
 	public function GetTempStatistics($days)
 	{
 		if (!ctype_digit((string)$days) || $days < 1 || $days > 1000)
-			throw new RestException(400, "Invalid request parameter: $days");
+			throw new RestException(self::HTTP_BAD_REQUEST,
+				"Invalid request parameter: $days");
 
 		global $conn;
 
@@ -306,7 +355,7 @@ Class Climate
 	public function GetHeatingConsumption($days)
 	{
 		if (!ctype_digit((string)$days) || $days < 1 || $days > 1000)
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Invalid request parameter: $days");
 
 		$d = $days - 1;
@@ -352,27 +401,27 @@ Class Climate
 	{
 		if (!ctype_digit((string)$year) || $year < 2010 || $year > 2050)
 		{
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Year: $year is out of the range.");
 		}
 		if (!ctype_digit((string)$month) || $month < 1 || $month > 12)
 		{
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Month: $month is out of the range.");
 		}
 		if (!ctype_digit((string)$day) || $day < 1 || $day > 31)
 		{
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Day: $day is out of the range.");
 		}
 		if (!ctype_digit((string)$hour) || $hour < 0 || $hour > 23)
 		{
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Hour: $hour is out of the range.");
 		}
 		if (!ctype_digit((string)$minute) || $minute < 0 || $minute > 59)
 		{
-			throw new RestException(400,
+			throw new RestException(self::HTTP_BAD_REQUEST,
 				"Minute: $minute is out of the range.");
 		}
 	}
@@ -400,10 +449,12 @@ Class Climate
 	public function PutConfiguration($data)
 	{
 		if (!array_key_exists("heating", $data))
-			throw new RestException(400, "No heating section");
+			throw new RestException(self::HTTP_BAD_REQUEST,
+				"No heating section");
 
 		if (!array_key_exists("schedule", $data))
-			throw new RestException(400, "No schedule section");
+			throw new RestException(self::HTTP_BAD_REQUEST,
+				"No schedule section");
 
 		// Possibly more validation to go here.
 

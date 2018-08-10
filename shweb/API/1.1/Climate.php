@@ -135,7 +135,6 @@ Class Climate
 		return $arr;
 	}
 
-	//private static $temp = array();
 
 	/**
 	 *	ESP autonomous temperature sensor data feed endpoint.
@@ -177,6 +176,10 @@ Class Climate
 	 *	Data point information is posted in JSON by shc/heating.js
 	 *
 	 *	Will deprecate after migrated to new ESP temperature sensors.
+	 *
+	 *	Curl positive test:
+	 *
+	 *	curl -X POST http://localhost/API/1.1/climate/data/heating --data '{ "heater" : 42.5, "fluid_in" : 38.62, "fluid_out" : 40.8, "external" : 8.2, "am_bedroom" : 19, "bedroom" : 20, "cabinet" : 21, "child_bedroom" : 22, "kitchen" : 23, "bathroom_1" : 24, "control" : 20, "bathroom_1_floor" : 28, "heating" : 0, "pump" : 1, "bathroom_1_heating" : 1 }'
 	 *
 	 *	@url POST /data/heating
 	 */
@@ -234,23 +237,14 @@ Class Climate
 
 		global $conn;
 
-		// TODO: handle if record alreay created by PostTemperatureData endpoint!
-		// This would be better go to a separate SP similar to SP_UPDATE_SENSOR
-		// with INSERT/UPDATE logic
-		if (!$conn->query(
-			"INSERT INTO heating " .
-			"(time, heater, fluid_in, fluid_out, external, " .
-			"am_bedroom, bedroom, cabinet, sasha_bedroom, " .
-			"kitchen, bathroom, sauna_floor, control, heating, " .
-			"pump, sauna_heating) " .
-			"VALUES (NOW(), " .
+		if (!$conn->query("CALL SP_ADD_HEATING_RECORD(" .
 			"$data->heater, $data->fluid_in, $data->fluid_out, " .
 			"$data->external, $data->am_bedroom, $data->bedroom, " .
 			"$data->cabinet, $data->child_bedroom, " .
 			"$data->kitchen, $data->bathroom_1, " .
 			"$data->bathroom_1_floor, $data->control, " .
 			"$data->heating, $data->pump, " .
-			"$data->bathroom_1_heating)"))
+			"$data->bathroom_1_heating);"))
 		{
 			throw new RestException(self::HTTP_BAD_REQUEST,
 				"DB error: " . $conn->error);

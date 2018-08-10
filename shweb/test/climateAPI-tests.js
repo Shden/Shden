@@ -204,10 +204,10 @@ describe('/API/1.1/climate testing:', function() {
 				});
 			});
 			request.write(
-				JSON.stringify({
+				JSON.stringify([{
 					temperature	: 22,
-					sensor		: 'DS1820_ID'
-				}, null, 4),
+					sensorId	: '28FF72BF47160342'
+				}], null, 4),
 				encoding='utf8');
 			request.end();
 		});

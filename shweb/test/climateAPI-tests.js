@@ -48,8 +48,8 @@ describe('/API/1.1/climate testing:', function() {
 					schedule.should.have.property("active");
 					moment(schedule.from, moment.ISO_8601).isValid().should.be.ok();
 					moment(schedule.to, moment.ISO_8601).isValid().should.be.ok();
-					moment(schedule.from, moment.ISO_8601).isSame(moment("2016-10-01 19:00")).should.be.ok();
-					moment(schedule.to, moment.ISO_8601).isSame(moment("2016-10-02 21:00")).should.be.ok();
+					moment(schedule.from, moment.ISO_8601).isSame(moment("2016-10-01T19:00:00+03:00")).should.be.ok();
+					moment(schedule.to, moment.ISO_8601).isSame(moment("2016-10-02T21:00:00+03:00")).should.be.ok();
 					done();
 				});
 			});
@@ -75,8 +75,9 @@ describe('/API/1.1/climate testing:', function() {
 					schedule.should.have.property("active");
 					moment(schedule.from, moment.ISO_8601).isValid().should.be.ok();
 					moment(schedule.to, moment.ISO_8601).isValid().should.be.ok();
-					moment(schedule.from, moment.ISO_8601).isSame(moment("1990-01-01 00:00")).should.be.ok();
-					moment(schedule.to, moment.ISO_8601).isSame(moment("1990-01-01 00:00")).should.be.ok();
+					//console.log(schedule.from);
+					moment(schedule.from, moment.ISO_8601).isSame(moment("1990-01-01T00:00:00+03:00")).should.be.ok();
+					moment(schedule.to, moment.ISO_8601).isSame(moment("1990-01-01T00:00:00+03:00")).should.be.ok();
 					done();
 				});
 			});
@@ -84,19 +85,100 @@ describe('/API/1.1/climate testing:', function() {
 		});
 	});
 
-	describe.skip('Statistics testing:', function() {
+	describe('Statistics testing:', function() {
 
-		it('GetTempHistory', function(done) {
+		function CSn(endpointName, n, done, expectedStatusCode) {
+			http.get({
+				host: 'localhost',
+				path: `/API/1.1/climate/${endpointName}/${n}`
+			}, function(responce) {
+				responce.statusCode.should.be.equal(expectedStatusCode);
+				var data = '';
 
+				responce.on('data', function(b) {
+					data += b;
+				});
+				responce.on('end', function() {
+					var history = JSON.parse(data);
+					done();
+				});
+			});
+		}
+
+		describe('GetTempHistory tests:', function() {
+
+			it('GetTempHistory/1 responds 200', function(done) {
+				CSn('GetTempHistory', 1, done, 200)
+			});
+			it('GetTempHistory/7 responds 200', function(done) {
+				CSn('GetTempHistory', 7, done, 200)
+			});
+			it('GetTempHistory/0 responds 400', function(done) {
+				CSn('GetTempHistory', 0, done, 400)
+			});
+			it('GetTempHistory/301 responds 400', function(done) {
+				CSn('GetTempHistory', 301, done, 400)
+			});
+			it('GetTempHistory/blah-blah responds 400', function(done) {
+				CSn('GetTempHistory', 'blah-blah', done, 400)
+			});
 		});
-		it('GetHumidityHistory', function(done) {
 
+		describe('GetHumidityHistory tests:', function() {
+
+			it('GetHumidityHistory/1 responds 200', function(done) {
+				CSn('GetHumidityHistory', 1, done, 200)
+			});
+			it('GetHumidityHistory/7 responds 200', function(done) {
+				CSn('GetHumidityHistory', 7, done, 200)
+			});
+			it('GetHumidityHistory/0 responds 400', function(done) {
+				CSn('GetHumidityHistory', 0, done, 400)
+			});
+			it('GetHumidityHistory/301 responds 400', function(done) {
+				CSn('GetHumidityHistory', 301, done, 400)
+			});
+			it('GetHumidityHistory/blah-blah responds 400', function(done) {
+				CSn('GetHumidityHistory', 'blah-blah', done, 400)
+			});
 		});
-		it('GetTempStatistics', function(done) {
 
+		describe('GetTempStatistics tests:', function() {
+
+			it('GetTempStatistics/1 responds 200', function(done) {
+				CSn('GetTempStatistics', 1, done, 200)
+			});
+			it('GetTempStatistics/7 responds 200', function(done) {
+				CSn('GetTempStatistics', 7, done, 200)
+			});
+			it('GetTempStatistics/0 responds 400', function(done) {
+				CSn('GetTempStatistics', 0, done, 400)
+			});
+			it('GetTempStatistics/1001 responds 400', function(done) {
+				CSn('GetTempStatistics', 1001, done, 400)
+			});
+			it('GetTempStatistics/blah-blah responds 400', function(done) {
+				CSn('GetTempStatistics', 'blah-blah', done, 400)
+			});
 		});
-		it('GetHeatingConsumption', function(done) {
 
+		describe('GetHeatingConsumption tests:', function() {
+
+			it('GetHeatingConsumption/1 responds 200', function(done) {
+				CSn('GetHeatingConsumption', 1, done, 200)
+			});
+			it('GetHeatingConsumption/7 responds 200', function(done) {
+				CSn('GetHeatingConsumption', 7, done, 200)
+			});
+			it('GetHeatingConsumption/0 responds 400', function(done) {
+				CSn('GetHeatingConsumption', 0, done, 400)
+			});
+			it('GetHeatingConsumption/1001 responds 400', function(done) {
+				CSn('GetHeatingConsumption', 1001, done, 400)
+			});
+			it('GetHeatingConsumption/blah-blah responds 400', function(done) {
+				CSn('GetHeatingConsumption', 'blah-blah', done, 400)
+			});
 		});
 	});
 

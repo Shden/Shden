@@ -26,7 +26,6 @@ Class ElectricityConsumption
 			throw new RestException(
 				400, "'$commandLine' returned $exitCode");
 
-		//$mercuryStr = `$gateExecutable /dev/ttyUSB0 --json --testRun`;
 		$mercuryData = json_decode($mercuryStr, true);
 
 		return $mercuryData;

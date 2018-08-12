@@ -7,6 +7,8 @@ require_once ('../../include/db.inc');
  */
 Class Status
 {
+	const HTTP_BAD_REQUEST = 400;
+
 	/**
 	 *	Return house status information.
 	 *
@@ -60,7 +62,8 @@ Class Status
 
 		if ($changeStatusTo != 1 && $changeStatusTo != 0)
 		{
-			throw new RestException(400, 'Invalid staus requested.');
+			throw new RestException(self::HTTP_BAD_REQUEST,
+				'Invalid status requested.');
 		}
 		$conn->query("CALL SP_CHANGE_PRESENCE($changeStatusTo);");
 
@@ -104,7 +107,8 @@ Class Status
 			`echo $mainsStatus >> /home/den/Shden/appliances/mainsSwitch`;
 		}
 		else
-			throw new RestException(400, 'Invalid mains status.');
+			throw new RestException(self::HTTP_BAD_REQUEST,
+				'Invalid mains status.');
 	}
 }
 

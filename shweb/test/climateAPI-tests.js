@@ -269,7 +269,7 @@ describe('/API/1.1/climate testing:', function() {
 
 	describe('Temperature sensors data reporting:', function() {
 
-		it('Post valid temperature data', function(done) {
+		function postTemperatureTestHelper(done, payload, expectedStatusCode) {
 			var request = http.request({
 				host: 'localhost',
 				path: '/API/1.1/climate/data/temperature',
@@ -281,42 +281,34 @@ describe('/API/1.1/climate testing:', function() {
 					data += b;
 				});
 				responce.on('end', function() {
-					responce.statusCode.should.be.equal(200, data);
+					responce.statusCode.should.be.equal(expectedStatusCode, data);
 					done();
 				});
 			});
 			request.write(
-				JSON.stringify([{
-					temperature	: 22,
-					sensorId	: '28FF72BF47160342'
-				}], null, 4),
-				encoding='utf8');
+				JSON.stringify(payload, null, 4), encoding='utf8');
 			request.end();
+		}
+
+		it('Valid temperature data accepted', function(done) {
+			postTemperatureTestHelper(done, [{
+				temperature	: 22,
+				sensorId	: '28FF72BF47160342'
+			}], 200);
 		});
 
-		it('Post invalid temperature data', function(done) {
-			var request = http.request({
-				host: 'localhost',
-				path: '/API/1.1/climate/data/temperature',
-				method: 'POST'
-			}, responce => {
-				var data = '';
+		it('Invalid temperature data rejected', function(done) {
+			postTemperatureTestHelper(done, [{
+				temperature	: 999,
+				sensorId	: '28FF72BF47160342'
+			}], 400);
+		});
 
-				responce.on('data', function(b) {
-					data += b;
-				});
-				responce.on('end', function() {
-					responce.statusCode.should.be.equal(400, data);
-					done();
-				});
-			});
-			request.write(
-				JSON.stringify({
-					temperature	: 999,
-					sensor		: 'DS1820_ID'
-				}, null, 4),
-				encoding='utf8');
-			request.end();
+		it('Invalid sensorId rejected', function(done) {
+			postTemperatureTestHelper(done, [{
+				temperature	: 20,
+				sensorId	: 'invalid senor id'
+			}], 406);
 		});
 	});
 });

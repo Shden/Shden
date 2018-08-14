@@ -59,14 +59,14 @@ class RestServer
 	public $realm;
 	public $mode;
 	public $root;
-	
+
 	protected $map = array();
 	protected $errorClasses = array();
 	protected $cached;
 
 	/**
 	 * The constructor.
-	 * 
+	 *
 	 * @param string $mode The mode, either debug or production
 	 */
 	public function  __construct($mode = 'debug', $realm = 'Rest Server')
@@ -78,7 +78,7 @@ class RestServer
 		elseif (substr($dir, -1) != '/') $this->root = $dir . '/';
 		else $this->root = $dir;
 	}
-	
+
 	public function  __destruct()
 	{
 		if ($this->mode == 'production' && !$this->cached) {
@@ -89,13 +89,13 @@ class RestServer
 			}
 		}
 	}
-	
+
 	public function refreshCache()
 	{
 		$this->map = array();
 		$this->cached = false;
 	}
-	
+
 	public function unauthorized($ask = false)
 	{
 		if ($ask) {
@@ -103,20 +103,20 @@ class RestServer
 		}
 		throw new RestException(401, "You are not authorized to access this resource.");
 	}
-	
-	
+
+
 	public function handle()
 	{
 		$this->url = $this->getPath();
 		$this->method = $this->getMethod();
 		$this->format = $this->getFormat();
-		
+
 		if ($this->method == 'PUT' || $this->method == 'POST') {
 			$this->data = $this->getData();
 		}
-		
+
 		list($obj, $method, $params, $this->params, $noAuth) = $this->findUrl();
-		
+
 		if ($obj) {
 			if (is_string($obj)) {
 				if (class_exists($obj)) {
@@ -125,30 +125,30 @@ class RestServer
 					throw new Exception("Class $obj does not exist");
 				}
 			}
-			
+
 			$obj->server = $this;
-			
+
 			try {
 				if (method_exists($obj, 'init')) {
 					$obj->init();
 				}
-				
+
 				if (!$noAuth && method_exists($obj, 'authorize')) {
 					if (!$obj->authorize()) {
 						$this->sendData($this->unauthorized(true));
 						exit;
 					}
 				}
-				
+
 				$result = call_user_func_array(array($obj, $method), $params);
-				
+
 				if ($result !== null) {
 					$this->sendData($result);
 				}
 			} catch (RestException $e) {
 				$this->handleError($e->getCode(), $e->getMessage());
-			}			
-		
+			}
+
 		} else {
 			$this->handleError(404);
 		}
@@ -157,14 +157,14 @@ class RestServer
 	public function addClass($class, $basePath = '')
 	{
 		$this->loadCache();
-		
+
 		if (!$this->cached) {
 			if (is_string($class) && !class_exists($class)){
 				throw new Exception('Invalid method or class');
 			} elseif (!is_string($class) && !is_object($class)) {
 				throw new Exception('Invalid method or class; must be a classname or object');
 			}
-			
+
 			if (substr($basePath, 0, 1) == '/') {
 				$basePath = substr($basePath, 1);
 			}
@@ -175,12 +175,12 @@ class RestServer
 			$this->generateMap($class, $basePath);
 		}
 	}
-	
+
 	public function addErrorClass($class)
 	{
 		$this->errorClasses[] = $class;
 	}
-	
+
 	public function handleError($statusCode, $errorMessage = null)
 	{
 		$method = "handle$statusCode";
@@ -201,21 +201,21 @@ class RestServer
 				}
 			}
 		}
-		
+
 		$message = $this->codes[$statusCode] . ($errorMessage && $this->mode == 'debug' ? ': ' . $errorMessage : '');
-		
+
 		$this->setStatus($statusCode);
 		$this->sendData(array('error' => array('code' => $statusCode, 'message' => $message)));
 	}
-	
+
 	protected function loadCache()
 	{
 		if ($this->cached !== null) {
 			return;
 		}
-		
+
 		$this->cached = false;
-		
+
 		if ($this->mode == 'production') {
 			if (function_exists('apc_fetch')) {
 				$map = apc_fetch('urlMap');
@@ -234,15 +234,15 @@ class RestServer
 			}
 		}
 	}
-	
+
 	protected function findUrl()
 	{
 		$urls = $this->map[$this->method];
 		if (!$urls) return null;
-		
+
 		foreach ($urls as $url => $call) {
 			$args = $call[2];
-			
+
 			if (!strstr($url, '$')) {
 				if ($url == $this->url) {
 					if (isset($args['data'])) {
@@ -261,11 +261,11 @@ class RestServer
 					if (isset($args['data'])) {
 						$params[$args['data']] = $this->data;
 					}
-					
+
 					foreach ($matches as $arg => $match) {
 						if (is_numeric($arg)) continue;
 						$paramMap[$arg] = $match;
-						
+
 						if (isset($args[$arg])) {
 							$params[$args[$arg]] = $match;
 						}
@@ -295,16 +295,16 @@ class RestServer
 		} elseif (class_exists($class)) {
 			$reflection = new ReflectionClass($class);
 		}
-		
+
 		$methods = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
-		
+
 		foreach ($methods as $method) {
 			$doc = $method->getDocComment();
 			$noAuth = strpos($doc, '@noAuth') !== false;
 			if (preg_match_all('/@url[ \t]+(GET|POST|PUT|DELETE|HEAD|OPTIONS)[ \t]+\/?(\S*)/s', $doc, $matches, PREG_SET_ORDER)) {
-				
+
 				$params = $method->getParameters();
-				
+
 				foreach ($matches as $match) {
 					$httpMethod = $match[1];
 					$url = $basePath . $match[2];
@@ -319,7 +319,7 @@ class RestServer
 					$call[] = $args;
 					$call[] = null;
 					$call[] = $noAuth;
-					
+
 					$this->map[$httpMethod][$url] = $call;
 				}
 			}
@@ -335,7 +335,7 @@ class RestServer
 		$path = preg_replace('/\.(\w+)$/i', '', $path);
 		return $path;
 	}
-	
+
 	public function getMethod()
 	{
 		$method = $_SERVER['REQUEST_METHOD'];
@@ -347,7 +347,7 @@ class RestServer
 		}
 		return $method;
 	}
-	
+
 	public function getFormat()
 	{
 		$format = RestFormat::PLAIN;
@@ -361,7 +361,7 @@ class RestServer
 			$override = isset($_REQUEST['format']) ? $_REQUEST['format'] : $override;
 			$override = trim($override);
 		}
-		
+
 		// Check for trailing dot-format syntax like /controller/action.format -> action.json
 		if(preg_match('/\.(\w+)$/i', $_SERVER['REQUEST_URI'], $matches)) {
 			$override = $matches[1];
@@ -378,11 +378,11 @@ class RestServer
 		}
 		return $format;
 	}
-	
+
 	public function getData()
 	{
 		$data = file_get_contents('php://input');
-		
+
 		if ($this->format == RestFormat::AMF) {
 			require_once 'Zend/Amf/Parse/InputStream.php';
 			require_once 'Zend/Amf/Parse/Amf3/Deserializer.php';
@@ -392,13 +392,14 @@ class RestServer
 		} else {
 			$data = json_decode($data);
 		}
-		
+
 		return $data;
 	}
-	
+
 
 	public function sendData($data)
 	{
+		header("Access-Control-Allow-Origin: *");
 		header("Cache-Control: no-cache, must-revalidate");
 		header("Expires: 0");
 		header('Content-Type: ' . $this->format);
@@ -423,7 +424,7 @@ class RestServer
 			if ($data && $this->mode == 'debug') {
 				$data = $this->json_format($data);
 			}
-		
+
 		} else {
 			if (is_object($data) && method_exists($data, '__keepOut')) {
 				$data = clone $data;
@@ -445,7 +446,7 @@ class RestServer
 		$code .= ' ' . $this->codes[strval($code)];
 		header("{$_SERVER['SERVER_PROTOCOL']} $code");
 	}
-	
+
 	private function xml_encode($mixed, $domElement=null, $DOMDocument=null) {
     if (is_null($DOMDocument)) {
         $DOMDocument =new DOMDocument;
@@ -475,7 +476,7 @@ class RestServer
                         $node = $singular;
                     }
                 }
- 
+
                 $this->xml_encode($mixedElement, $node, $DOMDocument);
             }
         }
@@ -492,9 +493,9 @@ class RestServer
 		$indent_level = 0;
 		$in_string = false;
 		$backslashed = -1;
-		
+
 		$len = strlen($json);
-		
+
 		for($c = 0; $c < $len; $c++) {
 			$char = $json[$c];
 			switch($char) {
@@ -533,7 +534,7 @@ class RestServer
 				case '\\':
 					if ($backslashed != $c) {
 						// next letter will be backslashed
-						$backslashed = $c+1; 
+						$backslashed = $c+1;
 					}
 					$new_json .= $char;
 					break;
@@ -543,10 +544,10 @@ class RestServer
 					}
 				default:
 					$new_json .= $char;
-					break;					
+					break;
 			}
 		}
-		
+
 		return $new_json;
 	}
 
@@ -591,10 +592,10 @@ class RestServer
 
 class RestException extends Exception
 {
-	
+
 	public function __construct($code, $message = null)
 	{
 		parent::__construct($message, $code);
 	}
-	
+
 }

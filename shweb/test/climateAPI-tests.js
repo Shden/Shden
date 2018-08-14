@@ -275,13 +275,13 @@ describe('/API/1.1/climate testing:', function() {
 				path: '/API/1.1/climate/data/temperature',
 				method: 'POST'
 			}, responce => {
-				var data = '';
+				var result = '';
 
 				responce.on('data', function(b) {
-					data += b;
+					result += b;
 				});
 				responce.on('end', function() {
-					responce.statusCode.should.be.equal(expectedStatusCode, data);
+					responce.statusCode.should.be.equal(expectedStatusCode, result);
 					done();
 				});
 			});

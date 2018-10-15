@@ -88,6 +88,7 @@ Class Status
 			$lighting->ChangeStatus('streetLight250', 0);
 			$lighting->ChangeStatus('streetLight150', 0);
 			$lighting->ChangeStatus('balkonLight', 0);
+			$lighting->ChangeStatus('fenceLight', 0);
 
 			$this->SetMains(0);
 		}

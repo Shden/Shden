@@ -39,6 +39,10 @@
 					<td>Свет на балконе 2-го этажа:</td>
 					<td><button id="balkonLight" class="btn btn-lg">...</button></a>
 				</tr>
+				<tr>
+					<td>Подсветка забора и парковки:</td>
+					<td><button id="fenceLight" class="btn btn-lg">...</button></a>
+				</tr>
 			</table>
 			<div id="spinner" class="spinner">
 		</div>
@@ -64,7 +68,7 @@
 
 					spinner.stop();
 					$('#spinner').hide();
-			    });
+				});
 		}
 
 		function refreshButtons(data)
@@ -72,6 +76,7 @@
 			refreshButtonView('streetLight250', data['streetLight250']);
 			refreshButtonView('streetLight150', data['streetLight150']);
 			refreshButtonView('balkonLight', data['balkonLight']);
+			refreshButtonView('fenceLight', data['fenceLight']);
 		}
 
 		function refreshButtonView(applianceId, applianceStatus)

@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  *	House lighting API endpoint. This API is desginged to control lighting on/off, status etc.
- */	
+ */
 Class Lighting
 {
 	/**
@@ -15,14 +15,16 @@ Class Lighting
 		$streetLight250Status = (int)`cat /home/den/Shden/appliances/streetLight250`;
 		$streetLight150Status = (int)`cat /home/den/Shden/appliances/streetLight150`;
 		$balkonLightStatus    = (int)`cat /home/den/Shden/appliances/balkonLight`;
+		$fenceLight	      = (int)`cat /home/den/Shden/appliances/fenceLight`;
 
 		return array(
 					"streetLight250" => $streetLight250Status,
 					"streetLight150" => $streetLight150Status,
-					"balkonLight"	 => $balkonLightStatus
-				);		
+					"balkonLight"	 => $balkonLightStatus,
+					"fenceLight"	 => $fenceLight
+				);
 	}
-	
+
 	/**
 	 *	Update specific appliance status.
 	 *

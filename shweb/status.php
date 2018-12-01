@@ -18,6 +18,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.css" integrity="sha256-4RzAUGJSSgMc9TaVEml6THMrB96T28MR6/2FJ3RCHBQ=" crossorigin="anonymous" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.js" integrity="sha256-8Roi9vOs6/KPNbW4O/JoZZoNFI/iM36Ekn0sklwEZa0=" crossorigin="anonymous"></script>
+
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
 </head>
 <body>
 

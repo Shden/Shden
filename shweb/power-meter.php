@@ -130,6 +130,7 @@
 	<script>
 		$(document).ready(function() {
 			refreshForm();
+			setInterval(refreshForm, 5000);
 		});
 
 		function refreshForm()

@@ -70,9 +70,6 @@
 			<h1>
 				Режим:
 				<span id="statusHdr" class="status-val">---</span>
-				<a role="button" class="btn btn-default" href="javascript:updateForm();">
-					<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-				</a>
 			</h1>
 			<h2>
 				Электропитание: <span id="mains">----</span>
@@ -132,6 +129,7 @@
 <script>
 	$(document).ready(function() {
 		updateForm();
+		setInterval(updateForm, 5000);
 	});
 
 	function updateForm()

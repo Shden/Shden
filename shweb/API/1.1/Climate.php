@@ -1,8 +1,6 @@
 <?php
 require_once ('../../include/sql2js.php');
 
-define(TZ, "MSK");
-
 /**
  *	House climate API endpoint. This API is desginged to control heating
  * 	system parameters including different heating schedules for various

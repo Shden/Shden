@@ -1,7 +1,7 @@
 <?php
 require_once ('../../include/sql2js.php');
 
-define($TZ, "MSK");
+define(TZ, "MSK");
 
 /**
  *	House climate API endpoint. This API is desginged to control heating
@@ -33,7 +33,7 @@ Class Climate
 			$this->GetConfigurationFileName());
 		$json = json_decode($configurationStr, true);
 
-		$time_zone = new DateTimeZone($TZ);
+		$time_zone = new DateTimeZone(TZ);
 		$arrival_date =
 			new DateTime($json["schedule"]["arrival"], $time_zone);
 		$departure_date =
@@ -103,7 +103,7 @@ Class Climate
 				"Invalid request parameter: $days.");
 
 		global $conn;
-		$time_zone = new DateTimeZone($TZ);
+		$time_zone = new DateTimeZone(TZ);
 
 		$res = $conn->query(
 			"SELECT DATE(time) as Date, HOUR(time) as Hour, " .
@@ -265,7 +265,7 @@ Class Climate
 				"Invalid request parameter: $days.");
 
 		global $conn;
-		$time_zone = new DateTimeZone($TZ);
+		$time_zone = new DateTimeZone(TZ);
 
 		if ($days <= 2)
 		{
@@ -367,7 +367,7 @@ Class Climate
 		$arr_year, $arr_month, $arr_day, $arr_hour,
 		$dep_year, $dep_month, $dep_day, $dep_hour)
 	{
-		$time_zone = new DateTimeZone($TZ);
+		$time_zone = new DateTimeZone(TZ);
 		$arrival = new DateTime(now, $time_zone);
 		$arrival->setDate($arr_year, $arr_month, $arr_day);
 		$arrival->setTime($arr_hour, 0);

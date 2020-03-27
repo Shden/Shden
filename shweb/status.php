@@ -80,10 +80,10 @@
 			Расход сегодня: <span id="power_today" class="power-val">--</span>
 			<div id="chart" />
 		</div>
-		<div>
+		<!--div>
 			<br/>
 			<a id="modeBtn" class="btn btn-lg btn-warning" role="button" href="javascript:Kettle();">Чайник!</a>
-		</div>
+		</div-->
 		<div class="page-header">
 			В доме: <span id="inside" class="temp-big">--.--</span>
 			На улице: <span id="outside" class="temp-big">--.--</span>

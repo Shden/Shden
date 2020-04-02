@@ -13,7 +13,7 @@ const heaterCutOffTemp		= 95.0;		/* Heater failure temperature */
 const EXIT_OK			= 0;
 const EXIT_FAILURE		= 1;
 
-const MAX_POWER			= 15800;	
+const MAX_POWER			= 16500;	
 const HEATER_POWER		= 13000;
 
 const CELCIUS			= '\u00B0C';

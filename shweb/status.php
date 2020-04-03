@@ -174,8 +174,11 @@
 		var power_now = $('#power_now');
 		var power_today = $('#power_today');
 
-		power_today.html(numeral(data.power.PT.ap).format('0.0') + ' кВт/ч');
-		renderPowerGauge(data.power.S.sum/1000);
+		if ('PT' in data.power && 'S' in data.power)
+		{
+			power_today.html(numeral(data.power.PT.ap).format('0.0') + ' кВт/ч');
+			renderPowerGauge(data.power.S.sum/1000);
+		}
 
 		formatTemp($('#MIN_INT_H24'), data.tempStat.day.inside.min);
 		formatTemp($('#AVG_INT_H24'), data.tempStat.day.inside.avg);

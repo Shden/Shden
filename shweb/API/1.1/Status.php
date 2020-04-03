@@ -32,6 +32,15 @@ Class Status
 		$climate = new Climate;
 		$electricity = new ElectricityConsumption;
 
+		try
+		{
+			$power = $electricity->GetPowerMeterData();
+		}
+		catch(RestException $e)
+		{
+			$power = $e->getMessage();
+		}
+
 		return array(
 			"climate" => array(
 				"outTemp" 	=> $outsideTemp,
@@ -42,7 +51,7 @@ Class Status
 				"starting"	=> $starting,
 				"mains"		=> $mainsStatus
 			),
-			"power" => $electricity->GetPowerMeterData(),
+			"power" => $power,
 			"tempStat" => array(
 				"day" 	=> $climate->GetTempStatistics(1),
 				"month" => $climate->GetTempStatistics(30)

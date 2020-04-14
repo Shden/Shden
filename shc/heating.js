@@ -254,7 +254,7 @@ function OnOff(value)
 // Might be combined measure e.g. avergage temperature etc.
 function getControlTemperature()
 {
-	return ow.getT(ow.sensors.bedroomSensor);
+	return ow.getT(ow.sensors.kitchenSensor);
 }
 
 // Heater control

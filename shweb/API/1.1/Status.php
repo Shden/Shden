@@ -30,7 +30,7 @@ Class Status
 		$kitchenTemp = (float)`cat /home/den/Shden/appliances/kitchenTemp`;
 		$mainsStatus = (int)`cat /home/den/Shden/appliances/mainsSwitch`;
 
-		$insideTemp = ($kitchenTemp + $bedRoomTemp) / 2;
+		$insideTemp = ($kitchenTemp + $bedRoomTemp) / 2.0;
 
 		$climate = new Climate;
 		$electricity = new ElectricityConsumption;

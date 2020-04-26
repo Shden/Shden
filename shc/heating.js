@@ -254,7 +254,15 @@ function OnOff(value)
 // Might be combined measure e.g. avergage temperature etc.
 function getControlTemperature()
 {
-	return ow.getT(ow.sensors.bedroomSensor);
+	return Promise.all([
+		ow.getT(ow.sensors.kitchenSensor),
+		ow.getT(ow.sensors.bedroomSensor)
+	])
+	.then(results => {
+		var kitchenTemp = results[0];
+		var bedroomTemp = results[1];
+		return (kitchenTemp + bedroomTemp) / 2;
+	});
 }
 
 // Heater control

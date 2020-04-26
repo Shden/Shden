@@ -7,7 +7,7 @@ global.OWDebugMode = true;
 
 describe('Heating Module Tests:', function() {
 
-	const T = 12.44;
+	const T = 18.07; // for kitchen and bedroom average T
 
 	describe('Check preset:', function() {
 		it(`44.2 на ТЭН (${ow.sensors.heaterSensor})`, function() {

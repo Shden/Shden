@@ -27,7 +27,10 @@ Class Status
 
 		$outsideTemp = (float)`cat /home/den/Shden/appliances/outsideTemp`;
 		$bedRoomTemp = (float)`cat /home/den/Shden/appliances/bedRoomTemp`;
+		$kitchenTemp = (float)`cat /home/den/Shden/appliances/kitchenTemp`;
 		$mainsStatus = (int)`cat /home/den/Shden/appliances/mainsSwitch`;
+
+		$insideTemp = ($kitchenTemp + $bedRoomTemp) / 2;
 
 		$climate = new Climate;
 		$electricity = new ElectricityConsumption;
@@ -44,7 +47,7 @@ Class Status
 		return array(
 			"climate" => array(
 				"outTemp" 	=> $outsideTemp,
-				"inTemp"	=> $bedRoomTemp
+				"inTemp"	=> $insideTemp
 			),
 			"mode" => array(
 				"presence"	=> $isin,

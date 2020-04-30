@@ -36,7 +36,9 @@
 						outTemp: "температура на улице",
 						heaterIn: "t вход котла",
 						heaterOut: "t выход котла",
-						saunaFloor: "t пол в сауне"
+						saunaFloor: "t пол в сауне",
+						bedroom: "наша спальня",
+						kitchen: "кухня"
 					},
 					hide: ["heaterIn", "heaterOut", "saunaFloor"]
 				},
@@ -53,7 +55,7 @@
 							{ value: 0 },
 							{ value: 2 },
 							{ value: 7 },
-							{ value: 21.5 },
+							{ value: 22.0 },
 						]
 					}
 				},

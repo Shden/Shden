@@ -28,7 +28,7 @@
 					xFormat: "%Y-%m-%dT%H:%M:%S%Z",
 					keys: {
 						x: "date",
-						value: ["inTemp", "outTemp", "heaterIn", "heaterOut", "saunaFloor"]
+						value: ["inTemp", "outTemp", "heaterIn", "heaterOut", "saunaFloor", "bedroom", "kitchen"]
 					},
 					type: "spline",
 					names: {

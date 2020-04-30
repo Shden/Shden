@@ -128,7 +128,9 @@ Class Climate
 				"outTemp" 	=> (float) $r["outTemp"],
 				"heaterIn"	=> (float) $r["heaterIn"],
 				"heaterOut"	=> (float) $r["heaterOut"],
-				"saunaFloor"	=> (float) $r["saunaFloor"]
+				"saunaFloor"	=> (float) $r["saunaFloor"],
+				"bedroom"	=> (float) $r["bedroom"],
+				"kitchen"	=> (float) $r["kitchen"]
 			);
 		}
 		$res->free();

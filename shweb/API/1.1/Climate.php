@@ -107,7 +107,7 @@ Class Climate
 
 		$res = $conn->query(
 			"SELECT DATE(time) as Date, HOUR(time) as Hour, " .
-			"AVG(external) as outTemp, AVG(bedroom) as inTemp, " .
+			"AVG(external) as outTemp, (AVG(bedroom) + AVG(kitchen)) / 2 as inTemp, " .
 			"AVG(fluid_in) as heaterIn, AVG(fluid_out) as heaterOut, " .
 			"AVG(sauna_floor) as saunaFloor " .
 			"FROM heating " .

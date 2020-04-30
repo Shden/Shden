@@ -470,5 +470,25 @@ Class Climate
 		`echo 1 >> /home/den/Shden/appliances/bathVentilationSwitch`;
 		return 1;
 	}
+
+	/**
+	 * 	Get floor heating state for all areas.
+	 * 
+	 * 	@url GET /FloorHeatingState
+	 */
+	public function GetFloorHeatingState()
+	{
+		$curl = curl_init();
+
+		curl_setopt($curl, CURLOPT_URL, "http://192.168.1.120/status");
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		
+		$result = curl_exec($curl);
+
+		curl_close($curl);
+
+		return $result;
+
+	}
 }
 ?>

@@ -27,14 +27,11 @@
 		<div class="container" align="center">
 			<h2>Управление теплыми полами</h2>
 			<div>
-                                <b>Холл сегмент 1:</b> температура <span id="segment0t">...</span>, нагрев <span id="segment0h">...</span>.
+				<a href="http://192.168.1.120/config">Холл, двойной регулятор (1370 + 1095 Вт)</a>.
                         </div>
 			<div>
-			        <b>Холл сегмент 2:</b> температура <span id="segment1t">...</span>, нагрев <span id="segment1h">...</span>.
+				<a href="http://192.168.1.120/config">Холл, одиночный регулятор (400 Вт)</a>.
                         </div>
-                        <br/>
-                        <a href="javascript:refreshForm();" id="hallSegment12Btn" class="btn" role="button">...</a>
-			<div id="spinner" class="spinner">
 		</div>
 	</div>
 

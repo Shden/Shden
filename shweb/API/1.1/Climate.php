@@ -1,7 +1,7 @@
 <?php
 require_once ('../../include/sql2js.php');
 
-date_default_timezone_set("MSK");
+date_default_timezone_set("Europe/Moscow");
 
 /**
  *	House climate API endpoint. This API is desginged to control heating

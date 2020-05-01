@@ -22,140 +22,184 @@
 			?>
 
 			<h2>Настройки системы отопления:</h2>
-			<form  class="form-horizontal">
-				<div class="form-group">
+			<form>
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="standbyTemperature">
-						Температура в режиме ожидания, день (&deg;С):</label>
-					<div class="date col-sm-1">
+						Температура в режиме ожидания, день:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="standbyTemperature"
-							format="0.0"/>
+							format="0.0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="standbyTemperatureAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="standbyNightTemperature">
-						ночь (&deg;С):</label>
-					<div class="date col-sm-1">
+						ночь:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="standbyNightTemperature"
-							format="0.0"/>
+							format="0.0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="standbyNightTemperatureAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="presenceTemperature">
-						Температура в режиме присутствия (&deg;С):</label>
-					<div class="date col-sm-1">
+						Температура в режиме присутствия:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="presenceTemperature"
-							format="0.0"/>
+							format="0.0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="presenceTemperatureAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="tempDelta">
-						Точность поддержания температуры (&deg;С):</label>
-					<div class="date col-sm-1">
+						Точность поддержания температуры:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="tempDelta"
-							format="0.00"/>
+							format="0.00"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="tempDeltaAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="stopPumpTempDelta">
-						Помпа отключается при разнице температур по контуру менее (&deg;С):</label>
-					<div class="date col-sm-1">
+						Помпа отключается при разнице температур по контуру менее:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="stopPumpTempDelta"
-							format="0.00"/>
+							format="0.00"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="stopPumpTempDeltaAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="electricHeaterOffTemp">
-						Отключаем ТЭН, если котел нагревает воду до (&deg;С):</label>
-					<div class="date col-sm-1">
+						Отключаем ТЭН, если котел нагревает воду до:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="electricHeaterOffTemp"
-							format="0.0"/>
+							format="0.0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="electricHeaterOffTempAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="saunaFloorTemp">
 						Температура теплого пола в сауне (&deg;С):</label>
-					<div class="date col-sm-1">
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="saunaFloorTemp"
-							format="0.0"/>
+							format="0.0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="saunaFloorTempAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="comfortSleepStartHour">
-						Режима комфортного сна, начало (часов):</label>
-					<div class="date col-sm-1">
+						Режима комфортного сна, начало:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="comfortSleepStartHour"
-							format="0"/>
+							format="0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">час</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="comfortSleepStartHourAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="comfortSleepEndHour">
-						окончание (часов):</label>
-					<div class="date col-sm-1">
+						окончание:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="comfortSleepEndHour"
-							format="0"/>
+							format="0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">час</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="comfortSleepEndHourAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="comfortSleepTargetTemperature">
-						Температура в спальнях в режиме комфортного сна (&deg;С):</label>
-					<div class="date col-sm-1">
+						Температура в спальнях в режиме комфортного сна:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="comfortSleepTargetTemperature"
-							format="0.0"/>
+							format="0.0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="comfortSleepTargetTemperatureAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="advanceNightHeating">
-						Ночной предварительный подогрев заранее (часов):</label>
-					<div class="date col-sm-1">
+						Ночной предварительный подогрев заранее:</label>
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control"
 							id="advanceNightHeating"
-							format="0"/>
+							format="0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">час</span>
+  						</div>
 					</div>
 					<label class="control-label col-sm-3" id="advanceNightHeatingAlert">
 						<strong></strong>
 					</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<div class="col-sm-offset-6 col-sm-10">
 						<a class="btn btn-primary"
 							href="javascript:updateConfiguration()">
@@ -169,7 +213,6 @@
 				</div>
 				</div>
 			</form>
-
 
 		</div>
 		<div id="spinner" class="spinner"/>

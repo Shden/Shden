@@ -1,41 +1,46 @@
 <!-- Static navbar -->
-<div class="navbar navbar-default navbar-inverse" role="navigation">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="#"><b>Брод</b></a>
-	</div>
-	<div class="navbar-collapse collapse">
-		<ul class="nav navbar-nav">
-			<li><a href="status.php">Состояние дома</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Климат <b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="schedule.php">Таймер отопления</a></li>
-					<li><a href="temperature.php">Температурный график</a></li>
-					<li><a href="humidity.php">Уровень влажности</a></li>
-					<li><a href="ventilation.php">Вентиляция</a></li>
-					<li><a href="floorheating.php">Теплые полы</a></li>
-					<li class="divider"></li>
-					<li><a href="logview.php?log=heating.log">Лог отопления</a></li>
-					<li><a href="logview.php?log=ventilation.log">Лог влажности</a></li>
-					<li class="divider"></li>
-					<li><a href="config.php">Настройки</a></li>
-				</ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<a class="navbar-brand" href="#">Брод</a>
+  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    		<span class="navbar-toggler-icon"></span>
+  	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="status.php">Состояние дома</a>
 			</li>
-			<li><a href="lighting.php">Освещение</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Электроэнергия <b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="power-meter.php">Электросчетчик</a></li>
-					<li><a href="power-stat.php">Статистика</a></li>
-					<li><a href="heatingConsumption.php">Расход на отопление</a></li>
-				</ul>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Климат
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="schedule.php">Таймер отопления</a>
+					<a class="dropdown-item" href="temperature.php">Температурный график</a>
+					<a class="dropdown-item" href="humidity.php">Уровень влажности</a>
+					<a class="dropdown-item" href="ventilation.php">Вентиляция</a>
+					<a class="dropdown-item" href="floorheating.php">Теплые полы</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="logview.php?log=heating.log">Лог отопления</a>
+					<a class="dropdown-item" href="logview.php?log=ventilation.log">Лог влажности</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="config.php">Настройки</a>
+				</div>
+			</li>
+			<li class="nav-item active">
+				<a class="nav-link" href="lighting.php">Освещение</a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Электроэнергия
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="power-meter.php">Электросчетчик</a>
+					<a class="dropdown-item" href="power-stat.php">Статистика</a>
+					<a class="dropdown-item" href="heatingConsumption.php">Расход на отопление</a>
+				</div>
 			</li>
 		</ul>
-	</div><!--/.nav-collapse -->
-</div>
+	</div>
+</nav>
+<br/>

@@ -21,8 +21,8 @@
 			include 'include/js.php';
 			?>
 
-			<h2>Настройки системы отопления:</h2>
 			<form>
+				<h2>Настройки основной системы отопления:</h2>
 				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="standbyTemperature">
 						Температура в режиме ожидания, день:</label>
@@ -120,22 +120,6 @@
 					</label>
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-6 control-label" for="saunaFloorTemp">
-						Температура теплого пола в сауне (&deg;С):</label>
-					<div class="input-group col-sm-2">
-						<input type="text" class="form-control"
-							id="saunaFloorTemp"
-							format="0.0"
-							style="text-align:right;"/>
-						<div class="input-group-append">
-    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
-  						</div>
-					</div>
-					<label class="control-label col-sm-3" id="saunaFloorTempAlert">
-						<strong></strong>
-					</label>
-				</div>
-				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="comfortSleepStartHour">
 						Режима комфортного сна, начало:</label>
 					<div class="input-group col-sm-2">
@@ -199,6 +183,38 @@
 						<strong></strong>
 					</label>
 				</div>
+				<h2>Настройка теплых полов</h2>
+				<div class="form-group row">
+					<label class="col-sm-6 control-label" for="saunaFloorTemp">
+						Температура теплого пола в сауне:</label>
+					<div class="input-group col-sm-2">
+						<input type="text" class="form-control"
+							id="saunaFloorTemp"
+							format="0.0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
+					</div>
+					<label class="control-label col-sm-3" id="saunaFloorTempAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-6 control-label">
+						Холл, двойной регулятор (1370 + 1095 Вт):</label>
+					<div class="input-group col-sm-2">
+						<a class="btn btn-outline-secondary btn-block btn-sm" href="http://192.168.1.120/config">настроить >></a>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-6 control-label">
+						Холл, одиночный регулятор (400 Вт):</label>
+					<div class="input-group col-sm-2">
+						<a class="btn btn-outline-secondary btn-block btn-sm" href="http://192.168.1.121/config">настроить >></a>
+					</div>
+				</div>
+
 				<div class="form-group row">
 					<div class="col-sm-offset-6 col-sm-10">
 						<a class="btn btn-primary"

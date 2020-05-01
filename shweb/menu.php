@@ -19,7 +19,6 @@
 					<a class="dropdown-item" href="temperature.php">Температурный график</a>
 					<a class="dropdown-item" href="humidity.php">Уровень влажности</a>
 					<a class="dropdown-item" href="ventilation.php">Вентиляция</a>
-					<a class="dropdown-item" href="floorheating.php">Теплые полы</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="logview.php?log=heating.log">Лог отопления</a>
 					<a class="dropdown-item" href="logview.php?log=ventilation.log">Лог влажности</a>

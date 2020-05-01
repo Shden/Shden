@@ -43,7 +43,7 @@ Class Climate
 		return array(
 			"from" 	=> $arrival_date->format(DateTime::ATOM),
 			"to" => $departure_date->format(DateTime::ATOM),
-			"active" => $departure_date > new DateTime(now, $time_zone) ? 1 : 0
+			"active" => $departure_date > new DateTime("now", $time_zone) ? 1 : 0
 		);
 	}
 

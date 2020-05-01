@@ -72,6 +72,22 @@
 					</label>
 				</div>
 				<div class="form-group row">
+					<label class="col-sm-6 control-label" for="comfortSleepTargetTemperature">
+						Температура в спальнях в режиме комфортного сна:</label>
+					<div class="input-group col-sm-2">
+						<input type="text" class="form-control"
+							id="comfortSleepTargetTemperature"
+							format="0.0"
+							style="text-align:right;"/>
+						<div class="input-group-append">
+    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
+  						</div>
+					</div>
+					<label class="control-label col-sm-3" id="comfortSleepTargetTemperatureAlert">
+						<strong></strong>
+					</label>
+				</div>
+				<div class="form-group row">
 					<label class="col-sm-6 control-label" for="tempDelta">
 						Точность поддержания температуры:</label>
 					<div class="input-group col-sm-2">
@@ -148,22 +164,6 @@
   						</div>
 					</div>
 					<label class="control-label col-sm-3" id="comfortSleepEndHourAlert">
-						<strong></strong>
-					</label>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-6 control-label" for="comfortSleepTargetTemperature">
-						Температура в спальнях в режиме комфортного сна:</label>
-					<div class="input-group col-sm-2">
-						<input type="text" class="form-control"
-							id="comfortSleepTargetTemperature"
-							format="0.0"
-							style="text-align:right;"/>
-						<div class="input-group-append">
-    							<span class="input-group-text" id="basic-addon2">&deg;С</span>
-  						</div>
-					</div>
-					<label class="control-label col-sm-3" id="comfortSleepTargetTemperatureAlert">
 						<strong></strong>
 					</label>
 				</div>

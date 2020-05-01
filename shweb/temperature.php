@@ -73,6 +73,14 @@
 					y: {
 						label: "Температура"
 					}
+				},
+				tooltip: {
+					show: true,
+					format: {
+						value: function (value, ratio, id, index) { 
+							return numeral(value).format("0.0") + " &deg;C"; 
+						}
+					}
 				}
 			}');
 		?>

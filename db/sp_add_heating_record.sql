@@ -21,8 +21,7 @@ CREATE PROCEDURE SP_ADD_HEATING_RECORD(
 	bathroom_1_heatingOn	TINYINT		-- is sauna floor heating on
 )
 BEGIN
-	DECLARE ts DATETIME;
-	DECLARE ticksCount INT;
+	DECLARE thisMinute, nextMinunte, tickTime DATETIME;
 
 	SELECT SUBTIME(NOW(), SEC_TO_TIME(SECOND(NOW()))) INTO thisMinute;
 	SELECT DATE_ADD(thisMinute, INTERVAL 1 MINUTE) INTO nextMinunte;

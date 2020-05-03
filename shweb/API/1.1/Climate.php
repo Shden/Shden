@@ -112,8 +112,8 @@ Class Climate
 			"AVG(external) as outTemp, (AVG(bedroom) + AVG(kitchen)) / 2 as inTemp, " .
 			"AVG(bedroom) as bedroom, AVG(kitchen) as kitchen, " .
 			"AVG(fluid_in) as heaterIn, AVG(fluid_out) as heaterOut, " .
-			"AVG(sauna_floor) as saunaFloor " .
-			"AVG(hall_floor_1) as hall_floor_1, AVG(hall_floor_2) as hall_floor_2, AVG(hall_floor_3) as hall_floor_3, " .
+			"AVG(sauna_floor) as saunaFloor, " .
+			"AVG(hall_floor_1) as hall_floor_1, AVG(hall_floor_2) as hall_floor_2, AVG(hall_floor_3) as hall_floor_3 " .
 			"FROM heating " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 			"GROUP BY HOUR(time), DATE(time) " .
@@ -133,7 +133,10 @@ Class Climate
 				"heaterOut"	=> (float) $r["heaterOut"],
 				"saunaFloor"	=> (float) $r["saunaFloor"],
 				"bedroom"	=> (float) $r["bedroom"],
-				"kitchen"	=> (float) $r["kitchen"]
+				"kitchen"	=> (float) $r["kitchen"],
+				"hall_floor_1"	=> (float) $r["hall_floor_1"],
+				"hall_floor_2"	=> (float) $r["hall_floor_2"],
+				"hall_floor_3"	=> (float) $r["hall_floor_3"]
 			);
 		}
 		$res->free();

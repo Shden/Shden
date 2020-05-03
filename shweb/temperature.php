@@ -28,7 +28,11 @@
 					xFormat: "%Y-%m-%dT%H:%M:%S%Z",
 					keys: {
 						x: "date",
-						value: ["inTemp", "outTemp", "heaterIn", "heaterOut", "saunaFloor", "bedroom", "kitchen"]
+						value: [
+							"inTemp", "outTemp", "heaterIn", "heaterOut", 
+							"saunaFloor", "bedroom", "kitchen",
+							"hall_floor_1", "hall_floor_2", "hall_floor_3" 
+							]
 					},
 					type: "spline",
 					names: {
@@ -38,9 +42,15 @@
 						heaterOut: "t выход котла",
 						saunaFloor: "t пол в сауне",
 						bedroom: "наша спальня",
-						kitchen: "кухня"
+						kitchen: "кухня",
+						hall_floor_1: "пол в холле сегмент 1",
+						hall_floor_2: "пол в холле сегмент 2",
+						hall_floor_3: "пол в холле сегмент 3"
 					},
-					hide: ["heaterIn", "heaterOut", "saunaFloor"]
+					hide: [
+						"heaterIn", "heaterOut", "saunaFloor", 
+						"hall_floor_1", "hall_floor_2", "hall_floor_3" 
+						]
 				},
 				zoom: {
 					enabled: true

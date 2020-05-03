@@ -113,6 +113,7 @@ Class Climate
 			"AVG(bedroom) as bedroom, AVG(kitchen) as kitchen, " .
 			"AVG(fluid_in) as heaterIn, AVG(fluid_out) as heaterOut, " .
 			"AVG(sauna_floor) as saunaFloor " .
+			"AVG(hall_floor_1) as hall_floor_1, AVG(hall_floor_2) as hall_floor_2, AVG(hall_floor_3) as hall_floor_3, " .
 			"FROM heating " .
 			"WHERE time > DATE_ADD(NOW(), INTERVAL -$days DAY) " .
 			"GROUP BY HOUR(time), DATE(time) " .

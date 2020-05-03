@@ -1,5 +1,6 @@
 <?php
 require_once ('../../include/sql2js.php');
+use Jacwright\RestServer;
 
 date_default_timezone_set("Europe/Moscow");
 

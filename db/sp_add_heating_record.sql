@@ -26,15 +26,15 @@ BEGIN
 
 	SELECT SUBTIME(NOW(), SEC_TO_TIME(SECOND(NOW()))) INTO thisMinute;
 	SELECT DATE_ADD(thisMinStart, INTERVAL 1 MINUTE) INTO nextMinunte;
-	SELECT COUNT(*) FROM heating WHERE time >= thisMinute AND time < nextMinunte ts INTO ticksCount;
+	SELECT MIN(time) FROM heating WHERE time >= thisMinute AND time < nextMinunte ts INTO tickTime;
 
-	IF ticksCount = 0 THEN
+	IF ISNULL(tickTime) THEN
 		INSERT INTO heating
 		(time, heater, fluid_in, fluid_out, external,
 		am_bedroom, bedroom, cabinet, sasha_bedroom,
 		kitchen, bathroom, sauna_floor, control, heating,
 		pump, sauna_heating)
-		VALUES (ts,
+		VALUES (NOW(),
 		heater, fluid_in, fluid_out, external,
 		am_bedroom, bedroom, cabinet, child_bedroom,
 		kitchen, bathroom_1, bathroom_1_floor, control, heatingOn,
@@ -50,7 +50,7 @@ BEGIN
 		h.sauna_floor = bathroom_1_floor, h.control = control,
 		h.heating = heatingOn, h.pump = pumpOn,
 		h.sauna_heating = bathroom_1_heatingOn
-		WHERE time = ts;
+		WHERE time = tickTime;
 	END IF;
 
 END//

@@ -12,25 +12,25 @@ BEGIN
 
 	SELECT SUBTIME(NOW(), SEC_TO_TIME(SECOND(NOW()))) INTO thisMinute;
 	SELECT DATE_ADD(thisMinStart, INTERVAL 1 MINUTE) INTO nextMinunte;
-	SELECT COUNT(*) FROM heating WHERE time >= thisMinute AND time < nextMinunte ts INTO ticksCount;
+	SELECT MIN(time) FROM heating WHERE time >= thisMinute AND time < nextMinunte ts INTO tickTime;
 
 	IF sensorId = '28FF513D92150353' THEN /* hall_floor_1 */
-		IF ticksCount = 0 THEN
-			INSERT INTO heating (time, hall_floor_1) VALUES (ts, value);
+		IF ISNULL(tickTime) THEN
+			INSERT INTO heating (time, hall_floor_1) VALUES (NOW(), value);
 		ELSE
-			UPDATE heating SET hall_floor_1 = value WHERE time = ts;
+			UPDATE heating SET hall_floor_1 = value WHERE time = tickTime;
 		END IF;
 	ELSEIF sensorId = '28FF3F7292150126' THEN /* hall_floor_2 */
-		IF ticksCount = 0 THEN
-			INSERT INTO heating (time, hall_floor_2) VALUES (ts, value);
+		IF ISNULL(tickTime) THEN
+			INSERT INTO heating (time, hall_floor_2) VALUES (NOW(), value);
 		ELSE
-			UPDATE heating SET hall_floor_2 = value WHERE time = ts;
+			UPDATE heating SET hall_floor_2 = value WHERE time = tickTime;
 		END IF;
 	ELSEIF sensorId = '28FF263D9215036F' THEN /* hall_floor_3 */
-		IF ticksCount = 0 THEN
-			INSERT INTO heating (time, hall_floor_3) VALUES (ts, value);
+		IF ISNULL(tickTime) THEN
+			INSERT INTO heating (time, hall_floor_3) VALUES (NOW(), value);
 		ELSE
-			UPDATE heating SET hall_floor_3 = value WHERE time = ts;
+			UPDATE heating SET hall_floor_3 = value WHERE time = tickTime;
 		END IF;
 	ELSE
 		SIGNAL SQLSTATE '80002'

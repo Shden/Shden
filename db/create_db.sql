@@ -12,6 +12,9 @@ CREATE TABLE IF NOT EXISTS heating (
 	bathroom 	DECIMAL(5,2),
 	control 	DECIMAL(5,2),
 	sauna_floor	DECIMAL(5,2),
+	hall_floor_1	DECIMAL(5,2),	/* 1st segment to the windows */
+	hall_floor_2	DECIMAL(5,2),	/* 2nd segment in the middle */
+	hall_floor_3	DECIMAL(5,2),	/* 3rd small segment */
 	heating		TINYINT,
 	pump		TINYINT,
 	sauna_heating	TINYINT,

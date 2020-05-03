@@ -24,8 +24,9 @@ BEGIN
 	DECLARE ts DATETIME;
 	DECLARE ticksCount INT;
 
-	SELECT NOW() INTO ts;
-	SELECT COUNT(*) FROM heating WHERE time = ts INTO ticksCount;
+	SELECT SUBTIME(NOW(), SEC_TO_TIME(SECOND(NOW()))) INTO thisMinute;
+	SELECT DATE_ADD(thisMinStart, INTERVAL 1 MINUTE) INTO nextMinunte;
+	SELECT COUNT(*) FROM heating WHERE time >= thisMinute AND time < nextMinunte ts INTO ticksCount;
 
 	IF ticksCount = 0 THEN
 		INSERT INTO heating

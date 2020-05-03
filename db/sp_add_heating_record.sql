@@ -25,7 +25,7 @@ BEGIN
 	DECLARE ticksCount INT;
 
 	SELECT SUBTIME(NOW(), SEC_TO_TIME(SECOND(NOW()))) INTO thisMinute;
-	SELECT DATE_ADD(thisMinStart, INTERVAL 1 MINUTE) INTO nextMinunte;
+	SELECT DATE_ADD(thisMinute, INTERVAL 1 MINUTE) INTO nextMinunte;
 	SELECT MIN(time) FROM heating WHERE time >= thisMinute AND time < nextMinunte ts INTO tickTime;
 
 	IF ISNULL(tickTime) THEN

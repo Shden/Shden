@@ -1,5 +1,7 @@
 <?php
 
+use Jacwright\RestServer\RestException;
+
 /**
  *	House lighting API endpoint. This API is desginged to control lighting on/off, status etc.
  */

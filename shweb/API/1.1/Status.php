@@ -1,6 +1,8 @@
 <?php
 require_once ('../../include/db.inc');
 
+use Jacwright\RestServer\RestException;
+
 /**
  *	House status API endpoint. This API is primarely works with overall house status, including status snaps for remote
  *	monitoring and status changing.

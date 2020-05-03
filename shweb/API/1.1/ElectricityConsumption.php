@@ -1,6 +1,8 @@
 <?php
 require_once ('../../include/sql2js.php');
 
+use Jacwright\RestServer\RestException;
+
 /**
  *	Electricity consumption API, including power meter data, aggregated consumption data and
  *	historical data.

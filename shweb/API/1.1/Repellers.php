@@ -1,6 +1,8 @@
 <?php
 require_once ('../../include/db.inc');
 
+use Jacwright\RestServer\RestException;
+
 /**
  *	Repellers control API endpoint.
  *	This is to control rodents repeller(s) in the house.

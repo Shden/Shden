@@ -27,7 +27,7 @@ BEGIN
 	SELECT DATE_ADD(thisMinute, INTERVAL 1 MINUTE) INTO nextMinunte;
 	SELECT MIN(time) FROM heating WHERE time >= thisMinute AND time < nextMinunte ts INTO tickTime;
 
-	IF ISNULL(tickTime) THEN
+	IF ISNULL(tickTime) = 1 THEN
 		INSERT INTO heating
 		(time, heater, fluid_in, fluid_out, external,
 		am_bedroom, bedroom, cabinet, sasha_bedroom,

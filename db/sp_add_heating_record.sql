@@ -25,7 +25,7 @@ BEGIN
 
 	SELECT SUBTIME(NOW(), SEC_TO_TIME(SECOND(NOW()))) INTO thisMinute;
 	SELECT DATE_ADD(thisMinute, INTERVAL 1 MINUTE) INTO nextMinunte;
-	SELECT MIN(time) FROM heating WHERE time >= thisMinute AND time < nextMinunte ts INTO tickTime;
+	SELECT MIN(time) FROM heating WHERE time >= thisMinute AND time < nextMinunte INTO tickTime;
 
 	IF ISNULL(tickTime) = 1 THEN
 		INSERT INTO heating

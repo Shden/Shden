@@ -11,7 +11,7 @@ BEGIN
 
 	SELECT SUBTIME(NOW(), SEC_TO_TIME(SECOND(NOW()))) INTO thisMinute;
 	SELECT DATE_ADD(thisMinute, INTERVAL 1 MINUTE) INTO nextMinunte;
-	SELECT MIN(time) FROM heating WHERE time >= thisMinute AND time < nextMinunte ts INTO tickTime;
+	SELECT MIN(time) FROM heating WHERE time >= thisMinute AND time < nextMinunte INTO tickTime;
 
 	IF sensorId = '28FF513D92150353' THEN /* hall_floor_1 */
 		IF ISNULL(tickTime) = 1 THEN

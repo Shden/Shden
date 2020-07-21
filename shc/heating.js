@@ -13,7 +13,7 @@ const heaterCutOffTemp		= 95.0;		/* Heater failure temperature */
 const EXIT_OK			= 0;
 const EXIT_FAILURE		= 1;
 
-const MAX_POWER			= 16500;	
+const MAX_POWER			= 16500;
 const HEATER_POWER		= 13000;
 
 const CELCIUS			= '\u00B0C';
@@ -598,6 +598,7 @@ function getPowerMeterData()
 	return new Promise((resolved, rejected) => {
 		http.get(addAuthorizationHeader({
 			host: 'localhost',
+			port: 81,
 			path: '/API/1.1/consumption/electricity/GetPowerMeterData'
 		}), responce => {
 			if (responce.statusCode != 200)
@@ -645,6 +646,7 @@ function postDataPoint(dataPoint)
 	return new Promise((resolved, rejected) => {
 		var request = http.request(addAuthorizationHeader({
 			host: 'localhost',
+			port: 81,
 			path: '/API/1.1/climate/data/heating',
 			method: 'POST'
 		}), responce => {

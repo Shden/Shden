@@ -206,7 +206,7 @@
 			modeBtn.addClass('btn-primary').removeClass('btn-danger');
 			modeBtn.attr('href', 'javascript:SetHouseMode(0)');
 		}
-		else if (data.mode.presence == 0) {
+		else {
 			statusHdr.html('Ожидание');
 			modeBtn.html('В режим присутствия');
 			modeBtn.addClass('btn-danger').removeClass('btn-primary');

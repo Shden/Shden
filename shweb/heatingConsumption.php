@@ -22,22 +22,12 @@
 
 		<h2>Энергопотребление системы отопления, интервал в днях: <span id="daysCount">...</span></h2>
 
-		<div class="btn-group" data-toggle="buttons">
-			<label onclick="refreshForm(1)" class="btn btn-primary">
-			  <input type="radio" name="options" id="option1" autocomplete="off">Сутки
-			</label>
-			<label onclick="refreshForm(2)" class="btn btn-primary">
-			  <input type="radio" name="options" id="option2" autocomplete="off">Двое суток
-			</label>
-			<label onclick="refreshForm(7)" class="btn btn-primary active">
-			  <input type="radio" name="options" id="option3" autocomplete="off" checked>Неделя
-			</label>
-			<label onclick="refreshForm(14)" class="btn btn-primary">
-			  <input type="radio" name="options" id="option3" autocomplete="off">2 недели
-			</label>
-			<label onclick="refreshForm(31)" class="btn btn-primary">
-			  <input type="radio" name="options" id="option3" autocomplete="off">Месяц
-			</label>
+		<div class="btn-group" data-toggle="group">
+			<button onclick="refreshForm(1)" type="button" class="btn btn-secondary">Сутки</button>
+			<button onclick="refreshForm(2)" type="button" class="btn btn-secondary">Двое суток</button>
+			<button onclick="refreshForm(7)" type="button" class="btn btn-secondary">Неделя</button>
+			<button onclick="refreshForm(14)" type="button" class="btn btn-secondary">2 недели</button>
+			<button onclick="refreshForm(31)" type="button" class="btn btn-secondary">Месяц</button>
 		</div>
 		<br/><br/>
 		<table class="table table-striped table-condensed">

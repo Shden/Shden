@@ -27,9 +27,14 @@ Class Status
 			$starting = $r["time"];
 		}
 
-		$outsideTemp = (float)`cat /home/den/Shden/appliances/outsideTemp`;
-		$bedRoomTemp = (float)`cat /home/den/Shden/appliances/bedRoomTemp`;
-		$kitchenTemp = (float)`cat /home/den/Shden/appliances/kitchenTemp`;
+		$res = $conn->query("SELECT external, kitchen, bedroom FROM heating WHERE time > date_sub(now(), INTERVAL 5 MINUTE) order by time desc limit 1;") or die($conn->error);
+		if ($r = $res->fetch_assoc())
+		{
+			$outsideTemp = $r["external"];
+			$bedRoomTemp = $r["bedroom"];
+			$kitchenTemp = $r["kitchen"];	
+		}
+
 		$mainsStatus = (int)`cat /home/den/Shden/appliances/mainsSwitch`;
 
 		$insideTemp = ($kitchenTemp + $bedRoomTemp) / 2.0;
@@ -56,11 +61,7 @@ Class Status
 				"starting"	=> $starting,
 				"mains"		=> $mainsStatus
 			),
-			"power" => $power,
-			"tempStat" => array(
-				"day" 	=> $climate->GetTempStatistics(1),
-				"month" => $climate->GetTempStatistics(30)
-			)
+			"power" => $power
 		);
 	}
 

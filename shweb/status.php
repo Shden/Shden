@@ -88,40 +88,6 @@
 			В доме: <span id="inside" class="temp-big">--.--</span>
 			На улице: <span id="outside" class="temp-big">--.--</span>
 		</div>
-		<div>
-			<div class="col-md-6">
-				<table>
-					<tr>
-						<td><b>24 часа:</b></td>
-						<td><small>[min/avg/max] <a href="temperature.php?days=1">Подробнее >></a></small></td>
-					</tr>
-					<tr>
-						<td>&nbsp;в доме</td>
-						<td><span id="MIN_INT_H24"></span>/<span id="AVG_INT_H24"></span>/<span id="MAX_INT_H24"></span></td>
-					</tr>
-					<tr>
-						<td>&nbsp;на улице</td>
-						<td><span id="MIN_EXT_H24"></span>/<span id="AVG_EXT_H24"></span>/<span id="MAX_EXT_H24"></span></td>
-					</tr>
-				</table>
-			</div>
-			<div class="col-md-6">
-				<table>
-					<tr>
-						<td><b>30 дней:</b></td>
-						<td><small>[min/avg/max] <a href="temperature.php?days=30">Подробнее >></a></small></td>
-					</tr>
-					<tr>
-						<td>&nbsp;в доме</td>
-						<td><span id="MIN_INT_D30"></span>/<span id="AVG_INT_D30"></span>/<span id="MAX_INT_D30"></span></td>
-					</tr>
-					<tr>
-						<td>&nbsp;на улице</td>
-						<td><span id="MIN_EXT_D30"></span>/<span id="AVG_EXT_D30"></span>/<span id="MAX_EXT_D30"></span></td>
-					</tr>
-				</table>
-			</div>
-		</div>
 	</div>
 	<div id="spinner" class="spinner"/>
 </div>
@@ -129,7 +95,7 @@
 <script>
 	$(document).ready(function() {
 		updateForm();
-		setInterval(updateForm, 5000);
+		setInterval(updateForm, 30000);
 	});
 
 	function updateForm()
@@ -179,22 +145,6 @@
 			power_today.html(numeral(data.power.PT.ap).format('0.0') + ' кВт/ч');
 			renderPowerGauge(data.power.S.sum/1000);
 		}
-
-		formatTemp($('#MIN_INT_H24'), data.tempStat.day.inside.min);
-		formatTemp($('#AVG_INT_H24'), data.tempStat.day.inside.avg);
-		formatTemp($('#MAX_INT_H24'), data.tempStat.day.inside.max);
-
-		formatTemp($('#MIN_EXT_H24'), data.tempStat.day.outside.min);
-		formatTemp($('#AVG_EXT_H24'), data.tempStat.day.outside.avg);
-		formatTemp($('#MAX_EXT_H24'), data.tempStat.day.outside.max);
-
-		formatTemp($('#MIN_INT_D30'), data.tempStat.month.inside.min);
-		formatTemp($('#AVG_INT_D30'), data.tempStat.month.inside.avg);
-		formatTemp($('#MAX_INT_D30'), data.tempStat.month.inside.max);
-
-		formatTemp($('#MIN_EXT_D30'), data.tempStat.month.outside.min);
-		formatTemp($('#AVG_EXT_D30'), data.tempStat.month.outside.avg);
-		formatTemp($('#MAX_EXT_D30'), data.tempStat.month.outside.max);
 
 		var modeBtn = $('#modeBtn');
 		var statusHdr = $('#statusHdr');

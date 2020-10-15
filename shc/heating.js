@@ -17,7 +17,7 @@ const MAX_POWER			= 16500;
 const HEATER_POWER		= 13000;
 
 const CELCIUS			= '\u00B0C';
-const BUILD			= '0.4';
+const BUILD			= '0.4.1';
 
 const ON			= 1;
 const OFF			= 0;

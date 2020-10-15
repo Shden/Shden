@@ -152,8 +152,8 @@ function main()
 					bathroom_1		: bathroomTemp,
 					bathroom_1_floor	: saunaFloorTemp,
 					control			: controlTemp,
-					heating			: heaterState,
-					pump			: pumpState,
+					heating			: 0,	// deprecated
+					pump			: 0,	// deprecated
 					bathroom_1_heating	: saunaFloorHeatingState
 				})
 				.then(() => {

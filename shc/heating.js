@@ -131,16 +131,11 @@ function main()
 		.then(results => {
 			var saunaFloorHeatingState = results[0];
 
-			printOutKV(printMode, 'Heater', OnOff(0)); // deprecated but stay as 0 to keep CSV format now
+			printOutKV(printMode, 'Heater', OnOff(0));	// deprecated but stay as 0 to keep CSV format now
 			printOutKV(printMode, 'Sauna floor',
 				OnOff(saunaFloorHeatingState));
 
-			// -- Control pump
-			var pumpState = controlPump([controlTemp,
-				electricHeaterTemp, ingoingFluidTemp,
-				outgoingFluidTemp, bathroomTemp, kitchenTemp,
-				childrenSmallTemp]);
-			printOutKV(printMode, 'Pump', OnOff(pumpState));
+			printOutKV(printMode, 'Pump', OnOff(0));	// deprecated but stay as 0 to keep CSV format now
 
 			// -- Post data point
 			postDataPoint(

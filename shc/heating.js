@@ -17,7 +17,7 @@ const MAX_POWER			= 16500;
 const HEATER_POWER		= 13000;
 
 const CELCIUS			= '\u00B0C';
-const BUILD			= '0.4.1';
+const BUILD			= '0.4.2';
 
 const ON			= 1;
 const OFF			= 0;
@@ -46,14 +46,6 @@ if (require.main === module)
 // Main logic
 function main()
 {
-	if (wasOverheated())
-	{
-		setHeater(OFF);
-		setPump(ON);
-		console.log('Previous heater failure detected. Cannot run.');
-		return EXIT_FAILURE;
-	}
-
 	// -- Check the command line options
 	var cmdOptions = parseCommandLine(process.argv);
 	if (cmdOptions.invalid != null)
@@ -127,11 +119,6 @@ function main()
 		// -- Control everything
 		Promise.all([
 
-			// -- Control heater
-			controlHeater(
-				controlTemp, electricHeaterTemp,
-				outgoingFluidTemp, consumption),
-
 			// -- Control sauna floor temp
 			controlSaunaFloor(saunaFloorTemp,
 				configuration.heating.saunaFloorTemp),
@@ -142,10 +129,9 @@ function main()
 			})
 		])
 		.then(results => {
-			var heaterState = results[0];
-			var saunaFloorHeatingState = results[1];
+			var saunaFloorHeatingState = results[0];
 
-			printOutKV(printMode, 'Heater', OnOff(heaterState));
+			printOutKV(printMode, 'Heater', OnOff(0)); // deprecated but stay as 0 to keep CSV format now
 			printOutKV(printMode, 'Sauna floor',
 				OnOff(saunaFloorHeatingState));
 
@@ -265,39 +251,11 @@ function getControlTemperature()
 	});
 }
 
-// Heater control
-function setHeater(ison)
-{
-	const sw = ow.switches.heaterSwitch;
-	ow.changeSwitch(sw.address, sw.channel, ison);
-}
-
-// Pump control
-function setPump(ison)
-{
-	const sw = ow.switches.pumpSwitch;
-	ow.changeSwitch(sw.address, sw.channel, ison);
-}
-
 // Sauna floor control
 function setSaunaFloor(ison)
 {
 	const sw = ow.switches.saunaFloorSwitch;
 	ow.changeSwitch(sw.address, sw.channel, ison);
-}
-
-// Current heater state
-function getHeaterState()
-{
-	const sw = ow.switches.heaterSwitch;
-	return ow.getSwitchState(sw.address, sw.channel);
-}
-
-// Current pump state
-function getPumpState()
-{
-	const sw = ow.switches.pumpSwitch;
-	return ow.getSwitchState(sw.address, sw.channel);
 }
 
 // Will eventually bring current target temperature,
@@ -454,86 +412,6 @@ function controlRoom(roomDescr, targetTemp)
 	});
 }
 
-/** Heater control routine.
- *	controlTemp - current control temperature
- *	heaterTemp - current electric heater temperature to control (ref: O1)
- *	outgoingFluidTemp - current outgoing temperature of the fluid
- *			    (oven + electric heater, ref: O2)
- *	currentPowerConsumption - total current power consumption from powher
- *				meter.
- */
-function controlHeater(
-	controlTemp, heaterTemp, outgoingFluidTemp, currentPowerConsumption)
-{
-	/* First, immediately check heater for overheat */
-	if (heaterTemp >= heaterCutOffTemp)
-	{
-		setHeater(OFF);
-		setPump(ON);
-
-		configuration.error =
-			`${new Date().toLocaleString()}: Heater failure detected t=${heaterTemp}C.`;
-
-		fs.writeFileSync(configurationFileName, JSON.stringify(configuration, null, 4));
-		console.log(configuration.error);
-
-		throw configuration.error;
-	}
-
-	return new Promise((resolved, rejected) => {
-
-		// Then check if oven provides enough heating
-		if (outgoingFluidTemp > configuration.heating.electricHeaterOffTemp &&
-		    outgoingFluidTemp - heaterTemp > configuration.heating.ovenExtraOffTemp)
-		{
-			// Oven heater is providing enough heat, no need to run electricity
-			setHeater(OFF);
-			resolved(OFF);
-			return;
-		}
-
-		Promise.all([
-			getHeaterState(),
-			getTargetTemp()
-		])
-		.then(results => {
-			var heaterState = results[0];
-			var targetTemp = results[1];
-
-			// Check power consumption limit
-			if ((heaterState == 1 && currentPowerConsumption > MAX_POWER) ||
-			    (heaterState == 0 && currentPowerConsumption > MAX_POWER - HEATER_POWER))
-			{
-				if (heaterState == 1)
-				{
-					setHeater(OFF);
-				}
-				resolved(OFF);
-			}
-
-			// Third go to electrc heater control and see if action needed
-			else if (controlTemp < targetTemp)
-			{
-				setHeater(ON);
-				resolved(ON);
-			}
-			else if (controlTemp > targetTemp + configuration.heating.tempDelta)
-			{
-				setHeater(OFF);
-				// Dont stop pump until fluid temp will go down
-				// Other heat sources may still be on
-				resolved(OFF);
-			}
-
-			// Finally if nothing needed to be changed,
-			// just return the current status.
-			else {
-				resolved(heaterState);
-			}
-		});
-	});
-}
-
 /*
  *	Sauna floor control procedure.
  */
@@ -550,30 +428,6 @@ function controlSaunaFloor(currentFloorTemp, targetFloorTemp)
 				resolved(floorHeatingON);
 			});
 	});
-}
-
-/*
- *	Pump control procedure
- *	temperatureVector - vector of temperatures across the house
- *
- *	Pump shall be on while the vector contains devations more than configured.
- */
-function controlPump(temperatureVector)
-{
-	var minT = Math.min.apply(null, temperatureVector);
-	    maxT = Math.max.apply(null, temperatureVector);
-
-	var pumpState =
-		(maxT - minT > configuration.heating.stopPumpTempDelta)
-		? ON : OFF;
-	setPump(pumpState);
-	return pumpState;
-}
-
-// Checks if heating error was reported.
-function wasOverheated()
-{
-	return configuration.error != null;
 }
 
 // What is the current house power consumption. To stay within power limit.
@@ -687,16 +541,9 @@ if (typeof exports !== 'undefined')
 	exports.getHeatingTime = getHeatingTime;
 	exports.getHeatingStartTime = getHeatingStartTime;
 	exports.checkIfNowWithinInterval = checkIfNowWithinInterval;
-	exports.setHeater = setHeater;
-	exports.setPump = setPump;
 	exports.setSaunaFloor = setSaunaFloor;
-	exports.getHeaterState = getHeaterState;
-	exports.getPumpState = getPumpState;
 	exports.controlRoom = controlRoom;
-	exports.controlHeater = controlHeater;
 	exports.controlSaunaFloor = controlSaunaFloor;
-	exports.controlPump = controlPump;
-	exports.wasOverheated = wasOverheated;
 	exports.getPowerMeterData = getPowerMeterData;
 	exports.getCurrentPowerConsumption = getCurrentPowerConsumption;
 	exports.postDataPoint = postDataPoint;

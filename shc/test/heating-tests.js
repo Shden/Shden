@@ -25,23 +25,6 @@ describe('Heating Module Tests:', function() {
 		});
 	});
 
-	describe('Switches are working:', function() {
-		it('Heater', function() {
-			h.setHeater(1);
-			h.getHeaterState().should.be.eventually.equal(1);
-			h.setHeater(0);
-			h.getHeaterState().should.be.eventually.equal(0);
-			(function() { h.setHeater(333); }).should.throw();
-		});
-		it('Pump', function() {
-			h.setPump(1);
-			h.getPumpState().should.be.eventually.equal(1);
-			h.setPump(0);
-			h.getPumpState().should.be.eventually.equal(0);
-			(function() { h.setPump(333); }).should.throw();
-		});
-	});
-
 	describe('Check heating time calculations:', function() {
 
 		it(`Heating duration in hours for current: 18.07C and target ${h.configuration.heating.presenceTemperature}C is 4.43 hours`,
@@ -335,90 +318,6 @@ describe('Heating Module Tests:', function() {
 		});
 	});
 
-	describe('Heating control:', function() {
-
-		describe('Throws and reports on overheat:', function() {
-
-
-			it('More than 95C is a failire', function(done) {
-				(function() { h.controlHeater(22.0, 96.0, 25.0, 0) }).should.throw();
-				h.configuration.should.have.property("error");
-				h.getPumpState().should.be.eventually.equal(1);
-				h.getHeaterState().should.be.eventually.equal(0);
-				h.wasOverheated().should.be.equal(true);
-				done();
-			});
-
-			it('Less than 95C is OK', function(done) {
-				delete h.configuration.error;
-				(function() { h.controlHeater(22.0, 94.0, 25.0, 0) }).should.not.throw();
-				h.configuration.should.not.have.property("error");
-				h.wasOverheated().should.be.equal(false);
-				done();
-			});
-
-			// To clean up alarm temperature flag from configuration.
-			after(function() {
-				const configurationFileName = __dirname + '/../config/heating.json';
-				var cfg = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
-				delete cfg.error;
-				fs.writeFileSync(configurationFileName, JSON.stringify(cfg, null, 4));
-			})
-		});
-
-		describe('Oven offs heating:', function() {
-
-			it('Small extra temperature from oven does not off heating', function() {
-				h.controlHeater(1.0, 85.0, 86.0, 0)
-				.then(() => {
-					h.getHeaterState().should.be.eventually.equal(1);
-				});
-			});
-
-			it('More extra temperature from oven offs heating', function() {
-				h.controlHeater(1.0, 71.0, 79.0, 0)
-				.then(() => {
-					h.getHeaterState().should.be.eventually.equal(0);
-				});
-			});
-		});
-
-		describe('Temperature control:', function() {
-
-			it('Heating is ON when colder than target temperature', function() {
-				h.getTargetTemp()
-				.then((targetTemp) => {
-					h.controlHeater(targetTemp - 0.25, 40.0, 40.0, 0)
-					.then((heaterState) => {
-						h.getHeaterState().should.be.eventually.equal(1);
-					});
-				});
-			});
-
-			it('Heating is OFF when hoter than target temperature', function() {
-				h.getTargetTemp()
-				.then((targetTemp) => {
-					h.controlHeater(targetTemp + 0.25, 40.0, 40.0, 0)
-					.then((heaterState) => {
-						h.getHeaterState().should.be.eventually.equal(0);
-					});
-				});
-			});
-		});
-
-		describe('Power consumption considered:', function() {
-
-			it('Heating is OFF even when colder than needed ' +
-			   'but power consumption is high', function() {
-				var targetTemp = h.getTargetTemp();
-				h.controlHeater(targetTemp - 0.25, 40.0, 40.0, 18000)
-					.then((heaterState) => {
-						h.getHeaterState().should.be.eventually.equal(0);
-					});
-			});
-		})
-	});
-
 	describe('Sauna floor:', function() {
 
 		describe('Off in standby', function() {
@@ -446,19 +345,6 @@ describe('Heating Module Tests:', function() {
 			it('Off when temperature is higher', function() {
 				h.controlSaunaFloor(20, 10).should.be.eventually.equal(0);
 			});
-		});
-	});
-
-	describe('Pump control', function() {
-
-		before(function() {
-			h.configuration.heating.stopPumpTempDelta.should.be.equal(2.5);
-		});
-		it('Off on small deviations', function() {
-			h.controlPump([0.0, 2.0, 1.8, 1.99, 2.1, 0.5]).should.be.equal(0);
-		});
-		it('On for bigger deviations', function() {
-			h.controlPump([0.0, 2.0, 3.8, 2.99, 2.1, 0.5]).should.be.equal(1);
 		});
 	});
 

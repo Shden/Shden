@@ -18,8 +18,6 @@ const sensors = {
 
 /* Switches */
 const switches = {
-	heaterSwitch           : { "address" : "3A.3E9403000000", "channel" : "PIO.A"},
-	pumpSwitch             : { "address" : "3A.3E9403000000", "channel" : "PIO.B"},
 	saunaFloorSwitch       : { "address" : "3A.14280D000000", "channel" : "PIO.B"},
 	childrenSmallSwitch    : { "address" : "3A.CB9703000000", "channel" : "PIO.A"}
 };

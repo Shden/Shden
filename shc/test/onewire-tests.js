@@ -20,7 +20,6 @@ describe('Onewire filesystem testing', function() {
 		});
 
 		it('stubnet has switches', function() {
-			ow.getStubNet().should.have.property(ow.switches.heaterSwitch.address);
 			ow.getStubNet().should.have.property(ow.switches.saunaFloorSwitch.address);
 			ow.getStubNet().should.have.property(ow.switches.childrenSmallSwitch.address);
 		});

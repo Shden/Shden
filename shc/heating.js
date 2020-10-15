@@ -597,7 +597,7 @@ function getPowerMeterData()
 {
 	return new Promise((resolved, rejected) => {
 		http.get(addAuthorizationHeader({
-			host: 'localhost',
+			host: '192.168.1.162',
 			port: 81,
 			path: '/API/1.1/consumption/electricity/GetPowerMeterData'
 		}), responce => {
@@ -628,7 +628,7 @@ function addAuthorizationHeader(request)
 		// need authorization, add header
 		var headers = { 'headers' : {
 			'Authorization': 'Basic ' +
-			new Buffer(
+			new Buffer.from(
 				APIcredentials.userName + ':' +
 				APIcredentials.password).toString('base64')
 		}}

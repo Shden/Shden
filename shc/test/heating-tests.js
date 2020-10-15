@@ -7,17 +7,18 @@ global.OWDebugMode = true;
 
 describe('Heating Module Tests:', function() {
 
-	const T = 18.07; // for kitchen and bedroom average T
-
 	describe('Check preset:', function() {
 		it(`44.2 на ТЭН (${ow.sensors.heaterSensor})`, function() {
 			ow.getT(ow.sensors.heaterSensor).should.be.eventually.equal(44.2);
 		});
-		it(`${T} в спальне (${ow.sensors.bedroomSensor})`, function() {
-			ow.getT(ow.sensors.bedroomSensor).should.be.eventually.equal(T);
+		it(`12.44 в спальне (${ow.sensors.bedroomSensor})`, function() {
+			ow.getT(ow.sensors.bedroomSensor).should.be.eventually.equal(12.44);
 		});
-		it(`getControlTemperature() is ${T}`, function() {
-			h.getControlTemperature().should.be.eventually.equal(T);
+		it(`23.7 в кухне (${ow.sensors.kitchenSensor})`, function() {
+			ow.getT(ow.sensors.kitchenSensor).should.be.eventually.equal(23.7);
+		});
+		it(`getControlTemperature() is 18.07 as average between bedroom and kitchen`, function() {
+			h.getControlTemperature().should.be.eventually.equal(18.07);
 		});
 		it('presenceTemperature is configured at 22.5', function() {
 			h.configuration.heating.presenceTemperature.should.be.equal(22.5);
@@ -43,16 +44,16 @@ describe('Heating Module Tests:', function() {
 
 	describe('Check heating time calculations:', function() {
 
-		it(`Heating duration in hours for current: ${T}C and target ${h.configuration.heating.presenceTemperature}C is 10.06 hours`,
+		it(`Heating duration in hours for current: 18.07C and target ${h.configuration.heating.presenceTemperature}C is 4.43 hours`,
 			function() {
-				h.getHeatingTime().should.be.eventually.equal(10.06);
+				h.getHeatingTime().should.be.eventually.equal(4.43);
 			});
 
-		it('Heating start should be 2016-09-30 23:56:24 for arrival at 2016-10-01 10:00',
+		it('Heating start should be 2016-10-01 05:34:12 for arrival at 2016-10-01 10:00',
 			function() {
 				h.configuration.schedule.arrival = '2016-10-01 10:00';
 				h.getHeatingStartTime().should.eventually.eql(
-					new Date(2016, 08, 30, 23, 56, 24)
+					new Date(2016, 09, 01, 05, 34, 12)
 				);
 			});
 
@@ -60,20 +61,21 @@ describe('Heating Module Tests:', function() {
 
 			const hoursToMs = 60 * 60 * 1000;
 
-			var heatingTime;
+			var startHeatingHoursLag;
 
 			before(function() {
 				return h.getHeatingTime().
 					then(time => {
-						heatingTime = time;
+						startHeatingHoursLag = time;
 					});
 			});
 
 			it('1 minute BEFORE start heating is OFF', function() {
+
 				h.configuration.schedule.arrival =
-					new Date(Date.now() + heatingTime * hoursToMs + 1 * 60 * 1000).toLocaleString();
+					new Date(Date.now() + startHeatingHoursLag * hoursToMs + 1 * 60 * 1000).toISOString();
 				h.configuration.schedule.departure =
-					new Date(Date.now() + 24 * hoursToMs).toLocaleString();
+					new Date(Date.now() + 24 * hoursToMs).toISOString();
 				return h.isPresenceHeating().
 					then(res => {
 						res.should.be.equal(false);
@@ -82,9 +84,9 @@ describe('Heating Module Tests:', function() {
 
 			it('1 minute AFTER start heating is ON', function() {
 				h.configuration.schedule.arrival =
-					new Date(Date.now() + heatingTime * hoursToMs - 1 * 60 * 1000).toLocaleString();
+					new Date(Date.now() + startHeatingHoursLag * hoursToMs - 1 * 60 * 1000).toISOString();
 				h.configuration.schedule.departure =
-					new Date(Date.now() + 24 * hoursToMs).toLocaleString();
+					new Date(Date.now() + 24 * hoursToMs).toISOString();
 				return h.isPresenceHeating().
 					then(res => {
 						res.should.be.equal(true);
@@ -93,9 +95,9 @@ describe('Heating Module Tests:', function() {
 
 			it('1 minute BEFORE finish heating is ON', function() {
 				h.configuration.schedule.arrival =
-					new Date(Date.now() - 1 * hoursToMs).toLocaleString();
+					new Date(Date.now() - 1 * hoursToMs).toISOString();
 				h.configuration.schedule.departure =
-					new Date(Date.now() + 1 * 60 * 1000).toLocaleString();
+					new Date(Date.now() + 1 * 60 * 1000).toISOString();
 				return h.isPresenceHeating().
 					then(res => {
 						res.should.be.equal(true);
@@ -104,9 +106,9 @@ describe('Heating Module Tests:', function() {
 
 			it('1 minute AFTER finish heating is OFF', function() {
 				h.configuration.schedule.arrival =
-					new Date(Date.now() - 1 * hoursToMs).toLocaleString();
+					new Date(Date.now() - 1 * hoursToMs).toISOString();
 				h.configuration.schedule.departure =
-					new Date(Date.now() - 1 * 60 * 1000).toLocaleString();
+					new Date(Date.now() - 1 * 60 * 1000).toISOString();
 				return h.isPresenceHeating().
 					then(res => {
 						res.should.be.equal(false);
@@ -136,27 +138,27 @@ describe('Heating Module Tests:', function() {
 
 				it('1 minute before advance night start heating is OFF', function() {
 					var _61minPastNow = new Date(Date.now() + 61 * msPerMin);
-					h.configuration.schedule.arrival = _61minPastNow.toLocaleString();
-					h.configuration.schedule.departure = _2hoursAfter.toLocaleString();
+					h.configuration.schedule.arrival = _61minPastNow.toISOString();
+					h.configuration.schedule.departure = _2hoursAfter.toISOString();
 					return h.isAdvanceNightHeating().should.be.equal(false);
 				});
 
 				it('1 minute past advance night start heating is ON', function() {
 					var _59minPastNow = new Date(Date.now() + 59 * msPerMin);
-					h.configuration.schedule.arrival = _59minPastNow.toLocaleString();
-					h.configuration.schedule.departure = _2hoursAfter.toLocaleString();
+					h.configuration.schedule.arrival = _59minPastNow.toISOString();
+					h.configuration.schedule.departure = _2hoursAfter.toISOString();
 					return h.isAdvanceNightHeating().should.be.equal(true);
 				});
 
 				it('1 minute before arrival heating is ON', function() {
-					h.configuration.schedule.arrival = _1minAfter.toLocaleString();
-					h.configuration.schedule.departure = _2hoursAfter.toLocaleString();
+					h.configuration.schedule.arrival = _1minAfter.toISOString();
+					h.configuration.schedule.departure = _2hoursAfter.toISOString();
 					return h.isAdvanceNightHeating().should.be.equal(true);
 				});
 
 				it('1 minute past arrival heating is OFF', function() {
-					h.configuration.schedule.arrival = _1minBefore.toLocaleString();
-					h.configuration.schedule.departure = _2hoursAfter.toLocaleString();
+					h.configuration.schedule.arrival = _1minBefore.toISOString();
+					h.configuration.schedule.departure = _2hoursAfter.toISOString();
 					return h.isAdvanceNightHeating().should.be.equal(false);
 				});
 			});
@@ -189,15 +191,15 @@ describe('Heating Module Tests:', function() {
 	// now is within arrival..departure dates i.e. presence mode
 	function toPresenceMode()
 	{
-		h.configuration.schedule.arrival = _1dayBefore.toLocaleString();
-		h.configuration.schedule.departure = _1dayAfter.toLocaleString();
+		h.configuration.schedule.arrival = _1hourBefore.toISOString();
+		h.configuration.schedule.departure = _1dayAfter.toISOString();
 	}
 
 	// now is after departure i.e. standby mode
 	function toStandbyMode()
 	{
-		h.configuration.schedule.arrival = _2daysBefore.toLocaleString();
-		h.configuration.schedule.departure = _1dayBefore.toLocaleString();
+		h.configuration.schedule.arrival = _2daysBefore.toISOString();
+		h.configuration.schedule.departure = _1dayBefore.toISOString();
 	}
 
 	function toDayTariff()
@@ -479,7 +481,7 @@ describe('Heating Module Tests:', function() {
 		});
 	});
 
-	describe('Posting heating data:', function() {
+	describe.skip('Posting heating data:', function() {
 
 		it('Invalid data points rejected', function() {
 			return h.postDataPoint()

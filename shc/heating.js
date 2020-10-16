@@ -1,20 +1,18 @@
 // Node.js port of heating controller logic.
-var fs = require('fs');
 var ow = require('./onewire');
 var http = require('http');
 var numeral = require('numeral');
 var pad = require('pad');
+var mqtt = require('mqtt')
+var fs = require('fs')
+var path = require('path')
 
 // -- configuration constants:
 const configurationFileName = __dirname + '/config/heating.json';
 const APIcredentialsFileName = __dirname + '/config/api-credentials.json';
 
-const heaterCutOffTemp		= 95.0;		/* Heater failure temperature */
 const EXIT_OK			= 0;
 const EXIT_FAILURE		= 1;
-
-const MAX_POWER			= 16500;
-const HEATER_POWER		= 13000;
 
 const CELCIUS			= '\u00B0C';
 const BUILD			= '0.4.2';
@@ -524,6 +522,47 @@ function postDataPoint(dataPoint)
 	});
 }
 
+var device;
+
+// Publish temperature data point to mqtt topic.
+function publishDataPoint(dataPoint)
+{
+	const DEVICE_KEY = fs.readFileSync(path.join(__dirname, '../yc/device/heating.key'))
+	const DEVICE_CERT = fs.readFileSync(path.join(__dirname, '../yc/device/heating.cert'))
+	const ROOT_CA = fs.readFileSync(path.join(__dirname, '../yc/rootCA.crt'))
+	
+	const PORT = 8883
+	const HOST = 'mqtt.cloud.yandex.net'
+	
+	const DEVICE_ID = "areim9bfk6muptdal791"
+	const DEVICE_EVENTS = "$devices/" + DEVICE_ID + "/events"
+	
+	const deviceOptions = {
+		port: PORT,
+		host: HOST,
+		key: DEVICE_KEY,
+		cert: DEVICE_CERT,
+		rejectUnauthorized: true,
+		ca: ROOT_CA,
+		protocol: 'mqtts',
+		clientId: 'Shden-heating'
+	}
+
+	return new Promise((resolved, rejected) => {
+		device = mqtt.connect(deviceOptions)
+
+		device.on('connect', function() {
+			device.publish(DEVICE_EVENTS, dataPoint.toString())
+			device.end()
+			resolved()
+		})
+
+		device.on('error', function(error) {
+			rejected(error)
+		})
+	})
+}
+
 // -- Exports for testing
 // If we're running under Node,
 if (typeof exports !== 'undefined')
@@ -542,6 +581,7 @@ if (typeof exports !== 'undefined')
 	exports.getPowerMeterData = getPowerMeterData;
 	exports.getCurrentPowerConsumption = getCurrentPowerConsumption;
 	exports.postDataPoint = postDataPoint;
+	exports.publishDataPoint = publishDataPoint;
 	exports.parseCommandLine = parseCommandLine;
 
 	// data

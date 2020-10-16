@@ -348,7 +348,7 @@ describe('Heating Module Tests:', function() {
 		});
 	});
 
-	describe('Power meter link:', function() {
+	describe.skip('Power meter link:', function() {
 
 		it('Check power meter data retrival', function() {
 			return h.getPowerMeterData()
@@ -367,9 +367,9 @@ describe('Heating Module Tests:', function() {
 		});
 	});
 
-	describe.skip('Posting heating data:', function() {
+	describe('Posting heating data:', function() {
 
-		it('Invalid data points rejected', function() {
+		it.skip('Invalid data points rejected', function() {
 			return h.postDataPoint()
 				.then(
 					res => {
@@ -384,34 +384,40 @@ describe('Heating Module Tests:', function() {
 				);
 		});
 
-		it('Valid data points accepted', function() {
-			return h.postDataPoint(
-				{
-					heater			: 44,
-					fluid_in		: 20,
-					fluid_out		: 30,
-					external		: -10,
-					am_bedroom		: 21,
-					bedroom			: 22,
-					cabinet			: 23,
-					child_bedroom		: 24,
-					kitchen			: 25,
-					bathroom_1		: 26,
-					bathroom_1_floor	: 27,
-					control			: 22,
-					heating			: 1,
-					pump			: 1,
-					bathroom_1_heating	: 1
-				}).then(
-					res => {
-						// Succeess expected
-						true.should.be.ok();
-					},
-					err => {
-						console.log(err);
-						true.should.be.not.ok(err);
-					}
-				);
+		const aValidDataPoint = {
+			heater			: 44,
+			fluid_in		: 20,
+			fluid_out		: 30,
+			external		: -10,
+			am_bedroom		: 21,
+			bedroom			: 22,
+			cabinet			: 23,
+			child_bedroom		: 24,
+			kitchen			: 25,
+			bathroom_1		: 26,
+			bathroom_1_floor	: 27,
+			control			: 22,
+			heating			: 1,
+			pump			: 1,
+			bathroom_1_heating	: 1
+		};
+
+		it.skip('Valid data points accepted', function() {
+			return h.postDataPoint(aValidDataPoint).then(
+				res => {
+					// Succeess expected
+					true.should.be.ok();
+				},
+				err => {
+					console.log(err);
+					true.should.be.not.ok(err);
+				}
+			);
+		});
+
+		it('Publish data point to YC IoT device', function() {
+			this.timeout(5000);
+			return h.publishDataPoint(aValidDataPoint);
 		});
 	});
 

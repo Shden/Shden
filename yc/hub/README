@@ -1,0 +1,6 @@
+ShDen Hub servce configuration
+
+1. Installation
+
+Start from hub.servce file in this directory. Check directories layout for everything (node, working directory). 
+Make sure hubuser exists in DB, have access etc. Then copy hub.servce to /lib/systemd/system/.

@@ -385,7 +385,7 @@ describe('Heating Module Tests:', function() {
 		});
 
 		const aValidDataPoint = {
-			heater			: 44,
+			heater			: 44.2,
 			fluid_in		: 20,
 			fluid_out		: 30,
 			external		: -10,

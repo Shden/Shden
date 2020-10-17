@@ -15,7 +15,7 @@ const EXIT_OK			= 0;
 const EXIT_FAILURE		= 1;
 
 const CELCIUS			= '\u00B0C';
-const BUILD			= '0.4.2';
+const BUILD			= '0.5';
 
 const ON			= 1;
 const OFF			= 0;
@@ -135,29 +135,32 @@ function main()
 
 			printOutKV(printMode, 'Pump', OnOff(0));	// deprecated but stay as 0 to keep CSV format now
 
-			// -- Post data point
-			postDataPoint(
-				{
-					heater			: electricHeaterTemp,
-					fluid_in		: ingoingFluidTemp,
-					fluid_out		: outgoingFluidTemp,
-					external		: externalTemp,
-					am_bedroom		: amBedroomTemp,
-					bedroom			: bedroomTemp,
-					cabinet			: cabinetTemp,
-					child_bedroom		: childrenSmallTemp,
-					kitchen			: kitchenTemp,
-					bathroom_1		: bathroomTemp,
-					bathroom_1_floor	: saunaFloorTemp,
-					control			: controlTemp,
-					heating			: 0,	// deprecated
-					pump			: 0,	// deprecated
-					bathroom_1_heating	: saunaFloorHeatingState
-				})
-				.then(() => {
-					printOutKV(printMode, 'Completed', new Date());
-					console.log('');
-				});
+			var dataPoint = {
+				heater			: electricHeaterTemp,
+				fluid_in		: ingoingFluidTemp,
+				fluid_out		: outgoingFluidTemp,
+				external		: externalTemp,
+				am_bedroom		: amBedroomTemp,
+				bedroom			: bedroomTemp,
+				cabinet			: cabinetTemp,
+				child_bedroom		: childrenSmallTemp,
+				kitchen			: kitchenTemp,
+				bathroom_1		: bathroomTemp,
+				bathroom_1_floor	: saunaFloorTemp,
+				control			: controlTemp,
+				heating			: 0,	// deprecated
+				pump			: 0,	// deprecated
+				bathroom_1_heating	: saunaFloorHeatingState
+			}
+			// -- Post data point to the API and publish to IoT topic
+			Promise.all([
+				postDataPoint(dataPoint),
+				publishDataPoint(dataPoint)
+			])
+			.then(() => {
+				printOutKV(printMode, 'Completed', new Date());
+				console.log('');
+			});
 		});
 	})
 	.catch(err => {
@@ -534,7 +537,7 @@ function publishDataPoint(dataPoint)
 	const PORT = 8883
 	const HOST = 'mqtt.cloud.yandex.net'
 	
-	const DEVICE_ID = "areim9bfk6muptdal791"
+	const DEVICE_ID = "areim9bfk6muptdal791" // heating
 	const DEVICE_EVENTS = "$devices/" + DEVICE_ID + "/events"
 	
 	const deviceOptions = {
@@ -552,7 +555,7 @@ function publishDataPoint(dataPoint)
 		device = mqtt.connect(deviceOptions)
 
 		device.on('connect', function() {
-			device.publish(DEVICE_EVENTS, dataPoint.toString())
+			device.publish(DEVICE_EVENTS, JSON.stringify(dataPoint))
 			device.end()
 			resolved()
 		})

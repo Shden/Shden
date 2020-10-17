@@ -26,7 +26,8 @@ const pool = mariadb.createPool({
         host: process.argv[2], 
         user: process.argv[3], 
         password: process.argv[4],
-        connectionLimit: 5
+        connectionLimit: 5,
+        database: 'SHDEN'
 });
 
 var registryOptions = {

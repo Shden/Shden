@@ -30,7 +30,7 @@ function getStubNet()
 		global.stubnet = new Object();
 		var stubnet = global.stubnet;
 
-		// create sensors
+		// create temperature sensors
 		for (var sensor in sensors) {
 			if (sensors.hasOwnProperty(sensor)) {
 				stubnet[sensors[sensor]] = new Object();

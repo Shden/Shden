@@ -1,11 +1,11 @@
 // Node.js port of heating controller logic.
-var ow = require('./onewire');
-var http = require('http');
-var numeral = require('numeral');
-var pad = require('pad');
-var mqtt = require('mqtt')
-var fs = require('fs')
-var path = require('path')
+const ow = require('./onewire');
+const http = require('http');
+const numeral = require('numeral');
+const pad = require('pad');
+const mp = require('./mqtt-publish');
+const fs = require('fs');
+
 
 // -- configuration constants:
 const configurationFileName = __dirname + '/config/heating.json';
@@ -155,7 +155,7 @@ function main()
 			// -- Post data point to the API and publish to IoT topic
 			Promise.all([
 				postDataPoint(dataPoint),
-				publishDataPoint(dataPoint)
+				mp.publishHeatingDataPoint(dataPoint)
 			])
 			.then(() => {
 				printOutKV(printMode, 'Completed', new Date());
@@ -525,47 +525,6 @@ function postDataPoint(dataPoint)
 	});
 }
 
-var device;
-
-// Publish temperature data point to mqtt topic.
-function publishDataPoint(dataPoint)
-{
-	const DEVICE_KEY = fs.readFileSync(path.join(__dirname, '../yc/device/heating.key'))
-	const DEVICE_CERT = fs.readFileSync(path.join(__dirname, '../yc/device/heating.cert'))
-	const ROOT_CA = fs.readFileSync(path.join(__dirname, '../yc/rootCA.crt'))
-	
-	const PORT = 8883
-	const HOST = 'mqtt.cloud.yandex.net'
-	
-	const DEVICE_ID = "areim9bfk6muptdal791" // heating
-	const DEVICE_EVENTS = "$devices/" + DEVICE_ID + "/events"
-	
-	const deviceOptions = {
-		port: PORT,
-		host: HOST,
-		key: DEVICE_KEY,
-		cert: DEVICE_CERT,
-		rejectUnauthorized: true,
-		ca: ROOT_CA,
-		protocol: 'mqtts',
-		clientId: 'Shden-heating'
-	}
-
-	return new Promise((resolved, rejected) => {
-		device = mqtt.connect(deviceOptions)
-
-		device.on('connect', function() {
-			device.publish(DEVICE_EVENTS, JSON.stringify(dataPoint))
-			device.end()
-			resolved()
-		})
-
-		device.on('error', function(error) {
-			rejected(error)
-		})
-	})
-}
-
 // -- Exports for testing
 // If we're running under Node,
 if (typeof exports !== 'undefined')
@@ -584,7 +543,6 @@ if (typeof exports !== 'undefined')
 	exports.getPowerMeterData = getPowerMeterData;
 	exports.getCurrentPowerConsumption = getCurrentPowerConsumption;
 	exports.postDataPoint = postDataPoint;
-	exports.publishDataPoint = publishDataPoint;
 	exports.parseCommandLine = parseCommandLine;
 
 	// data

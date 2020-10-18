@@ -14,3 +14,7 @@ yc iot registry certificate add --registry-name=shwade --certificate-file=./regi
 echo "Heating IoT device"
 openssl req -x509 -newkey rsa:4096 -keyout device/heating.key -out device/heating.cert -nodes -days 365 -subj '/CN=localhost'
 yc iot device create --registry-name=shwade --name=heating --certificate-file=./device/heating.cert
+
+echo "Humidity device"
+openssl req -x509 -newkey rsa:4096 -keyout device/humidity.key -out device/humidity.cert -nodes -days 365 -subj '/CN=localhost'
+yc iot device create --registry-name=shwade --name=humidity --certificate-file=./device/humidity.cert

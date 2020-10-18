@@ -57,3 +57,4 @@ CREATE TABLE IF NOT EXISTS power (
 /* Create DB users and grant access */
 GRANT ALL ON SHDEN.* TO webuser@localhost IDENTIFIED BY 'webuser';
 GRANT ALL ON SHDEN.* TO importuser@localhost IDENTIFIED BY 'importuser';
+GRANT ALL ON SHDEN.* TO hubuser@localhost IDENTIFIED BY 'hubuser';

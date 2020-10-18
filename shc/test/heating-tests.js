@@ -1,7 +1,7 @@
 var h = require('../heating');
 var ow = require('../onewire');
-var fs = require('fs');
 var should = require('should');
+const mp = require('../mqtt-publish');
 
 global.OWDebugMode = true;
 
@@ -415,9 +415,9 @@ describe('Heating Module Tests:', function() {
 			);
 		});
 
-		it('Publish data point to YC IoT device', function() {
+		it('Publish heating data point to YC IoT device', function() {
 			this.timeout(5000);
-			return h.publishDataPoint(aValidDataPoint);
+			return mp.publishHeatingDataPoint(aValidDataPoint);
 		});
 	});
 

@@ -1,38 +1,34 @@
-ShDen Hub servce configuration
+1. Access to AWS environment
 
-1. Installation
+ssh -i ~/AWS/DA-AWS-key.pem den@ec2-18-184-115-169.eu-central-1.compute.amazonaws.com
+
+2. ShDen Hub servce configuration
+
+2.1. Installation
 
 Start from hub.servce file in this directory. Check directories layout for everything (node, working directory). 
 Make sure hubuser exists in DB, have access etc. Then copy hub.servce to /lib/systemd/system/:
-
 $ sudo cp hub.service /lib/systemd/system/
 
 Run this command:
-
 $ sudo systemctl daemon-reload
 
 Let SystemD know about the hub service and instruct SystemD to load this service on boot:
-
 $ sudo systemctl enable hub
 
 Now run the hub service:
-
 $ sudo systemctl restart hub
 
-2. Operations
+2.2. Operations
 
 To stop the service:
-
 $ sudo systemctl stop hub
 
 To disable the service (prevent it from loading on boot):
-
 $ sudo systemctl disable hub
 
 To see the status of the service:
-
 $ sudo systemctl status hub
 
 To restart:
-
 $ sudo systemctl restart hub

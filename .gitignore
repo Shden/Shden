@@ -7,4 +7,7 @@
 /shc/config/credentials.json
 /shc/config/ventilation.json
 /shweb/firmware
-
+/yc/examples
+/yc/node_modules
+/yc/node_test
+/yc/hub/node_modules

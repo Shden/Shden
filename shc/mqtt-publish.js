@@ -1,25 +1,45 @@
+// Contains house-side device event publishing methods.
+// Exports as follows:
+if (typeof exports !== 'undefined')
+{
+	// methods
+        exports.publishHeatingDataPoint = publishHeatingDataPoint;
+	exports.publishHumidityDataPoint = publishHumidityDataPoint;
+	exports.publishPowerDataPoint = publishPowerDataPoint;
+}
+
 const mqtt = require('mqtt');
 const fs = require('fs');
 const path = require('path');
 
 function publishHeatingDataPoint(dataPoint)
 {
-	const DEVICE_ID = "areim9bfk6muptdal791"; // heating IoT device ID
+	const HEATING_DEVICE_ID = "areim9bfk6muptdal791"; // heating IoT device ID
 
         return publishDataPoint(
                 '../yc/device/heating.key',
                 '../yc/device/heating.cert',
-                DEVICE_ID, dataPoint);
+                HEATING_DEVICE_ID, dataPoint);
 }
 
 function publishHumidityDataPoint(dataPoint)
 {
-        const DEVICE_ID = "are6dp175p84uho333u9"; // humidity IoT device ID
+        const HUMIDITY_DEVICE_ID = "are6dp175p84uho333u9"; // humidity IoT device ID
 
         return publishDataPoint(
                 '../yc/device/humidity.key',
                 '../yc/device/humidity.cert',
-                DEVICE_ID, dataPoint);
+                HUMIDITY_DEVICE_ID, dataPoint);
+}
+
+function publishPowerDataPoint(dataPoint)
+{
+	const POWER_DEVICE_ID = "are52umg1pukam0lo673"; // power IoT device ID
+
+	return publishDataPoint(
+		'../yc/device/power.key',
+		'../yc/device/power.cert',
+		POWER_DEVICE_ID, dataPoint);
 }
 
 // Generic for publishing data point to mqtt device events topic.
@@ -58,11 +78,4 @@ function publishDataPoint(keyFileName, certFileName, iotDeviceID, dataPoint)
 			rejected(error);
 		})
 	})
-}
-
-if (typeof exports !== 'undefined')
-{
-	// methods
-        exports.publishHeatingDataPoint = publishHeatingDataPoint;
-        exports.publishHumidityDataPoint = publishHumidityDataPoint;
 }

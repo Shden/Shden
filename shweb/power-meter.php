@@ -46,6 +46,10 @@
 					<th>Всего</th>
 				</thead>
 				<tr>
+					<td class="first">Подача электричества:</td>
+					<td id="mainsStatus" colspan="4"/>
+				</tr>
+				<tr>
 					<td class="first">Напряжение сети (В):</td>
 					<td id="U-p1"/>
 					<td id="U-p2"/>
@@ -53,7 +57,7 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td  class="first">Ток потребления (А):</td>
+					<td class="first">Ток потребления (А):</td>
 					<td id="I-p1"/>
 					<td id="I-p2"/>
 					<td id="I-p3"/>
@@ -140,6 +144,8 @@
 
 			$.getJSON(GetAPIURL("consumption/electricity/GetPowerMeterData"))
 				.done(function(data) {
+
+					refreshValue1('mainsStatus', data);
 
 					refreshValue('U', 'p1', data);
 					refreshValue('U', 'p2', data);

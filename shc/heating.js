@@ -5,6 +5,7 @@ const numeral = require('numeral');
 const pad = require('pad');
 const mp = require('./mqtt-publish');
 const fs = require('fs');
+const http = require('http');
 
 // -- configuration constants:
 const configurationFileName = __dirname + '/config/heating.json';

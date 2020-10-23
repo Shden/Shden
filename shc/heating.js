@@ -444,7 +444,7 @@ function getCurrentPowerConsumption()
 function postDataPoint(dataPoint)
 {
 	return new Promise((resolved, rejected) => {
-		var request = http.request(addAuthorizationHeader({
+		var request = http.request(p.addAuthorizationHeader({
 			host: 'localhost',
 			port: 81,
 			path: '/API/1.1/climate/data/heating',

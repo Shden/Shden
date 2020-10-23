@@ -68,4 +68,5 @@ if (typeof exports !== 'undefined')
 {
         // methods
         exports.getPowerMeterData = getPowerMeterData;
+        exports.addAuthorizationHeader = addAuthorizationHeader;
 }

@@ -1,0 +1,27 @@
+/*
+ *	SP called by to add power record.
+ */
+DELIMITER //
+DROP PROCEDURE IF EXISTS SP_ADD_POWER_RECORD;
+CREATE PROCEDURE SP_ADD_POWER_RECORD(
+	U1		DECIMAL(5,2),
+	U2		DECIMAL(5,2),
+	U3		DECIMAL(5,2),
+	I1		DECIMAL(5,2),
+	I2		DECIMAL(5,2),
+	I3		DECIMAL(5,2),
+	P1		DECIMAL(5,2),
+	P2		DECIMAL(5,2),
+	P3		DECIMAL(5,2),
+	PS		DECIMAL(5,2),
+	S1		DECIMAL(5,2),
+	S2		DECIMAL(5,2),
+	S3		DECIMAL(5,2),
+	SS		DECIMAL(5,2),
+	mainsstatus	TINYINT
+)
+BEGIN
+	INSERT INTO power(time, U1, U2, U3, I1, I2, I3, P1, P2, P3, PS, S1, S2, S3, SS, mainsstatus)
+	VALUES (NOW(), U1, U2, U3, I1, I2, I3, P1, P2, P3, PS, S1, S2, S3, SS, mainsstatus);
+END//
+DELIMITER ;

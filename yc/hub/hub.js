@@ -14,8 +14,10 @@ const HOST = 'mqtt.cloud.yandex.net';
 
 const HEATING_DEVICE_ID = "areim9bfk6muptdal791";       // heating IoT device ID
 const HUMIDITY_DEVICE_ID = "are6dp175p84uho333u9";      // humidity IoT device ID
+const POWER_DEVICE_ID = "are52umg1pukam0lo673";         // power IoT device ID
 const HEATING_EVENTS = deviceEventsTopic(HEATING_DEVICE_ID);
 const HUMIDITY_EVENTS = deviceEventsTopic(HUMIDITY_DEVICE_ID);
+const POWER_EVENTS = deviceEventsTopic(POWER_DEVICE_ID);
 
 function deviceEventsTopic(deviceID)
 {
@@ -55,34 +57,52 @@ if (require.main === module)
 
         registry.on('connect', function () {
                 console.log('Connected to MQTT server.');
+
+                // -- device events subscriptions:
+                // -- heating
                 registry.subscribe(HEATING_EVENTS, (err) => {
                         if (!err)
                                 console.log(`Hub subscribed to heating events at ${HEATING_EVENTS}.`);
                         else
-                                console.error('Registry subscription error: ' + err);
+                                console.error('Heating events subscription error: ' + err);
                 })
 
+                // -- humidity
                 registry.subscribe(HUMIDITY_EVENTS, (err) => {
                         if (!err)
                                 console.log(`Hub subscribed to humidity events at ${HUMIDITY_EVENTS}.`);
                         else
-                                console.error('Registry subscription error: ' + err);
+                                console.error('Humidity events subscription error: ' + err);
+                })
+
+                // -- power
+                registry.subscribe(POWER_EVENTS, (err) => {
+                        if (!err)
+                                console.log(`Hub subscribed to power events at ${POWER_EVENTS}.`);
+                        else
+                                console.error('Power events subscripton error: ' + err);
                 })
         })
         
+        // -- device messages handling:
         registry.on('message', (topic, message) => {
+                var dataPoint = JSON.parse(message);
                 if (topic == HEATING_EVENTS)
                 {
                         console.log(`Hub received heating update message: ${message.toString()}`);
-                        var dataPoint = JSON.parse(message);
                         persistHeatingData(pool, dataPoint);
                 };
 
                 if (topic == HUMIDITY_EVENTS)
                 {
                         console.log(`Hub received humidity update message: ${message.toString()}`);
-                        var dataPoint = JSON.parse(message);
                         persistHumidityData(pool, dataPoint);
+                };
+
+                if (topic == POWER_EVENTS)
+                {
+                        console.log(`Hub received power update message: ${message.toString()}`);
+                        persistPowerData(pool, dataPoint);
                 }
         })
 }
@@ -92,7 +112,6 @@ function persistHeatingData(dbConnectionPool, dataPoint)
         return new Promise((resolve, reject) => {
                 dbConnectionPool.getConnection()
                 .then(dbConnection => {
-        
                         dbConnectionPool.query(
                                 "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
                                         [dataPoint.heater, dataPoint.fluid_in, dataPoint.fluid_out,
@@ -120,11 +139,10 @@ function persistHumidityData(dbConnectionPool, dataPoint)
         return new Promise((resolve, reject) => {
                 dbConnectionPool.getConnection()
                 .then(dbConnection => {
-        
                         dbConnectionPool.query(
                                 "CALL SP_ADD_HUMIDITY_RECORD(?);", [dataPoint.firstFloorSauna]
                         ).then(() => {
-                                console.log('Humidity records updated.')
+                                console.log('Humidity records updated.');
                                 dbConnection.end();
                                 resolve();              
                         })
@@ -135,6 +153,33 @@ function persistHumidityData(dbConnectionPool, dataPoint)
                         reject(err);
                 })
         })  
+}
+
+function persistPowerData(dbConnectionPool, dataPoint)
+{
+        return new Promise((resolve, reject) => {
+                dbConnectionPool.getConnection()
+                .then(dbConnection => {
+                        dbConnectionPool.query(
+                                "CALL SP_ADD_POWER_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [
+                                        dataPoint.U.p1, dataPoint.U.p2, dataPoint.U.p3,
+                                        dataPoint.I.p1, dataPoint.I.p2, dataPoint.I.p3,
+                                        dataPoint.P.p1, dataPoint.P.p2, dataPoint.P.p3, dataPoint.P.sum,
+                                        dataPoint.S.p1, dataPoint.S.p2, dataPoint.S.p3, dataPoint.S.sum,
+                                        dataPoint.mainsStatus
+                                ]
+                        ).then(() => {
+                                console.log('Power records updated.');
+                                dbConnection.end();
+                                resolve();
+                        })
+                }).catch(err => {
+                       //handle error
+                       console.log(err); 
+                       dbConnection.end();
+                       reject(err);
+                })
+        })
 }
 
 function printUsage()

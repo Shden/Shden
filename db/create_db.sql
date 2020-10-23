@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS power (
 	S2		DECIMAL(7,2),
 	S3		DECIMAL(7,2),
 	SS		DECIMAL(7,2),
+	mainsstatus	TINYINT
 	PRIMARY KEY(time));
 
 /* Create DB users and grant access */

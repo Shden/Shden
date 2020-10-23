@@ -114,7 +114,8 @@ function main()
 
 			// -- Control sauna floor temp
 			controlSaunaFloor(saunaFloorTemp,
-				configuration.heating.saunaFloorTemp),
+				configuration.heating.saunaFloorTemp,
+				consumption),
 
 			// -- Individual rooms control
 			configuration.roomControlDescriptors.map(function(item) {
@@ -406,8 +407,9 @@ function controlRoom(roomDescr, targetTemp)
 /*
  *	Sauna floor control procedure.
  */
-function controlSaunaFloor(currentFloorTemp, targetFloorTemp)
+function controlSaunaFloor(currentFloorTemp, targetFloorTemp, consumption)
 {
+	// TODO: handle consumption overrun
 	return new Promise((resolved, rejected) => {
 		isPresenceHeating()
 			.then(isPresence => {

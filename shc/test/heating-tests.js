@@ -366,11 +366,6 @@ describe('Heating Module Tests:', function() {
 					res.should.be.a.Number();
 				});
 		});
-
-		it('Check power meter communication when no power', function(done) {
-			// TODO: add this test
-			done(new Error('not implemented'));
-		})
 	});
 
 	describe('Posting heating data:', function() {

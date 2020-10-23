@@ -46,7 +46,7 @@
 					<th>Всего</th>
 				</thead>
 				<tr>
-					<td class="first">Подача электричества:</td>
+					<td class="first">Внешнее электропитание:</td>
 					<td id="mainsStatus" colspan="4"/>
 				</tr>
 				<tr>
@@ -145,7 +145,7 @@
 			$.getJSON(GetAPIURL("consumption/electricity/GetPowerMeterData"))
 				.done(function(data) {
 
-					refreshValue1('mainsStatus', data);
+					$('#mainsStatus').html((data.mainsStatus == 1) ? 'в норме' : 'авария');
 
 					refreshValue('U', 'p1', data);
 					refreshValue('U', 'p2', data);

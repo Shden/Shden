@@ -1,19 +1,14 @@
-var p = require('../power');
+const p = require('../power');
 const mp = require('../mqtt-publish');
 
 describe('Power meter module tests:', function() {
 
-        const mercury236CmdLine = '/Users/den/Shden/mercury236/mercury236 RS485 --testRun --json';
-
         it('Can get power meter data', function() {
-                // dry run for testing
-                return p.getPowerMeterData(mercury236CmdLine);
+                return p.getPowerMeterData();
         });
 
         it('Can publish power meter data', async function() {
-
-                let output = await p.getPowerMeterData(mercury236CmdLine);
-                var powerDataPoint = JSON.parse(output);
+                let powerDataPoint = await p.getPowerMeterData();
                 return mp.publishPowerDataPoint(powerDataPoint);
         });
 

@@ -1,6 +1,7 @@
-var h = require('../heating');
-var ow = require('../onewire');
-var should = require('should');
+const h = require('../heating');
+const p = require('../power');
+const ow = require('../onewire');
+const should = require('should');
 const mp = require('../mqtt-publish');
 
 global.OWDebugMode = true;
@@ -348,10 +349,10 @@ describe('Heating Module Tests:', function() {
 		});
 	});
 
-	describe.skip('Power meter link:', function() {
+	describe('Power meter link:', function() {
 
 		it('Check power meter data retrival', function() {
-			return h.getPowerMeterData()
+			return p.getPowerMeterData()
 				.then(function(res) {
 					res.should.have.property("U");
 					res.should.have.property("I");
@@ -365,6 +366,11 @@ describe('Heating Module Tests:', function() {
 					res.should.be.a.Number();
 				});
 		});
+
+		it('Check power meter communication when no power', function(done) {
+			// TODO: add this test
+			done(new Error('not implemented'));
+		})
 	});
 
 	describe('Posting heating data:', function() {

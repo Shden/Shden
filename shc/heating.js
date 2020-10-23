@@ -1,15 +1,16 @@
 // Node.js port of heating controller logic.
 const ow = require('./onewire');
-const http = require('http');
+const p = require('./power');
 const numeral = require('numeral');
 const pad = require('pad');
 const mp = require('./mqtt-publish');
 const fs = require('fs');
 
-
 // -- configuration constants:
 const configurationFileName = __dirname + '/config/heating.json';
-const APIcredentialsFileName = __dirname + '/config/api-credentials.json';
+
+// read configuration file
+var configuration = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
 
 const EXIT_OK			= 0;
 const EXIT_FAILURE		= 1;
@@ -29,12 +30,6 @@ const OutputMode = {
 	CONSOLE : 0,
 	LOG : 1
 };
-
-// read configuration file
-var configuration = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
-
-// read credentials file
-var APIcredentials = require(APIcredentialsFileName);
 
 if (require.main === module)
 {
@@ -430,7 +425,7 @@ function controlSaunaFloor(currentFloorTemp, targetFloorTemp)
 function getCurrentPowerConsumption()
 {
 	return new Promise((resolved, rejected) => {
-		getPowerMeterData()
+		p.getPowerMeterData()
 			.then(result => {
 				resolved(result.P.sum)
 			})
@@ -440,54 +435,6 @@ function getCurrentPowerConsumption()
 			});
 
 	})
-}
-
-// Returns promise to bring current power meter data.
-function getPowerMeterData()
-{
-	return new Promise((resolved, rejected) => {
-		http.get(addAuthorizationHeader({
-			host: '192.168.1.162',
-			port: 81,
-			path: '/API/1.1/consumption/electricity/GetPowerMeterData'
-		}), responce => {
-			if (responce.statusCode != 200)
-				rejected(responce.statusCode);
-
-			var data = '';
-			responce.on('data', b => {
-				data += b;
-			});
-			responce.on('end', () => {
-				var powerInfo = JSON.parse(data);
-				resolved(powerInfo);
-			});
-			responce.on('error', err => {
-				console.log(err);
-				rejected(err);
-			});
-		});
-	});
-}
-
-// Auxilary method creating adding authorization header to request if required.
-function addAuthorizationHeader(request)
-{
-	if (APIcredentials.authorizationReqired)
-	{
-		// need authorization, add header
-		var headers = { 'headers' : {
-			'Authorization': 'Basic ' +
-			new Buffer.from(
-				APIcredentials.userName + ':' +
-				APIcredentials.password).toString('base64')
-		}}
-		return Object.assign(request, headers);
-	}
-	else {
-		// no authorization required, just return request as is
-		return request;
-	}
 }
 
 // Post data point to keep historical data.
@@ -540,7 +487,6 @@ if (typeof exports !== 'undefined')
 	exports.setSaunaFloor = setSaunaFloor;
 	exports.controlRoom = controlRoom;
 	exports.controlSaunaFloor = controlSaunaFloor;
-	exports.getPowerMeterData = getPowerMeterData;
 	exports.getCurrentPowerConsumption = getCurrentPowerConsumption;
 	exports.postDataPoint = postDataPoint;
 	exports.parseCommandLine = parseCommandLine;

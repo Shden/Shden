@@ -157,12 +157,12 @@
 			else
 			{
 				/* Setting default start and end dates to the next weekend (Friday to Sunday) */
-		        arrivalDate = new Date();
-		        while (arrivalDate.getDay() != 5)
-		            arrivalDate.setDate(arrivalDate.getDate() + 1);
+				arrivalDate = new Date();
+				while (arrivalDate.getDay() != 5)
+					arrivalDate.setDate(arrivalDate.getDate() + 1);
 
 				var departureDate = new Date();
-		        departureDate.setDate((arrivalDate.getDate() + 2));
+			        departureDate.setDate((arrivalDate.getDate() + 2));
 
 				arrivalDate.setHours(18);
 				departureDate.setHours(21);

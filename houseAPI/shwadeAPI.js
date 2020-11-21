@@ -65,7 +65,7 @@ class ShWadeAPI {
                                         else 
                                         {
                                                 var p = JSON.parse(data.payload);
-                                                resolved(p.state.desired);
+                                                resolved(p.state.reported);
                                         }
                                 })
                         };
@@ -114,7 +114,7 @@ class ShWadeAPI {
                         // -- if shadow status is requested
                         else
                         {
-                                var params = {
+                                let updateRequest = {
                                         payload: JSON.stringify({
                                                 state: {
                                                         desired: update
@@ -125,15 +125,15 @@ class ShWadeAPI {
 
                                 // console.log(params);
 
-                                this.iotData.updateThingShadow(params, (err, data) => {
+                                this.iotData.updateThingShadow(updateRequest, (err, data) => {
                                         if (err)
-                                        {
                                                 rejected(err)
-                                        }
                                         else
                                         {
                                                 var o = JSON.parse(data.payload);
-                                                resolved(o.state.desired);
+                                                // console.log(data);
+                                                this.getStatus().then(status => { resolved(status); });
+                                                // resolved(o.state.reported);
                                         } 
                                 });
                         };

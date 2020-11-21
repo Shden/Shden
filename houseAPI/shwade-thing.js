@@ -1,5 +1,5 @@
-/* ShWade as AWS thing:
- *      - has local API to report/update house status
+/* ShWade thing:
+ *      - provides local REST API to report/update house status
  *      - updates AWS thing shadow to keep it in sync with ShWade state
  *      - subscribed to mqtt updates arising as result of AWS thing shadow updates
  */
@@ -10,6 +10,7 @@ const awsIot = require('aws-iot-device-sdk');
 const config = require('./config/shwade-thing-config.json');
 const bodyParser = require('body-parser');
 
+console.log(`1-wire runtime mode: ${config.OWDebugMode ? 'debug' : 'productive'}`);
 global.OWDebugMode = config.OWDebugMode; // Debug mode for one wire
 
 const app = express();
@@ -51,14 +52,11 @@ var ShWadeThing = awsIot.device({
 
 ShWadeThing
         .on('connect', function() {
-                // console.log('connected');
                 ShWadeThing.subscribe('$aws/things/ShWade/shadow/update/delta');
         });
 
 ShWadeThing
         .on('message', function(topic, payload) {
-                // console.log('message', topic, payload.toString());
-
                 // -- delta message from shadow came in
                 if (topic == '$aws/things/ShWade/shadow/update/delta')
                 {
@@ -74,12 +72,12 @@ setInterval(() =>
 {
         ShWadeGate.getStatus().then((status) => {
                 
-                let update = {
+                let payload = JSON.stringify({
                         state : {
-                                reported : status
-                        }
-                };
-                let payload = JSON.stringify(update);
+                                reported : status,
+                                desired : null                                       
+                                }
+                        });
                 
                 console.log('Updating AWS shadow:\n', payload);        
                 ShWadeThing.publish('$aws/things/ShWade/shadow/update', payload);

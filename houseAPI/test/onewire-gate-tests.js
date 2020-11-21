@@ -14,9 +14,9 @@ describe('Onewire filesystem gate tests', function() {
 		});
 
 		it('stubnet has temperature sensors', function() {
-			ow.getStubNet().should.have.property(ow.temperatureSensors.heater);
+			ow.getStubNet().should.have.property(ow.temperatureSensors.fluid_in);
 			ow.getStubNet().should.have.property(ow.temperatureSensors.bedroom);
-			ow.getStubNet().should.have.property(ow.temperatureSensors.external);
+			ow.getStubNet().should.have.property(ow.temperatureSensors.outsideTemp);
 		});
 
 		it('stubnet has switches', function() {
@@ -28,15 +28,15 @@ describe('Onewire filesystem gate tests', function() {
 	describe('Temperature', function() {
 		
 		it('1-wire stub has temperature sensors', function() {
-			ow.getStubNet()[ow.temperatureSensors.heater].should.have.property("temperature").which.is.a.Number();
+			ow.getStubNet()[ow.temperatureSensors.fluid_in].should.have.property("temperature").which.is.a.Number();
 			ow.getStubNet()[ow.temperatureSensors.bedroom].should.have.property("temperature").which.is.a.Number();
-			ow.getStubNet()[ow.temperatureSensors.external].should.have.property("temperature").which.is.a.Number();
+			ow.getStubNet()[ow.temperatureSensors.outsideTemp].should.have.property("temperature").which.is.a.Number();
 		});
 
 		it('getT() returns temperature', function() {
-			ow.getT(ow.temperatureSensors.heater).should.be.eventually.equal(44.2);
+			ow.getT(ow.temperatureSensors.fluid_in).should.be.eventually.equal(32.6);
 			ow.getT(ow.temperatureSensors.bedroom).should.be.eventually.a.Number();
-			ow.getT(ow.temperatureSensors.external).should.be.eventually.a.Number();
+			ow.getT(ow.temperatureSensors.outsideTemp).should.be.eventually.a.Number();
 		});
 	});
 
@@ -133,46 +133,68 @@ describe('Onewire filesystem gate tests', function() {
 			});
 		});
 
-		it('updateStatus() can change switches', function() {
-			ow.getStatus().then(status => {
-				// saunaFloorSwitch check:
-				status.switches.saunaFloorSwitch = 1;
-				ow.updateStatus(status)
-					.then(res => {
-						res.switches.saunaFloorSwitch.should.be.equal(1);
+		describe('updateStatus() for valid switches works', function() {
 
-						res.switches.saunaFloorSwitch = 0;
-						ow.updateStatus(res).then(res => {
-							res.switches.saunaFloorSwitch.should.be.equal(0);
-						});
+			function checkSwitch(switchName) { 
+				return ow.getStatus().then(status => {
+					status.should.not.be.null();
+					status.should.be.an.Object();
+					
+					let newState = {
+						switches : { }
+					};
+					// toggle state
+					newState.switches[switchName] = (status.switches[switchName]) ? 0 : 1;
+					ow.updateStatus(newState).then(result => {
+						result.switches[switchName].should.be.equal(newState.switches[switchName]);
 					});
+				});
+			};
 
-				// childrenSmallSwitch check:
-				status.switches.childrenSmallSwitch = 1;
-				ow.updateStatus(status)
-					.then(res => {
-						res.switches.childrenSmallSwitch.should.be.equal(1);
-
-						res.switches.childrenSmallSwitch = 0;
-						ow.updateStatus(res).then(res => {
-							res.switches.childrenSmallSwitch.should.be.equal(0);
-						});
-					});
-
+			it('saunaFloorSwitch works', function() {
+				return checkSwitch('saunaFloorSwitch');
 			});
-		})
 
-		it('updateStatus() unknowns do not affect knowns', function() {
-			ow.getStatus().then(status => {
-				status.switches['unknown_switch'] = 1;
-
-				ow.updateStatus(status).then(updatedStatus => {
-					updatedStatus.switches.saunaFloorSwitch.should.be.equal(0);
-					updatedStatus.switches.childrenSmallSwitch.should.be.equal(0);
-					Object.keys(updatedStatus.switches).length.should.be.equal(2);
-				})
+			it('childrenSmallSwitch works', function() {
+				return checkSwitch('childrenSmallSwitch');
 			});
-		})
+		});
+
+		it('updateStatus() for unknowns do not affect knowns', function() {
+			let wrongUpdateWithUnknownSensor = {
+				switches : { 
+					unknown_switch : 1
+				}
+			};
+
+			return ow.updateStatus(wrongUpdateWithUnknownSensor).then(updatedStatus => {
+				updatedStatus.switches.saunaFloorSwitch.should.be.equal(0);
+				updatedStatus.switches.childrenSmallSwitch.should.be.equal(0);
+				Object.keys(updatedStatus.switches).length.should.be.equal(Object.keys(ow.switches).length);
+			});
+		});
+
+		it('updateStatus() rejects temperatureSensors updates', function() {
+			let wrongUpdateWithTemperatureSensors = {
+				temperatureSensors : {
+					sensor1 : 10,
+					sensor2 : 18.5
+				}
+			}
+
+			ow.updateStatus(wrongUpdateWithTemperatureSensors).should.be.rejected();
+		});
+
+		it('updateStatus() rejects humiditySensors updates', function() {
+			let wrongUpdateWithHumiditySensors = {
+				humiditySensors : {
+					sensor1 : 10,
+					sensor2 : 18.5
+				}
+			}
+
+			ow.updateStatus(wrongUpdateWithHumiditySensors).should.be.rejected();
+		});
 	});
 
 	after(function() {

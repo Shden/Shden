@@ -11,57 +11,42 @@ describe('ShWade API tests', function() {
         });
         
         // aid methods
-        function checkGetStatus(API, done)
+        function checkGetStatus(API)
         {
-                API.getStatus()
-                        .then(status => {
-                                // console.log(status);
-                                status.should.have.property('oneWireStatus');
+                return API.getStatus().then(status => {
+                        status.should.have.property('oneWireStatus');
 
-                                status.oneWireStatus.should.have.property('temperatureSensors');
-                                status.oneWireStatus.should.have.property('switches');
-                                status.oneWireStatus.should.have.property('humiditySensors');
-                                done();
-                        });
+                        status.oneWireStatus.should.have.property('temperatureSensors');
+                        status.oneWireStatus.should.have.property('switches');
+                        status.oneWireStatus.should.have.property('humiditySensors');
+                });
         }
 
-        function checkUpdateStatus(API, done)
+        function checkUpdateStatus(API)
         {
-                API.getStatus()
-                        .then(status => {
-                                // status.oneWireStatus.switches.saunaFloorSwitch =
-                                //         (status.oneWireStatus.switches.saunaFloorSwitch) ? 0 : 1;
-                                // status.oneWireStatus.switches.childrenSmallSwitch =
-                                //         (status.oneWireStatus.switches.childrenSmallSwitch) ? 0 : 1;
-
-                                API.updateStatus(status)
-                                        .then(result => {
-                                                result.should.have.property('oneWireStatus');
-                
-                                                result.oneWireStatus.should.have.property('switches');
-
-                                                done();
-                
-                                                // result.oneWireStatus.switches.saunaFloorSwitch.should.be.equal(
-                                                //         status.oneWireStatus.switches.saunaFloorSwitch
-                                                // );
-                                                // result.oneWireStatus.switches.childrenSmallSwitch.should.be.equal(
-                                                //         status.oneWireStatus.switches.childrenSmallSwitch
-                                                // );
-                                        });
-                        });
+                let validUpdateRequest = {
+                        oneWireStatus : {
+                                switches : {
+                                        sw22 : 1
+                                }
+                        }
+                };
+                return API.updateStatus(validUpdateRequest).then(result => {
+                        result.should.have.property('oneWireStatus');
+                        result.oneWireStatus.should.have.property('switches');
+                });
         }
 
         describe('Thing API tests (local)', function () {
 
                 let thingAPI = new API({ thingAPI: true });
 
-                it('getStatus()', function(done) {
-                        checkGetStatus(thingAPI, done);
+                it('getStatus()', function() {
+                        return checkGetStatus(thingAPI);
                 })
 
-                it('updateStatus()', function(done) {
-                        checkUpdateStatus(thingAPI, done);
+                it('updateStatus()', function() {
+                        return checkUpdateStatus(thingAPI);
                 })
                 
         });
@@ -70,12 +55,12 @@ describe('ShWade API tests', function() {
 
                 let shadowAPI = new API({ shadowAPI: true });
                 
-                it('getStatus()', function(done) {
-                        checkGetStatus(shadowAPI, done);
+                it('getStatus()', function() {
+                        return checkGetStatus(shadowAPI);
                 })
 
-                it('updateStatus()', function(done) {
-                        checkUpdateStatus(shadowAPI, done);
+                it('updateStatus()', function() {
+                        return checkUpdateStatus(shadowAPI);
                 })
 
         });

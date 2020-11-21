@@ -10,17 +10,21 @@ describe('ShWade gate tests', function() {
         it('getStatus() promise resolved to valid REST object', function() {
                 return shwg.getStatus().then(status => {
                         status.should.have.property("oneWireStatus").which.is.an.Object();
-                        // console.log(JSON.stringify(status, null, '\t'));
                 })
         });
 
         it('updateStatus() promise resolved to valid REST object', function() {
-                return shwg.getStatus().then(status => {
-                        shwg.updateStatus(status).then(newStatus => {
-                                newStatus.should.have.property("oneWireStatus").which.is.an.Object();
-                        });
+                let validUpdateRequest = {
+                        oneWireStatus : {
+                                switches : {
+                                        sw1 : 0,
+                                        sw2 : 1
+                                }
+                        }
+                }
+                return shwg.updateStatus(validUpdateRequest).then(updatedStatus => {
+                        updatedStatus.should.have.property("oneWireStatus").which.is.an.Object();
                 });
-
         });
 
 })

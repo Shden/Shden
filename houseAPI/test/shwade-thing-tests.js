@@ -16,7 +16,6 @@ describe('ShWadeThing REST API tests', function() {
                                 res.statusCode.should.be.equal(200);
                                 res.body.should.be.an.Object();
                                 res.body.should.have.property("oneWireStatus").which.is.an.Object();
-                                //console.log(JSON.stringify(res.body));
                                 done();
                         })
         });
@@ -44,24 +43,6 @@ describe('ShWadeThing REST API tests', function() {
                                 done();
                         });
 
-        });
-
-        it('PUT ShWade thing status should handle GET output', function(done) {
-
-                chai.request(server)
-                        .get('/things/ShWade')
-                        .end((err, res) => {
-                                res.statusCode.should.be.equal(200);
-                                res.body.should.be.an.Object();
-
-                                chai.request(server)
-                                        .put('/things/ShWade')
-                                        .send(res.body)
-                                        .end((err, res) => {
-                                                res.statusCode.should.be.equal(200);  
-                                                done();
-                                        });
-                        });
         });
 
 });

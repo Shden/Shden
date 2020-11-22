@@ -2,35 +2,6 @@
 const http = require('http');
 const config = require('../config/mercury236-config.json');
 
-
-// // Returns promise to bring current power meter data.
-// function getPowerMeterData()
-// {
-// 	return new Promise((resolved, rejected) => {
-// 		http.get(addAuthorizationHeader({
-// 			host: '192.168.1.162',
-// 			port: 81,
-// 			path: '/API/1.1/consumption/electricity/GetPowerMeterData'
-// 		}), responce => {
-// 			if (responce.statusCode != 200)
-// 				rejected(responce.statusCode);
-
-// 			var data = '';
-// 			responce.on('data', b => {
-// 				data += b;
-// 			});
-// 			responce.on('end', () => {
-// 				var powerInfo = JSON.parse(data);
-// 				resolved(powerInfo);
-// 			});
-// 			responce.on('error', err => {
-// 				console.log(err);
-// 				rejected(err);
-// 			});
-// 		});
-// 	});
-// }
-
 // Returns promise to bring current power meter data.
 function getStatus()
 {

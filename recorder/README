@@ -1,5 +1,16 @@
 ReadMe WIP
 
+Testing
+
+For remote tesing grant remote connection right to a user as follows:
+
+GRANT ALL ON SHDEN.* TO 'testuser'@'%' IDENTIFIED BY 'testuserpassword';
+
+Also, 
+
+$ sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+
+and change bind-address param to  0.0.0.0
 
 Installation
 

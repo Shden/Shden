@@ -29,14 +29,14 @@ $ sudo systemctl restart shwade-thing
 
 ShWade Thing Service Operations
 
-To stop the service:
-$ sudo systemctl stop shwade-thing
-
-To disable the service (prevent it from loading on boot):
-$ sudo systemctl disable shwade-thing
-
 To see the status of the service:
 $ sudo systemctl status shwade-thing
 
 To restart:
 $ sudo systemctl restart shwade-thing
+
+To stop the service:
+$ sudo systemctl stop shwade-thing
+
+To disable the service (prevent it from loading on boot):
+$ sudo systemctl disable shwade-thing

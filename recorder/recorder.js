@@ -14,23 +14,107 @@ setInterval(() => {
         console.info('Persisting current data.');
 }, config.RecordingIntervalSec * 1000);
 
-// Obtaint current house state data point
-function getDataPoint()
+function persistHeatingData(dbConnectionPool, dataPoint)
 {
-        return thingAPI.getStatus();
+        return new Promise((resolved, rejected) => {
+                dbConnectionPool.getConnection().then(dbConnection => {
+                        dbConnectionPool.query(
+                                "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
+                                [
+                                                                                                // SP_ADD_HEATING_RECORD params:
+                                        null,                                                   // 1 - heater (not used)
+                                        dataPoint.temperatureSensors.fluid_in,                  // 2 - fluid_in
+                                        dataPoint.temperatureSensors.fluid_out,                 // 3 - fluid_out
+                                        dataPoint.temperatureSensors.outsideTemp,               // 4 - external
+                                        dataPoint.temperatureSensors.am_bedroom,                // 5 - am_bedroom
+                                        dataPoint.temperatureSensors.bedroom,                   // 6 - bedroom
+                                        dataPoint.temperatureSensors.cabinet,                   // 7 - cabinet
+                                        dataPoint.temperatureSensors.child_bedroom,             // 8 - child_bedroom
+                                        dataPoint.temperatureSensors.kitchen,                   // 9 - kitchen
+                                        dataPoint.temperatureSensors.sauna_ceiling,             // 10 - bathroom_1
+                                        dataPoint.temperatureSensors.bathroom_1_floor_1,        // 11 - bathroom_1_floor
+                                        null,                                                   // 12 - control (not used)
+                                        null,                                                   // 13 - heatingOn (not used)
+                                        null,                                                   // 14 - pumpOn (not used)
+                                        dataPoint.switches.saunaFloorSwitch                     // 15 - bathroom_1_heatingOn
+                                ]
+                        ).then(() => {
+                                dbConnection.end();
+                                resolved();              
+                        });
+                }).catch(err => {
+                        //handle error
+                        console.log(err); 
+                        dbConnection.end();
+                        rejected(err);
+                });
+        });
 }
 
-// // Get DB connection pool
-// function getDBConnectionPool()
-// {
-//         return DB.createPool(config.DBConnection);
-// }
+function persistHumidityData(dbConnectionPool, dataPoint)
+{
+        return new Promise((resolved, rejected) => {
+                dbConnectionPool.getConnection().then(dbConnection => {
+                        dbConnectionPool.query(
+                                "CALL SP_ADD_HUMIDITY_RECORD(?);", [dataPoint.humiditySensors.bathroom_1]
+                        ).then(() => {
+                                dbConnection.end();
+                                resolved();              
+                        })
+                }).catch(err => {
+                        //handle error
+                        console.log(err); 
+                        dbConnection.end();
+                        rejected(err);
+                })
+        })  
+}
+
+function persistPowerData(dbConnectionPool, dataPoint)
+{
+        return new Promise((resolved, rejected) => {
+                dbConnectionPool.getConnection().then(dbConnection => {
+                        dbConnectionPool.query(
+                                "CALL SP_ADD_POWER_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [
+                                        dataPoint.U.p1, 
+                                        dataPoint.U.p2, 
+                                        dataPoint.U.p3,
+
+                                        dataPoint.I.p1, 
+                                        dataPoint.I.p2, 
+                                        dataPoint.I.p3,
+
+                                        dataPoint.P.p1, 
+                                        dataPoint.P.p2, 
+                                        dataPoint.P.p3, 
+                                        dataPoint.P.sum,
+
+                                        dataPoint.S.p1, 
+                                        dataPoint.S.p2, 
+                                        dataPoint.S.p3, 
+                                        dataPoint.S.sum,
+
+                                        dataPoint.mainsStatus
+                                ]
+                        ).then(() => {
+                                dbConnection.end();
+                                resolved();
+                        })
+                }).catch(err => {
+                       //handle error
+                       console.log(err); 
+                       dbConnection.end();
+                       rejected(err);
+                })
+        })
+}
 
 if (typeof exports !== 'undefined')
 {
-	// check methods
-        exports.getDataPoint = getDataPoint;
-        // exports.getDBConnectionPool = getDBConnectionPool;
+        // check methods
+        exports.persistHeatingData = persistHeatingData;
+        exports.persistPowerData = persistPowerData;
+        exports.persistHumidityData = persistHumidityData;
 
         // check properties for testing
         exports.thingAPI = thingAPI;

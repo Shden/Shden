@@ -1,0 +1,14 @@
+# copy this file to /lib/systemd/system/
+# note: check all directores layout first!
+
+[Unit]
+Description=ShWade House Data Recorder Service
+After=network-online.target
+
+[Service]
+Restart=on-failure
+WorkingDirectory=/home/den/Shden/recorder
+ExecStart=/usr/bin/node recorder.js
+
+[Install]
+WantedBy=multi-user.target

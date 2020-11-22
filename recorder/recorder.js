@@ -11,7 +11,21 @@ let DBConnectionPool = DB.createPool(config.DBConnection);
 
 // API data persisting loop
 setInterval(() => {
-        console.info('Persisting current data.');
+        console.info('Update started...');
+        
+        thingAPI.getStatus().then(dataPoint => {
+                Promise.all([
+                        persistHeatingData(DBConnectionPool, dataPoint.oneWireStatus),
+                        persistHumidityData(DBConnectionPool, dataPoint.oneWireStatus),
+                        persistPowerData(DBConnectionPool, dataPoint.powerStatus)
+                ])
+                .then(() => {
+                        console.info('updated.');
+                })
+                .catch(err => {
+                        console.error(err);
+                })
+        })
 }, config.RecordingIntervalSec * 1000);
 
 function persistHeatingData(dbConnectionPool, dataPoint)

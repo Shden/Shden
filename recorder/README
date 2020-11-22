@@ -21,3 +21,32 @@ To deploy to the target environment:
 
 $ cd recorder
 $ scp -r config/ den@192.168.1.162:/home/den/Shden/recorder
+
+ShWade House Data Recorder Service Installation
+
+Start from shwade-recorder.service file in this directory. Check directories layout for everything 
+(node, working directory). Then copy shwade-recorder.service to /lib/systemd/system/:
+$ sudo cp shwade-recorder.service /lib/systemd/system/
+
+Run this command:
+$ sudo systemctl daemon-reload
+
+Let SystemD know about the shwade-recorder service and instruct SystemD to load this service on boot:
+$ sudo systemctl enable shwade-recorder
+
+Now run the shwade-recorder service:
+$ sudo systemctl restart shwade-recorder
+
+ShWade House Data Recorder Service Operations
+
+To see the status of the service:
+$ sudo systemctl status shwade-recorder
+
+To restart:
+$ sudo systemctl restart shwade-recorder
+
+To stop the service:
+$ sudo systemctl stop shwade-recorder
+
+To disable the service (prevent it from loading on boot):
+$ sudo systemctl disable shwade-recorder

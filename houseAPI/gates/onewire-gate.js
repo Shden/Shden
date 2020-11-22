@@ -58,23 +58,23 @@ const switches = {
 	WU15			: { "address" : "29.A4B511000000", "channel" : "PIO.6" },	// окно 15 вверх
 	WU16			: { "address" : "29.A4B511000000", "channel" : "PIO.7" },	// окно 16 вверх
 
-	WD01			: { "address" : "29.9FB511000000", "channel" : "PIO.0" },	// окно 1 вниз
-	WD02			: { "address" : "29.9FB511000000", "channel" : "PIO.1" },	// окно 2 вниз
-	WD03			: { "address" : "29.9FB511000000", "channel" : "PIO.2" },	// окно 3 вниз
-	WD04			: { "address" : "29.9FB511000000", "channel" : "PIO.3" },	// окно 4 вниз
-	WD05			: { "address" : "29.9FB511000000", "channel" : "PIO.4" },	// окно 5 вниз
-	WD06			: { "address" : "29.9FB511000000", "channel" : "PIO.5" },	// окно 6 вниз
-	WD07			: { "address" : "29.9FB511000000", "channel" : "PIO.6" },	// окно 7 вниз
-	WD08			: { "address" : "29.9FB511000000", "channel" : "PIO.7" },	// окно 8 вниз
+	WD01			: { "address" : "29.9CB511000000", "channel" : "PIO.0" },	// окно 1 вниз
+	WD02			: { "address" : "29.9CB511000000", "channel" : "PIO.1" },	// окно 2 вниз
+	WD03			: { "address" : "29.9CB511000000", "channel" : "PIO.2" },	// окно 3 вниз
+	WD04			: { "address" : "29.9CB511000000", "channel" : "PIO.3" },	// окно 4 вниз
+	WD05			: { "address" : "29.9CB511000000", "channel" : "PIO.4" },	// окно 5 вниз
+	WD06			: { "address" : "29.9CB511000000", "channel" : "PIO.5" },	// окно 6 вниз
+	WD07			: { "address" : "29.9CB511000000", "channel" : "PIO.6" },	// окно 7 вниз
+	WD08			: { "address" : "29.9CB511000000", "channel" : "PIO.7" },	// окно 8 вниз
 
-	WD09			: { "address" : "29.9CB511000000", "channel" : "PIO.0" },	// окно 9 вниз
-	WD10			: { "address" : "29.9CB511000000", "channel" : "PIO.1" },	// окно 10 вниз
-	WD11			: { "address" : "29.9CB511000000", "channel" : "PIO.2" },	// окно 11 вниз
-	WD12			: { "address" : "29.9CB511000000", "channel" : "PIO.3" },	// окно 12 вниз
-	WD13			: { "address" : "29.9CB511000000", "channel" : "PIO.4" },	// окно 13 вниз
-	WD14			: { "address" : "29.9CB511000000", "channel" : "PIO.5" },	// окно 14 вниз
-	WD15			: { "address" : "29.9CB511000000", "channel" : "PIO.6" },	// окно 15 вниз
-	WD16			: { "address" : "29.9CB511000000", "channel" : "PIO.7" }	// окно 16 вниз
+	WD09			: { "address" : "29.9FB511000000", "channel" : "PIO.0" },	// окно 9 вниз
+	WD10			: { "address" : "29.9FB511000000", "channel" : "PIO.1" },	// окно 10 вниз
+	WD11			: { "address" : "29.9FB511000000", "channel" : "PIO.2" },	// окно 11 вниз
+	WD12			: { "address" : "29.9FB511000000", "channel" : "PIO.3" },	// окно 12 вниз
+	WD13			: { "address" : "29.9FB511000000", "channel" : "PIO.4" },	// окно 13 вниз
+	WD14			: { "address" : "29.9FB511000000", "channel" : "PIO.5" },	// окно 14 вниз
+	WD15			: { "address" : "29.9FB511000000", "channel" : "PIO.6" },	// окно 15 вниз
+	WD16			: { "address" : "29.9FB511000000", "channel" : "PIO.7" }	// окно 16 вниз
 };
 
 // Creates stubnet with all sensor and switches if not yet created.

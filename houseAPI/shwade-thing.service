@@ -1,0 +1,14 @@
+# copy this file to /lib/systemd/system/
+# note: check all directores layout first!
+
+[Unit]
+Description=ShWade Thing Service
+After=network-online.target
+
+[Service]
+Restart=on-failure
+WorkingDirectory=/home/den/Shden/houseAPI
+ExecStart=/usr/bin/node shwade-thing.js
+
+[Install]
+WantedBy=multi-user.target

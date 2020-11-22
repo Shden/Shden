@@ -1,0 +1,14 @@
+
+
+
+
+Installation
+
+Sensitive information
+
+Folders .keys and config are not included to git repository as they have private information.
+To deploy to the target environment:
+
+$ cd houseAPI
+$ scp -r config/ den@192.168.1.162:/home/den/Shden/houseAPI
+$ scp -r .keys/ den@192.168.1.162:/home/den/Shden/houseAPI

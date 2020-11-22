@@ -1,0 +1,12 @@
+ReadMe WIP
+
+
+Installation
+
+Sensitive Information
+
+Folder config is not included to git repository as is has private information.
+To deploy to the target environment:
+
+$ cd recorder
+$ scp -r config/ den@192.168.1.162:/home/den/Shden/recorder

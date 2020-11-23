@@ -1,21 +1,14 @@
-var should = require('should');
-var http = require('http');
+const should = require('should');
+const http = require('http');
+const API = require('./api-config').config;
 
-// -- figure out what API version to test
-process.argv.length.should.be.above(3);
-process.argv[2].should.be.String();
-let API_version = process.argv[2].split('=')[1];
-let APIconfig = require('./api-origin-config.json')['API_' + API_version];
-console.log(`API configuration:`);
-console.log(APIconfig);
+describe(`/API/${API.version}/status testing:`, function() {
 
-describe(`/API/${APIconfig.version}/status testing:`, function() {
-
-	it(`GetHouseStatus: GET /API/${APIconfig.version}/status/GetHouseStatus`, function(done) {
+	it(`GetHouseStatus: GET /API/${API.version}/status/GetHouseStatus`, function(done) {
 		http.get({
-			host: APIconfig.host,
-			path: `/API/${APIconfig.version}/status/GetHouseStatus`,
-			port: APIconfig.port
+			host: API.host,
+			path: `/API/${API.version}/status/GetHouseStatus`,
+			port: API.port
 		}, function(responce) {
 			responce.statusCode.should.be.equal(200);
 			var data = '';
@@ -42,9 +35,9 @@ describe(`/API/${APIconfig.version}/status testing:`, function() {
 
 		function SM(m, expectedStatusCode, done) {
 			var req = http.request({
-				host: APIconfig.host,
-				path: `/API/${APIconfig.version}/status/SetHouseMode/${m}`,
-				port: APIconfig.port,
+				host: API.host,
+				path: `/API/${API.version}/status/SetHouseMode/${m}`,
+				port: API.port,
 				method: 'PUT'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(expectedStatusCode);
@@ -61,11 +54,11 @@ describe(`/API/${APIconfig.version}/status testing:`, function() {
 			req.end();
 		}
 
-		it(`ON: PUT /API/${APIconfig.version}/status/SetHouseMode/1`, function(done) {
+		it(`ON: PUT /API/${API.version}/status/SetHouseMode/1`, function(done) {
 			SM(1, 200, done);
 		});
 
-		it(`OFF: PUT /API/${APIconfig.version}/status/SetHouseMode/0`, function(done) {
+		it(`OFF: PUT /API/${API.version}/status/SetHouseMode/0`, function(done) {
 			SM(0, 200, done);
 		});
 

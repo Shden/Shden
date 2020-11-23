@@ -1,12 +1,14 @@
-var should = require('should');
-var http = require('http');
+const should = require('should');
+const http = require('http');
+const API = require('./api-config').config;
 
-describe('/API/1.1/repellers testing:', function() {
+describe(`/API/${API.version}/repellers testing:`, function() {
 
-	it('GetStatus', function(done) {
+	it(`GetStatus: GET /API/${API.version}/repellers/GetStatus`, function(done) {
 		http.get({
-			host: 'localhost',
-			path: '/API/1.1/repellers/GetStatus'
+			host: API.host,
+			port: API.port,
+			path: `/API/${API.version}/repellers/GetStatus`
 		}, function(responce) {
 			responce.statusCode.should.be.equal(200);
 			var data = '';
@@ -22,12 +24,13 @@ describe('/API/1.1/repellers testing:', function() {
 		});
 	});
 
-	describe('SetStatus', function() {
+	describe('SetStatus tests:', function() {
 
-		it('ON', function(done) {
+		it(`ON: PUT /API/${API.version}/repellers/SetStatus/1`, function(done) {
 			var req = http.request({
-				host: 'localhost',
-				path: '/API/1.1/repellers/SetStatus/1',
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/repellers/SetStatus/1`,
 				method: 'PUT'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
@@ -46,10 +49,11 @@ describe('/API/1.1/repellers testing:', function() {
 			req.end();
 		});
 
-		it('OFF', function(done) {
+		it(`OFF: PUT /API/${API.version}/repellers/SetStatus/0`, function(done) {
 			var req = http.request({
-				host: 'localhost',
-				path: '/API/1.1/repellers/SetStatus/0',
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/repellers/SetStatus/0`,
 				method: 'PUT'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
@@ -69,10 +73,11 @@ describe('/API/1.1/repellers testing:', function() {
 		});
 	});
 
-	it('RefreshPulse', function(done) {
+	it(`RefreshPulse: GET /API/${API.version}/repellers/RefreshPulse`, function(done) {
 		http.get({
-			host: 'localhost',
-			path: '/API/1.1/repellers/RefreshPulse'
+			host: API.host,
+			port: API.port,
+			path: `/API/${API.version}/repellers/RefreshPulse`
 		}, function(responce) {
 			responce.statusCode.should.be.equal(200);
 			done();

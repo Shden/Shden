@@ -377,11 +377,11 @@ Class Climate
 		$dep_year, $dep_month, $dep_day, $dep_hour)
 	{
 		$time_zone = new DateTimeZone(date_default_timezone_get());
-		$arrival = new DateTime(now, $time_zone);
+		$arrival = new DateTime("now", $time_zone);
 		$arrival->setDate($arr_year, $arr_month, $arr_day);
 		$arrival->setTime($arr_hour, 0);
 
-		$departure = new DateTime(now, $time_zone);
+		$departure = new DateTime("now", $time_zone);
 		$departure->setDate($dep_year, $dep_month, $dep_day);
 		$departure->setTime($dep_hour, 0);
 

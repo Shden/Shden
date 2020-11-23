@@ -1,0 +1,12 @@
+{
+        "API_1.1" : {
+                "version" : "1.1",
+                "host" : "192.168.1.162",
+                "port" : 81
+        },
+        "API_1.2" : {
+                "version" : "1.2",
+                "host" : "localhost",
+                "port" : 3001
+        }
+}

@@ -1,12 +1,14 @@
-var should = require('should');
-var http = require('http');
+const should = require('should');
+const http = require('http');
+const API = require('./api-config').config;
 
-describe('/API/1.1/electricity/consumption testing:', function() {
+describe(`/API/${API.version}/electricity/consumption testing:`, function() {
 
-	it('GetPowerMeterData', function(done) {
+	it(`GetPowerMeterData: GET /API/${API.version}/consumption/electricity/GetPowerMeterData`, function(done) {
 		http.get({
-			host: 'localhost',
-			path: '/API/1.1/consumption/electricity/GetPowerMeterData'
+			host: API.host,
+			port: API.port,
+			path: `/API/${API.version}/consumption/electricity/GetPowerMeterData`
 		}, function(responce) {
 			responce.statusCode.should.be.equal(200);
 			var data = '';
@@ -33,10 +35,11 @@ describe('/API/1.1/electricity/consumption testing:', function() {
 		});
 	});
 
-	it('GetPowerConsumptionByHours', function(done) {
+	it(`GetPowerConsumptionByHours: GET /API/${API.version}/consumption/electricity/GetPowerConsumptionByHours/1`, function(done) {
 		http.get({
-			host: 'localhost',
-			path: '/API/1.1/consumption/electricity/GetPowerConsumptionByHours/1'
+			host: API.host,
+			port: API.port,
+			path: `/API/${API.version}/consumption/electricity/GetPowerConsumptionByHours/1`
 		}, function(responce) {
 			responce.statusCode.should.be.equal(200);
 			var data = '';
@@ -52,22 +55,23 @@ describe('/API/1.1/electricity/consumption testing:', function() {
 		});
 	});
 
-		it('GetPowerConsumptionByDays', function(done) {
-			http.get({
-				host: 'localhost',
-				path: '/API/1.1/consumption/electricity/GetPowerConsumptionByDays/1'
-			}, function(responce) {
-				responce.statusCode.should.be.equal(200);
-				var data = '';
+	it(`GetPowerConsumptionByDays: GET /API/${API.version}/consumption/electricity/GetPowerConsumptionByDays/1`, function(done) {
+		http.get({
+			host: API.host,
+			port: API.port,
+			path: `/API/${API.version}/consumption/electricity/GetPowerConsumptionByDays/1`
+		}, function(responce) {
+			responce.statusCode.should.be.equal(200);
+			var data = '';
 
-				responce.on('data', function(b) {
-					data += b;
-				});
+			responce.on('data', function(b) {
+				data += b;
+			});
 
-				responce.on('end', function() {
-					// TODO: add resulting data validation.
-					done();
-				});
+			responce.on('end', function() {
+				// TODO: add resulting data validation.
+				done();
 			});
 		});
 	});
+});

@@ -3,6 +3,8 @@ require_once ('../../include/sql2js.php');
 
 use Jacwright\RestServer\RestException;
 
+date_default_timezone_set("Europe/Moscow");
+
 /**
  *	Electricity consumption API, including power meter data, aggregated consumption data and
  *	historical data.
@@ -59,7 +61,7 @@ Class ElectricityConsumption
 			throw new RestException(400, "Invalid request parameter: $days.");
 
 		global $conn;
-		$time_zone = new DateTimeZone(TZ);
+		$time_zone = new DateTimeZone(date_default_timezone_get());
 
 		$res = $conn->query(
 			"SELECT DATE(time) as Date, HOUR(time) as Hour, " .
@@ -97,7 +99,7 @@ Class ElectricityConsumption
 			throw new RestException(400, "Invalid request parameter: $days.");
 
 		global $conn;
-		$time_zone = new DateTimeZone(TZ);
+		$time_zone = new DateTimeZone(date_default_timezone_get());
 
 		$res = $conn->query(
 			"SELECT DATE(time) as Date, " .

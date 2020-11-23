@@ -1,15 +1,17 @@
-var should = require('should');
-var http = require('http');
-var moment = require('moment');
+const should = require('should');
+const http = require('http');
+const moment = require('moment');
+const API = require('./api-config').config;
 
-describe('/API/1.1/climate testing:', function() {
+describe(`/API/${API.version}/climate testing:`, function() {
 
 	describe('Schedule testing:', function() {
 
-		it('GetSchedule', function(done) {
+		it(`GetSchedule: GET /API/${API.version}/climate/GetSchedule`, function(done) {
 			http.get({
-				host: 'localhost',
-				path: '/API/1.1/climate/GetSchedule'
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/GetSchedule`
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
 				var data = '';
@@ -29,10 +31,11 @@ describe('/API/1.1/climate testing:', function() {
 			});
 		});
 
-		it('SetSchedule', function(done) {
+		it(`SetSchedule: PUT /API/${API.version}/climate/SetSchedule/2016/10/1/19/2016/10/2/21`, function(done) {
 			var req = http.request({
-				host: 'localhost',
-				path: '/API/1.1/climate/SetSchedule/2016/10/1/19/2016/10/2/21',
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/SetSchedule/2016/10/1/19/2016/10/2/21`,
 				method: 'PUT'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
@@ -56,10 +59,11 @@ describe('/API/1.1/climate testing:', function() {
 			req.end();
 		});
 
-		it('ResetSchedule', function(done) {
+		it(`ResetSchedule: PUT /API/${API.version}/climate/ResetSchedule`, function(done) {
 			var req = http.request({
-				host: 'localhost',
-				path: '/API/1.1/climate/ResetSchedule',
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/ResetSchedule`,
 				method: 'PUT'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
@@ -89,8 +93,9 @@ describe('/API/1.1/climate testing:', function() {
 
 		function CSn(endpointName, n, done, expectedStatusCode) {
 			http.get({
-				host: 'localhost',
-				path: `/API/1.1/climate/${endpointName}/${n}`
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/${endpointName}/${n}`
 			}, function(responce) {
 				responce.statusCode.should.be.equal(expectedStatusCode);
 				var data = '';
@@ -185,10 +190,11 @@ describe('/API/1.1/climate testing:', function() {
 	describe('Heating configuration testing:', function() {
 
 		var config;
-		it('Get heating configuration', function(done) {
+		it(`GET /API/${API.version}/climate/Configuration`, function(done) {
 			http.get({
-				host: 'localhost',
-				path: '/API/1.1/climate/Configuration'
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/Configuration`
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
 				var data = '';
@@ -205,10 +211,11 @@ describe('/API/1.1/climate testing:', function() {
 			});
 		});
 
-		it('Put heating configuration', function(done) {
+		it(`PUT /API/${API.version}/climate/Configuration`, function(done) {
 			var req = http.request({
-				host: 'localhost',
-				path: '/API/1.1/climate/Configuration',
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/Configuration`,
 				method: 'PUT'
 			}, function(responce) {
 				responce.statusCode.should.be.equal(200);
@@ -230,8 +237,9 @@ describe('/API/1.1/climate testing:', function() {
 
 		it('Post heating data point (deprecate)', function(done) {
 			var request = http.request({
-				host: 'localhost',
-				path: '/API/1.1/climate/data/heating',
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/data/heating`,
 				method: 'POST'
 			}, responce => {
 				var data = '';
@@ -271,8 +279,9 @@ describe('/API/1.1/climate testing:', function() {
 
 		function postTemperatureTestHelper(done, payload, expectedStatusCode) {
 			var request = http.request({
-				host: 'localhost',
-				path: '/API/1.1/climate/data/temperature',
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/data/temperature`,
 				method: 'POST'
 			}, responce => {
 				var result = '';
@@ -293,14 +302,14 @@ describe('/API/1.1/climate testing:', function() {
 		it('Valid temperature data accepted', function(done) {
 			postTemperatureTestHelper(done, [{
 				temperature	: 22,
-				sensorId	: '28FF72BF47160342'
+				sensorId	: '28FF513D92150353'
 			}], 200);
 		});
 
 		it('Invalid temperature data rejected', function(done) {
 			postTemperatureTestHelper(done, [{
 				temperature	: 999,
-				sensorId	: '28FF72BF47160342'
+				sensorId	: '28FF513D92150353'
 			}], 400);
 		});
 

@@ -1,12 +1,14 @@
-var should = require('should');
-var http = require('http');
+const should = require('should');
+const http = require('http');
+const API = require('./api-config').config;
 
-describe('/API/1.1/gateways testing:', function() {
+describe(`/API/${API.version}/gateways testing:`, function() {
 
-	it('GetStatus', function(done) {
+	it(`GetStatus: GET /API/${API.version}/gateways/GetStatus`, function(done) {
 		http.get({
-			host: 'localhost',
-			path: '/API/1.1/gateways/GetStatus'
+			host: API.host,
+			port: API.port,
+			path: `/API/${API.version}/gateways/GetStatus`
 		}, function(responce) {
 			responce.statusCode.should.be.equal(200);
 			var data = '';

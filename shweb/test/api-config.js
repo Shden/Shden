@@ -1,5 +1,7 @@
+const should = require('should');
+
 // -- figure out what API version to test
-process.argv.length.should.be.above(3);
+process.argv.length.should.be.aboveOrEqual(3);
 process.argv[2].should.be.String();
 let API_version = process.argv[2].split('=')[1];
 let APIconfig = require('./api-origin-config.json')['API_' + API_version];

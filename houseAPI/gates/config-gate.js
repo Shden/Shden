@@ -1,8 +1,8 @@
 // House configuration gate.
-const { rejects } = require('assert');
-var fs = require('fs');
+const fs = require('fs');
+const path = require('path');
 
-const configFile = '/Users/den/Shden/shc/config/house-config.json';
+const configFile = path.join(__dirname, '../../shc/config/house-config.json');
 
 // Creates REST object representing current house configuration
 async function getConfig()

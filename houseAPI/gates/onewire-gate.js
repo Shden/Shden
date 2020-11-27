@@ -189,7 +189,7 @@ async function getHumiditySensorsData()
 
 
 // Creates REST object representing 1-wire network state including all devices states
-function getStatus()
+async function getStatus()
 {
 	return new Promise((resolved, rejected) => {
 		Promise.all([

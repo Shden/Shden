@@ -32,7 +32,6 @@ function getShWadeStatus(request, response)
 {
         ShWadeGate.getStatus().then(res => { 
                 response.json(res); 
-                response.end(); 
         });
 }
 
@@ -41,7 +40,6 @@ function updateShWadeStatus(request, response)
         //console.log(request.body);
         ShWadeGate.updateStatus(request.body).then(res => { 
                 response.json(res); 
-                response.end(); 
         });        
 }
 

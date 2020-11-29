@@ -37,7 +37,7 @@ function getShWadeStatus(request, response)
 
 function updateShWadeStatus(request, response)
 {
-        //console.log(request.body);
+        console.log('Updating thing status: ', request.body);
         ShWadeGate.updateStatus(request.body).then(res => { 
                 response.json(res); 
         });        
@@ -81,7 +81,7 @@ setInterval(() =>
                                 }
                         });
                 
-                console.log('Updating AWS shadow:\n', payload);        
+                console.log('Updating AWS shadow: ', payload);        
                 ShWadeThing.publish('$aws/things/ShWade/shadow/update', payload);
 
         });

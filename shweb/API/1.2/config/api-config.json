@@ -1,0 +1,13 @@
+{
+        "port" : 3001,
+
+        "DBConnection" : {
+                "host": "localhost", 
+                "user": "webuser", 
+                "password": "webuser",
+                "connectionLimit": 5,
+                "database": "SHDEN"
+        },
+
+        "houseAPIorigin" : { "thingAPI": true }
+}

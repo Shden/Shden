@@ -1,0 +1,12 @@
+{
+        "climate" : {
+                "outTemp" :     null,
+                "inTemp" :      null
+        },
+        "mode" : {
+                "presence" :    null,
+                "starting" :    null,
+                "mains" :       null
+        },
+        "power" : null
+}

@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 
 console.log(`1-wire runtime mode: ${config.OWDebugMode ? 'debug' : 'productive'}`);
 global.OWDebugMode = config.OWDebugMode; // Debug mode for one wire
+console.log(`1-wire dry run mode: ${global.OWDryRun}`);
 
 const app = express();
 
@@ -37,7 +38,7 @@ function getShWadeStatus(request, response)
 
 function updateShWadeStatus(request, response)
 {
-        console.log('Updating thing status: ', request.body);
+        console.log('Updating thing status:', request.body);
         ShWadeGate.updateStatus(request.body).then(res => { 
                 response.json(res); 
         });        
@@ -81,7 +82,7 @@ setInterval(() =>
                                 }
                         });
                 
-                console.log('Updating AWS shadow: ', payload);        
+                console.log('Updating AWS shadow:', payload);        
                 ShWadeThing.publish('$aws/things/ShWade/shadow/update', payload);
 
         });

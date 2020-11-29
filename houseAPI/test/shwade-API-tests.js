@@ -1,6 +1,6 @@
-const chai = require('chai');
+// const chai = require('chai');
 const should = require('should');
-const server = require('../shwade-thing');
+// const server = require('../shwade-thing');
 const API = require('../shwadeAPI');
 
 
@@ -11,15 +11,15 @@ describe('ShWade API tests', function() {
         });
         
         // aid methods
-        function checkGetStatus(API)
+        async function checkGetStatus(API)
         {
-                return API.getStatus().then(status => {
-                        status.should.have.property('oneWireStatus');
+                let status = await API.getStatus();
 
-                        status.oneWireStatus.should.have.property('temperatureSensors');
-                        status.oneWireStatus.should.have.property('switches');
-                        status.oneWireStatus.should.have.property('humiditySensors');
-                });
+                status.should.have.property('oneWireStatus');
+
+                status.oneWireStatus.should.have.property('temperatureSensors');
+                status.oneWireStatus.should.have.property('switches');
+                status.oneWireStatus.should.have.property('humiditySensors');
         }
 
         function checkUpdateStatus(API)
@@ -38,6 +38,8 @@ describe('ShWade API tests', function() {
         }
 
         describe('Thing API tests (local)', function () {
+
+                this.timeout(15000);
 
                 let thingAPI = new API({ thingAPI: true });
 

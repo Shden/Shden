@@ -5,7 +5,6 @@ describe('Configuration gate tests:', function() {
 
         it('getConfig()', async function() {
                 let config = await c.getConfig();
-                console.log(config);
                 config.should.be.an.Object();
         });
 

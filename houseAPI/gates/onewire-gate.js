@@ -4,7 +4,6 @@ var fs = require('fs');
 
 /* Temperature sensors mapping, this should reflect actual 1-wire network devices */
 const temperatureSensors = {
-	dressing_room           : "10.67C6697351FF",	// 1 - гардеробная
 	kitchen_storage         : "10.AEFF8F020800",	// 1 - комната между кухней и сауной, кухонная кладовая
 	sauna_ceiling		: "10.C0F48F020800", 	// 1 - сауна на потолке
 	bathroom_1_floor_2 	: "10.CE0290020800",	// 1 - датчик температуры пола (унитаз)	

@@ -11,8 +11,9 @@ const config = require('./config/shwade-thing-config.json');
 const bodyParser = require('body-parser');
 
 console.log(`1-wire runtime mode: ${config.OWDebugMode ? 'debug' : 'productive'}`);
+console.log(`1-wire dry run mode: ${config.OWDryRun}`);
 global.OWDebugMode = config.OWDebugMode; // Debug mode for one wire
-console.log(`1-wire dry run mode: ${global.OWDryRun}`);
+global.OWDryRun = config.OWDryRun;
 
 const app = express();
 

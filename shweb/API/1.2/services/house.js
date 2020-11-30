@@ -29,7 +29,6 @@ async function GetHouseStatus()
         houseStatusResp.climate.inTemp = houseStatus.oneWireStatus.temperatureSensors.bedroom;
 
         houseStatusResp.mode.presence = (houseStatus.config.mode == 'presence') ? 1 : 0;
-        // houseStatusResponce.mode.starting -- to be provided (TODO)
         houseStatusResp.mode.mains = houseStatus.oneWireStatus.switches.mainsSwitch;
 
         houseStatusResp.power = houseStatus.powerStatus;
@@ -41,25 +40,27 @@ async function GetHouseStatus()
 async function SetHouseMode(newMode)
 {
         let updateRequest = {
-                // switches : { },
+                oneWireStatus : {
+                        switches : { }
+                },
                 config : {
                         mode : (newMode == 1) ? 'presence' : 'standby'
                 }
         };
 
-        // if (newMode == 1) { // to presence
+        if (newMode == 1) { // to presence
 
-        //         updateRequest.switches.ultrasonicSwitch = 0;
-        //         updateRequest.switches.mainsSwitch = 1;
+                updateRequest.oneWireStatus.switches.ultrasonicSwitch = 0;
+                updateRequest.oneWireStatus.switches.mainsSwitch = 1;
 
-        // } else if (newMode == 0) { // to standby
+        } else if (newMode == 0) { // to standby
 
-        //         updateRequest.switches.streetLight250 = 0;
-        //         updateRequest.switches.ultrasonicSwitch = 1;
-        //         updateRequest.switches.mainsSwitch = 0;
-        //         updateRequest.switches.fenceLight = 0;
+                updateRequest.oneWireStatus.switches.streetLight250 = 0;
+                updateRequest.oneWireStatus.switches.ultrasonicSwitch = 1;
+                updateRequest.oneWireStatus.switches.mainsSwitch = 0;
+                updateRequest.oneWireStatus.switches.fenceLight = 0;
 
-        // }
+        }
 
         await houseAPI.updateStatus(updateRequest);
         return GetHouseStatus();

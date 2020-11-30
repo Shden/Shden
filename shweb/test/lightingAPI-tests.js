@@ -42,7 +42,7 @@ describe(`/API/${API.version}/lighting testing:`, function() {
 		function CS(a, m, expectedStatusCode, done) {
 			var req = http.request({
 				host: API.host,
-				path: `/API/${API.version}/lighting/ChangeStatus/${a},${m}`,
+				path: `/API/${API.version}/lighting/ChangeStatus/${a}/${m}`,
 				port: API.port,
 				method: 'PUT'
 			}, function(responce) {
@@ -67,11 +67,11 @@ describe(`/API/${API.version}/lighting testing:`, function() {
 			CS(testAppliance, 1, 200, done);
 		});
 
-		it(`PUT /API/${API.version}/lighting/ChangeStatus/${testAppliance}/0 sets to standby mode`, function(done) {
+		it(`PUT /API/${API.version}/lighting/ChangeStatus/${testAppliance}/0 sets to OFF`, function(done) {
 			CS(testAppliance, 0, 200, done);
 		});
 
-		it(`PUT /API/${API.version}/lighting/ChangeStatus/${testAppliance}/222 raises exception 400`, function(done) {
+		it(`PUT /API/${API.version}/lighting/ChangeStatus/${testAppliance}/222 raises exception`, function(done) {
 			CS(testAppliance, 222, 400, done);
 		});
 

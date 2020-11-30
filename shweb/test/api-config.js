@@ -8,4 +8,17 @@ let APIconfig = require('./api-origin-config.json')['API_' + API_version];
 console.log(`API configuration:`);
 console.log(APIconfig);
 
+if (APIconfig.version == "1.2")
+{
+        console.log('For version 1.2 chai will be loaded.');
+        
+        const chai = require('chai');
+        const chaiHttp = require('chai-http');
+        const app = require('../API/1.2/app');
+
+        // Configure chai
+        chai.use(chaiHttp);
+        //chai.should();
+}
+
 module.exports.config = APIconfig;

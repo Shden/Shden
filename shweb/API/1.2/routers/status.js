@@ -7,7 +7,7 @@ const HTTP_BAD_REQUEST = 400;
 /**
  *	Return house status information.
  *
- *	@url GET /GetHouseStatus
+ *	GET /GetHouseStatus
  */
 router.get('/GetHouseStatus', async function(req, res) {
 
@@ -18,8 +18,8 @@ router.get('/GetHouseStatus', async function(req, res) {
 /**
  *	Change house mode to the mode provided.
  *
- *	@url PUT /SetHouseMode/:changeStatusTo
- *	$changeStatusTo: 1 - presence mode, 0 - standby mode
+ *	PUT /SetHouseMode/:changeStatusTo
+ *	:changeStatusTo: 1 - presence mode, 0 - standby mode
  */
 router.put('/SetHouseMode/:changeStatusTo', async function(req, res) {
 

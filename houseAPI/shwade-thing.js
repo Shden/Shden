@@ -65,9 +65,20 @@ ShWadeThing
                 if (topic == '$aws/things/ShWade/shadow/update/delta')
                 {
                         var newState = JSON.parse(payload).state;
-                        console.log('Shadow update received: ');
-                        console.log(JSON.stringify(newState));
-                        ShWadeGate.updateStatus(newState);
+                        console.log('Shadow update received:', JSON.stringify(newState));
+                        ShWadeGate.updateStatus(newState).then((updatedStatus) => {
+                                
+                                let reportingBack = JSON.stringify({
+                                        state : {
+                                                reported : updatedStatus,
+                                                desired : null                                       
+                                                }
+                                        });
+                                
+                                console.log('Reporting back to AWS shadow:', reportingBack);        
+                                ShWadeThing.publish('$aws/things/ShWade/shadow/update', reportingBack);
+                
+                        })
                 }
         });
 
@@ -78,8 +89,8 @@ setInterval(() =>
                 
                 let payload = JSON.stringify({
                         state : {
-                                reported : status,
-                                desired : null                                       
+                                reported : status
+                                // desired : null                                       
                                 }
                         });
                 

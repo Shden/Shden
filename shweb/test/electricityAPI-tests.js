@@ -1,77 +1,63 @@
 const should = require('should');
 const http = require('http');
+const HTTPStatus = require('http-status-codes');
 const API = require('./api-config').config;
+
+function getTester(url, expectedCode, resultValidator)
+{
+	http.get({
+		host: API.host,
+		port: API.port,
+		path: url
+	}, function(responce) {
+		responce.statusCode.should.be.equal(expectedCode);
+		var data = '';
+
+		responce.on('data', function(b) {
+			data += b;
+		});
+
+		responce.on('end', function() {
+			resultValidator(data);
+		});
+	});
+}
 
 describe(`/API/${API.version}/electricity/consumption testing:`, function() {
 
-	it(`GetPowerMeterData: GET /API/${API.version}/consumption/electricity/GetPowerMeterData`, function(done) {
-		http.get({
-			host: API.host,
-			port: API.port,
-			path: `/API/${API.version}/consumption/electricity/GetPowerMeterData`
-		}, function(responce) {
-			responce.statusCode.should.be.equal(200);
-			var data = '';
-
-			responce.on('data', function(b) {
-				data += b;
-			});
-			responce.on('end', function() {
-				var info = JSON.parse(data);
-				info.should.have.property("U");
-				info.should.have.property("I");
-				info.should.have.property("CosF");
-				info.should.have.property("F");
-				info.should.have.property("A");
-				info.should.have.property("P");
-				info.should.have.property("S");
-				info.should.have.property("PR");
-				info.should.have.property("PR-day");
-				info.should.have.property("PR-night");
-				info.should.have.property("PY");
-				info.should.have.property("PT");
-				done();
-			});
-		});
+	let getPowerMeterDataURL = `/API/${API.version}/consumption/electricity/GetPowerMeterData`;
+	it(`GetPowerMeterData: GET ${getPowerMeterDataURL}`, function(done) {
+		this.timeout(15000);
+		getTester(getPowerMeterDataURL, HTTPStatus.OK, (responce) => {
+			var powerData = JSON.parse(responce);
+			powerData.should.have.property("U");
+			powerData.should.have.property("I");
+			powerData.should.have.property("CosF");
+			powerData.should.have.property("F");
+			powerData.should.have.property("A");
+			powerData.should.have.property("P");
+			powerData.should.have.property("S");
+			powerData.should.have.property("PR");
+			powerData.should.have.property("PR-day");
+			powerData.should.have.property("PR-night");
+			powerData.should.have.property("PY");
+			powerData.should.have.property("PT");
+			done();
+		})
 	});
 
-	it(`GetPowerConsumptionByHours: GET /API/${API.version}/consumption/electricity/GetPowerConsumptionByHours/1`, function(done) {
-		http.get({
-			host: API.host,
-			port: API.port,
-			path: `/API/${API.version}/consumption/electricity/GetPowerConsumptionByHours/1`
-		}, function(responce) {
-			responce.statusCode.should.be.equal(200);
-			var data = '';
+	let getPowerStatisticsURL = `/API/${API.version}/consumption/electricity/GetPowerStatistics/1`;
+	it(`GetPowerStatistics GET ${getPowerStatisticsURL}`, function(done) {
+		getTester(getPowerStatisticsURL, HTTPStatus.OK, (r) => { done() });
+	})
 
-			responce.on('data', function(b) {
-				data += b;
-			});
-
-			responce.on('end', function() {
-				// TODO: add resulting data validation.
-				done();
-			});
-		});
+	let getPowerConsumptionByHoursURL = `/API/${API.version}/consumption/electricity/GetPowerConsumptionByHours/1`;
+	it(`GetPowerConsumptionByHours: GET ${getPowerConsumptionByHoursURL}`, function(done) {
+		getTester(getPowerConsumptionByHoursURL, HTTPStatus.OK, (r) => { done() });
 	});
 
-	it(`GetPowerConsumptionByDays: GET /API/${API.version}/consumption/electricity/GetPowerConsumptionByDays/1`, function(done) {
-		http.get({
-			host: API.host,
-			port: API.port,
-			path: `/API/${API.version}/consumption/electricity/GetPowerConsumptionByDays/1`
-		}, function(responce) {
-			responce.statusCode.should.be.equal(200);
-			var data = '';
-
-			responce.on('data', function(b) {
-				data += b;
-			});
-
-			responce.on('end', function() {
-				// TODO: add resulting data validation.
-				done();
-			});
-		});
+	let getPowerConsumptionByDaysURL = `/API/${API.version}/consumption/electricity/GetPowerConsumptionByDays/1`;
+	it(`GetPowerConsumptionByDays: GET ${getPowerConsumptionByDaysURL}`, function(done) {
+		getTester(getPowerConsumptionByDaysURL, HTTPStatus.OK, (r) => { done() });
 	});
 });

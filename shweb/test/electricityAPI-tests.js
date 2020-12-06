@@ -1,34 +1,16 @@
 const should = require('should');
-const http = require('http');
+const testers = require('./API-testers');
 const HTTPStatus = require('http-status-codes');
 const API = require('./api-config').config;
 
-function getTester(url, expectedCode, resultValidator)
-{
-	http.get({
-		host: API.host,
-		port: API.port,
-		path: url
-	}, function(responce) {
-		responce.statusCode.should.be.equal(expectedCode);
-		var data = '';
-
-		responce.on('data', function(b) {
-			data += b;
-		});
-
-		responce.on('end', function() {
-			resultValidator(data);
-		});
-	});
-}
 
 describe(`/API/${API.version}/electricity/consumption testing:`, function() {
 
 	let getPowerMeterDataURL = `/API/${API.version}/consumption/electricity/GetPowerMeterData`;
 	it(`GetPowerMeterData: GET ${getPowerMeterDataURL}`, function(done) {
 		this.timeout(15000);
-		getTester(getPowerMeterDataURL, HTTPStatus.OK, (responce) => {
+
+		testers.getTester(getPowerMeterDataURL, HTTPStatus.OK, (responce) => {
 			var powerData = JSON.parse(responce);
 			powerData.should.have.property("U");
 			powerData.should.have.property("I");
@@ -48,16 +30,16 @@ describe(`/API/${API.version}/electricity/consumption testing:`, function() {
 
 	let getPowerStatisticsURL = `/API/${API.version}/consumption/electricity/GetPowerStatistics/1`;
 	it(`GetPowerStatistics GET ${getPowerStatisticsURL}`, function(done) {
-		getTester(getPowerStatisticsURL, HTTPStatus.OK, (r) => { done() });
+		testers.getTester(getPowerStatisticsURL, HTTPStatus.OK, (r) => { done() });
 	})
 
 	let getPowerConsumptionByHoursURL = `/API/${API.version}/consumption/electricity/GetPowerConsumptionByHours/1`;
 	it(`GetPowerConsumptionByHours: GET ${getPowerConsumptionByHoursURL}`, function(done) {
-		getTester(getPowerConsumptionByHoursURL, HTTPStatus.OK, (r) => { done() });
+		testers.getTester(getPowerConsumptionByHoursURL, HTTPStatus.OK, (r) => { done() });
 	});
 
 	let getPowerConsumptionByDaysURL = `/API/${API.version}/consumption/electricity/GetPowerConsumptionByDays/1`;
 	it(`GetPowerConsumptionByDays: GET ${getPowerConsumptionByDaysURL}`, function(done) {
-		getTester(getPowerConsumptionByDaysURL, HTTPStatus.OK, (r) => { done() });
+		testers.getTester(getPowerConsumptionByDaysURL, HTTPStatus.OK, (r) => { done() });
 	});
 });

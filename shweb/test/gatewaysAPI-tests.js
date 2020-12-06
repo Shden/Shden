@@ -1,28 +1,19 @@
 const should = require('should');
-const http = require('http');
+const testers = require('./API-testers');
+const HTTPStatus = require('http-status-codes');
+const { response } = require('express');
 const API = require('./api-config').config;
 
 describe(`/API/${API.version}/gateways testing:`, function() {
 
-	it(`GetStatus: GET /API/${API.version}/gateways/GetStatus`, function(done) {
-		http.get({
-			host: API.host,
-			port: API.port,
-			path: `/API/${API.version}/gateways/GetStatus`
-		}, function(responce) {
-			responce.statusCode.should.be.equal(200);
-			var data = '';
-
-			responce.on('data', function(b) {
-				data += b;
-			});
-			responce.on('end', function() {
-				var status = JSON.parse(data);
-				status.should.have.property("parking");
-				status.should.have.property("territory");
-				done();
-			});
-		});
+	let getStatusURL = `/API/${API.version}/gateways/GetStatus`;
+	it(`GetStatus: GET ${getStatusURL}`, function(done) {
+		testers.getTester(getStatusURL, HTTPStatus.OK, (response) => {
+			var status = JSON.parse(response);
+			status.should.have.property("parking");
+			status.should.have.property("territory");
+			done();
+		})
 	});
 
 	it.skip('Move', function(done) {

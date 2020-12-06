@@ -18,10 +18,13 @@ async function getConfig()
 // Updates house configuration based on the requested new state
 async function updateConfig(newConfig)
 {
+        let currentConfig = await getConfig();
+        let combinedConfig = { ...currentConfig, ...newConfig };
+
         return new Promise((resolved, rejected) => {
-                fs.writeFile(configFile, JSON.stringify(newConfig), (err) => {
+                fs.writeFile(configFile, JSON.stringify(combinedConfig), (err) => {
                         if (err) rejected(err);
-                        resolved(newConfig);
+                        resolved(combinedConfig);
                 });
         });
 }

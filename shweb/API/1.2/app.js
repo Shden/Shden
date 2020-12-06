@@ -1,6 +1,10 @@
 // API 1.2 express application
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
+app.use(bodyParser.json());
+
 const config = require('./config/api-config.json');
 
 app.use('/API/1.2/status', require('./routers/status'));

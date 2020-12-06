@@ -1,24 +1,11 @@
-// const DB = require('mariadb');
 const config = require('../config/api-config.json');
 const ShWadeAPI = require('../../../../houseAPI/shwadeAPI');
 
-// let dbConnectionPool = DB.createPool(config.DBConnection);
 let houseAPI = new ShWadeAPI(config.houseAPIorigin);
 
 // Returns current house status
 async function GetHouseStatus() 
 {
-        // let dbConnection = await dbConnectionPool.getConnection();
-        // let [ presence, result2 ] = await Promise.all([
-        //         dbConnection.query("SELECT time, isin FROM presence ORDER BY time desc LIMIT 1;"),
-        //         dbConnection.query("SELECT external, kitchen, bedroom FROM heating WHERE time > date_sub(now(), \
-        //                                 INTERVAL 5 MINUTE) order by time desc limit 1;")
-        // ]);
-        // dbConnection.end();
-
-        // console.log(presence);
-        // console.log(result2);
-
         let houseStatus = await houseAPI.getStatus();
 
         // load responce model

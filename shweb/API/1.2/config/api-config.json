@@ -2,9 +2,9 @@
         "port" : 3001,
 
         "DBConnection" : {
-                "host": "localhost", 
-                "user": "webuser", 
-                "password": "webuser",
+                "host": "192.168.1.162", 
+                "user": "testuser", 
+                "password": "testuser",
                 "connectionLimit": 5,
                 "database": "SHDEN"
         },

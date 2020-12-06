@@ -54,7 +54,7 @@ describe(`/API/${API.version}/lighting testing:`, function() {
 				});
 				responce.on('end', function() {
 					if (responce.statusCode == 200)
-						var status = JSON.parse(data);
+						JSON.parse(data);
 					done();
 				});
 			});

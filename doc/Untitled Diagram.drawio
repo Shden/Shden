@@ -1,4 +1,4 @@
-<mxfile modified="2020-12-07T14:28:20.850Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15" etag="lo4Qa_53Zn0IdkD9W3QF" version="13.11.0" type="github" pages="2">
+<mxfile modified="2020-12-07T14:51:50.884Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15" etag="LLCxLKehgtY0mRWt9Go0" version="13.11.0" type="github" pages="2">
   <diagram id="Ht1M8jgEwFfnCIfOTk4-" name="Page-1">
     <mxGraphModel dx="946" dy="1464" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -125,8 +125,61 @@
       <root>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-0" />
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-1" parent="mEVoEUZ3S1xTIFTmwvnm-0" />
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-2" value="Generic group" style="fillColor=none;strokeColor=#5A6C86;dashed=1;verticalAlign=top;fontStyle=0;fontColor=#5A6C86;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
-          <mxGeometry x="40" y="760" width="760" height="360" as="geometry" />
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-2" value="House API" style="fillColor=none;strokeColor=#5A6C86;dashed=1;verticalAlign=top;fontStyle=0;fontColor=#5A6C86;align=left;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="40" y="810" width="760" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;verticalAlign=bottom;" edge="1" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-4" target="mEVoEUZ3S1xTIFTmwvnm-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-11" value="REST API Shadow Updates&lt;br&gt;MQTT Thing Defat Updates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mEVoEUZ3S1xTIFTmwvnm-8">
+          <mxGeometry x="0.0516" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-4" value="ShWade Shadow" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.shadow;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="180" y="840" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-7" value="ShWade Thing" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.shadow;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="560" y="840" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=none;endFill=0;" edge="1" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-12" target="mEVoEUZ3S1xTIFTmwvnm-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-12" value="" style="html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=api;align=right;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="190" y="730" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=none;endFill=0;" edge="1" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-14" target="mEVoEUZ3S1xTIFTmwvnm-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-14" value="" style="html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=api" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="570" y="730" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-17" value="ShWadeAPI(Cloud)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="250" y="744" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-18" value="ShWadeAPI(Local)" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="450" y="744" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;" edge="1" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-19" target="mEVoEUZ3S1xTIFTmwvnm-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-19" value="ShWadeGate" style="html=1;align=center;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="510" y="945" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-23" value="1WireGate" style="html=1;align=center;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="400" y="1040" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;" edge="1" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-25" target="mEVoEUZ3S1xTIFTmwvnm-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-25" value="MercuryGate" style="html=1;align=center;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="540" y="1040" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;" edge="1" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-27" target="mEVoEUZ3S1xTIFTmwvnm-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-27" value="ConfigGate" style="html=1;align=center;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="680" y="1040" width="110" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

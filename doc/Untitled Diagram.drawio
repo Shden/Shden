@@ -1,4 +1,4 @@
-<mxfile modified="2020-12-07T15:26:06.713Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15" etag="1TS7Jay4498UhAh56-v0" version="13.11.0" type="github" pages="2">
+<mxfile modified="2020-12-07T15:27:01.716Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15" etag="Z87e6QMaSNa4ZSZGhNTT" version="13.11.0" type="github" pages="2">
   <diagram id="Ht1M8jgEwFfnCIfOTk4-" name="Page-1">
     <mxGraphModel dx="946" dy="1464" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -210,6 +210,12 @@
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-50" value="Controllers" style="html=1;align=center;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
           <mxGeometry x="460" y="610" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-53" value="" style="html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=api;align=right;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="590" y="260" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-54" value="WebUI API" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="510" y="274" width="70" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

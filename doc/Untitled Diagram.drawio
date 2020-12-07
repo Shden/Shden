@@ -1,4 +1,4 @@
-<mxfile modified="2020-12-07T15:36:50.139Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15" etag="KCeUqFCRp68rAW8jD_Uu" version="13.11.0" type="github" pages="2">
+<mxfile modified="2020-12-07T15:38:21.323Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15" etag="Q_JAclGxiw4GcpnInh22" version="13.11.0" type="github" pages="2">
   <diagram id="Ht1M8jgEwFfnCIfOTk4-" name="Page-1">
     <mxGraphModel dx="946" dy="1464" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -238,6 +238,12 @@
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-55" value="API 1.2 middleware" style="html=1;align=center;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
           <mxGeometry x="480" y="460" width="270" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" edge="1" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-63" target="mEVoEUZ3S1xTIFTmwvnm-53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-63" value="WebUI" style="html=1;align=center;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="545" y="260" width="140" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

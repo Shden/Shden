@@ -28,7 +28,7 @@ router.put('/ChangeStatus/:applianceName/:newStatus', async function(req, res)
         let applianceName = req.params.applianceName;
         let newStatus = req.params.newStatus;
 
-        if (newStatus != 1 && newStatus != 0)
+        if (isNaN(newStatus) || (newStatus != 1 && newStatus != 0))
         {
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid status requested (${newStatus}).`);
                 return;

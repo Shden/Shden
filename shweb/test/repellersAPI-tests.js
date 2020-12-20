@@ -18,7 +18,7 @@ describe(`/API/${API.version}/repellers testing:`, function() {
 	});
 
 	describe('SetStatus tests:', function() {
-
+		this.timeout(15000);
 		it(`ON: PUT /API/${API.version}/repellers/SetStatus/1`, function(done) {
 			var req = http.request({
 				host: API.host,

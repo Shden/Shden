@@ -1,0 +1,14 @@
+# copy this file to /lib/systemd/system/
+# note: check all directores layout first!
+
+[Unit]
+Description=ShWade WebUI API Service
+After=network-online.target
+
+[Service]
+Restart=on-failure
+WorkingDirectory=/home/den/Shden/shweb/API/1.2
+ExecStart=/usr/bin/node webUI-API.js
+
+[Install]
+WantedBy=multi-user.target

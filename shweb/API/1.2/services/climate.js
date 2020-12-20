@@ -135,8 +135,7 @@ async function SetBathVentilationOn(duration)
                 }
         };
 
-        await houseAPI.updateStatus(updateRequest);
-        return;
+        return await houseAPI.updateStatus(updateRequest);
 }
 
 exports.GetTempHistory = GetTempHistory;

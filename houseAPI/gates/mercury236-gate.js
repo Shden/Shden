@@ -16,7 +16,7 @@ function getPowerMeterDataByLocalProcessExec()
 	return new Promise((resolved, rejected) => {
 		var child = require('child_process').execFile(config.mercury236cmd.exec, [ 
 			config.mercury236cmd.RS485dongle, 
-			'--testRun',
+			// '--testRun',
 			'--json'
 		], function(err, stdout, stderr) { 
 			if (err) {

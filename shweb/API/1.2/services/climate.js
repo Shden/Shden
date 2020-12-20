@@ -39,13 +39,13 @@ async function GetHumidityHistory(days)
                         (days < 2)
                         ?
                                 // all datapoints for shorter time periods
-                                `SELECT DATE(time) as Date, HOUR(time) as Hour, MINUTE(time) as Minute, bathroom \
+                                `SELECT DATE_FORMAT(time, "%Y-%m-%d %H:%i:00") as date, bathroom \
                                 FROM humidity \
                                 WHERE time > DATE_ADD(NOW(), INTERVAL -${days} DAY) \
                                 ORDER BY time;`
                         :
                                 // avg by hours for longer time periods
-                                `SELECT DATE(time) as Date, HOUR(time) as Hour, 0 as Minute, AVG(bathroom) as bathroom \
+                                `SELECT DATE_FORMAT(time, "%Y-%m-%d %H:%i:00") as date, AVG(bathroom) as bathroom \
                                 FROM humidity \
                                 WHERE time > DATE_ADD(NOW(), INTERVAL -${days} DAY) \
                                 GROUP BY HOUR(time), DATE(time) \

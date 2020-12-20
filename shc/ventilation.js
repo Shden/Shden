@@ -1,5 +1,4 @@
 const fs = require('fs');
-const mp = require('./mqtt-publish');
 
 // -- configuration constants:
 const bathRoomHumiditySensor = '/mnt/1wire/26.140A56010000/humidity';
@@ -14,24 +13,21 @@ if (require.main === module)
 	// then get humidity
 	var humidity = getHumidity();
 
-	mp.publishHumidityDataPoint({ firstFloorSauna: humidity })
-	.then(() => {
-		// update EMA humidity in the configuration
-		configuration.EMA = EMA(configuration.EMA_steps, configuration.EMA, humidity);
+	// update EMA humidity in the configuration
+	configuration.EMA = EMA(configuration.EMA_steps, configuration.EMA, humidity);
 
-		// call ventilation control code and write out log data
-		// Log format:
-		// 2016-05-12 22:42:03|43.73|0
-		console.log(
-			getDateFormatted() + '|' +
-			humidity.toFixed(2) + '|' +
-			controlBathVentilation(humidity) + '|' +
-			configuration.EMA.toFixed(2)
-		);
+	// call ventilation control code and write out log data
+	// Log format:
+	// 2016-05-12 22:42:03|43.73|0
+	console.log(
+		getDateFormatted() + '|' +
+		humidity.toFixed(2) + '|' +
+		controlBathVentilation(humidity) + '|' +
+		configuration.EMA.toFixed(2)
+	);
 
-		// update configuration file with new EMA humidity
-		fs.writeFileSync(configurationFileName, JSON.stringify(configuration, null, 4));
-	})
+	// update configuration file with new EMA humidity
+	fs.writeFileSync(configurationFileName, JSON.stringify(configuration, null, 4));
 }
 
 // format string like 2016-05-12 22:42:03

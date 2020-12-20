@@ -3,7 +3,6 @@ const ow = require('./onewire');
 const p = require('./power');
 const numeral = require('numeral');
 const pad = require('pad');
-const mp = require('./mqtt-publish');
 const fs = require('fs');
 const http = require('http');
 
@@ -150,11 +149,7 @@ function main()
 				bathroom_1_heating	: saunaFloorHeatingState
 			}
 			// -- Post data point to the API and publish to IoT topic
-			Promise.all([
-				postDataPoint(dataPoint),
-				mp.publishHeatingDataPoint(dataPoint)
-			])
-			.then(() => {
+			postDataPoint(dataPoint).then(() => {
 				printOutKV(printMode, 'Completed', new Date());
 				console.log('');
 			});

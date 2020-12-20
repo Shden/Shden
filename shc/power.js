@@ -1,19 +1,10 @@
 // Obtains mains status and info and publishes power status updates.
-const mp = require('./mqtt-publish');
 const http = require('http');
 
 const APIcredentialsFileName = __dirname + '/config/api-credentials.json';
 
 // read credentials file
 var APIcredentials = require(APIcredentialsFileName);
-
-if (require.main === module)
-{
-        getPowerMeterData()
-                .then(result => {
-                        mp.publishPowerDataPoint(result);
-                })
-}
 
 // Returns promise to bring current power meter data.
 function getPowerMeterData()

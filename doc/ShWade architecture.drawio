@@ -1,25 +1,17 @@
-<mxfile modified="2020-12-20T22:50:02.629Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15" etag="Ic_73f5NSVmmp8qrziqP" version="14.1.1" type="github">
+<mxfile modified="2020-12-20T23:09:42.968Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15" etag="WtHbSCm684CL56Nws-bi" version="14.1.1" type="github">
   <diagram id="tRFMU8ikQU5egtYRDpaq" name="Page-2">
-    <mxGraphModel dx="946" dy="617" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1351" dy="881" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-0" />
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-1" parent="mEVoEUZ3S1xTIFTmwvnm-0" />
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-40" value="House API" style="fillColor=none;strokeColor=#5A6C86;dashed=1;verticalAlign=top;fontStyle=0;fontColor=#5A6C86;labelBackgroundColor=#FFFF66;align=right;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="50" y="740" width="740" height="370" as="geometry" />
+          <mxGeometry x="50" y="730" width="740" height="380" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-36" value="ShWade Home PC" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_on_premise;strokeColor=#5A6C86;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#5A6C86;dashed=0;labelBackgroundColor=#FFFF66;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="430" y="200" width="370" height="920" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-33" value="AWS Cloud" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;labelBackgroundColor=#FFFF66;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="40" y="200" width="370" height="920" as="geometry" />
-        </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;verticalAlign=bottom;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-4" target="mEVoEUZ3S1xTIFTmwvnm-7" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-11" value="REST API Shadow Updates&lt;br&gt;MQTT Thing Defat Updates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="mEVoEUZ3S1xTIFTmwvnm-8" vertex="1" connectable="0">
-          <mxGeometry x="0.0516" y="-3" relative="1" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-33" value="AWS EC2 Instance" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;labelBackgroundColor=#FFFF66;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
+          <mxGeometry x="40" y="200" width="370" height="610" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-4" value="ShWade Shadow" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.shadow;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="190" y="840" width="70" height="70" as="geometry" />
@@ -31,19 +23,19 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-12" value="" style="html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=api;align=right;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="200" y="770" width="50" height="48" as="geometry" />
+          <mxGeometry x="200" y="750" width="50" height="48" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=none;startFill=0;endArrow=none;endFill=0;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-14" target="mEVoEUZ3S1xTIFTmwvnm-7" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-14" value="" style="html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=api" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="590" y="770" width="50" height="48" as="geometry" />
+          <mxGeometry x="590" y="750" width="50" height="48" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-17" value="ShWadeAPI(Cloud)" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="70" y="784" width="120" height="20" as="geometry" />
+          <mxGeometry x="75" y="764" width="120" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-18" value="ShWadeAPI(Local)" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="460" y="784" width="120" height="20" as="geometry" />
+          <mxGeometry x="465" y="764" width="120" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-19" target="mEVoEUZ3S1xTIFTmwvnm-23" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -87,8 +79,8 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=none;endFill=0;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-50" target="mEVoEUZ3S1xTIFTmwvnm-14" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="505" y="730" />
-              <mxPoint x="615" y="730" />
+              <mxPoint x="505" y="720" />
+              <mxPoint x="615" y="720" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -107,11 +99,10 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-55" target="mEVoEUZ3S1xTIFTmwvnm-47" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-86" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-55" target="mEVoEUZ3S1xTIFTmwvnm-14" edge="1">
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-86" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.995;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-55" target="mEVoEUZ3S1xTIFTmwvnm-14" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="700" y="730" />
-              <mxPoint x="615" y="730" />
+              <mxPoint x="700" y="780" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -139,9 +130,9 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-69" value="Historical data" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="480" y="570" width="90" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-70" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-71" edge="1">
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-70" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-71" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="225" y="770" as="targetPoint" />
+            <mxPoint x="225" y="750" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-71" value="Recorder" style="html=1;align=center;fillColor=#FFE6CC;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
@@ -176,7 +167,7 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.995;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-80" target="mEVoEUZ3S1xTIFTmwvnm-12" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="310" y="800" />
+              <mxPoint x="310" y="780" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -192,8 +183,8 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-83" value="Historical data" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="90" y="570" width="90" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="F7xtwPMyAh1mgOi8PhVG-0" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service:&lt;/b&gt;&amp;nbsp;shwade-thing&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;URI:&lt;/b&gt; 192.168.1.162:3000/things/ShWade&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/houseAPI/README&quot;&gt;houseAPI/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&lt;/b&gt; houseAPI/config/shwade-thing-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="645" y="769" width="170" height="50" as="geometry" />
+        <mxCell id="F7xtwPMyAh1mgOi8PhVG-0" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service:&lt;/b&gt;&amp;nbsp;shwade-thing&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;URI:&lt;/b&gt; 192.168.1.162:3000/things/ShWade&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/houseAPI/README&quot;&gt;houseAPI/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&lt;/b&gt;&amp;nbsp;config/shwade-thing-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
+          <mxGeometry x="657" y="850" width="140" height="50" as="geometry" />
         </mxCell>
         <mxCell id="F7xtwPMyAh1mgOi8PhVG-4" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service: &lt;/b&gt;ShWade-webUI-API&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;URI:&lt;/b&gt;&amp;nbsp;192.168.1.162:3001&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/shweb/API/1.2/README&quot;&gt;shweb/API/1.2/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&lt;/b&gt;&amp;nbsp;shweb/API/1.2/config/api-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="645" y="389" width="150" height="50" as="geometry" />
@@ -202,7 +193,18 @@
           <mxGeometry x="50" y="660" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="qBeVhZSmWdmqCQgk20M2-2" value="&lt;p style=&quot;margin: 0px ; font-stretch: normal ; line-height: normal ; font-family: &amp;#34;helvetica neue&amp;#34;&quot;&gt;&lt;font style=&quot;font-size: 10px&quot;&gt;ec2-18-184-115-169.eu-central-1.compute.amazonaws.com&lt;/font&gt;&lt;/p&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
-          <mxGeometry x="50" y="230" width="290" height="20" as="geometry" />
+          <mxGeometry x="70" y="217" width="290" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="qBeVhZSmWdmqCQgk20M2-3" value="AWS IoT" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;labelBackgroundColor=#FFFF66;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="40" y="820" width="370" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;verticalAlign=bottom;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-4" target="mEVoEUZ3S1xTIFTmwvnm-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-11" value="REST API Shadow Updates&lt;br&gt;MQTT Thing Defat Updates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;spacingTop=0;spacing=0;spacingLeft=0;" parent="mEVoEUZ3S1xTIFTmwvnm-8" vertex="1" connectable="0">
+          <mxGeometry x="0.0516" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

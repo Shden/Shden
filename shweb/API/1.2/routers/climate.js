@@ -159,7 +159,7 @@ router.put('/Configuration', async function(req, res)
  *
  *	PUT /SetBathVentilationOn/:duration
  */
-router.put('/SetBathVentilationOn', async function(req, res)
+router.put('/SetBathVentilationOn/:duration', async function(req, res)
 {
         let duration = req.params.duration;
         if (isNaN(duration) || duration < 1 || duration > 60 * 24) 

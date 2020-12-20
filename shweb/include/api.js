@@ -1,10 +1,10 @@
 function GetAPIURL(methodURI)
 {
 	var APIOptions = {
-		debugOrigin: 'http://shden.info:8080',
-		prodOrigin: '',
+		debugOrigin: 'http://192.168.1.162:3001',
+		prodOrigin: 'http://192.168.1.162:3001',
 		subdomain: 'API',
-		version: '1.1'
+		version: '1.2'
 	};
 
 	var debugMode = false;

@@ -1,6 +1,6 @@
-<mxfile modified="2020-12-20T13:40:50.666Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15" etag="wIVjXp0ey4G9htkTo625" version="14.1.1" type="github">
+<mxfile modified="2020-12-20T22:50:02.629Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15" etag="Ic_73f5NSVmmp8qrziqP" version="14.1.1" type="github">
   <diagram id="tRFMU8ikQU5egtYRDpaq" name="Page-2">
-    <mxGraphModel dx="386" dy="252" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="946" dy="617" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-0" />
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-1" parent="mEVoEUZ3S1xTIFTmwvnm-0" />
@@ -153,6 +153,11 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=block;startFill=1;endArrow=none;endFill=0;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-74" target="mEVoEUZ3S1xTIFTmwvnm-71" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="qBeVhZSmWdmqCQgk20M2-0" value="recorder_user" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=8;" vertex="1" connectable="0" parent="mEVoEUZ3S1xTIFTmwvnm-73">
+          <mxGeometry x="0.6221" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-74" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;labelBackgroundColor=#FFFF66;fontSize=16;align=right;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="195" y="570" width="60" height="60" as="geometry" />
         </mxCell>
@@ -187,11 +192,17 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-83" value="Historical data" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="90" y="570" width="90" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="F7xtwPMyAh1mgOi8PhVG-0" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service:&lt;/b&gt;&amp;nbsp;shwade-thing&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;URI:&lt;/b&gt; 192.168.1.162:3000/things/ShWade&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/houseAPI/README&quot;&gt;houseAPI/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&lt;/b&gt; houseAPI/config/shwade-thing-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+        <mxCell id="F7xtwPMyAh1mgOi8PhVG-0" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service:&lt;/b&gt;&amp;nbsp;shwade-thing&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;URI:&lt;/b&gt; 192.168.1.162:3000/things/ShWade&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/houseAPI/README&quot;&gt;houseAPI/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&lt;/b&gt; houseAPI/config/shwade-thing-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="645" y="769" width="170" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="F7xtwPMyAh1mgOi8PhVG-4" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service: &lt;/b&gt;ShWade-webUI-API&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;URI:&lt;/b&gt;&amp;nbsp;192.168.1.162:3001&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/shweb/API/1.2/README&quot;&gt;shweb/API/1.2/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&lt;/b&gt;&amp;nbsp;shweb/API/1.2/config/api-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+        <mxCell id="F7xtwPMyAh1mgOi8PhVG-4" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service: &lt;/b&gt;ShWade-webUI-API&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;URI:&lt;/b&gt;&amp;nbsp;192.168.1.162:3001&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/shweb/API/1.2/README&quot;&gt;shweb/API/1.2/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&lt;/b&gt;&amp;nbsp;shweb/API/1.2/config/api-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="645" y="389" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qBeVhZSmWdmqCQgk20M2-1" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service:&lt;/b&gt;&amp;nbsp;shwade-recorder&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/recorder/README&quot;&gt;recorder/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&amp;nbsp;&lt;/b&gt;config/recorder-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="50" y="660" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qBeVhZSmWdmqCQgk20M2-2" value="&lt;p style=&quot;margin: 0px ; font-stretch: normal ; line-height: normal ; font-family: &amp;#34;helvetica neue&amp;#34;&quot;&gt;&lt;font style=&quot;font-size: 10px&quot;&gt;ec2-18-184-115-169.eu-central-1.compute.amazonaws.com&lt;/font&gt;&lt;/p&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="50" y="230" width="290" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

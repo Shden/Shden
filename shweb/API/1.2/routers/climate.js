@@ -152,4 +152,23 @@ router.put('/Configuration', async function(req, res)
         res.json(await Climate.UpdateHeatingConfiguration(req.body));
 });
 
+/**
+ *	Turn on bath ventilation for a period of time.
+ *
+ *	duration - time (minutes) for ventilation.
+ *
+ *	PUT /SetBathVentilationOn/:duration
+ */
+router.put('/SetBathVentilationOn', async function(req, res)
+{
+        let duration = req.params.duration;
+        if (isNaN(duration) || duration < 1 || duration > 60 * 24) 
+        {
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid duration requested: (${duration}).`);
+                return;
+        }
+        await Climate.SetBathVentilationOn(duration);
+        return;
+});
+
 module.exports = router;

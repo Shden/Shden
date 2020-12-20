@@ -121,7 +121,22 @@ async function UpdateHeatingConfiguration(config)
 {
         // also as in GetHeatingConfiguration(), this will not separate 'heating' of
         // the whole configuration.
-         return await houseAPI.updateStatus(config);
+        return await houseAPI.updateStatus(config);
+}
+
+async function SetBathVentilationOn(duration)
+{
+        // just turns on -- temporary implementation
+        let updateRequest = {
+                oneWireStatus : {
+                        switches : { 
+                                saunaVentilation : 1
+                        }
+                }
+        };
+
+        await houseAPI.updateStatus(updateRequest);
+        return;
 }
 
 exports.GetTempHistory = GetTempHistory;
@@ -131,3 +146,4 @@ exports.GetHeatingSchedule = GetHeatingSchedule;
 exports.SetHeatingSchedlue = SetHeatingSchedlue;
 exports.GetHeatingConfiguration = GetHeatingConfiguration;
 exports.UpdateHeatingConfiguration = UpdateHeatingConfiguration;
+exports.SetBathVentilationOn = SetBathVentilationOn;

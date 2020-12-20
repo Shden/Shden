@@ -17,7 +17,7 @@ ShWade WebUI API Service Installation
 
 Start from ShWade-webUI-API.service file in this directory. Check directories layout for everything 
 (node, working directory). Then copy ShWade-webUI-API.service to /lib/systemd/system/:
-$ sudo cp webUI-API.service /lib/systemd/system/
+$ sudo cp ShWade-webUI-API.service /lib/systemd/system/
 
 Run this command:
 $ sudo systemctl daemon-reload

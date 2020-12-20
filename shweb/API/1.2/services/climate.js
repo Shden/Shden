@@ -11,7 +11,7 @@ async function GetTempHistory(days)
         try
         {
                 return await dbConnection.query(`\
-                        SELECT DATE(time) as Date, HOUR(time) as Hour, \
+                        SELECT DATE_FORMAT(time, "%Y-%m-%d %H:00:00") as date, \
                         AVG(external) as outTemp, (AVG(bedroom) + AVG(kitchen)) / 2 as inTemp, \
                         AVG(bedroom) as bedroom, AVG(kitchen) as kitchen, \
                         AVG(fluid_in) as heaterIn, AVG(fluid_out) as heaterOut, \

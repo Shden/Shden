@@ -25,7 +25,7 @@
 			'{
 				bindto: "#chart",
 				data: {
-					xFormat: "%Y-%m-%dT%H:%M:%S%Z",
+					xFormat: "%Y-%m-%dT%H:%M:%S.%Z",
 					keys: {
 						x: "date",
 						value: [

@@ -167,8 +167,7 @@ router.put('/SetBathVentilationOn/:duration', async function(req, res)
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid duration requested: (${duration}).`);
                 return;
         }
-        await Climate.SetBathVentilationOn(duration);
-        return;
+        res.json(await Climate.SetBathVentilationOn(duration));
 });
 
 module.exports = router;

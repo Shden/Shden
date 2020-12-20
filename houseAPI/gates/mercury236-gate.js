@@ -1,9 +1,34 @@
-//const { response } = require('express');
 const http = require('http');
 const config = require('../config/mercury236-config.json');
 
 // Returns promise to bring current power meter data.
 function getStatus()
+{
+	if (config.powerMeterCommunicationMode.API == 1)
+		return getPowerMeterDataByAPI();
+
+	if (config.powerMeterCommunicationMode.localProcessExec == 1)
+		return getPowerMeterDataByLocalProcessExec();
+}
+
+function getPowerMeterDataByLocalProcessExec()
+{
+	return new Promise((resolved, rejected) => {
+		var child = require('child_process').execFile(config.mercury236cmd.exec, [ 
+			config.mercury236cmd.RS485dongle, 
+			'--testRun',
+			'--json'
+		], function(err, stdout, stderr) { 
+			if (err) {
+				rejected(stderr);
+			}
+			// console.log(stdout); 
+			resolved(JSON.parse(stdout));
+		});
+	}); 
+}
+
+function getPowerMeterDataByAPI()
 {
 	return new Promise((resolved, rejected) => {
 		http.get(addAuthorizationHeader({
@@ -50,13 +75,6 @@ function addAuthorizationHeader(request)
 	}
 }
 
-// function getStatus()
-// {
-//         // let data = await getPowerMeterData();
-//         // return data;
-//         return getPowerMeterData().then(data => { console.log(data); return data });
-// }
- 
 // -- Exports for testing
 if (typeof exports !== 'undefined')
 {

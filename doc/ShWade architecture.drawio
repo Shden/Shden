@@ -1,4 +1,4 @@
-<mxfile modified="2020-12-20T23:18:25.904Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15" etag="pvA1tr-xxh-NGkaktS62" version="14.1.1" type="github">
+<mxfile modified="2020-12-21T11:29:51.039Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15" etag="UD6H-uzR6SEoEtws0cm3" version="14.1.1" type="github">
   <diagram id="tRFMU8ikQU5egtYRDpaq" name="Page-2">
     <mxGraphModel dx="946" dy="617" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -166,7 +166,7 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-77" value="WebUI API" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="125" y="404" width="70" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-80" target="mEVoEUZ3S1xTIFTmwvnm-74" edge="1">
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-78" value="&lt;font style=&quot;font-size: 8px&quot;&gt;APIuser&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-80" target="mEVoEUZ3S1xTIFTmwvnm-74" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.995;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-80" target="mEVoEUZ3S1xTIFTmwvnm-12" edge="1">
@@ -206,7 +206,7 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;verticalAlign=bottom;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-4" target="mEVoEUZ3S1xTIFTmwvnm-7" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-11" value="REST API Shadow Updates&lt;br&gt;MQTT Thing Defat Updates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;spacingTop=0;spacing=0;spacingLeft=0;" parent="mEVoEUZ3S1xTIFTmwvnm-8" vertex="1" connectable="0">
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-11" value="REST API Shadow Updates&lt;br&gt;MQTT Thing Delta Updates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;spacingTop=0;spacing=0;spacingLeft=0;" parent="mEVoEUZ3S1xTIFTmwvnm-8" vertex="1" connectable="0">
           <mxGeometry x="0.0516" y="-3" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>

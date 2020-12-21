@@ -1,4 +1,4 @@
-<mxfile modified="2020-12-21T11:29:51.039Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15" etag="UD6H-uzR6SEoEtws0cm3" version="14.1.1" type="github">
+<mxfile modified="2020-12-21T18:10:54.538Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15" etag="4EcQHiHTZVKArYF7J24e" version="14.1.1" type="github">
   <diagram id="tRFMU8ikQU5egtYRDpaq" name="Page-2">
     <mxGraphModel dx="946" dy="617" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -8,10 +8,10 @@
           <mxGeometry x="50" y="730" width="740" height="380" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-36" value="ShWade Home PC" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_on_premise;strokeColor=#5A6C86;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#5A6C86;dashed=0;labelBackgroundColor=#FFFF66;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="430" y="200" width="370" height="920" as="geometry" />
+          <mxGeometry x="430" y="140" width="370" height="980" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-33" value="AWS EC2 Instance" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;labelBackgroundColor=#FFFF66;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="40" y="200" width="370" height="610" as="geometry" />
+          <mxGeometry x="40" y="140" width="370" height="670" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-4" value="ShWade Shadow" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.shadow;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="190" y="840" width="70" height="70" as="geometry" />
@@ -31,11 +31,11 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-14" value="" style="html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=api" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="590" y="750" width="50" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-17" value="ShWadeAPI(Cloud)" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="75" y="764" width="120" height="20" as="geometry" />
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-17" value="ShWadeAPI(Cloud)" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;fontSize=10;fontStyle=1" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
+          <mxGeometry x="85" y="764" width="110" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-18" value="ShWadeAPI(Local)" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="465" y="764" width="120" height="20" as="geometry" />
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-18" value="ShWadeAPI(Local)" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;fontStyle=1;fontSize=10;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
+          <mxGeometry x="485" y="764" width="100" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-19" target="mEVoEUZ3S1xTIFTmwvnm-23" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -91,10 +91,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-53" value="" style="html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=api;align=right;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="590" y="390" width="50" height="48" as="geometry" />
+          <mxGeometry x="590" y="410" width="50" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-54" value="WebUI API" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="515" y="404" width="70" height="20" as="geometry" />
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-54" value="WebUI API" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;fontStyle=1;fontSize=10;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
+          <mxGeometry x="515" y="424" width="70" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-55" target="mEVoEUZ3S1xTIFTmwvnm-47" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -112,13 +112,13 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-55" value="API 1.2 middleware" style="html=1;align=center;fillColor=#FFE6CC;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="480" y="460" width="270" height="70" as="geometry" />
+          <mxGeometry x="480" y="480" width="270" height="50" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-63" target="mEVoEUZ3S1xTIFTmwvnm-53" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-63" value="WebUI" style="html=1;align=center;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="545" y="260" width="140" height="60" as="geometry" />
+          <mxGeometry x="545" y="200" width="140" height="60" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-66" target="mEVoEUZ3S1xTIFTmwvnm-63" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -132,8 +132,8 @@
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-67" value="&lt;span style=&quot;background-color: rgb(255 , 255 , 255)&quot;&gt;Remote User&lt;/span&gt;" style="aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.azure.user;labelBackgroundColor=#FFFF66;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="201.5" y="40" width="47" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-69" value="Historical data" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="480" y="570" width="90" height="20" as="geometry" />
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-69" value="Historical data" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;fontStyle=1;fontSize=10;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
+          <mxGeometry x="490" y="590" width="80" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-70" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-71" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -161,10 +161,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-76" value="" style="html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=api;align=right;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="200" y="390" width="50" height="48" as="geometry" />
+          <mxGeometry x="200" y="410" width="50" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-77" value="WebUI API" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="125" y="404" width="70" height="20" as="geometry" />
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-77" value="WebUI API" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;fontStyle=1;fontSize=10;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
+          <mxGeometry x="125" y="424" width="70" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-78" value="&lt;font style=&quot;font-size: 8px&quot;&gt;APIuser&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-80" target="mEVoEUZ3S1xTIFTmwvnm-74" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -177,28 +177,27 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-80" value="API 1.2 middleware" style="html=1;align=center;fillColor=#FFE6CC;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="90" y="460" width="270" height="70" as="geometry" />
+          <mxGeometry x="90" y="480" width="270" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-81" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-82" target="mEVoEUZ3S1xTIFTmwvnm-76" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-81" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=none;startFill=0;endArrow=block;endFill=1;fontSize=16;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="mEVoEUZ3S1xTIFTmwvnm-82" target="qBeVhZSmWdmqCQgk20M2-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="225" y="279" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="mEVoEUZ3S1xTIFTmwvnm-82" value="WebUI" style="html=1;align=center;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="155" y="260" width="140" height="60" as="geometry" />
+          <mxGeometry x="155" y="200" width="140" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-83" value="Historical data" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="90" y="570" width="90" height="20" as="geometry" />
+        <mxCell id="mEVoEUZ3S1xTIFTmwvnm-83" value="Historical data" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;fontStyle=1;fontSize=10;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
+          <mxGeometry x="100" y="590" width="80" height="20" as="geometry" />
         </mxCell>
         <mxCell id="F7xtwPMyAh1mgOi8PhVG-0" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service:&lt;/b&gt;&amp;nbsp;shwade-thing&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;URI:&lt;/b&gt; 192.168.1.162:3000/things/ShWade&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/houseAPI/README&quot;&gt;houseAPI/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&lt;/b&gt;&amp;nbsp;config/shwade-thing-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
           <mxGeometry x="657" y="850" width="140" height="50" as="geometry" />
         </mxCell>
         <mxCell id="F7xtwPMyAh1mgOi8PhVG-4" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service: &lt;/b&gt;ShWade-webUI-API&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;URI:&lt;/b&gt;&amp;nbsp;192.168.1.162:3001&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/shweb/API/1.2/README&quot;&gt;shweb/API/1.2/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&lt;/b&gt;&amp;nbsp;shweb/API/1.2/config/api-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" parent="mEVoEUZ3S1xTIFTmwvnm-1" vertex="1">
-          <mxGeometry x="645" y="389" width="150" height="50" as="geometry" />
+          <mxGeometry x="645" y="409" width="150" height="50" as="geometry" />
         </mxCell>
         <mxCell id="qBeVhZSmWdmqCQgk20M2-1" value="&lt;div style=&quot;font-size: 7px&quot;&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;b&gt;Service:&lt;/b&gt;&amp;nbsp;shwade-recorder&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 7px&quot;&gt;&lt;div&gt;&lt;b&gt;Docs:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;https://github.com/Shden/Shden/blob/aws-iot/recorder/README&quot;&gt;recorder/README&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Config:&amp;nbsp;&lt;/b&gt;config/recorder-config.json&lt;/div&gt;&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
           <mxGeometry x="50" y="660" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="qBeVhZSmWdmqCQgk20M2-2" value="&lt;p style=&quot;margin: 0px ; font-stretch: normal ; line-height: normal ; font-family: &amp;#34;helvetica neue&amp;#34;&quot;&gt;&lt;font style=&quot;font-size: 10px&quot;&gt;ec2-18-184-115-169.eu-central-1.compute.amazonaws.com&lt;/font&gt;&lt;/p&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
-          <mxGeometry x="70" y="217" width="290" height="20" as="geometry" />
         </mxCell>
         <mxCell id="qBeVhZSmWdmqCQgk20M2-3" value="AWS IoT" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;labelBackgroundColor=#FFFF66;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
           <mxGeometry x="40" y="820" width="370" height="300" as="geometry" />
@@ -210,6 +209,15 @@
           <mxGeometry x="0.0516" y="-3" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="qBeVhZSmWdmqCQgk20M2-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=8;" edge="1" parent="mEVoEUZ3S1xTIFTmwvnm-1" source="qBeVhZSmWdmqCQgk20M2-8" target="mEVoEUZ3S1xTIFTmwvnm-76">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qBeVhZSmWdmqCQgk20M2-8" value="&lt;span style=&quot;color: rgb(35 , 47 , 62) ; font-size: 10px ; font-weight: bold&quot;&gt;Amazon API Gateway&lt;/span&gt;" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.api_gateway;fillColor=#D9A741;gradientColor=none;labelBackgroundColor=#FFFFFF;fontSize=8;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="197.5" y="290" width="55" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qBeVhZSmWdmqCQgk20M2-2" value="&lt;p style=&quot;margin: 0px ; font-stretch: normal ; line-height: normal ; font-family: &amp;quot;helvetica neue&amp;quot;&quot;&gt;&lt;font style=&quot;font-size: 10px&quot;&gt;ec2-18-184-115-169.eu-central-1.compute.amazonaws.com&lt;/font&gt;&lt;/p&gt;" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;fontSize=8;labelBackgroundColor=#FFFFFF;" vertex="1" parent="mEVoEUZ3S1xTIFTmwvnm-1">
+          <mxGeometry x="70" y="160" width="290" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

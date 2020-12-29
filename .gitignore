@@ -9,6 +9,7 @@
 
 /shweb/firmware
 /shweb/API/1.2/config
+/shweb/include/api.js
 
 /yc/examples
 /yc/node_modules

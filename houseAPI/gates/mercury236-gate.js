@@ -75,7 +75,6 @@ function addAuthorizationHeader(request)
 	}
 }
 
-// -- Exports for testing
 if (typeof exports !== 'undefined')
 {
         // methods

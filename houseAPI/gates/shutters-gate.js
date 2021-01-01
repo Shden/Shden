@@ -145,5 +145,4 @@ if (typeof exports !== 'undefined')
 {
         exports.getStatus = getStatus;
         exports.updateStatus = updateStatus;
-        exports.setAll = setAll;
 }

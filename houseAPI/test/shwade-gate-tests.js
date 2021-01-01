@@ -10,6 +10,9 @@ describe('ShWade gate tests', function() {
         it('getStatus() promise resolved to valid REST object', function() {
                 return shwg.getStatus().then(status => {
                         status.should.have.property("oneWireStatus").which.is.an.Object();
+                        status.should.have.property("powerStatus").which.is.an.Object();
+                        status.should.have.property("config").which.is.an.Object();
+                        status.should.have.property("shutters").which.is.an.Object();
                 })
         });
 

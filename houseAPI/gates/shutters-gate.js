@@ -2,8 +2,6 @@ const config = require('../config/shutters-config.json');
 const net = require('net');
 const { log } = require('console');
 
-// setAll(Number('0x00FF'));
-
 // Creates REST object representing all shutters states
 async function getStatus()
 {
@@ -31,9 +29,17 @@ async function getStatus()
         return status;
 }
 
-// Updates shutters states to the requested new state
-async function updateStatus(newStatus)
+// Updates shutters states to the requested new state.
+// status Update may have a subset of items
+async function updateStatus(statusUpdate)
 {
+        // combine all items from current and updated (as setAll() needs all bits)
+        let newStatus = await getStatus();
+        if (statusUpdate.F1 !== undefined)
+                newStatus.F1 = { ...newStatus.F1, ...statusUpdate.F1 };
+        if (statusUpdate.F2 !== undefined)
+                newStatus.F2 = { ...newStatus.F2, ...statusUpdate.F2 };
+
         if (
                 isNaN(newStatus.F2.W9) || (newStatus.F2.W9 != 0 && newStatus.F2.W9 != 1) ||
                 isNaN(newStatus.F2.W8) || (newStatus.F2.W8 != 0 && newStatus.F2.W8 != 1) ||

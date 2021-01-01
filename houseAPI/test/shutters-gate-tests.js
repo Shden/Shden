@@ -13,6 +13,10 @@ describe('Shutters gate tests:', function() {
                 F2: { W1: 0, W2: 1, W3: 0, W4: 1, W5: 0, W6: 1, W7: 0, W8: 1, W9: 0 }
               };
 
+        let partialUpdate = {
+                F1: { W3: 1}
+        };
+
         // it('test', function() {
         //         return s.setAll(Number('0xFF00'));
         // })
@@ -42,8 +46,12 @@ describe('Shutters gate tests:', function() {
                 })
         }
 
-        it('Can set to 0x5555H', function() {
+        it('Can update all', function() {
                 return canSetTo(x5555H);
+        });
+
+        it('Can update parially', function() {
+                return canSetTo(partialUpdate);
         });
 
 });

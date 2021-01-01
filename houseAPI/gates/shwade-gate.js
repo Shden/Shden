@@ -40,6 +40,8 @@ async function updateStatus(newStatus)
                 await owg.updateStatus(newStatus.oneWireStatus);
         if (newStatus.config != null)
                 await cfg.updateConfig(newStatus.config);
+        if (newStatus.shutters != null)
+                await shutters.updateStatus(newStatus.shutters);
 
         return getStatus();
 }

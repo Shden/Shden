@@ -22,7 +22,10 @@ router.get('/GetPowerStatistics/:days', async function(req, res)
 {
         let days = req.params.days;
         if (isNaN(days) || days < 1 || days > 365)
+        {
                 res.statusCode(HTTPStatus.BAD_REQUEST).send(`Invalid period ${days} specified.`);
+                return;
+        }
 
         res.json(await Electricity.GetPowerStatistics(days));
 });
@@ -37,7 +40,10 @@ router.get('/GetPowerConsumptionByHours/:days', async function(req, res)
 {
         let days = req.params.days;
         if (isNaN(days) || days < 1 || days > 300)
+        {
                 res.statusCode(HTTPStatus.BAD_REQUEST).send(`Invalid period ${days} specified.`);
+                return;
+        }
 
         res.json(await Electricity.GetPowerConsumptionByHours(days));
 });
@@ -52,8 +58,11 @@ router.get('/GetPowerConsumptionByDays/:days', async function(req, res)
 {
         let days = req.params.days;
         if (isNaN(days) || days < 1 || days > 300)
+        {
                 res.statusCode(HTTPStatus.BAD_REQUEST).send(`Invalid period ${days} specified.`);
- 
+                return;
+        }
+
         res.json(await Electricity.GetPowerConsumptionByDays(days));
 });
 

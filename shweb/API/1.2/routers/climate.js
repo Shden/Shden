@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const HTTPStatus = require('http-status-codes');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 const Climate = require('../services/climate');
 
 /**

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Repellers = require('../services/repellers');
-const HTTPStatus = require('http-status-codes');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 
 /**
  *	Returns repeller switch status for all devices connected.
@@ -25,7 +25,7 @@ router.put('/SetStatus/:newStatus', async function(req, res)
         let newStatus = req.params.newStatus;
         if (isNaN(newStatus) || ((newStatus != 0) && (newStatus != 1)))
         {
-                res.statusCode(HTTPStatus.BAD_REQUEST).send('Invalid repellers status requested.');
+                res.status(HTTPStatus.BAD_REQUEST).send('Invalid repellers status requested.');
                 return;
         }
 

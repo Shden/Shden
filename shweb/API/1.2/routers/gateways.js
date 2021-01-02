@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const HTTPStatus = require('http-status-codes').StatusCodes;
 const Gateways = require('../services/gateways');
 
 /**

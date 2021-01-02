@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const House = require('../services/house');
-const HTTPStatus = require('http-status-codes');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 
 /**
  *	Return house status information.

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const HTTPStatus = require('http-status-codes');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 const Electricity = require('../services/electricity');
 
 /**
@@ -23,7 +23,7 @@ router.get('/GetPowerStatistics/:days', async function(req, res)
         let days = req.params.days;
         if (isNaN(days) || days < 1 || days > 365)
         {
-                res.statusCode(HTTPStatus.BAD_REQUEST).send(`Invalid period ${days} specified.`);
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid period ${days} specified.`);
                 return;
         }
 
@@ -41,7 +41,7 @@ router.get('/GetPowerConsumptionByHours/:days', async function(req, res)
         let days = req.params.days;
         if (isNaN(days) || days < 1 || days > 300)
         {
-                res.statusCode(HTTPStatus.BAD_REQUEST).send(`Invalid period ${days} specified.`);
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid period ${days} specified.`);
                 return;
         }
 
@@ -59,7 +59,7 @@ router.get('/GetPowerConsumptionByDays/:days', async function(req, res)
         let days = req.params.days;
         if (isNaN(days) || days < 1 || days > 300)
         {
-                res.statusCode(HTTPStatus.BAD_REQUEST).send(`Invalid period ${days} specified.`);
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid period ${days} specified.`);
                 return;
         }
 

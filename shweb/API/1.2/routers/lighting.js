@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Lighting = require('../services/lighting');
-const HTTPStatus = require('http-status-codes');
-
+const HTTPStatus = require('http-status-codes').StatusCodes;
 
 /**
  *	Returns lighting status for all appliances connected to the system.

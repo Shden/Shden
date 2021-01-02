@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Shutters = require('../services/shutters');
-const HTTPStatus = require('http-status-codes');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 
 /**
  *	Return shutters state information.

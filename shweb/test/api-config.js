@@ -14,7 +14,7 @@ if (APIconfig.version == "1.2")
         
         const chai = require('chai');
         const chaiHttp = require('chai-http');
-        const app = require('../API/1.2/app');
+        const app = require('../API/1.2/webUI-API');
 
         // Configure chai
         chai.use(chaiHttp);

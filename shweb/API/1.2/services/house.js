@@ -53,5 +53,8 @@ async function SetHouseMode(newMode)
         return GetHouseStatus();
 }
 
-exports.GetHouseStatus = GetHouseStatus;
-exports.SetHouseMode = SetHouseMode;
+if (typeof exports !== 'undefined')
+{
+        exports.GetHouseStatus = GetHouseStatus;
+        exports.SetHouseMode = SetHouseMode;
+}

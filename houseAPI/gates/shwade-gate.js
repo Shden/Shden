@@ -15,6 +15,11 @@ const { response } = require('express');
 async function getStatus()
 {
         return new Promise((resolved, rejected) => {
+                /* Review needed after a while.
+                 * With .all this raises exception if any promise was rejected.
+                 * Considering usage .allSettled to provide resuls for resolved and error
+                 * reasons for rejected. (?)
+                 */
                 Promise.all([
                         owg.getStatus(),
                         mercury236.getStatus(),

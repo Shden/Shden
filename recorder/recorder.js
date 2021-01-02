@@ -55,12 +55,12 @@ function persistHeatingData(dbConnectionPool, dataPoint)
                         ).then(() => {
                                 dbConnection.end();
                                 resolved();              
+                        }).catch(err => {
+                                //handle error
+                                console.log(err); 
+                                dbConnection.end();
+                                rejected(err);
                         });
-                }).catch(err => {
-                        //handle error
-                        console.log(err); 
-                        dbConnection.end();
-                        rejected(err);
                 });
         });
 }
@@ -74,14 +74,14 @@ function persistHumidityData(dbConnectionPool, dataPoint)
                         ).then(() => {
                                 dbConnection.end();
                                 resolved();              
-                        })
-                }).catch(err => {
-                        //handle error
-                        console.log(err); 
-                        dbConnection.end();
-                        rejected(err);
-                })
-        })  
+                        }).catch(err => {
+                                //handle error
+                                console.log(err); 
+                                dbConnection.end();
+                                rejected(err);
+                        });
+                });
+        }); 
 }
 
 function persistPowerData(dbConnectionPool, dataPoint)
@@ -113,14 +113,14 @@ function persistPowerData(dbConnectionPool, dataPoint)
                         ).then(() => {
                                 dbConnection.end();
                                 resolved();
-                        })
-                }).catch(err => {
-                       //handle error
-                       console.log(err); 
-                       dbConnection.end();
-                       rejected(err);
-                })
-        })
+                        }).catch(err => {
+                                //handle error
+                                console.log(err); 
+                                dbConnection.end();
+                                rejected(err);
+                        });
+                });
+        });
 }
 
 if (typeof exports !== 'undefined')

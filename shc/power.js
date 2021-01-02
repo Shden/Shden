@@ -12,8 +12,8 @@ function getPowerMeterData()
 	return new Promise((resolved, rejected) => {
 		http.get(addAuthorizationHeader({
 			host: '192.168.1.162',
-			port: 81,
-			path: '/API/1.1/consumption/electricity/GetPowerMeterData'
+			port: 3001,
+			path: '/API/1.2/consumption/electricity/GetPowerMeterData'
 		}), responce => {
 			if (responce.statusCode != 200)
 				rejected(responce.statusCode);

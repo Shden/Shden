@@ -27,7 +27,7 @@ router.get('/GetPowerStatistics/:days', async function(req, res)
                 return;
         }
 
-        res.json(await Electricity.GetPowerStatistics(days));
+        res.json(await Electricity.GetPowerStatistics(Number(days)));
 });
 
 /**
@@ -45,7 +45,7 @@ router.get('/GetPowerConsumptionByHours/:days', async function(req, res)
                 return;
         }
 
-        res.json(await Electricity.GetPowerConsumptionByHours(days));
+        res.json(await Electricity.GetPowerConsumptionByHours(Number(days)));
 });
 
 /**
@@ -63,7 +63,7 @@ router.get('/GetPowerConsumptionByDays/:days', async function(req, res)
                 return;
         }
 
-        res.json(await Electricity.GetPowerConsumptionByDays(days));
+        res.json(await Electricity.GetPowerConsumptionByDays(Number(days)));
 });
 
 module.exports = router;

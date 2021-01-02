@@ -18,7 +18,7 @@ router.get('/GetTempHistory/:days', async function(req, res)
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid request parameter: (${days}).`);
                 return;
         }
-        res.json(await Climate.GetTempHistory(days));
+        res.json(await Climate.GetTempHistory(Number(days)));
 });
 
 /**
@@ -36,7 +36,7 @@ router.get('/GetHumidityHistory/:days', async function(req, res)
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid request parameter: (${days}).`);
                 return;
         }
-        res.json(await Climate.GetHumidityHistory(days));
+        res.json(await Climate.GetHumidityHistory(Number(days)));
 });
 
 /**
@@ -54,7 +54,7 @@ router.get('/GetTempStatistics/:days', async function(req, res)
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid request parameter: (${days}).`);
                 return;
         }
-        res.json(await Climate.GetTempStatistics(days));
+        res.json(await Climate.GetTempStatistics(Number(days)));
 });
 
 /**
@@ -167,7 +167,7 @@ router.put('/SetBathVentilationOn/:duration', async function(req, res)
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid duration requested: (${duration}).`);
                 return;
         }
-        res.json(await Climate.SetBathVentilationOn(duration));
+        res.json(await Climate.SetBathVentilationOn(Number(duration)));
 });
 
 module.exports = router;

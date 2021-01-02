@@ -148,11 +148,6 @@ function main()
 				pump			: 0,	// deprecated
 				bathroom_1_heating	: saunaFloorHeatingState
 			}
-			// -- Post data point to the API and publish to IoT topic
-			postDataPoint(dataPoint).then(() => {
-				printOutKV(printMode, 'Completed', new Date());
-				console.log('');
-			});
 		});
 	})
 	.catch(err => {
@@ -435,41 +430,6 @@ function getCurrentPowerConsumption()
 	})
 }
 
-// Post data point to keep historical data.
-function postDataPoint(dataPoint)
-{
-	return new Promise((resolved, rejected) => {
-		var request = http.request(p.addAuthorizationHeader({
-			host: 'localhost',
-			port: 81,
-			path: '/API/1.1/climate/data/heating',
-			method: 'POST'
-		}), responce => {
-
-			var data = '';
-			responce.on('data', b => {
-				data += b;
-			});
-			responce.on('end', () => {
-				if (responce.statusCode === 200)
-					resolved();
-				else {
-					console.log(data);
-					rejected(responce.statusCode);
-				}
-			});
-			responce.on('error', err => {
-				console.log(err);
-				rejected(err);
-			});
-		});
-		request.write(
-			JSON.stringify(dataPoint, null, 4),
-			encoding='utf8');
-		request.end();
-	});
-}
-
 // -- Exports for testing
 // If we're running under Node,
 if (typeof exports !== 'undefined')
@@ -486,7 +446,6 @@ if (typeof exports !== 'undefined')
 	exports.controlRoom = controlRoom;
 	exports.controlSaunaFloor = controlSaunaFloor;
 	exports.getCurrentPowerConsumption = getCurrentPowerConsumption;
-	exports.postDataPoint = postDataPoint;
 	exports.parseCommandLine = parseCommandLine;
 
 	// data

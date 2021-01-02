@@ -89,7 +89,7 @@ async function GetHeatingSchedule()
 
         schedule.from = getConfigDate(houseStatus, 'arrival');
         schedule.to = getConfigDate(houseStatus, 'departure');
-        schedule.active = (schedule.to > new Date()) ? 1 : 0;
+        schedule.active = (new Date(schedule.to) > new Date()) ? 1 : 0;
 
         return schedule;
 }

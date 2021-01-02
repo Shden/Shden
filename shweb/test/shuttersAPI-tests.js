@@ -21,6 +21,7 @@ describe(`/API/${API.version}/shutters testing:`, function() {
 
         it(`State: PUT ${stateURL}`, function(done) {
 
-                let request = 
+                // WIP 
+                // let request = 
         });
 });

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title>Статистика электросети</title>
 
@@ -83,31 +83,8 @@
 		
 		$('#daysCount').html(days);
 
-		// $('.datatable').remove();
-		// var table = d3.select(".container")
-		// 	.append("table")
-		// 		.attr("class", "datatable");
 		var table = d3.select(".table");
-	
-		// var head = table.append("tr");
-		// head.append("th").attr("rowspan", 2).attr("class", "bb leftalign").text("Дата");
-		// for (var i=1; i<=3; i++)
-		// 	head.append("th").attr("colspan", 4).attr("class", "centeralign lb f"+i).text("Фаза "+i);
-		// head.append("th").attr("colspan", 3).attr("class", "centeralign lb").text("Ошибки (минут)");
-		//
-		// var head = table.append("tr");
-		//
-		// for (var i=1; i<=3; i++)
-		// {
-		// 	head.append("th").attr("class", "bb lb f"+i).text("Min (V)");
-		// 	head.append("th").attr("class", "bb f"+i).text("Max (V)");
-		// 	head.append("th").attr("class", "bb f"+i).text("Avg (V)");
-		// 	head.append("th").attr("class", "bb rb f"+i).text("STD");
-		// }
-		// head.append("th").attr("class", "bb").text("Низк.");
-		// head.append("th").attr("class", "bb").text("Выс.");
-		// head.append("th").attr("class", "bb").text("Откл.");
-	
+		
 		var API = GetAPIURL("consumption/electricity/GetPowerStatistics/") + days;
 		$.getJSON(API)
 			.done(function(data) {
@@ -116,15 +93,21 @@
 				$('#spinner').hide();
 
 				table.selectAll(".datarow").remove();
+
+				let dataset = data[0];
 				
 				var row = table.select("tbody").selectAll("row")
-					.data(data)
+					.data(dataset)
 					.enter()
 					.append("tr");
 			
-				row.attr("class", function(d) { return (d.CutoffMinutes > 0 ? "danger datarow" : "datarow"); })
+				row.attr("class", function(d) { 
+					return (d.CutoffMinutes > 0 ? "table-danger datarow" : "datarow"); 
+				})
 		
-				row.append("td").attr("class", "leftalign rb").text(function(d) { return d.DATE; });
+				row.append("td").attr("class", "leftalign rb").text(function(d) { 
+					return (new Date(d.DATE).toLocaleDateString()); 
+				});
 
 				for (i=1; i<=3; i++)
 				{

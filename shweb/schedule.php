@@ -25,50 +25,46 @@
     <?php include 'menu.php';?>
 
 		<h2>Таймер отопления</h2>
-		<form class="form-horizontal">
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Состояние:</label>
-			    <div class="col-sm-8">
-			       <div class="checkbox">
-			         <label>
-			           <input type="checkbox" id="timerActive" onchange="enableContols();">Таймер активен
-			         </label>
-			       </div>
-			     </div>
+		<form>
+			<div class="row mb-3">
+				<label class="col-sm-2 control-form-label">Состояние:</label>
+				<div class="col-sm-8">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="timerActive" onchange="enableContols();">Таймер активен
+						</label>
+					</div>
+				</div>
 			</div>
 			<div class="alert alert-warning" id="alert">
 				<strong></strong>
 			</div>
-			<div class="form-group">
+			<div class="row mb-3">
 				<label class="col-sm-2 control-label" for="arrive_date">Приедем:</label>
-				<div class="date col-sm-8">
+				<div class="date col-sm-6">
 					<input type="text" class="form-control" id="arrive_date"
 						data-date-week-start="1" data-date-language="ru"
 						data-date-autoclose="true" data-date-days-of-week-highlighted="0,6"
 						data-date-format="DD, d MM yyyy"/>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
+				<div class="col-sm-2">
 					<select class="form-control" id="arrive_hour"></select>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="row mb-3">
 				<label class="col-sm-2 control-label" for="dep_date">Уедем:</label>
-				<div class="date col-sm-8">
+				<div class="date col-sm-6">
 					<input type="text" class="form-control" id="dep_date"
 						data-date-week-start="1" data-date-language="ru"
 						data-date-autoclose="true" data-date-days-of-week-highlighted="0,6"
 						data-date-format="DD, d MM yyyy"/>
  				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
+				 <div class="col-sm-2">
 					<select class="form-control" id="dep_hour"></select>
 				</div>
 			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
+			<div class="row mb-3">
+				<div class="col-sm-6">
 					<a class="btn btn-primary" href="javascript:updateSchedule()">Обновить настройки таймера</a>
 				</div>
 			</div>

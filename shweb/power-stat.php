@@ -24,11 +24,20 @@
 		<h2>Статистика электросети, интервал в днях: <span id="daysCount">...</span></h2>
 
 		<div class="btn-group" role="group">
-			<button onclick="refreshForm(1)" type="button" class="btn btn-secondary">Сутки</button>
-			<button onclick="refreshForm(2)" type="button" class="btn btn-secondary">Двое суток</button>
-			<button onclick="refreshForm(7)" type="button" class="btn btn-secondary">Неделя</button>
-			<button onclick="refreshForm(40)" type="button" class="btn btn-secondary">2 недели</button>
-			<button onclick="refreshForm(31)" type="button" class="btn btn-secondary">Месяц</button>
+			<input type="radio" class="btn-check" name="btnradio" onclick="refreshForm(1)" id="day1" autocomplete="off">
+			<label class="btn btn-outline-primary" for="day1">Сутки</label>
+
+			<input type="radio" class="btn-check" name="btnradio" onclick="refreshForm(2)" id="day2" autocomplete="off">
+			<label class="btn btn-outline-primary" for="day2">Двое суток</label>
+
+			<input type="radio" class="btn-check" name="btnradio" onclick="refreshForm(7)" id="day7" autocomplete="off" checked>
+			<label class="btn btn-outline-primary" for="day7">Неделя</label>
+
+			<input type="radio" class="btn-check" name="btnradio" onclick="refreshForm(14)" id="day14" autocomplete="off">
+			<label class="btn btn-outline-primary" for="day14">Две недели</label>
+			
+			<input type="radio" class="btn-check" name="btnradio" onclick="refreshForm(31)" id="day31" autocomplete="off">
+			<label class="btn btn-outline-primary" for="day31">Месяц</label>
 		</div>
 		<br/><br/>
 	

@@ -1,6 +1,6 @@
 const should = require('should');
 const testers = require('./API-testers');
-const HTTPStatus = require('http-status-codes');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 const API = require('./api-config').config;
 
 

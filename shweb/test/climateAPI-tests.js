@@ -2,7 +2,7 @@ const should = require('should');
 const http = require('http');
 const moment = require('moment');
 const API = require('./api-config').config;
-const HTTPStatus = require('http-status-codes');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 
 describe(`/API/${API.version}/climate testing:`, function() {
 

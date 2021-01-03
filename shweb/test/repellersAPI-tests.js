@@ -1,7 +1,7 @@
 const should = require('should');
 const http = require('http');
 const testers = require('./API-testers');
-const HTTPStatus = require('http-status-codes');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 const { response } = require('express');
 const API = require('./api-config').config;
 
@@ -26,7 +26,7 @@ describe(`/API/${API.version}/repellers testing:`, function() {
 				path: `/API/${API.version}/repellers/SetStatus/1`,
 				method: 'PUT'
 			}, function(responce) {
-				responce.statusCode.should.be.equal(200);
+				responce.statusCode.should.be.equal(HTTPStatus.OK);
 				var data = '';
 
 				responce.on('data', function(b) {
@@ -49,7 +49,7 @@ describe(`/API/${API.version}/repellers testing:`, function() {
 				path: `/API/${API.version}/repellers/SetStatus/0`,
 				method: 'PUT'
 			}, function(responce) {
-				responce.statusCode.should.be.equal(200);
+				responce.statusCode.should.be.equal(HTTPStatus.OK);
 				var data = '';
 
 				responce.on('data', function(b) {
@@ -75,7 +75,7 @@ describe(`/API/${API.version}/repellers testing:`, function() {
 				port: API.port,
 				path: `/API/${API.version}/repellers/RefreshPulse`
 			}, function(responce) {
-				responce.statusCode.should.be.equal(200);
+				responce.statusCode.should.be.equal(HTTPStatus.OK);
 				done();
 			});
 		});

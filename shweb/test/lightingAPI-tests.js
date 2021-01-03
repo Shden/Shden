@@ -1,5 +1,6 @@
 const should = require('should');
 const http = require('http');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 const API = require('./api-config').config;
 
 describe(`/API/${API.version}/lighting testing:`, function() {
@@ -14,7 +15,7 @@ describe(`/API/${API.version}/lighting testing:`, function() {
 				path: `/API/${API.version}/lighting/GetStatus`,
 				port: API.port
 			}, function(responce) {
-				responce.statusCode.should.be.equal(200);
+				responce.statusCode.should.be.equal(HTTPStatus.OK);
 				var data = '';
 
 				responce.on('data', function(b) {
@@ -53,7 +54,7 @@ describe(`/API/${API.version}/lighting testing:`, function() {
 					data += b;
 				});
 				responce.on('end', function() {
-					if (responce.statusCode == 200)
+					if (responce.statusCode == HTTPStatus.OK)
 						JSON.parse(data);
 					done();
 				});
@@ -64,15 +65,15 @@ describe(`/API/${API.version}/lighting testing:`, function() {
                 const testAppliance = 'fenceLight';
 
 		it(`PUT /API/${API.version}/lighting/ChangeStatus/${testAppliance}/1 sets to ON`, function(done) {
-			CS(testAppliance, 1, 200, done);
+			CS(testAppliance, 1, HTTPStatus.OK, done);
 		});
 
 		it(`PUT /API/${API.version}/lighting/ChangeStatus/${testAppliance}/0 sets to OFF`, function(done) {
-			CS(testAppliance, 0, 200, done);
+			CS(testAppliance, 0, HTTPStatus.OK, done);
 		});
 
 		it(`PUT /API/${API.version}/lighting/ChangeStatus/${testAppliance}/222 raises exception`, function(done) {
-			CS(testAppliance, 222, 400, done);
+			CS(testAppliance, 222, HTTPStatus.BAD_REQUEST, done);
 		});
 
 	});

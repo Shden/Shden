@@ -1,106 +1,76 @@
-// Node.js port of heating controller logic.
-const ow = require('./onewire');
-const p = require('./power');
+// -- Heating controller.
 const numeral = require('numeral');
 const pad = require('pad');
-const fs = require('fs');
+const config = require('./config/API-config.json');
+const houseAPI = require('../houseAPI/shwadeAPI');
 
-// -- configuration constants:
-const configurationFileName = __dirname + '/config/heating.json';
+const EXIT_OK		= 0;
+const EXIT_FAILURE	= 1;
 
-// read configuration file
-var configuration = JSON.parse(fs.readFileSync(configurationFileName, 'utf8'));
+const CELCIUS		= '\u00B0C';
+const BUILD		= '2.1';
 
-const EXIT_OK			= 0;
-const EXIT_FAILURE		= 1;
+const CMD_DRY_RUN	= 'dryRun';
+const CMD_HELP		= 'help';
 
-const CELCIUS			= '\u00B0C';
-const BUILD			= '2.0';
-
-const ON			= 1;
-const OFF			= 0;
-
-const CMD_DEBUG			= 'debug';
-const CMD_DRY_RUN		= 'dryRun';
-const CMD_HELP			= 'help';
-
-if (require.main === module)
+// -- Main logic
+// -- Check the command line options
+var cmdOptions = parseCommandLine(process.argv);
+if (cmdOptions.invalid != null)
 {
-	main();
+	console.log('Error: Invalid command line options: ' +
+		cmdOptions.invalid);
+	printUsage();
+	return EXIT_FAILURE;
+}
+if (cmdOptions.help)
+{
+	printUsage();
+	return EXIT_OK;
 }
 
-// Main logic
-function main()
-{
-	// -- Check the command line options
-	var cmdOptions = parseCommandLine(process.argv);
-	if (cmdOptions.invalid != null)
+let dryRun = cmdOptions.dryRun;
+
+printOutKV('Controller build', BUILD);
+printOutKV('House API origin configuration', JSON.stringify(config.APIOrigin));
+printOutKV('OW Dry run mode', dryRun);
+
+// -- Start handling --
+let thingAPI = new houseAPI(config.APIOrigin);
+
+// -- Get *everything* from thingAPI
+thingAPI.getStatus().then(results => {
+	let saunaFloorTemp = results.oneWireStatus.temperatureSensors.bathroom_1_floor_1;
+	let consumption = results.powerStatus.P.sum;
+	let targetTemp = results.config.heating.saunaFloorTemp;
+
+	printOutKV('Target temperature', numeral(targetTemp).format('0.00'), CELCIUS);
+	printOutKV('Floor temperature', numeral(saunaFloorTemp).format('0.00'), CELCIUS);
+	printOutKV('Power consumption', numeral(consumption).format('0,0'), 'W');
+
+	// -- Whether in presence or standby mode now
+	let now = new Date();
+	let presenceStart = new Date(results.config.schedule.arrival);
+	let presenceFinish = new Date(results.config.schedule.departure);
+	let isPresence = now >= presenceStart && now <= presenceFinish;
+
+	// -- Control sauna floor temp
+	let floorHeatingState = (isPresence && saunaFloorTemp < targetTemp) ? 1 : 0;
+	let currentHeatingState = results.oneWireStatus.switches.saunaFloorSwitch;
+	if (!dryRun && floorHeatingState != currentHeatingState)
 	{
-		console.log('Error: Invalid command line options: ' +
-			cmdOptions.invalid);
-		printUsage();
-		return EXIT_FAILURE;
-	}
-	if (cmdOptions.help)
-	{
-		printUsage();
-		return EXIT_OK;
-	}
+		let updateRequest = { oneWireStatus: { switches: { saunaFloorSwitch: floorHeatingState }}};
+		thingAPI.updateStatus(updateRequest).then((res) => {
+			printOutKV('Floor heating changed', OnOff(res.oneWireStatus.switches.saunaFloorSwitch));
 
-	global.OWDebugMode = cmdOptions.debug;
-	global.OWDryRun = cmdOptions.dryRun;
-
-	printOutKV('Controller build', BUILD);
-	printOutKV('Started', new Date());
-
-	// -- Start handling --
-	printOutKV('OW Debug mode', global.OWDebugMode);
-	printOutKV('OW Dry run mode', global.OWDryRun);
-
-
-	// -- Measure current temperatures and set out the target temperature
-	Promise.all([
-		ow.getT(ow.sensors.saunaFloorSensor),
-		getCurrentPowerConsumption()
-		])
-	.then(results => {
-		var idx = 0;
-		var saunaFloorTemp 	= results[idx++];
-		var consumption 	= results[idx++];
-
-		var targetTemp = configuration.heating.saunaFloorTemp;
-
-		printOutKV('Target temperature',
-			numeral(targetTemp).format('0.00'), CELCIUS);
-		printOutKV('Floor temperature',
-			numeral(saunaFloorTemp).format('0.00'), CELCIUS);
-		printOutKV('Power consumption',
-			numeral(consumption).format('0,0'), 'W');
-
-		// -- Control everything
-		Promise.all([
-
-			// -- Control sauna floor temp
-			controlSaunaFloor(saunaFloorTemp,
-				targetTemp,
-				consumption),
-
-			// -- Individual rooms control
-			configuration.roomControlDescriptors.map(function(item) {
-				return controlRoom(item, targetTemp);
-			})
-		])
-		.then(results => {
-			var saunaFloorHeatingState = results[0];
-
-			printOutKV('Floor heating',
-				OnOff(saunaFloorHeatingState));
 		});
-	})
-	.catch(err => {
-		printOutKV('Execution failed', err);
-	});
-}
+	}
+	else
+	printOutKV('Floor heating stays the same', OnOff(currentHeatingState));
+})
+.catch(err => {
+	printOutKV('Execution failed', err);
+});
 // -- End main
 
 function printUsage()
@@ -108,14 +78,13 @@ function printUsage()
 	console.log('Usage:');
 	console.log('  node heating.js [options]');
 	console.log('  options:');
-	console.log(`    --${CMD_DEBUG}\t- to use 1wire stub instad of real network.`);
 	console.log(`    --${CMD_DRY_RUN}\t- run logic but do not change anything.`);
 	console.log(`    --${CMD_HELP}\t- to print this screen.`);
 }
 
 function parseCommandLine(argv)
 {
-	var options = [CMD_DEBUG, CMD_DRY_RUN, CMD_HELP];
+	var options = [CMD_DRY_RUN, CMD_HELP];
 	var result = new Object();
 
 	// pass 1: check what from options in argv
@@ -145,7 +114,7 @@ function printOutKV(key, value, unit)
 {
 	if (key != '' || value != '')
 	{
-		process.stdout.write(pad(25, key));
+		process.stdout.write(pad(30, key));
 		process.stdout.write(' : ');
 		process.stdout.write(
 			pad(40, (' ' +
@@ -158,97 +127,4 @@ function printOutKV(key, value, unit)
 function OnOff(value)
 {
 	return value ? "ON" : "OFF";
-}
-// -- Ancillary methods
-
-// Sauna floor control
-function setSaunaFloor(ison)
-{
-	const sw = ow.switches.saunaFloorSwitch;
-	ow.changeSwitch(sw.address, sw.channel, ison);
-}
-
-// Will eventually bring TRUE if presence heating mode
-// or FALSE if standby heating mode
-function isPresenceHeating()
-{
-	return new Promise((resolved, rejected) => {
-		var now = new Date();
-		var presenceStart = new Date(configuration.schedule.arrival);
-		var presenceFinish = new Date(configuration.schedule.departure);
-		var isPresence = now >= presenceStart && now <= presenceFinish;
-
-		resolved(isPresence);
-	});
-}
-
-/** Room control routine.
- *	roomDescr - descriptor of the room to control
- *	targetTemp - target temperature for the room
- */
-function controlRoom(roomDescr, targetTemp)
-{
-	return new Promise((resolved, rejected) => {
-		ow.getT(roomDescr.sensorAddress)
-			.then(roomTemp => {
-				var switchState =
-					(roomTemp > targetTemp +
-						configuration.heating.tempDelta)
-					? OFF : ON;
-				ow.changeSwitch(
-					roomDescr.switch.address,
-					roomDescr.switch.channel,
-					switchState);
-					resolved();
-			});
-	});
-}
-
-/*
- *	Sauna floor control procedure.
- */
-function controlSaunaFloor(currentFloorTemp, targetFloorTemp, consumption)
-{
-	return new Promise((resolved, rejected) => {
-		isPresenceHeating()
-			.then((isPresence) => {
-				var floorHeatingON =
-					(isPresence && currentFloorTemp < targetFloorTemp)
-					? ON : OFF;
-				setSaunaFloor(floorHeatingON);
-				resolved(floorHeatingON);
-			});
-	});
-}
-
-// What is the current house power consumption. To stay within power limit.
-function getCurrentPowerConsumption()
-{
-	return new Promise((resolved, rejected) => {
-		p.getPowerMeterData()
-			.then(result => {
-				resolved(result.P.sum)
-			})
-			.catch(err => {
-				console.log(err);
-				rejected(err);
-			});
-
-	})
-}
-
-// -- Exports for testing
-// If we're running under Node,
-if (typeof exports !== 'undefined')
-{
-	// methods
-	exports.isPresenceHeating = isPresenceHeating;
-	exports.setSaunaFloor = setSaunaFloor;
-	exports.controlRoom = controlRoom;
-	exports.controlSaunaFloor = controlSaunaFloor;
-	exports.getCurrentPowerConsumption = getCurrentPowerConsumption;
-	exports.parseCommandLine = parseCommandLine;
-
-	// data
-	exports.configuration = configuration;
 }

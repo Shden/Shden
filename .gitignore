@@ -1,20 +1,14 @@
 .htaccess
 .DS_Store
-/secure
-/shc/config
+
 /node_modules
+
+/shc/config
 /shc/node_modules
-/shc/config/credentials.json
-/shc/config/ventilation.json
 
 /shweb/firmware
 /shweb/API/1.2/config
 /shweb/include/api.js
-
-/yc/examples
-/yc/node_modules
-/yc/node_test
-/yc/hub/node_modules
 
 /houseAPI/node_modules
 /houseAPI/.keys

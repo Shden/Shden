@@ -33,7 +33,7 @@ let dryRun = cmdOptions.dryRun;
 
 printOutKV('Controller build', BUILD);
 printOutKV('House API origin configuration', JSON.stringify(config.APIOrigin));
-printOutKV('OW Dry run mode', dryRun);
+printOutKV('Dry run mode', dryRun);
 
 // -- Start handling --
 let thingAPI = new houseAPI(config.APIOrigin);

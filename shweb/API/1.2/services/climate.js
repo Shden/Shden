@@ -109,7 +109,7 @@ async function SetHeatingSchedlue(arrival, departure)
         return await GetHeatingSchedule();
 }
 
-async function GetHeatingConfiguration()
+async function GetConfiguration()
 {
         let houseStatus = await houseAPI.getStatus();
         // not sure is this will be needed as a separate 'heating' configuration.
@@ -117,11 +117,12 @@ async function GetHeatingConfiguration()
         return houseStatus.config;
 }
 
-async function UpdateHeatingConfiguration(config)
+async function UpdateConfiguration(config)
 {
         // also as in GetHeatingConfiguration(), this will not separate 'heating' of
         // the whole configuration.
-        return await houseAPI.updateStatus(config);
+        let updateRequest = { config: config };
+        return await houseAPI.updateStatus(updateRequest);
 }
 
 async function SetBathVentilationOn(duration)
@@ -143,6 +144,6 @@ exports.GetHumidityHistory = GetHumidityHistory;
 exports.GetTempStatistics = GetTempStatistics;
 exports.GetHeatingSchedule = GetHeatingSchedule;
 exports.SetHeatingSchedlue = SetHeatingSchedlue;
-exports.GetHeatingConfiguration = GetHeatingConfiguration;
-exports.UpdateHeatingConfiguration = UpdateHeatingConfiguration;
+exports.GetConfiguration = GetConfiguration;
+exports.UpdateConfiguration = UpdateConfiguration;
 exports.SetBathVentilationOn = SetBathVentilationOn;

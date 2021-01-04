@@ -133,23 +133,25 @@ router.put('/ResetSchedule', async function(req, res)
 });
 
 /**
- *      Return "heating" configuration.
+ *      Return house configuration.
+ *      Note: this probably should be moved to Status(?).
  *
  *      GET /Configuration
  */
 router.get('/Configuration', async function(req, res)
 {
-        res.json(await Climate.GetHeatingConfiguration());
+        res.json(await Climate.GetConfiguration());
 });
 
 /**
- *      Update "heating" configuration data.
+ *      Update house configuration data.
+ *      Note: this probably should be moved to Status(?).
  *
  *      PUT /Configuration
  */
 router.put('/Configuration', async function(req, res)
 {
-        res.json(await Climate.UpdateHeatingConfiguration(req.body));
+        res.json(await Climate.UpdateConfiguration(req.body));
 });
 
 /**

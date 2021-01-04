@@ -160,7 +160,7 @@
 		function moveShutter(event)
 		{
 			let req = { shutters: { [event.data.floor]: { [event.data.window]: event.data.newStatus }}};
-			console.log(req);
+			// console.log(req);
 
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');
@@ -172,8 +172,8 @@
 				data: JSON.stringify(req),
 				success: function(data) {
 
-					console.log(data);
-					refreshButtons(JSON.parse(data))
+					// console.log(data);
+					refreshButtons(data);
 
 					spinner.stop();
 					$('#spinner').hide();

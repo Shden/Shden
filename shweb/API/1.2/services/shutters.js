@@ -13,7 +13,8 @@ async function GetShuttersState()
 // Update shutters state
 async function UpdateShuttersState(shuttersUpdate)
 {
-        return await houseAPI.updateStatus(shuttersUpdate).shutters;
+        let houseStatus = await houseAPI.updateStatus(shuttersUpdate);
+        return houseStatus.shutters;
 }
 
 if (typeof exports !== 'undefined')

@@ -20,6 +20,11 @@
 			td
 			{
 				padding: 4px;
+				vertical-align: middle;
+			}
+			th
+			{
+				vertical-align: middle;
 			}
 			td.where
 			{
@@ -27,82 +32,107 @@
 			}
 			td.floor
 			{
-				text-align: left;
 				font-weight: bold;
-				border-bottom-width: 1px;
 			}
+			td.house
+			{
+				font-weight: bold;
+			}
+			h2
+			{
+				text-align: center;
+			}	
 		</style>
 
-		<div class="container" align="center"	>
+		<div class="container col-sm-6">
 
 			<h2>Управление роллетами</h2>
-			<table>
-				<tr>
-					<td class="floor" colspan="2">Первый этаж:</td>
 
-				</tr>
-					<td class="where">Гардеробная:</td>
-					<td><button id="F1W1" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Кухня:</td>
-					<td><button id="F1W2" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Кладовая около кухни:</td>
-					<td><button id="F1W3" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Кабинет Али:</td>
-					<td><button id="F1W4" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Холл:</td>
-					<td>
-						<button id="F1W5" class="btn">...</button>
-						<button id="F1W6" class="btn">...</button>
-					</td>
-				</tr>
-				<tr>
-					<td class="where">Прихожая:</td>
-					<td><button id="F1W7" class="btn">...</button></td>
-				</tr>
-
-				<tr>
-					<td class="floor" colspan="2">Второй этаж:</td>
-				</tr>
-				<tr>
-					<td class="where">Ко-ливинг:</td>
-					<td><button id="F2W1" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Большая детская комната:</td>
-					<td><button id="F2W2" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Сашина комната:</td>
-					<td><button id="F2W3" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Холл:</td>
-					<td><button id="F2W4" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Кабинет:</td>
-					<td><button id="F2W5" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Маленькая детская:</td>
-					<td><button id="F2W6" class="btn">...</button></td>
-				</tr>
-				<tr>
-					<td class="where">Балкон на озеро:</td>
-					<td>
-						<button id="F2W7" class="btn">...</button>
-						<button id="F2W8" class="btn">...</button>
-						<button id="F2W9" class="btn">...</button>
-					</td>
-				</tr>
+			<table class="table table-striped">
+				<thead class="table-primary">
+					<th class="house">Дом:</th>
+					<th class="house">
+						<button type="button" onclick="moveAll(0);" class="btn btn-dark">Спустить все</button>
+						<button type="button" onclick="moveAll(1);" class="btn btn-warning">Поднять все</button>
+					</th>
+				</thead>
+				<thead class="table-secondary">
+					<th class="floor">Первый этаж:</th>
+					<th class="floor">
+						<button type="button" onclick="moveFloor(1,0);" class="btn btn-dark">Спустить все</button>
+						<button type="button" onclick="moveFloor(1,1);" class="btn btn-warning">Поднять все</button>
+					</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="where">Гардеробная:</td>
+						<td><button id="F1W1" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Кухня:</td>
+						<td><button id="F1W2" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Кладовая около кухни:</td>
+						<td><button id="F1W3" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Кабинет Али:</td>
+						<td><button id="F1W4" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Холл:</td>
+						<td>
+							<button id="F1W5" class="btn">...</button>
+							<button id="F1W6" class="btn">...</button>
+						</td>
+					</tr>
+					<tr>
+						<td class="where">Прихожая:</td>
+						<td><button id="F1W7" class="btn">...</button></td>
+					</tr>
+				</tbody>
+				<thead class="table-secondary">
+					<th class="floor">Второй этаж:</th>
+					<th class="floor">
+						<button type="button" onclick="moveFloor(2,0);" class="btn btn-dark">Спустить все</button>
+						<button type="button" onclick="moveFloor(2,1);" class="btn btn-warning">Поднять все</button>
+					</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="where">Ко-ливинг:</td>
+						<td><button id="F2W1" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Большая детская комната:</td>
+						<td><button id="F2W2" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Сашина комната:</td>
+						<td><button id="F2W3" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Холл:</td>
+						<td><button id="F2W4" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Кабинет:</td>
+						<td><button id="F2W5" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Маленькая детская:</td>
+						<td><button id="F2W6" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Балкон на озеро:</td>
+						<td>
+							<button id="F2W7" class="btn">...</button>
+							<button id="F2W8" class="btn">...</button>
+							<button id="F2W9" class="btn">...</button>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 			<div id="spinner" class="spinner">
 		</div>
@@ -145,23 +175,83 @@
 			button.off('click');
 			if (state == 0)
 			{
-				button.addClass('btn-light').removeClass('btn-dark');
+				button.addClass('btn-warning').removeClass('btn-dark');
 				button.html('Поднять');
-				button.click({ floor: floor, window: window, newStatus: 1 }, moveShutter);
+				button.click({ floor: floor, window: window, newStatus: 1 }, moveSingleShutter);
 			}
 			else if (state == 1)
 			{
-				button.addClass('btn-dark').removeClass('btn-light');
-				button.html('Опустить');
-				button.click({ floor: floor, window: window, newStatus: 0 }, moveShutter);
+				button.addClass('btn-dark').removeClass('btn-warning');
+				button.html('Спустить');
+				button.click({ floor: floor, window: window, newStatus: 0 }, moveSingleShutter);
 			}
 		}
 
-		function moveShutter(event)
+		function moveSingleShutter(event)
 		{
 			let req = { shutters: { [event.data.floor]: { [event.data.window]: event.data.newStatus }}};
-			// console.log(req);
+			callAPI(req);
+		}
 
+			function moveFloor(floor, newState)
+		{
+			let req = { shutters: { }};
+			if (floor == 1)
+			{
+				req.shutters.F1 = new Object();
+				req.shutters.F1.W1 = newState;
+				req.shutters.F1.W2 = newState;
+				req.shutters.F1.W3 = newState;
+				req.shutters.F1.W4 = newState;
+				req.shutters.F1.W5 = newState;
+				req.shutters.F1.W6 = newState;
+				req.shutters.F1.W7 = newState;
+			}
+			if (floor == 2)
+			{
+				req.shutters.F2 = new Object();
+				req.shutters.F2.W1 = newState;
+				req.shutters.F2.W2 = newState;
+				req.shutters.F2.W3 = newState;
+				req.shutters.F2.W4 = newState;
+				req.shutters.F2.W5 = newState;
+				req.shutters.F2.W6 = newState;
+				req.shutters.F2.W7 = newState;
+				req.shutters.F2.W8 = newState;
+				req.shutters.F2.W9 = newState;
+			}
+			callAPI(req);
+		}
+
+		function moveAll(newState)
+		{
+			let req = { shutters: { F1: {}, F2: {}}};
+
+			req.shutters.F1.W1 = newState;
+			req.shutters.F1.W2 = newState;
+			req.shutters.F1.W3 = newState;
+			req.shutters.F1.W4 = newState;
+			req.shutters.F1.W5 = newState;
+			req.shutters.F1.W6 = newState;
+			req.shutters.F1.W7 = newState;
+
+			req.shutters.F2.W1 = newState;
+			req.shutters.F2.W2 = newState;
+			req.shutters.F2.W3 = newState;
+			req.shutters.F2.W4 = newState;
+			req.shutters.F2.W5 = newState;
+			req.shutters.F2.W6 = newState;
+			req.shutters.F2.W7 = newState;
+			req.shutters.F2.W8 = newState;
+			req.shutters.F2.W9 = newState;
+
+			callAPI(req);
+		}
+
+		function callAPI(req)
+		{
+			console.log(req);
+			
 			$('#spinner').show();
 			var spinner = createSpinner('spinner');
 

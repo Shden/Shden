@@ -85,13 +85,13 @@
 			button.off('click');
 			if (applianceStatus == 0)
 			{
-				button.addClass('btn-warning').removeClass('btn-default');
+				button.addClass('btn-warning').removeClass('btn-secondary');
 				button.html('Зажечь');
 				button.click({ applianceId: applianceId, newStatus: 1 }, applianceStatusUpdate);
 			}
 			else if (applianceStatus == 1)
 			{
-				button.addClass('btn-default').removeClass('btn-warning');
+				button.addClass('btn-secondary').removeClass('btn-warning');
 				button.html('Погасить');
 				button.click({ applianceId: applianceId, newStatus: 0 }, applianceStatusUpdate);
 			}

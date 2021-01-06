@@ -201,6 +201,22 @@
 						</label>
 					</div>
 					<div class="form-group row">
+						<label class="col-sm-6 control-label" for="house1FloorTemp">
+							Температура теплых полов в холле первого этажа:</label>
+						<div class="input-group col-sm-2">
+							<input type="text" class="form-control"
+								id="house1FloorTemp"
+								format="0.0"
+								style="text-align:right;"/>
+							<div class="input-group-append">
+								<span class="input-group-text" id="basic-addon2">&deg;С</span>
+							</div>
+						</div>
+						<label class="control-label col-sm-3" id="house1FloorTempAlert">
+							<strong></strong>
+						</label>
+					</div>
+					<div class="form-group row">
 						<label class="col-sm-6 control-label">
 							Холл, двойной регулятор (1370 + 1095 Вт):</label>
 						<div class="input-group col-sm-2">

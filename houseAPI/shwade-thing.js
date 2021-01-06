@@ -15,6 +15,8 @@ console.log(`1-wire dry run mode: ${config.OWDryRun}`);
 global.OWDebugMode = config.OWDebugMode; // Debug mode for one wire
 global.OWDryRun = config.OWDryRun;
 
+var thingCache; // keeps actual thing status
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -32,15 +34,20 @@ app.listen(config.port, (err) => {
 
 function getShWadeStatus(request, response)
 {
-        ShWadeGate.getStatus().then(res => { 
-                response.json(res); 
-        });
+        if (thingCache !== undefined)
+                response.json(thingCache);
+        else
+                ShWadeGate.getStatus().then(res => { 
+                        thingCache = res;
+                        response.json(res); 
+                });
 }
 
 function updateShWadeStatus(request, response)
 {
         console.log('Updating thing status:', request.body);
         ShWadeGate.updateStatus(request.body).then(res => { 
+                thingCache = res;
                 response.json(res); 
         });        
 }
@@ -67,6 +74,8 @@ ShWadeThing
                         var newState = JSON.parse(payload).state;
                         console.log('Shadow update received:', JSON.stringify(newState));
                         ShWadeGate.updateStatus(newState).then((updatedStatus) => {
+
+                                thingCache = updatedStatus;
                                 
                                 let reportingBack = JSON.stringify({
                                         state : {

@@ -46,11 +46,11 @@ describe('Shutters gate tests:', function() {
                 })
         }
 
-        it('Can update all', function() {
+        it.skip('Can update all', function() {
                 return canSetTo(x5555H);
         });
 
-        it('Can update parially', function() {
+        it.skip('Can update parially', function() {
                 return canSetTo(partialUpdate);
         });
 

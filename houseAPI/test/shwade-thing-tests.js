@@ -10,6 +10,7 @@ describe('ShWadeThing REST API tests', function() {
 
         it('GET ShWade thing status', function(done) {
 
+                this.timeout(30000);
                 chai.request(server)
                         .get('/things/ShWade')
                         .end((err, res) => {
@@ -30,6 +31,7 @@ describe('ShWadeThing REST API tests', function() {
                         }
                 };
 
+                this.timeout(30000);
                 chai.request(server)
                         .put('/things/ShWade')
                         .send(newStatus)

@@ -5,6 +5,8 @@ describe('Power meter gate tests:', function() {
 
         it('getStatus() promise resolved to valid REST object', function() {
 
+                this.timeout(15000);
+
                 function check3P(val)
                 {
                         val.should.have.property("p1").which.is.a.Number();

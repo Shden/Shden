@@ -8,6 +8,7 @@ describe('ShWade gate tests', function() {
 	});
 
         it('getStatus() promise resolved to valid REST object', function() {
+                this.timeout(15000);
                 return shwg.getStatus().then(status => {
                         status.should.have.property("oneWireStatus").which.is.an.Object();
                         status.should.have.property("powerStatus").which.is.an.Object();
@@ -25,6 +26,7 @@ describe('ShWade gate tests', function() {
                                 }
                         }
                 }
+                this.timeout(15000);
                 return shwg.updateStatus(validUpdateRequest).then(updatedStatus => {
                         updatedStatus.should.have.property("oneWireStatus").which.is.an.Object();
                 });

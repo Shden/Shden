@@ -39,15 +39,17 @@ describe('ShWade API tests', function() {
 
         describe('Thing API tests (local)', function () {
 
-                this.timeout(15000);
+                
 
                 let thingAPI = new API({ thingAPI: true });
 
                 it('getStatus()', function() {
+                        this.timeout(15000);
                         return checkGetStatus(thingAPI);
                 })
 
                 it('updateStatus()', function() {
+                        this.timeout(15000);
                         return checkUpdateStatus(thingAPI);
                 })
                 

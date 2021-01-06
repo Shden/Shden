@@ -75,6 +75,7 @@ ShWadeThing
                         console.log('Shadow update received:', JSON.stringify(newState));
                         ShWadeGate.updateStatus(newState).then((updatedStatus) => {
 
+                                // update cache
                                 thingCache = updatedStatus;
                                 
                                 let reportingBack = JSON.stringify({
@@ -96,6 +97,9 @@ setInterval(() =>
 {
         ShWadeGate.getStatus().then((status) => {
                 
+                // update cache
+                thingCache = status;
+
                 let payload = JSON.stringify({
                         state : {
                                 reported : status

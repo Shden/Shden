@@ -64,11 +64,12 @@ var ShWadeThing = awsIot.device({
 ShWadeThing
         .on('connect', function() {
                 ShWadeThing.subscribe('$aws/things/ShWade/shadow/update/delta');
+                ShWadeThing.subscribe('$aws/things/ShWade/shadow/update');
         });
 
 ShWadeThing
         .on('message', function(topic, payload) {
-                // -- delta message from shadow came in
+                // -- delta message => shadow on AWS was updated
                 if (topic == '$aws/things/ShWade/shadow/update/delta')
                 {
                         var newState = JSON.parse(payload).state;
@@ -87,10 +88,21 @@ ShWadeThing
                                 
                                 console.log('Reporting back to AWS shadow:', reportingBack);        
                                 ShWadeThing.publish('$aws/things/ShWade/shadow/update', reportingBack);
-                
                         })
+                };
+
+                // -- update message => thing was updated
+                if (topic == '$aws/things/ShWade/shadow/update')
+                {
+                        // we only need ESP updates 
+                        let update = JSON.parse(payload).state;
+                        if (update.reported.ESP != null)
+                        {
+                                console.log('Thing update received:', JSON.stringify(update));
+                                ShWadeGate.updateStatus(update);
+                        }
                 }
-        });
+         });
 
 // this reports IoT thing state each config.AWSShadowUpdateInteral milliseconds to update AWS shadow.
 setInterval(() =>

@@ -94,13 +94,12 @@ ShWadeThing
                 // -- update message => thing was updated
                 if (topic == '$aws/things/ShWade/shadow/update')
                 {
-                        // we only need ESP updates 
                         let update = JSON.parse(payload);
-                        console.log('@@@@@', JSON.stringify(update));
                         if (update.state.reported != null && update.state.reported.ESP != null)
                         {
+                                // we only interested in ESP updates 
                                 let espUpdate = { ESP: update.state.reported.ESP };
-                                console.log('Thing update received:', JSON.stringify(espUpdate));
+                                        console.log('Thing update received:', JSON.stringify(espUpdate));
                                 ShWadeGate.updateStatus(espUpdate).then((updatedStatus) => {
                                         // update cache
                                         thingCache = updatedStatus;

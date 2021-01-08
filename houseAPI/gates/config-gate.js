@@ -16,6 +16,7 @@ async function getConfig()
 }
 
 /**
+ * Helper function.
  * Performs a deep merge of `source` into `target`.
  * Mutates `target` only but not its objects and arrays.
  *

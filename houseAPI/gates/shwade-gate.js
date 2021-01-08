@@ -2,7 +2,7 @@
  *      - onewire-gate
  *      - config-gate
  *      - mercury236-gate
- *      - esp8266-gate (maybe in the future)
+ *      - esp8266-gate
  *      - shutters-gate
  *      - etc.
  */ 
@@ -10,6 +10,7 @@ const owg = require('./onewire-gate');
 const cfg = require('./config-gate');
 const mercury236 = require('../gates/mercury236-gate');
 const shutters = require('./shutters-gate');
+const esp = require('./esp-gate');
 const { response } = require('express');
 
 async function getStatus()
@@ -24,13 +25,15 @@ async function getStatus()
                         owg.getStatus(),
                         mercury236.getStatus(),
                         cfg.getConfig(),
-                        shutters.getStatus()
+                        shutters.getStatus(),
+                        esp.getState()
                 ]).then(responces => {
                         var ShWadeStatus = new Object();
                         ShWadeStatus.oneWireStatus = responces[0];
                         ShWadeStatus.powerStatus = responces[1];
                         ShWadeStatus.config = responces[2];
                         ShWadeStatus.shutters = responces[3]; 
+                        ShWadeStatus.ESP = responces[4];
                         resolved(ShWadeStatus);
                 });
         });
@@ -47,6 +50,8 @@ async function updateStatus(newStatus)
                 await cfg.updateConfig(newStatus.config);
         if (newStatus.shutters != null)
                 await shutters.updateStatus(newStatus.shutters);
+        if (newStatus.ESP != null)
+                await esp.updateCachedState(newStatus.ESP);
 
         return getStatus();
 }

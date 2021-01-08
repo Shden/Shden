@@ -99,7 +99,10 @@ ShWadeThing
                         if (update.reported.ESP != null)
                         {
                                 console.log('Thing update received:', JSON.stringify(update));
-                                ShWadeGate.updateStatus(update);
+                                ShWadeGate.updateStatus(update).then((updatedStatus) => {
+                                        // update cache
+                                        thingCache = updatedStatus;
+                                });
                         }
                 }
          });

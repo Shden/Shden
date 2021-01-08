@@ -1,8 +1,6 @@
-// const chai = require('chai');
 const should = require('should');
-// const server = require('../shwade-thing');
 const API = require('../shwadeAPI');
-
+const APIconfig = require('../config/shwade-API-config.json');
 
 describe('ShWade API tests', function() {
 
@@ -37,9 +35,7 @@ describe('ShWade API tests', function() {
                 });
         }
 
-        describe('Thing API tests (local)', function () {
-
-                
+        describe(`Thing API tests, origin: ${APIconfig.thing.host}`, function () {
 
                 let thingAPI = new API({ thingAPI: true });
 
@@ -55,7 +51,7 @@ describe('ShWade API tests', function() {
                 
         });
 
-        describe('Shadow API tests (AWS)', function () {
+        describe(`Shadow API tests, origin: ${APIconfig.shadow.endpoint}`, function () {
 
                 let shadowAPI = new API({ shadowAPI: true });
                 

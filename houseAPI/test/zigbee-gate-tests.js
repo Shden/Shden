@@ -16,7 +16,7 @@ describe('Zigbee gate tests:', function() {
 
         it('UpdateStatus()', function() {
                 return z.getStatus().then((res) => {
-                        res.switches.balcony_light = (res.switches.balcony_light + 1) % 2;
+                        res.switches.balconyLight = (res.switches.balconyLight + 1) % 2;
                         z.updateStatus(res);
                         // console.log(res);
                 });

@@ -75,7 +75,7 @@
 		{
 			refreshButtonView('streetLight250', data['streetLight250']);
 			refreshButtonView('streetLight150', data['streetLight150']);
-			refreshButtonView('balconyLight', data['balkonyLight']);
+			refreshButtonView('balconyLight', data['balconyLight']);
 			refreshButtonView('fenceLight', data['fenceLight']);
 		}
 

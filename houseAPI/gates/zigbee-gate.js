@@ -62,7 +62,7 @@ async function updateStatus(updateRequest)
         // traverse all switches in the request
         for (var switchAlias in updateRequest.switches)
         {
-                let requestedValue = updateRequest.switches[switchAlias];
+                let requestedValue = Number(updateRequest.switches[switchAlias]);
                 if (!isNaN(requestedValue) && (requestedValue == 0 || requestedValue == 1))
                 {
                         let switchConfig = config.devices.switches[switchAlias];

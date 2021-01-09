@@ -21,4 +21,8 @@ describe('Zigbee gate tests:', function() {
                         // console.log(res);
                 });
         });
+
+        after(function() {
+                z.tearDown();
+        })
 });

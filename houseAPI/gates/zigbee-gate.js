@@ -45,6 +45,11 @@ mqttClient.on('message', (topic, message) =>
         }
 });
 
+function tearDown()
+{
+        mqttClient.end(true);
+}
+
 // Returns zigbee devices accumulated states
 async function getStatus()
 {
@@ -75,4 +80,5 @@ if (typeof exports !== 'undefined')
 {
         exports.getStatus = getStatus;
         exports.updateStatus = updateStatus;
+        exports.tearDown = tearDown;
 }

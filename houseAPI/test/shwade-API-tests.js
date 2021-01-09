@@ -56,10 +56,12 @@ describe('ShWade API tests', function() {
                 let shadowAPI = new API({ shadowAPI: true });
                 
                 it('getStatus()', function() {
+                        this.timeout(15000);
                         return checkGetStatus(shadowAPI);
                 })
 
                 it('updateStatus()', function() {
+                        this.timeout(15000);
                         return checkUpdateStatus(shadowAPI);
                 })
 

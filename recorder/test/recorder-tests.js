@@ -24,7 +24,7 @@ describe('Recorder tests', function() {
         describe('Data persist checks', function() {
                 it('persistHeatingData() check', function(done) {
                         R.thingAPI.getStatus().then(dataPoint => {
-                                R.persistHeatingData(R.DBConnectionPool, dataPoint.oneWireStatus).then(() => {
+                                R.persistHeatingData(R.DBConnectionPool, dataPoint).then(() => {
                                         done();
                                 })
                         });

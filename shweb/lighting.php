@@ -37,7 +37,7 @@
 				</tr>
 				<tr>
 					<td>Свет на балконе 2-го этажа:</td>
-					<td><button id="balkonLight" class="btn btn-lg">...</button></a>
+					<td><button id="balconyLight" class="btn btn-lg">...</button></a>
 				</tr>
 				<tr>
 					<td>Подсветка забора и парковки:</td>
@@ -75,7 +75,7 @@
 		{
 			refreshButtonView('streetLight250', data['streetLight250']);
 			refreshButtonView('streetLight150', data['streetLight150']);
-			refreshButtonView('balkonLight', data['balkonLight']);
+			refreshButtonView('balconyLight', data['balkonyLight']);
 			refreshButtonView('fenceLight', data['fenceLight']);
 		}
 

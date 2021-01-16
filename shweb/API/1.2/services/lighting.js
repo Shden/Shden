@@ -36,7 +36,11 @@ async function UpdateStatus(applianceName, newStatus)
 
         if (updateRequest !== undefined)
                 await houseAPI.updateStatus(updateRequest);
-        return GetStatus();
+
+        // AWS shadow has some latency on update. This is a workaround.
+        let lightingStatus = GetStatus();
+        lightingStatus[applianceName] = newStatus;
+        return lightingStatus;
 }
 
 exports.GetStatus = GetStatus;

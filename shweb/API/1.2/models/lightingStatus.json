@@ -2,5 +2,6 @@
         "streetLight250": 0,
         "streetLight150": 0,
         "balconyLight": 0,
-        "fenceLight": 0
+        "fenceLight": 0,
+        "kitchenOverheadsLight": 0
 }

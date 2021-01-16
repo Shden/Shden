@@ -26,6 +26,7 @@ async function updateCachedState(updatedState)
         let combinedState = { ...currentState, ...updatedState }; // NB! shallow merge
 
         return new Promise((resolved, rejected) => {
+                // lockfile to avoid concurrent writeFile
                 lockFile.lock(lockName, function (err) {
                         if (err) rejected(err);
                         fs.writeFile(configFile, JSON.stringify(combinedState), (err) => {

@@ -18,7 +18,7 @@ mqttClient.on('connect', () =>
                 mqttClient.subscribe(sw.topic, (err) => {
                         if (err) 
                                 console.log('Subscription error:', err);
-                        mqttClient.publish(sw.topic + '/get', JSON.stringify({ state_right : '' }));
+                        mqttClient.publish(sw.topic + '/get', JSON.stringify({ [sw.channel] : '' }));
                 });
         }
 });

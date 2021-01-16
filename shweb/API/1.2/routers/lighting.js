@@ -33,7 +33,7 @@ router.put('/ChangeStatus/:applianceName/:newStatus', async function(req, res)
                 return;
         }
 
-        if (applianceName.length < 3 || applianceName.length > 15)
+        if (applianceName.length < 3 || applianceName.length > 64)
         {
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid appliance name (${applianceName}).`);
                 return;

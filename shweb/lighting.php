@@ -47,6 +47,10 @@
 					<td>Кухня, верхний свет:</td>
 					<td><button id="kitchenOverheadsLight" class="btn btn-lg">...</button></a>
 				</tr>
+				<tr>
+					<td>Лесница, подсветка:</td>
+					<td><button id="stairwayLight" class="btn btn-lg">...</button></a>
+				</tr>				
 			</table>
 			<div id="spinner" class="spinner">
 		</div>
@@ -82,6 +86,7 @@
 			refreshButtonView('balconyLight', data['balconyLight']);
 			refreshButtonView('fenceLight', data['fenceLight']);
 			refreshButtonView('kitchenOverheadsLight', data['kitchenOverheadsLight']);
+			refreshButtonView('stairwayLight', data['stairwayLight']);
 		}
 
 		function refreshButtonView(applianceId, applianceStatus)

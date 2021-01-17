@@ -20,54 +20,105 @@
 			td
 			{
 				padding: 4px;
+				vertical-align: middle;
+			}
+			th
+			{
+				vertical-align: middle;
+			}
+			td.where
+			{
 				text-align: right;
 			}
+			td.floor
+			{
+				font-weight: bold;
+			}
+			td.house
+			{
+				font-weight: bold;
+			}
+			h2
+			{
+				text-align: center;
+			}	
 		</style>
 
-		<div class="container" align="center">
-			<h2>Управление освещением</h2>
-			<table>
-				<tr>
-					<td>Уличный фонарь около дороги (250W):</td>
-					<td><button id="streetLight250" class="btn btn-lg">...</button></a>
-				</tr>
-				<tr>
-					<td>Уличный фонарь на озеро (150W):</td>
-					<td><button id="streetLight150" class="btn btn-lg">...</button></a>
-				</tr>
-				<tr>
-					<td>Свет на балконе 2-го этажа:</td>
-					<td><button id="balconyLight" class="btn btn-lg">...</button></a>
-				</tr>
-				<tr>
-					<td>Подсветка забора и парковки:</td>
-					<td><button id="fenceLight" class="btn btn-lg">...</button></a>
-				</tr>
-				<tr>
-					<td>Кухня, верхний свет:</td>
-					<td><button id="kitchenOverheadsLight" class="btn btn-lg">...</button></a>
-				</tr>
-				<tr>
-					<td>Лесница, подсветка:</td>
-					<td><button id="stairwayLight" class="btn btn-lg">...</button></a>
-				</tr>				
+		<div class="container col-sm-6">
 
-				<tr>
-					<td>Кладовая у кухни, верхний свет:</td>
-					<td><button id="pantryOverheadsLight" class="btn btn-lg">...</button></a>
-				</tr>				
-				<tr>
-					<td>Прихожая:</td>
-					<td><button id="hallwayOverheadsLight" class="btn btn-lg">...</button></a>
-				</tr>				
-				<tr>
-					<td>Тамбур прихожей:</td>
-					<td><button id="hallwayTambourOverheadsLight" class="btn btn-lg">...</button></a>
-				</tr>				
-				<tr>
-					<td>Крыльцо, верхний свет:</td>
-					<td><button id="porchOverheadsLight" class="btn btn-lg">...</button></a>
-				</tr>				
+			<h2>Управление освещением</h2>
+
+			<table class="table table-striped">
+				<thead class="table-primary">
+					<th class="house">Уличное освещение:</th>
+					<th class="house">
+						<button type="button" onclick="moveAll(0);" class="btn btn-secondary">Погасить все</button>
+					</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Уличный фонарь около дороги (250W):</td>
+						<td><button id="streetLight250" class="btn btn-lg">...</button></a>
+					</tr>
+					<tr>
+						<td>Уличный фонарь на озеро (150W):</td>
+						<td><button id="streetLight150" class="btn btn-lg">...</button></a>
+					</tr>
+					<tr>
+						<td>Подсветка забора и парковки:</td>
+						<td><button id="fenceLight" class="btn btn-lg">...</button></a>
+					</tr>
+					<tr>
+						<td>Крыльцо, верхний свет:</td>
+						<td><button id="porchOverheadsLight" class="btn btn-lg">...</button></a>
+					</tr>				
+				</tbody>
+				<thead class="table-primary">
+					<th class="house">Дом:</th>
+					<th class="house">
+						<button type="button" onclick="moveAll(0);" class="btn btn-secondary">Погасить все</button>
+					</th>
+				</thead>
+				<thead class="table-secondary">
+					<th class="floor">Первый этаж:</th>
+					<th class="floor">
+						<button type="button" onclick="moveFloor(1,0);" class="btn btn-secondary">Погасить все</button>
+					</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Тамбур прихожей:</td>
+						<td><button id="hallwayTambourOverheadsLight" class="btn btn-lg">...</button></a>
+					</tr>				
+					<tr>
+						<td>Прихожая:</td>
+						<td><button id="hallwayOverheadsLight" class="btn btn-lg">...</button></a>
+					</tr>				
+					<tr>
+						<td>Кухня, верхний свет:</td>
+						<td><button id="kitchenOverheadsLight" class="btn btn-lg">...</button></a>
+					</tr>
+					<tr>
+						<td>Кладовая у кухни, верхний свет:</td>
+						<td><button id="pantryOverheadsLight" class="btn btn-lg">...</button></a>
+					</tr>				
+					<tr>
+						<td>Лесница, подсветка:</td>
+						<td><button id="stairwayLight" class="btn btn-lg">...</button></a>
+					</tr>
+				</tbody>				
+				<thead class="table-secondary">
+					<th class="floor">Второй этаж:</th>
+					<th class="floor">
+						<button type="button" onclick="moveFloor(1,0);" class="btn btn-secondary">Погасить все</button>
+					</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Свет на балконе 2-го этажа:</td>
+						<td><button id="balconyLight" class="btn btn-lg">...</button></a>
+					</tr>
+				</tbody>
 			</table>
 			<div id="spinner" class="spinner">
 		</div>

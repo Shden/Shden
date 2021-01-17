@@ -51,6 +51,23 @@
 					<td>Лесница, подсветка:</td>
 					<td><button id="stairwayLight" class="btn btn-lg">...</button></a>
 				</tr>				
+
+				<tr>
+					<td>Кладовая у кухни, верхний свет:</td>
+					<td><button id="pantryOverheadsLight" class="btn btn-lg">...</button></a>
+				</tr>				
+				<tr>
+					<td>Прихожая:</td>
+					<td><button id="hallwayOverheadsLight" class="btn btn-lg">...</button></a>
+				</tr>				
+				<tr>
+					<td>Тамбур прихожей:</td>
+					<td><button id="hallwayTambourOverheadsLight" class="btn btn-lg">...</button></a>
+				</tr>				
+				<tr>
+					<td>Крыльцо, верхний свет:</td>
+					<td><button id="porchOverheadsLight" class="btn btn-lg">...</button></a>
+				</tr>				
 			</table>
 			<div id="spinner" class="spinner">
 		</div>
@@ -87,6 +104,11 @@
 			refreshButtonView('fenceLight', data['fenceLight']);
 			refreshButtonView('kitchenOverheadsLight', data['kitchenOverheadsLight']);
 			refreshButtonView('stairwayLight', data['stairwayLight']);
+
+			refreshButtonView('pantryOverheadsLight', data['pantryOverheadsLight']);
+			refreshButtonView('hallwayOverheadsLight', data['hallwayOverheadsLight']);
+			refreshButtonView('hallwayTambourOverheadsLight', data['hallwayTambourOverheadsLight']);
+			refreshButtonView('porchOverheadsLight', data['porchOverheadsLight']);
 		}
 
 		function refreshButtonView(applianceId, applianceStatus)

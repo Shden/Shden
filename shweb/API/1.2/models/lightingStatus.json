@@ -4,5 +4,9 @@
         "balconyLight": 0,
         "fenceLight": 0,
         "kitchenOverheadsLight": 0,
-        "stairwayLight": 0
+        "stairwayLight": 0,
+        "pantryOverheadsLight": 0,
+        "hallwayOverheadsLight": 0,
+        "tambourOverheadsLight": 0,
+        "porchOverheadsLight": 0
 }

@@ -4,7 +4,9 @@ const ShWadeAPI = require('../../../../houseAPI/shwadeAPI');
 let houseAPI = new ShWadeAPI(config.houseAPIorigin);
 
 const oneWireSwitches = ['streetLight250', 'fenceLight'];
-const zigbeeSwitches = ['streetLight150', 'balconyLight', 'kitchenOverheadsLight', 'stairwayLight'];
+const zigbeeSwitches = ['streetLight150', 'balconyLight', 'kitchenOverheadsLight', 'stairwayLight',
+                        'pantryOverheadsLight', 'hallwayOverheadsLight', 'hallwayTambourOverheadsLight', 'porchOverheadsLight'
+                ];
 
 async function GetStatus()
 {
@@ -20,6 +22,10 @@ async function GetStatus()
         lightingStatusResp.fenceLight = houseStatus.oneWireStatus.switches.fenceLight;
         lightingStatusResp.kitchenOverheadsLight = houseStatus.zigbee.switches.kitchenOverheadsLight;
         lightingStatusResp.stairwayLight = houseStatus.zigbee.switches.stairwayLight;
+        lightingStatusResp.pantryOverheadsLight = houseStatus.zigbee.switches.pantryOverheadsLight;
+        lightingStatusResp.hallwayOverheadsLight = houseStatus.zigbee.switches.hallwayOverheadsLight;
+        lightingStatusResp.hallwayTambourOverheadsLight = houseStatus.zigbee.switches.hallwayTambourOverheadsLight;
+        lightingStatusResp.porchOverheadsLight = houseStatus.zigbee.switches.porchOverheadsLight;
 
         return lightingStatusResp;
 }

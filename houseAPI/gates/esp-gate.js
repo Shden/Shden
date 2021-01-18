@@ -1,43 +1,24 @@
 // ESP controllers gate. Simply replicates AWS reported state, nothing  more.
-const fs = require('fs');
-const path = require('path');
-const lockFile = require('lockfile');
 
-const configFile = path.join(__dirname, '../../shc/config/esp-status.json');
-const lockName = 'esp-status.lock';
+let currentState = new Object();
 
-// Retrieve REST object representing current ESP state
+// Returns REST object representing current ESP state
 async function getState()
 {
         return new Promise((resolved, rejected) => {
-                fs.readFile(configFile, (err, data) => {
-                        if (err)
-                                // no config is not en error
-                                resolved({});
-                        resolved(JSON.parse(data));
-                });
+                resolved(currentState);
         });
 }
 
 // Update cached state
 async function updateCachedState(updatedState)
 {
-        let currentState = await getState();
-        let combinedState = { ...currentState, ...updatedState }; // NB! shallow merge
+        // let currentState = await getState();
+        currentState = { ...currentState, ...updatedState }; // NB! shallow merge
 
         return new Promise((resolved, rejected) => {
-                // lockfile to avoid concurrent writeFile
-                lockFile.lock(lockName, function (err) {
-                        if (err) rejected(err);
-                        fs.writeFile(configFile, JSON.stringify(combinedState), (err) => {
-                                lockFile.unlock(lockName);
-                                if (err) rejected(err);
-                                resolved(combinedState);
-                        });
-                });
-
-
-        });
+                resolved(currentState);
+         });
 }
 
 exports.getState = getState;

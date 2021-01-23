@@ -5,27 +5,24 @@ let houseAPI = new ShWadeAPI(config.houseAPIorigin);
 
 const oneWireSwitches = ['streetLight250', 'fenceLight'];
 const zigbeeSwitches = ['streetLight150', 'balconyLight', 'kitchenOverheadsLight', 'stairwayLight',
-                        'pantryOverheadsLight', 'hallwayOverheadsLight', 'hallwayTambourOverheadsLight', 'porchOverheadsLight'
+                        'pantryOverheadsLight', 'hallwayOverheadsLight', 'hallwayTambourOverheadsLight', 'porchOverheadsLight',
+                        'hall1OverheadsMainLight', 'hall1OverheadsExtraLight', 'alyaCabinetOverheadsLight', 'dressingRoomOverheadsLight'
                 ];
 
 async function GetStatus()
 {
         let houseStatus = await houseAPI.getStatus();
 
-        // load responce model
-        let lightingStatusResp = require('../models/lightingStatus.json');
+        let lightingStatusResp = new Object();
 
         // assign responce fields
-        lightingStatusResp.streetLight250 = houseStatus.oneWireStatus.switches.streetLight250;
-        lightingStatusResp.streetLight150 = houseStatus.zigbee.switches.streetLight150;
-        lightingStatusResp.balconyLight = houseStatus.zigbee.switches.balconyLight;
-        lightingStatusResp.fenceLight = houseStatus.oneWireStatus.switches.fenceLight;
-        lightingStatusResp.kitchenOverheadsLight = houseStatus.zigbee.switches.kitchenOverheadsLight;
-        lightingStatusResp.stairwayLight = houseStatus.zigbee.switches.stairwayLight;
-        lightingStatusResp.pantryOverheadsLight = houseStatus.zigbee.switches.pantryOverheadsLight;
-        lightingStatusResp.hallwayOverheadsLight = houseStatus.zigbee.switches.hallwayOverheadsLight;
-        lightingStatusResp.hallwayTambourOverheadsLight = houseStatus.zigbee.switches.hallwayTambourOverheadsLight;
-        lightingStatusResp.porchOverheadsLight = houseStatus.zigbee.switches.porchOverheadsLight;
+        // 1wire
+        for (o in oneWireSwitches)
+                lightingStatusResp[oneWireSwitches[o]] = houseStatus.oneWireStatus.switches[oneWireSwitches[o]];
+
+        // zigbee
+        for (z in zigbeeSwitches)
+                lightingStatusResp[zigbeeSwitches[z]] = houseStatus.zigbee.switches[zigbeeSwitches[z]];
 
         return lightingStatusResp;
 }

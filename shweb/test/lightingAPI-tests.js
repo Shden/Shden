@@ -28,7 +28,7 @@ describe(`/API/${API.version}/lighting testing:`, function() {
 					status.should.be.an.Object();
 					status.should.have.property('streetLight250').which.is.a.Number();
 					status.should.have.property('streetLight150').which.is.a.Number();
-					status.should.have.property('balkonLight').which.is.a.Number();
+					status.should.have.property('balconyLight').which.is.a.Number();
 					status.should.have.property('fenceLight').which.is.a.Number();
 
 					done();

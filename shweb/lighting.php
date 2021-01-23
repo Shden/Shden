@@ -58,19 +58,19 @@
 				<tbody>
 					<tr>
 						<td>Уличный фонарь около дороги (250W):</td>
-						<td><button id="streetLight250" class="btn btn-lg">...</button></a>
+						<td><button id="streetLight250" class="btn btn-lg">...</button></td>
 					</tr>
 					<tr>
 						<td>Уличный фонарь на озеро (150W):</td>
-						<td><button id="streetLight150" class="btn btn-lg">...</button></a>
+						<td><button id="streetLight150" class="btn btn-lg">...</button></td>
 					</tr>
 					<tr>
 						<td>Подсветка забора и парковки:</td>
-						<td><button id="fenceLight" class="btn btn-lg">...</button></a>
+						<td><button id="fenceLight" class="btn btn-lg">...</button></td>
 					</tr>
 					<tr>
 						<td>Крыльцо, верхний свет:</td>
-						<td><button id="porchOverheadsLight" class="btn btn-lg">...</button></a>
+						<td><button id="porchOverheadsLight" class="btn btn-lg">...</button></td>
 					</tr>				
 				</tbody>
 				<thead class="table-primary">
@@ -88,23 +88,38 @@
 				<tbody>
 					<tr>
 						<td>Тамбур прихожей:</td>
-						<td><button id="hallwayTambourOverheadsLight" class="btn btn-lg">...</button></a>
+						<td><button id="hallwayTambourOverheadsLight" class="btn btn-lg">...</button></td>
 					</tr>				
 					<tr>
 						<td>Прихожая:</td>
-						<td><button id="hallwayOverheadsLight" class="btn btn-lg">...</button></a>
+						<td><button id="hallwayOverheadsLight" class="btn btn-lg">...</button></td>
 					</tr>				
 					<tr>
-						<td>Кухня, верхний свет:</td>
-						<td><button id="kitchenOverheadsLight" class="btn btn-lg">...</button></a>
+						<td>Холл, верхний свет:</td>
+						<td>
+							<button id="hall1OverheadsMainLight" class="btn btn-lg">...</button>
+							<button id="hall1OverheadsExtraLight" class="btn btn-lg">...</button>
+						</td>
 					</tr>
 					<tr>
+						<td>Кухня, верхний свет:</td>
+						<td><button id="kitchenOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
+						<td>Гардеробная, верхний свет:</td>
+						<td><button id="dressingRoomOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>				
+					<tr>
 						<td>Кладовая у кухни, верхний свет:</td>
-						<td><button id="pantryOverheadsLight" class="btn btn-lg">...</button></a>
+						<td><button id="pantryOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>				
+					<tr>
+						<td>Кабинет Али, верхний свет:</td>
+						<td><button id="alyaCabinetOverheadsLight" class="btn btn-lg">...</button></td>
 					</tr>				
 					<tr>
 						<td>Лесница, подсветка:</td>
-						<td><button id="stairwayLight" class="btn btn-lg">...</button></a>
+						<td><button id="stairwayLight" class="btn btn-lg">...</button></td>
 					</tr>
 				</tbody>				
 				<thead class="table-secondary">
@@ -116,7 +131,7 @@
 				<tbody>
 					<tr>
 						<td>Свет на балконе 2-го этажа:</td>
-						<td><button id="balconyLight" class="btn btn-lg">...</button></a>
+						<td><button id="balconyLight" class="btn btn-lg">...</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -149,17 +164,23 @@
 
 		function refreshButtons(data)
 		{
-			refreshButtonView('streetLight250', data['streetLight250']);
-			refreshButtonView('streetLight150', data['streetLight150']);
-			refreshButtonView('balconyLight', data['balconyLight']);
-			refreshButtonView('fenceLight', data['fenceLight']);
-			refreshButtonView('kitchenOverheadsLight', data['kitchenOverheadsLight']);
-			refreshButtonView('stairwayLight', data['stairwayLight']);
+			// for each key in data
+			for (key in data)
+			{
+				// console.log(key);
+				refreshButtonView(key, data[key]);
+			}
+			// refreshButtonView('streetLight250', data['streetLight250']);
+			// refreshButtonView('streetLight150', data['streetLight150']);
+			// refreshButtonView('balconyLight', data['balconyLight']);
+			// refreshButtonView('fenceLight', data['fenceLight']);
+			// refreshButtonView('kitchenOverheadsLight', data['kitchenOverheadsLight']);
+			// refreshButtonView('stairwayLight', data['stairwayLight']);
 
-			refreshButtonView('pantryOverheadsLight', data['pantryOverheadsLight']);
-			refreshButtonView('hallwayOverheadsLight', data['hallwayOverheadsLight']);
-			refreshButtonView('hallwayTambourOverheadsLight', data['hallwayTambourOverheadsLight']);
-			refreshButtonView('porchOverheadsLight', data['porchOverheadsLight']);
+			// refreshButtonView('pantryOverheadsLight', data['pantryOverheadsLight']);
+			// refreshButtonView('hallwayOverheadsLight', data['hallwayOverheadsLight']);
+			// refreshButtonView('hallwayTambourOverheadsLight', data['hallwayTambourOverheadsLight']);
+			// refreshButtonView('porchOverheadsLight', data['porchOverheadsLight']);
 		}
 
 		function refreshButtonView(applianceId, applianceStatus)

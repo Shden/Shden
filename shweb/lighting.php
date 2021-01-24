@@ -133,6 +133,37 @@
 						<td>Свет на балконе 2-го этажа:</td>
 						<td><button id="balconyLight" class="btn btn-lg">...</button></td>
 					</tr>
+					<tr>
+						<td>Наша спальня, верхний свет:</td>
+						<td><button id="ourBedroomOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
+						<td>Маленькая детская, верхний свет:</td>
+						<td><button id="smallChildrenRoomOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
+						<td>Тамбур в коливинг, верхний свет:</td>
+						<td><button id="colivingTambourOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
+						<td>Коливинг, верхний свет:</td>
+						<td><button id="colivingOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
+						<td>Большая детская, верхний свет:</td>
+						<td>
+							<button id="biggerChildrenRoomOverheadsLight1" class="btn btn-lg">...</button>
+							<button id="biggerChildrenRoomOverheadsLight2" class="btn btn-lg">...</button>
+						</td>
+					</tr>
+					<tr>
+						<td>Холл 2-го этажа, верхний свет:</td>
+						<td><button id="hall2OverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
+						<td>Сашина комната, верхний свет:</td>
+						<td><button id="sashaOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
 				</tbody>
 			</table>
 			<div id="spinner" class="spinner">

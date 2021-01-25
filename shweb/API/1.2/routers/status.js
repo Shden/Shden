@@ -29,7 +29,7 @@ router.put('/HouseMode', async function(req, res) {
         let changeStatusRequest = req.body;
         if (changeStatusRequest.mode === undefined || (
                 changeStatusRequest.mode != House.HouseMode.PRESENCE_MODE && 
-                changeStatusRequest.mode != House.HouseMode.SHORTTERM_STANDY && 
+                changeStatusRequest.mode != House.HouseMode.SHORTTERM_STANDBY && 
                 changeStatusRequest.mode != House.HouseMode.LONGTERM_STANDBY))
         {
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid mode request (${JSON.stringify(changeStatusRequest)}).`);

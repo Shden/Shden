@@ -49,7 +49,7 @@ describe(`/API/${API.version}/status testing:`, function() {
 			});
 		});
 
-		it.skip(`HouseMode: PUT ${houseModeURL} mode 0 sets to standby mode`, function(done) {
+		it.skip(`HouseMode: PUT ${houseModeURL} mode 0 sets to longterm standby mode`, function(done) {
 			let modeUpdate = { mode: 0 };
 			testers.putTester(houseModeURL, modeUpdate, HTTPStatus.OK, (res) => {
 				done();

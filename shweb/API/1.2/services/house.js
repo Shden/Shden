@@ -26,11 +26,11 @@ async function SetMode(newMode)
                 config : { }
         };
 
-         switch(newMode)
+        switch(newMode)
         {
                 case HouseMode.PRESENCE_MODE:
                         // to presence
-                        updateRequest.config.modeDesctiption = 'Присутствие';
+                        updateRequest.config.modeDescription = 'Presence mode';
                         updateRequest.config.modeId = HouseMode.PRESENCE_MODE;
 
                         updateRequest.oneWireStatus.switches.ultrasonicSwitch = 0;
@@ -39,7 +39,7 @@ async function SetMode(newMode)
 
                 case HouseMode.LONGTERM_STANDBY:
                         // to longterm standby
-                        updateRequest.config.modeDesctiption = 'Долгосрочное отсутсвие';
+                        updateRequest.config.modeDescription = 'Long standby';
                         updateRequest.config.modeId = HouseMode.LONGTERM_STANDBY;
 
                         updateRequest.oneWireStatus.switches.streetLight250 = 0;
@@ -50,7 +50,7 @@ async function SetMode(newMode)
 
                 case HouseMode.SHORTTERM_STANDY:
                         // to shorterm standby
-                        updateRequest.config.modeDesctiption = 'Непродолжительное отсутствие';
+                        updateRequest.config.modeDescription = 'Short standby';
                         updateRequest.config.modeId = HouseMode.SHORTTERM_STANDY;
 
                         updateRequest.oneWireStatus.switches.streetLight250 = 0;
@@ -60,8 +60,7 @@ async function SetMode(newMode)
                         break;
         }
 
-        await houseAPI.updateStatus(updateRequest);
-        return GetHouseStatus();
+         return houseAPI.updateStatus(updateRequest);
 }
 
 if (typeof exports !== 'undefined')

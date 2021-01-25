@@ -254,7 +254,7 @@
 
 				if (data.config.modeId == newMode)
 				{
-					alert(`Помняли режим на: ${data.config.modeDesctiption}.`));
+					alert(`Помняли режим на: ${data.config.modeDesctiption}.`);
 				}
 				else
 				{

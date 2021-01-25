@@ -130,10 +130,6 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>Свет на балконе 2-го этажа:</td>
-						<td><button id="balconyLight" class="btn btn-lg">...</button></td>
-					</tr>
-					<tr>
 						<td>Наша спальня, верхний свет:</td>
 						<td><button id="ourBedroomOverheadsLight" class="btn btn-lg">...</button></td>
 					</tr>
@@ -157,12 +153,16 @@
 						</td>
 					</tr>
 					<tr>
+						<td>Сашина комната, верхний свет:</td>
+						<td><button id="sashaOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
 						<td>Холл 2-го этажа, верхний свет:</td>
 						<td><button id="hall2OverheadsLight" class="btn btn-lg">...</button></td>
 					</tr>
 					<tr>
-						<td>Сашина комната, верхний свет:</td>
-						<td><button id="sashaOverheadsLight" class="btn btn-lg">...</button></td>
+						<td>Свет на балконе 2-го этажа:</td>
+						<td><button id="balconyLight" class="btn btn-lg">...</button></td>
 					</tr>
 				</tbody>
 			</table>

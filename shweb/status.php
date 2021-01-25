@@ -67,29 +67,31 @@
 
 	<div class="container" align="center">
 		<div class="page-header">
-			<h1>
-				Режим:
-				<span id="statusHdr" class="status-val">---</span>
-			</h1>
+			<div class="btn-group">
+				<button id="currentMode" type="button" class="btn btn-lg"></button>
+				<button id="currentModeToggle" type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+					<span class="visually-hidden">Toggle Dropdown</span>
+				</button>
+				<ul id="changeModeMenu" class="dropdown-menu">
+					<li><a class="dropdown-item" href="#">Action</a></li>
+					<li><a class="dropdown-item" href="#">Another action</a></li>
+					<li><a class="dropdown-item" href="#">Something else here</a></li>
+				</ul>
+			</div>
 			<h2>
 				Электропитание: <span id="mains">----</span>
 			</h2>
-			<a id="modeBtn" class="btn btn-lg" role="button"></a>
 		</div>
 		<div class="page-header">
 			Расход сегодня: <span id="power_today" class="power-val">--</span>
-			<div id="chart" />
+			<div id="chart"></div>
 		</div>
-		<!--div>
-			<br/>
-			<a id="modeBtn" class="btn btn-lg btn-warning" role="button" href="javascript:Kettle();">Чайник!</a>
-		</div-->
 		<div class="page-header">
-			В доме: <span id="inside" class="temp-big">--.--</span>
-			На улице: <span id="outside" class="temp-big">--.--</span>
+			<a href="temperature.php">В доме:</a> <span id="inside" class="temp-big">--.--</span>
+			<a href="temperature.php">На улице:</a> <span id="outside" class="temp-big">--.--</span>
 		</div>
 	</div>
-	<div id="spinner" class="spinner"/>
+	<div id="spinner" class="spinner"></div>
 </div>
 
 <script>
@@ -103,7 +105,7 @@
 		$('#spinner').show();
 		var spinner = createSpinner('spinner');
 
-		$.getJSON(GetAPIURL("status/GetHouseStatus"))
+		$.getJSON(GetAPIURL("status/HouseStatus"))
 			.done(function(data) {
 
 				refreshControls(data);
@@ -112,17 +114,17 @@
 				$('#spinner').hide();
 			})
 			.fail(function(err) {
-				alert('Ошибка вызова GetHouseStatus.');
+				alert('Ошибка вызова GET HouseStatus.');
 			});
 	}
 
 	function refreshControls(data)
 	{
-		formatTemp($('#inside'), data.climate.inTemp);
-		formatTemp($('#outside'), data.climate.outTemp);
+		formatTemp($('#inside'), data.oneWireStatus.temperatureSensors.bedroom);
+		formatTemp($('#outside'), data.oneWireStatus.temperatureSensors.outsideTemp);
 
 		var mainsGlyphon = $('#mains');
-		if (data.mode.mains == 1)
+		if (data.oneWireStatus.switches.mainsSwitch == 1)
 		{
 			mainsGlyphon
 				.addClass('mains-on')
@@ -140,28 +142,49 @@
 		var power_now = $('#power_now');
 		var power_today = $('#power_today');
 
-		if ('PT' in data.power && 'S' in data.power)
+		if ('PT' in data.powerStatus && 'S' in data.powerStatus)
 		{
-			power_today.html(numeral(data.power.PT.ap).format('0.0') + ' кВт/ч');
-			renderPowerGauge(data.power.S.sum/1000);
+			power_today.html(numeral(data.powerStatus.PT.ap).format('0.0') + ' кВт/ч');
+			renderPowerGauge(data.powerStatus.S.sum/1000);
 		}
 
-		var modeBtn = $('#modeBtn');
-		var statusHdr = $('#statusHdr');
-		var statusAlert = $('#statusAlert');
+		let modeMenu = {
+			'1' : {
+				name: 'Режим присутствия',
+				transitionName: 'Перевести в режим присутствия',
+				class: 'btn-success'
+			},
+			'0' : {
+				name: 'Режим долгосрочного ожидания',
+				transitionName: 'Перевести в режим <b>долгосрочного</b> ожидания',
+				class: 'btn-danger'
+			},
+			'2' : {
+				name: 'Режим краткосрочного ожидания',
+				transitionName: 'Перевести в режим <b>краткосрочного</b> ожидания',
+				class: 'btn-warning'
+			}			
+		};
 
-		if (data.mode.presence == 1) {
-			statusHdr.html('Присутствие');
-			modeBtn.html('В режим ожидания');
-			modeBtn.addClass('btn-primary').removeClass('btn-danger');
-			modeBtn.attr('href', 'javascript:SetHouseMode(0)');
-		}
-		else {
-			statusHdr.html('Ожидание');
-			modeBtn.html('В режим присутствия');
-			modeBtn.addClass('btn-danger').removeClass('btn-primary');
-			modeBtn.attr('href', 'javascript:SetHouseMode(1)');
-		}
+		let currentMode = $('#currentMode');
+		let currentModeToggle = $('#currentModeToggle');
+		let mode = data.config.modeId;
+
+		// -- current mode display
+		currentMode.html(modeMenu[mode].name);
+		currentMode.addClass(modeMenu[mode].class);
+		currentModeToggle.addClass(modeMenu[mode].class);
+
+		// -- possible mode transitions 
+		$('#changeModeMenu').empty();
+		for (transitionMode in modeMenu)
+			if (mode != transitionMode)
+			{
+				$('#changeModeMenu').append(`<li><a class="dropdown-item" href="javascript:SetHouseMode(${transitionMode})">${modeMenu[transitionMode].transitionName}</a></li>`);
+				currentMode.removeClass(modeMenu[transitionMode].class);
+				currentModeToggle.removeClass(modeMenu[transitionMode].class);	
+			}
+
 	}
 
 	function renderPowerGauge(powerConsumption)
@@ -186,11 +209,11 @@
 			//    width: 39 // for adjusting arc thickness
 			},
 			color: {
-				pattern: [ '#60B044', '#F6C600', '#F97600', '#FF0000'], // the three color levels for the percentage values.
+				pattern: [ '#60B044', '#F6C600', '#F97600', '#FF0000'], // color levels for the values.
 				threshold: {
 					//            unit: 'value', // percentage is default
 					//            max: 200, // 100 is default
-					values: [3, 6, 9, 17]
+					values: [3, 6, 9, 12]
 				}
 			},
 			size: {
@@ -210,58 +233,40 @@
 		if (value < -2.0) control.addClass('temp-cold').removeClass('temp-warm');
 	}
 
-	function SetHouseMode(mode)
+	function SetHouseMode(newMode)
 	{
+		if (!confirm('Меняем режим?')) return;
+
 		$('#spinner').show();
 		var spinner = createSpinner('spinner');
 
-		var API = GetAPIURL("status/SetHouseMode");
 		$.ajax({
-		    url: API + '/' + mode,
-		    type: 'PUT',
+			url: GetAPIURL("status/HouseMode"),
+			type: 'PUT',
 			dataType: 'json',
-		    success: function(data) {
+			contentType: 'application/json',
+			data: JSON.stringify({ mode: newMode}),
+			success: function(data) {
 				refreshControls(data);
 
 				spinner.stop();
 				$('#spinner').hide();
 
-				if (data.mode.presence == mode)
+				if (data.config.modeId == newMode)
 				{
-					alert('Дом переведен в режим ' + ((mode == 0) ? 'ожидания.' : 'присутствия.'));
+					alert(`Помняли режим на: ${data.config.modeDesctiption}.`));
 				}
 				else
 				{
-					alert('Ошибка: режим не изменился.');
+					alert('Ошибка: не удалось сменить режим.');
 				}
-		    },
-			error: function(xhr, status, error) {
-				alert('Ошибка: ' + error);
-			}
-		});
-	}
-
-	function Kettle()
-	{
-		$('#spinner').show();
-		var spinner = createSpinner('spinner');
-
-		var API = GetAPIURL('consumption/electricity/DropPowerConsumption');
-		$.ajax({
-			url: API,
-			type: 'PUT',
-			dataType: 'json',
-			success: function(data) {
-				spinner.stop();
-				$('#spinner').hide();
-				updateForm();
 			},
 			error: function(xhr, status, error) {
 				alert('Ошибка: ' + error);
 			}
 		});
-
 	}
+
 </script>
 </body>
 </html>

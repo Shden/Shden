@@ -6,9 +6,9 @@ const HTTPStatus = require('http-status-codes').StatusCodes;
 /**
  *	Return house status information.
  *
- *	GET /GetHouseStatus
+ *	GET /HouseStatus
  */
-router.get('/GetHouseStatus', async function(req, res) {
+router.get('/HouseStatus', async function(req, res) {
 
         let houseStatus = await House.GetHouseStatus();
         res.json(houseStatus);
@@ -17,19 +17,26 @@ router.get('/GetHouseStatus', async function(req, res) {
 /**
  *	Change house mode to the mode provided.
  *
- *	PUT /SetHouseMode/:changeStatusTo
- *	:changeStatusTo: 1 - presence mode, 0 - standby mode
+ *	PUT /HouseMode
+ *	payload JSON: 
+ *      { mode: x } where x is a follows:
+ *      1 - presence mode, 
+ *      0 - longterm standby mode,
+ *      2 - shortterm standby mode.
  */
-router.put('/SetHouseMode/:changeStatusTo', async function(req, res) {
+router.put('/HouseMode', async function(req, res) {
 
-        let changeStatusTo = req.params.changeStatusTo;
-        if (changeStatusTo != 1 && changeStatusTo != 0)
+        let changeStatusRequest = req.body;
+        if (changeStatusRequest.mode === undefined || (
+                changeStatusRequest.mode != House.HouseMode.PRESENCE_MODE && 
+                changeStatusRequest.mode != House.HouseMode.SHORTTERM_STANDY && 
+                changeStatusRequest.mode != House.HouseMode.LONGTERM_STANDBY))
         {
-                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid status requested (${changeStatusTo}).`);
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid mode request (${JSON.stringify(changeStatusRequest)}).`);
                 return;
         }
         
-        let updatedStatus = await House.SetHouseMode(changeStatusTo);
+        let updatedStatus = await House.SetMode(changeStatusRequest.mode);
         res.status(HTTPStatus.OK).send(JSON.stringify(updatedStatus)).end();
 });
 

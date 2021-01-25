@@ -1,6 +1,8 @@
 const should = require('should');
 const http = require('http');
 const API = require('./api-config').config;
+const testers = require('./API-testers');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 
 describe(`/API/${API.version}/status testing:`, function() {
 
@@ -8,70 +10,51 @@ describe(`/API/${API.version}/status testing:`, function() {
 
 	describe(`GetHouseStatus`, function() {
 
-		it(`GET /API/${API.version}/status/GetHouseStatus returns valid house status`, function(done) {
-			http.get({
-				host: API.host,
-				path: `/API/${API.version}/status/GetHouseStatus`,
-				port: API.port
-			}, function(responce) {
-				responce.statusCode.should.be.equal(200);
-				var data = '';
+		let statusURL = `/API/${API.version}/status/HouseStatus`;
+		it(`Status: GET ${statusURL} returns valid house status`, function(done) {
+			testers.getTester(statusURL, HTTPStatus.OK, (resp) => {
 
-				responce.on('data', function(b) {
-					data += b;
-				});
-				responce.on('end', function() {
-					var status = JSON.parse(data);
-					// console.log(status)
+				let status = JSON.parse(resp);
 
-					status.should.be.an.Object();
-					status.should.have.property('climate');
-					status.should.have.property('mode');
-					status.should.have.property('power');
-
-					done();
-				});
+				status.should.be.an.Object();
+				status.should.have.property('oneWireStatus');
+				status.should.have.property('powerStatus');
+				status.should.have.property('config');
+				status.should.have.property('zigbee');
+				done();
 			});
-
 		});
 	});
 
 	describe(`SetHouseMode`, function() {
 
-		function SM(m, expectedStatusCode, done) {
-			var req = http.request({
-				host: API.host,
-				path: `/API/${API.version}/status/SetHouseMode/${m}`,
-				port: API.port,
-				method: 'PUT'
-			}, function(responce) {
-				responce.statusCode.should.be.equal(expectedStatusCode);
-				var data = '';
-
-				responce.on('data', function(b) {
-					data += b;
-				});
-				responce.on('end', function() {
-					if (responce.statusCode == 200)
-						var status = JSON.parse(data);
-					done();
-				});
+		let houseModeURL = `/API/${API.version}/status/HouseMode`;
+		it(`HouseMode: PUT ${houseModeURL} mode 222 raises exception`, function(done) {
+			let modeUpdate = { mode: 222 };
+			testers.putTester(houseModeURL, modeUpdate, HTTPStatus.BAD_REQUEST, (res) => {
+				done();
 			});
-			req.end();
-		}
-
-		it(`PUT /API/${API.version}/status/SetHouseMode/1 sets to presence mode`, function(done) {
-			SM(1, 200, done);
 		});
 
-		it(`PUT /API/${API.version}/status/SetHouseMode/0 sets to standby mode`, function(done) {
-			SM(0, 200, done);
+		it(`HouseMode: PUT ${houseModeURL} empty object raises exception`, function(done) {
+			testers.putTester(houseModeURL, new Object(), HTTPStatus.BAD_REQUEST, (res) => {
+				done();
+			});
+		})
+
+		it(`HouseMode: PUT ${houseModeURL} mode 1 sets to presence mode`, function(done) {
+			let modeUpdate = { mode: 1 };
+			testers.putTester(houseModeURL, modeUpdate, HTTPStatus.OK, (res) => {
+				done();
+			});
 		});
 
-		it(`PUT /API/${API.version}/status/SetHouseMode/222 raises exception 400`, function(done) {
-			SM(222, 400, done);
+		it.skip(`HouseMode: PUT ${houseModeURL} mode 0 sets to standby mode`, function(done) {
+			let modeUpdate = { mode: 0 };
+			testers.putTester(houseModeURL, modeUpdate, HTTPStatus.OK, (res) => {
+				done();
+			});
 		});
-
 
 	});
 });

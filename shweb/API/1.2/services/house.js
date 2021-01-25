@@ -51,6 +51,8 @@ class HouseState
 
                                 this.updateRequest.config.heating.saunaFloorTemp = 28.0;
 
+                                this.openShutters(1).openShutters(2);
+
                                 break;
         
                         case HouseMode.LONGTERM_STANDBY:
@@ -120,6 +122,18 @@ class HouseState
 
         closeShutters(floor)
         {
+                this.changeShutters(floor, 0);
+                return this;
+        }
+
+        openShutters(floor)
+        {
+                this.changeShutters(floor, 1);
+                return this;
+        }
+
+        changeShutters(floor, state)
+        {
                 if (floor == 1 || floor == 2)
                 {
                         if (this.updateRequest.shutters === undefined)
@@ -131,13 +145,13 @@ class HouseState
                                         if (this.updateRequest.shutters.F1 === undefined)
                                                 this.updateRequest.shutters.F1 = new Object();
 
-                                        this.updateRequest.shutters.F1.W1 = 0;
-                                        this.updateRequest.shutters.F1.W2 = 0;
-                                        this.updateRequest.shutters.F1.W3 = 0;
-                                        this.updateRequest.shutters.F1.W4 = 0;
-                                        this.updateRequest.shutters.F1.W5 = 0;
-                                        this.updateRequest.shutters.F1.W6 = 0;
-                                        this.updateRequest.shutters.F1.W7 = 0;
+                                        this.updateRequest.shutters.F1.W1 = state;
+                                        this.updateRequest.shutters.F1.W2 = state;
+                                        this.updateRequest.shutters.F1.W3 = state;
+                                        this.updateRequest.shutters.F1.W4 = state;
+                                        this.updateRequest.shutters.F1.W5 = state;
+                                        this.updateRequest.shutters.F1.W6 = state;
+                                        this.updateRequest.shutters.F1.W7 = state;
 
                                         break;
 
@@ -145,15 +159,15 @@ class HouseState
                                         if (this.updateRequest.shutters.F2 === undefined)
                                                 this.updateRequest.shutters.F2 = new Object();
 
-                                        this.updateRequest.shutters.F2.W1 = 0;
-                                        this.updateRequest.shutters.F2.W2 = 0;
-                                        this.updateRequest.shutters.F2.W3 = 0;
-                                        this.updateRequest.shutters.F2.W4 = 0;
-                                        this.updateRequest.shutters.F2.W5 = 0;
-                                        this.updateRequest.shutters.F2.W6 = 0;
-                                        this.updateRequest.shutters.F2.W7 = 0;
-                                        this.updateRequest.shutters.F2.W8 = 0;
-                                        this.updateRequest.shutters.F2.W9 = 0;
+                                        this.updateRequest.shutters.F2.W1 = state;
+                                        this.updateRequest.shutters.F2.W2 = state;
+                                        this.updateRequest.shutters.F2.W3 = state;
+                                        this.updateRequest.shutters.F2.W4 = state;
+                                        this.updateRequest.shutters.F2.W5 = state;
+                                        this.updateRequest.shutters.F2.W6 = state;
+                                        this.updateRequest.shutters.F2.W7 = state;
+                                        this.updateRequest.shutters.F2.W8 = state;
+                                        this.updateRequest.shutters.F2.W9 = state;
 
                                         break;
                         }

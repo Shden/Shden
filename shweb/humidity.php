@@ -17,49 +17,15 @@
 		<?php
 		include 'menu.php';
 		include 'include/js.php';
-		include 'include/chartHelper.php';
-
-		RenderChartWithIntervals(
-			'Уровень влажности, интервал в днях:',
-			'climate/GetHumidityHistory/',
-			'{
-				bindto: "#chart",
-				data: {
-					xFormat: "%Y-%m-%d %H:%M:%S",
-					keys: {
-						x: "date",
-						value: ["bathroom"]
-					},
-					type: "spline",
-					names: {
-						bathroom: "влажность в сауне"
-					}
-				},
-				grid: {
-					x: {
-						show: true
-					},
-					y: {
-						show: true
-					}
-				},
-				axis: {
-					x: {
-						type: "timeseries",
-						tick: {
-							culling: {
-								max: 6 // the number of tick texts will be adjusted to less than this value
-							},
-							format: "%d %b %H:%M" // Jan 19 20:40
-						},
-						label: "Время"
-					},
-					y: {
-						label: "Влажность"
-					}
-				}
-			}');
 		?>
+
+		<div class="embed-responsive">
+			<iframe 
+				class="embed-responsive-item" 
+				width="100%" height="760"
+				src="https://ec2-18-184-115-169.eu-central-1.compute.amazonaws.com/grafana/d/X8fZOHLMk/panel-monitoringa?orgId=1&from=1611337178643&to=1611941978643&refresh=1h&viewPanel=10">
+			</iframe>
+		</div>
 	</div>
 </body>
 </html>

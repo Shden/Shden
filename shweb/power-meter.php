@@ -34,7 +34,6 @@
 	<div class="container">
 		<?php include 'menu.php';?>
 
-		<br/>
 		<div class="container" align="center">
 			<h2>Данные электросчетчика</h2>
 			<h3>Мгновенные значения:</h3>

@@ -24,6 +24,7 @@
 
 		<?php include 'menu.php';?>
 
+		<br/>
 		<div class="container col-sm-8">
 
 			<h2>Таймер отопления</h2>

@@ -37,6 +37,7 @@
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="power-meter.php">Электросчетчик</a>
 						<a class="dropdown-item" href="power-stat.php">Статистика</a>
+						<a class="dropdown-item" href="power-monitor.php">Монитор</a>
 					</div>
 				</li>
 			</ul>

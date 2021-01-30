@@ -257,7 +257,7 @@ async function changeSwitch(switchAddress, switchChannel, switchStatus)
 		if (!global.OWDryRun) {
 			if (!global.OWDebugMode) {
 				var valuePath = `/mnt/1wire/${switchAddress}/${switchChannel}`;
-				fs.writeFile(valuePath, switchStatus, (err) => {
+				fs.writeFile(valuePath, switchStatus.toString(), (err) => {
 					if (err)
 						rejected(err);
 					resolved(switchStatus);

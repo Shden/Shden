@@ -21,6 +21,14 @@ mqttClient.on('connect', () =>
                         mqttClient.publish(sw.topic + '/get', JSON.stringify({ [sw.channel] : '' }));
                 });
         }
+
+        // -- presence sensors:
+        mqttClient.subscribe('zigbee2mqtt/0x00158d0004abd3b6', (err) => {
+                if (err) 
+                        console.log('Subscription error:', err);
+                else
+                        console.log('Motion sensor subscribed.');
+        });
 });
 
 // All MQTT messages will be routed here
@@ -42,6 +50,15 @@ mqttClient.on('message', (topic, message) =>
                                 switchState[switchAlias] = 0;
                         // console.log(switchState);
                 }
+        }
+
+        // -- presence
+        if (topic === 'zigbee2mqtt/0x00158d0004abd3b6')
+        {
+                console.log('Message from motion sensor: ', message);
+                mqttClient.publish(
+                        config.devices.switches.hall2OverheadsLight.topic + '/set',  
+                        JSON.stringify({ [config.devices.switches.hall2OverheadsLight.channel]: message.occupancy ? 1 : 0 }));
         }
 });
 

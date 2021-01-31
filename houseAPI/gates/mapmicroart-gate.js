@@ -2,6 +2,19 @@ const http = require('http');
 const config = require('../config/mapmicroart-config.json');
 const HTTPStatus = require('http-status-codes').StatusCodes;
 
+
+/*
+
+_MODE   3: МАП включен и транслирует сеть
+        2: МАП включен. Генерация от АКБ. Нет сети.
+
+
+_PLoad_calc нагрузка Вт на МАП
+_IAcc_med_A_u16 ток от аккумулятора
+_Uacc напряжение аккумуляторов
+
+*/
+
 // get microart MAP invertor status
 function getStatus()
 {

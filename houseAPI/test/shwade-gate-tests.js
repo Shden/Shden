@@ -14,6 +14,7 @@ describe('ShWade gate tests', function() {
                         status.should.have.property("powerStatus").which.is.an.Object();
                         status.should.have.property("config").which.is.an.Object();
                         status.should.have.property("shutters").which.is.an.Object();
+                        status.should.have.property("map").which.is.an.Object();
                 })
         });
 

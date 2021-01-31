@@ -1,5 +1,6 @@
 const http = require('http');
 const config = require('../config/mercury236-config.json');
+const HTTPStatus = require('http-status-codes').StatusCodes;
 
 // Returns promise to bring current power meter data.
 function getStatus()
@@ -36,7 +37,7 @@ function getPowerMeterDataByAPI()
 			port: config.port,
                         path: config.path
 		}), responce => {
-			if (responce.statusCode != 200)
+			if (responce.statusCode != HTTPStatus.OK)
 				rejected(responce.statusCode);
 
 			var data = '';

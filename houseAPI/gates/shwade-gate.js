@@ -5,6 +5,7 @@
  *      - esp8266-gate
  *      - shutters-gate
  *      - zigbee-gate
+ *      - mapmicroart-gate
  *      - etc.
  */ 
 const owg = require('./onewire-gate');
@@ -13,6 +14,7 @@ const mercury236 = require('../gates/mercury236-gate');
 const shutters = require('./shutters-gate');
 const esp = require('./esp-gate');
 const zigbee = require('./zigbee-gate');
+const microart = require('./mapmicroart-gate');
 const { response } = require('express');
 
 async function getStatus()
@@ -29,7 +31,8 @@ async function getStatus()
                         cfg.getConfig(),
                         shutters.getStatus(),
                         esp.getState(),
-                        zigbee.getStatus()
+                        zigbee.getStatus(),
+                        microart.getStatus()
                 ]).then(responces => {
                         var ShWadeStatus = new Object();
                         ShWadeStatus.oneWireStatus = responces[0];
@@ -38,6 +41,7 @@ async function getStatus()
                         ShWadeStatus.shutters = responces[3]; 
                         ShWadeStatus.ESP = responces[4];
                         ShWadeStatus.zigbee = responces[5];
+                        ShWadeStatus.map = responces[6];
                         resolved(ShWadeStatus);
                 });
         });

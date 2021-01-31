@@ -1,6 +1,12 @@
 const mqtt = require('mqtt');
 const config = require('../config/zigbee-config.json');
 
+// house modes enumeration
+const SwitchState = Object.freeze({ 
+        ON : 'ON',
+        OFF : 'OFF' 
+});
+
 const mqttClient = mqtt.connect(config.mqtt);
 const switchState = new Object();
 
@@ -58,7 +64,7 @@ mqttClient.on('message', (topic, message) =>
                 console.log('Message from motion sensor: ', msg);
                 mqttClient.publish(
                         config.devices.switches.hall2OverheadsLight.topic + '/set',  
-                        JSON.stringify({ [config.devices.switches.hall2OverheadsLight.channel]: msg.occupancy ? 1 : 0 }));
+                        JSON.stringify({ [config.devices.switches.hall2OverheadsLight.channel]: msg.occupancy ? SwitchState.ON : SwitchState.OFF }));
         }
 });
 
@@ -85,7 +91,7 @@ async function updateStatus(updateRequest)
                         let switchConfig = config.devices.switches[switchAlias];
                         if (switchConfig !== undefined)
                         {
-                                let deviceValue = (requestedValue) ? "ON" : "OFF";
+                                let deviceValue = (requestedValue) ? SwitchState.ON : SwitchState.OFF;
                                 mqttClient.publish(switchConfig.topic + '/set', JSON.stringify({ [switchConfig.channel]: deviceValue}));
                         }
                 }

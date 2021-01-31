@@ -20,7 +20,7 @@ mqttClient.on('connect', () =>
                 switchState[switchAlias] = null;
 
                 let sw = config.devices.switches[switchAlias];
-                console.log('Subscribing to:', sw.topic);
+                console.log('Subscribing to switch:', sw.topic);
                 mqttClient.subscribe(sw.topic, (err) => {
                         if (err) 
                                 console.log('Subscription error:', err);
@@ -29,12 +29,15 @@ mqttClient.on('connect', () =>
         }
 
         // -- presence sensors:
-        mqttClient.subscribe('zigbee2mqtt/0x00158d0004abd3b6', (err) => {
-                if (err) 
-                        console.log('Subscription error:', err);
-                else
-                        console.log('Motion sensor subscribed.');
-        });
+        for (var sensorAlias in config.devices.sensors)
+        {
+                let sn = config.devices.sensors[sensorAlias];
+                console.log('Subscribing to sensor:', sn.topic);
+                mqttClient.subscribe(sn.topic, (err) => {
+                        if (err) 
+                                console.log('Subscription error:', err);
+                })
+        }
 });
 
 // All MQTT messages will be routed here
@@ -42,7 +45,7 @@ mqttClient.on('message', (topic, message) =>
 {
         let msg = JSON.parse(message.toString());
 
-        // lookup switches
+        // -- lookup switches
         for (var switchAlias in config.devices.switches)
         {
                 let sw = config.devices.switches[switchAlias];
@@ -58,13 +61,29 @@ mqttClient.on('message', (topic, message) =>
                 }
         }
 
-        // -- presence
-        if (topic === 'zigbee2mqtt/0x00158d0004abd3b6')
+        // -- lookup sensors
+        for (var sensorAlias in config.devices.sensors)
         {
-                console.log('Message from motion sensor: ', msg);
-                mqttClient.publish(
-                        config.devices.switches.hall2OverheadsLight.topic + '/set',  
-                        JSON.stringify({ [config.devices.switches.hall2OverheadsLight.channel]: msg.occupancy ? SwitchState.ON : SwitchState.OFF }));
+                let sn = config.devices.sensors[sensorAlias];
+                if (sn.topic === topic)
+                {
+                        // -- traverse all dependend switches and turn on/off each
+                        let dependentSwitches = sn.controls;
+                        for (var depSwIndex in dependentSwitches)
+                        {
+                                let depSwName = dependentSwitches[depSwIndex];
+                                let sw = config.devices.switches[depSwName];
+                                if (sw !== undefined)
+                                {
+                                        mqttClient.publish(
+                                                sw.topic + '/set',
+                                                JSON.stringify({ [sw.channel]: msg.occupancy ? SwitchState.ON : SwitchState.OFF })
+                                        )
+                                }
+                                else
+                                        console.log('Invalid dependent switch name specifed:', depSwName);
+                        }
+                }
         }
 });
 

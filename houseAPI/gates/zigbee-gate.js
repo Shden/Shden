@@ -55,10 +55,10 @@ mqttClient.on('message', (topic, message) =>
         // -- presence
         if (topic === 'zigbee2mqtt/0x00158d0004abd3b6')
         {
-                console.log('Message from motion sensor: ', message);
+                console.log('Message from motion sensor: ', msg);
                 mqttClient.publish(
                         config.devices.switches.hall2OverheadsLight.topic + '/set',  
-                        JSON.stringify({ [config.devices.switches.hall2OverheadsLight.channel]: message.occupancy ? 1 : 0 }));
+                        JSON.stringify({ [config.devices.switches.hall2OverheadsLight.channel]: msg.occupancy ? 1 : 0 }));
         }
 });
 

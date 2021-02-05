@@ -75,7 +75,7 @@ mqttClient.on('message', (topic, message) =>
                                 let sw = config.devices.switches[depSwName];
 
                                 let swToState = (msg.occupancy && sn.illuminanceThreshold > msg.illuminance) ? SwitchState.ON : SwitchState.OFF;
-                                let swFromState = switchState[depSwName] == 1 ? SwitchState.ON : SwitchState.OFF;
+                                let swFromState = (switchState[depSwName] == 1) ? SwitchState.ON : SwitchState.OFF;
                                 
                                 if (sw !== undefined)
                                 {
@@ -85,7 +85,7 @@ mqttClient.on('message', (topic, message) =>
                                                         sw.topic + '/set',
                                                         JSON.stringify({ [sw.channel]: swToState })
                                                 );
-                                                switchState[depSwName] = swToState == SwitchState.ON ? 1 : 0;
+                                                switchState[depSwName] = (swToState == SwitchState.ON) ? 1 : 0;
                                         }
                                 }
                                 else

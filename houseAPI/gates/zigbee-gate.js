@@ -53,9 +53,9 @@ mqttClient.on('message', (topic, message) =>
                 {
                         // topic match found
                         let swState = msg[sw.channel];
-                        if (swState == "ON")
+                        if (swState == SwitchState.ON)
                                 switchState[switchAlias] = 1;
-                        if (swState == "OFF")
+                        if (swState == SwitchState.OFF)
                                 switchState[switchAlias] = 0;
                         // console.log(switchState);
                 }
@@ -73,11 +73,15 @@ mqttClient.on('message', (topic, message) =>
                         {
                                 let depSwName = dependentSwitches[depSwIndex];
                                 let sw = config.devices.switches[depSwName];
-                                if (sw !== undefined)
+
+                                let swToState = msg.occupancy ? SwitchState.ON : SwitchState.OFF;
+                                let swFromState = switchState[depSwName] == 1 ? SwitchState.ON : SwitchState.OFF;
+                                
+                                if (sw !== undefined && swToState != swFromState)
                                 {
                                         mqttClient.publish(
                                                 sw.topic + '/set',
-                                                JSON.stringify({ [sw.channel]: msg.occupancy ? SwitchState.ON : SwitchState.OFF })
+                                                JSON.stringify({ [sw.channel]: swToState })
                                         )
                                 }
                                 else

@@ -74,15 +74,19 @@ mqttClient.on('message', (topic, message) =>
                                 let depSwName = dependentSwitches[depSwIndex];
                                 let sw = config.devices.switches[depSwName];
 
-                                let swToState = msg.occupancy ? SwitchState.ON : SwitchState.OFF;
+                                let swToState = (msg.occupancy && sn.illuminanceThreshold < msg.illuminance) ? SwitchState.ON : SwitchState.OFF;
                                 let swFromState = switchState[depSwName] == 1 ? SwitchState.ON : SwitchState.OFF;
                                 
-                                if (sw !== undefined && swToState != swFromState && sn.illuminanceThreshold < msg.illuminance)
+                                if (sw !== undefined)
                                 {
-                                        mqttClient.publish(
-                                                sw.topic + '/set',
-                                                JSON.stringify({ [sw.channel]: swToState })
-                                        )
+                                        if (swToState != swFromState) 
+                                        {
+                                                mqttClient.publish(
+                                                        sw.topic + '/set',
+                                                        JSON.stringify({ [sw.channel]: swToState })
+                                                );
+                                                switchState[depSwName] = swToState == SwitchState.ON ? 1 : 0;
+                                        }
                                 }
                                 else
                                         console.log('Invalid dependent switch name specifed:', depSwName);

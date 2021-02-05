@@ -77,7 +77,7 @@ mqttClient.on('message', (topic, message) =>
                                 let swToState = msg.occupancy ? SwitchState.ON : SwitchState.OFF;
                                 let swFromState = switchState[depSwName] == 1 ? SwitchState.ON : SwitchState.OFF;
                                 
-                                if (sw !== undefined && swToState != swFromState)
+                                if (sw !== undefined && swToState != swFromState && sn.illuminanceThreshold < msg.illuminance)
                                 {
                                         mqttClient.publish(
                                                 sw.topic + '/set',

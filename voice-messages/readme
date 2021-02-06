@@ -1,0 +1,17 @@
+Файлы создаем с помощью Yandex Speech API
+
+1. Получаем токен:
+
+$ yc iam create-token
+
+2. Взять id каталога через https://console.cloud.yandex.ru. У меня было b1gl47bn5ajm4alr84dj
+
+3. Ставим переменные окружения для удобства:
+
+$ export FOLDER_ID=b1gl47bn5ajm4alr84dj
+$ export IAM_TOKEN=t1.9eu....
+
+4. Загружаем треки:
+
+$ curl -X POST -H "Authorization: Bearer ${IAM_TOKEN}" --data-urlencode "text=Сбой электросет+и. Перешли на резервный источник электричества." -d "lang=ru-RU&folderId=${FOLDER_ID}" "https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize" > backup-line.ogg
+$ curl -X POST -H "Authorization: Bearer ${IAM_TOKEN}" --data-urlencode "text=Подача электричества восстановлена." -d "lang=ru-RU&folderId=${FOLDER_ID}" "https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize" > main-line.ogg

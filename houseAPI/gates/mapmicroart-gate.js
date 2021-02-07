@@ -71,7 +71,7 @@ function notifyMapStatus(mapInfo)
 	if (mapInfo._MODE != mapMode)
 	{
 		mapMode = mapInfo._MODE;
-		mqttClient.publish('mapStatus', JSON.stringify({ _MODE : mapMode }));
+		mqttClient.publish('map/status', JSON.stringify({ _MODE : mapMode }));
 	}
 }
 

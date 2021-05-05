@@ -15,7 +15,8 @@ _Uacc напряжение аккумуляторов
 // MAP modes enumeration (_MODE field)
 const MapMode = Object.freeze({ 
         GridON : 3,		// МАП включен и транслирует сеть
-	GridOFFBattery: 2 	// МАП включен. Генерация от АКБ. Нет сети
+	GridOFFBattery: 2, 	// МАП включен. Генерация от АКБ. Нет сети
+	GridONCharging: 4	// МАП включен и транслирует сеть. Зарядка аккумулятора
 });
 
 const mqttClient = mqtt.connect(config.mqtt);

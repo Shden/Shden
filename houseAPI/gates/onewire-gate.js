@@ -14,7 +14,9 @@ const temperatureSensors = {
 	kitchen          	: "28.AAC56D020000",	// 1 - кухня
 	fluid_in            	: "28.BCBC6D020000",	// 1 - теплоноситель на входе котельной
 	child_bedroom    	: "28.CFE58D020000",	// 2 - детская (Аг) 
-	cabinet          	: "28.EA09B5040000",	// 2 - мой кабинет 
+	
+	// removed 05.05.21
+	// cabinet          	: "28.EA09B5040000",	// 2 - мой кабинет 
 	am_bedroom              : "28.ED64B4040000",	// 2 - комната для гостей (АМ) 
 	bathroom_1_floor_1      : "28.FF3545511603"	// 1 - датчик температуры пола (душ)
 
@@ -81,7 +83,7 @@ function getStubNet()
 		stubnet[temperatureSensors.outsideTemp].temperature = -8.2;
 		stubnet[temperatureSensors.am_bedroom].temperature = 21.6;
 		stubnet[temperatureSensors.bedroom].temperature = 12.44;
-		stubnet[temperatureSensors.cabinet].temperature = 21.4;
+		//stubnet[temperatureSensors.cabinet].temperature = 21.4;
 		stubnet[temperatureSensors.kitchen].temperature = 23.7;
 		stubnet[temperatureSensors.child_bedroom].temperature = 22.8;
 		stubnet[temperatureSensors.kitchen_storage].temperature = 26.1;

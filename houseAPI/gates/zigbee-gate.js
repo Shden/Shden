@@ -9,6 +9,7 @@ const SwitchState = Object.freeze({
 
 const mqttClient = mqtt.connect(config.mqtt);
 const switchState = new Object();
+const temperatureSensors = new Object();
 
 mqttClient.on('connect', () => 
 {
@@ -20,11 +21,24 @@ mqttClient.on('connect', () =>
                 switchState[switchAlias] = null;
 
                 let sw = config.devices.switches[switchAlias];
-                console.log('Subscribing to switch:', sw.topic);
+                console.log('Subscribing to the switch topic:', sw.topic);
                 mqttClient.subscribe(sw.topic, (err) => {
                         if (err) 
                                 console.log('Subscription error:', err);
                         mqttClient.publish(sw.topic + '/get', JSON.stringify({ [sw.channel] : '' }));
+                });
+        }
+
+        // -- sensors subscriptions:
+        for (var sensorAlias in config.devices.sensors)
+        {
+                temperatureSensors[sensorAlias] = null;
+
+                let s = config.devices.sensors[sensorAlias];
+                console.log('Subscribing to the sensor topic:', s.topic);
+                mqttClient.subscribe(s.topic, (err) => {
+                        if (err)
+                                console.log('Subscription error:', err);
                 });
         }
 
@@ -107,7 +121,10 @@ function tearDown()
 // Returns zigbee devices accumulated states
 async function getStatus()
 {
-        return { switches: switchState };
+        return { 
+                switches: switchState, 
+                temperatureSensors: temperatureSensors 
+        };
 }
 
 // Update zigbee devices as requested

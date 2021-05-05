@@ -9,7 +9,7 @@ const sensors = {
 	amSensor               : "28.ED64B4040000",	/* комната для гостей (АМ) */
 	inputSensor            : "28.BCBC6D020000",	/* жидкость на входе */
 	bedroomSensor          : "28.99C68D020000",	/* спальня */
-	cabinetSensor          : "28.EA09B5040000",	/* кабинет */
+	//cabinetSensor          : "28.EA09B5040000",	/* кабинет */
 	kitchenSensor          : "28.AAC56D020000",	/* кухня */
 	childrenSmallSensor    : "28.CFE58D020000",	/* детская (Аг) */
 	bathRoomSensor         : "10.AEFF8F020800",	/* ванная на 1-м этаже */

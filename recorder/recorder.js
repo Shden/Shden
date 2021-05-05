@@ -42,7 +42,7 @@ function persistHeatingData(dbConnectionPool, dataPoint)
                                         dataPoint.oneWireStatus.temperatureSensors.outsideTemp,         // 4 - external
                                         dataPoint.oneWireStatus.temperatureSensors.am_bedroom,          // 5 - am_bedroom
                                         dataPoint.oneWireStatus.temperatureSensors.bedroom,             // 6 - bedroom
-                                        dataPoint.oneWireStatus.temperatureSensors.cabinet,             // 7 - cabinet
+                                        dataPoint.zigbee.temperatureSensors.cabinet,                    // 7 - cabinet
                                         dataPoint.oneWireStatus.temperatureSensors.child_bedroom,       // 8 - child_bedroom
                                         dataPoint.oneWireStatus.temperatureSensors.kitchen,             // 9 - kitchen
                                         dataPoint.oneWireStatus.temperatureSensors.sauna_ceiling,       // 10 - bathroom_1

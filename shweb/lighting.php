@@ -153,6 +153,14 @@
 						</td>
 					</tr>
 					<tr>
+						<td>Тамбур в Сашину комнату, верхний свет:</td>
+						<td><button id="sashaTambourOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
+						<td>Санузел, верхний свет:</td>
+						<td><button id="bathroom2OverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
 						<td>Сашина комната, верхний свет:</td>
 						<td><button id="sashaOverheadsLight" class="btn btn-lg">...</button></td>
 					</tr>

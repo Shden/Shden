@@ -29,29 +29,18 @@ mqttClient.on('connect', () =>
                 });
         }
 
-        // -- sensors subscriptions:
+        // -- temperature sensors subscriptions:
         for (var sensorAlias in config.devices.sensors)
         {
                 temperatureSensors[sensorAlias] = null;
 
                 let s = config.devices.sensors[sensorAlias];
-                console.log('Subscribing to the sensor topic:', s.topic);
+                console.log('Subscribing to the temperature sensor topic:', s.topic);
                 mqttClient.subscribe(s.topic, (err) => {
                         if (err)
                                 console.log('Subscription error:', err);
                 });
         }
-
-        // // -- presence sensors:
-        // for (var sensorAlias in config.devices.sensors)
-        // {
-        //         let sn = config.devices.sensors[sensorAlias];
-        //         console.log('Subscribing to sensor:', sn.topic);
-        //         mqttClient.subscribe(sn.topic, (err) => {
-        //                 if (err) 
-        //                         console.log('Subscription error:', err);
-        //         })
-        // }
 });
 
 // All MQTT messages will be routed here
@@ -75,42 +64,16 @@ mqttClient.on('message', (topic, message) =>
                 }
         }
 
-        // // -- lookup sensors
-        // for (var sensorAlias in config.devices.sensors)
-        // {
-        //         let sn = config.devices.sensors[sensorAlias];
-        //         if (sn.topic === topic)
-        //         {
-        //                 // -- traverse all dependend switches and turn on/off each
-        //                 let dependentSwitches = sn.controls;
-        //                 for (var depSwIndex in dependentSwitches)
-        //                 {
-        //                         let depSwName = dependentSwitches[depSwIndex];
-        //                         let sw = config.devices.switches[depSwName];
-
-        //                         let swToState = (msg.occupancy) ? SwitchState.ON : SwitchState.OFF;
-        //                         let swNowState = (switchState[depSwName] == 1) ? SwitchState.ON : SwitchState.OFF;
-
-        //                         // Only allow on when the light is low
-        //                         if (swNowState == SwitchState.OFF && swToState == SwitchState.ON && sn.illuminanceThreshold < msg.illuminance)
-        //                                 swToState = SwitchState.OFF;
-                                
-        //                         if (sw !== undefined)
-        //                         {
-        //                                 if (swToState != swNowState) 
-        //                                 {
-        //                                         mqttClient.publish(
-        //                                                 sw.topic + '/set',
-        //                                                 JSON.stringify({ [sw.channel]: swToState })
-        //                                         );
-        //                                         switchState[depSwName] = (swToState == SwitchState.ON) ? 1 : 0;
-        //                                 }
-        //                         }
-        //                         else
-        //                                 console.log('Invalid dependent switch name specifed:', depSwName);
-        //                 }
-        //         }
-        // }
+        // -- lookup temperature sensors
+        for (var sensorAlias in config.devices.sensors)
+        {
+                let s = config.devices.sensors[sensorAlias];
+                if (s.topic === topic)
+                {
+                        temperatureSensors[sensorAlias] = msg.temperature;
+                        console.log('Temperature update:', topic, msg.temperature);
+                }
+        }
 });
 
 function tearDown()

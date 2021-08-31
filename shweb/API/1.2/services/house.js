@@ -116,6 +116,12 @@ class HouseState
                 this.updateRequest.zigbee.switches.biggerChildrenRoomOverheadsLight2 = 0;
                 this.updateRequest.zigbee.switches.hall2OverheadsLight = 0;
                 this.updateRequest.zigbee.switches.sashaOverheadsLight = 0;
+                this.updateRequest.zigbee.switches.sashaTambourOverheadsLight = 0;
+                this.updateRequest.zigbee.switches.bathroom2OverheadsLight = 0;
+                this.updateRequest.zigbee.switches.boilerRoomOverheadsLight = 0;
+                this.updateRequest.zigbee.switches.saunaOverheadsLight = 0;
+                this.updateRequest.zigbee.switches.saunaUnderLight = 0;
+                this.updateRequest.zigbee.switches.bathroom1OverheadsLight = 0;
                 
                 return this;
         }

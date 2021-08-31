@@ -95,6 +95,10 @@
 						<td><button id="hallwayOverheadsLight" class="btn btn-lg">...</button></td>
 					</tr>				
 					<tr>
+						<td>Котельная:</td>
+						<td><button id="boilerRoomOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>				
+					<tr>
 						<td>Холл, верхний свет:</td>
 						<td>
 							<button id="hall1OverheadsMainLight" class="btn btn-lg">...</button>
@@ -116,7 +120,20 @@
 					<tr>
 						<td>Кабинет Али, верхний свет:</td>
 						<td><button id="alyaCabinetOverheadsLight" class="btn btn-lg">...</button></td>
-					</tr>				
+					</tr>	
+					<tr>
+						<td>Ванная комната, верхний свет:</td>
+						<td><button id="bathroom1OverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>	
+					<tr>
+						<td>Сауна, верхний свет:</td>
+						<td><button id="saunaOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>	
+					<tr>
+						<td>Сауна, нижняя подсветка:</td>
+						<td><button id="saunaUnderLight" class="btn btn-lg">...</button></td>
+					</tr>	
+								
 					<tr>
 						<td>Лесница, подсветка:</td>
 						<td><button id="stairwayLight" class="btn btn-lg">...</button></td>

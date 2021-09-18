@@ -32,8 +32,8 @@ const switches = {
 	saunaVentilation	: { "address" : "3A.14280D000000", "channel" : "PIO.A" },	// 1 - вентиляция в ванной
 	saunaFloorSwitch       	: { "address" : "3A.14280D000000", "channel" : "PIO.B" },	// 1 - подогрев пола в ванной
 	// 					3A.14EE0E000000 не используется. ключ клапана в нашей спальне
-	mainsSwitch		: { "address" : "3A.35EE0E000000", "channel" : "PIO.B" },	// 1 - подача внешнего электричества
-	fenceLight		: { "address" : "3A.35EE0E000000", "channel" : "PIO.A" },	// наружняя подсветка
+	mainsSwitch		: { "address" : "3A.14EE0E000000", "channel" : "PIO.B" },	// 1 - подача внешнего электричества
+	fenceLight		: { "address" : "3A.14EE0E000000", "channel" : "PIO.A" },	// наружняя подсветка
 	//					3A.3E9403000000 не используется. реле ТЭН и циркуляции	
 	//					3A.4A370D000000 не работает. свет на озеро и на балконе
 	streetLight250		: { "address" : "3A.B8380D000000", "channel" : "PIO.A" },	// уличный фонарь

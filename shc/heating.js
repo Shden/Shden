@@ -48,14 +48,8 @@ thingAPI.getStatus().then(results => {
 	printOutKV('Floor temperature', numeral(saunaFloorTemp).format('0.00'), CELCIUS);
 	printOutKV('Power consumption', numeral(consumption).format('0,0'), 'W');
 
-	// -- Whether in presence or standby mode now
-	let now = new Date();
-	let presenceStart = new Date(results.config.schedule.arrival);
-	let presenceFinish = new Date(results.config.schedule.departure);
-	let isPresence = now >= presenceStart && now <= presenceFinish;
-
 	// -- Control sauna floor temp
-	let floorHeatingState = (isPresence && saunaFloorTemp < targetTemp) ? 1 : 0;
+	let floorHeatingState = (saunaFloorTemp < targetTemp) ? 1 : 0;
 	let currentHeatingState = results.oneWireStatus.switches.saunaFloorSwitch;
 	if (!dryRun && floorHeatingState != currentHeatingState)
 	{

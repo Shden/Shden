@@ -30,6 +30,9 @@
 				<li class="nav-item active">
 					<a class="nav-link" href="shutters.php">Роллеты</a>
 				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="gateways.php">Ворота</a>
+				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Электроэнергия

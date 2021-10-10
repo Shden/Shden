@@ -55,12 +55,16 @@
 
 		function gateOpen(gateName)
 		{
+			if (!confirm('Открываем ворота?')) return;
+
 			var URL = GetAPIURL("gateways/Open") + "/" + gateName;
 			callAPI(URL);
 		}
 
 		function gateClose(gateName)
 		{
+			if (!confirm('Закрываем ворота?')) return;
+			
 			var URL = GetAPIURL("gateways/Close") + "/" + gateName;
 			callAPI(URL);
 		}

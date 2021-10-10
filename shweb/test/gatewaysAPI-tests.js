@@ -6,17 +6,19 @@ const API = require('./api-config').config;
 
 describe(`/API/${API.version}/gateways testing:`, function() {
 
-	let getStatusURL = `/API/${API.version}/gateways/GetStatus`;
-	it(`GetStatus: GET ${getStatusURL}`, function(done) {
-		testers.getTester(getStatusURL, HTTPStatus.OK, (response) => {
-			var status = JSON.parse(response);
-			status.should.have.property("parking");
-			status.should.have.property("territory");
+	this.timeout(30000);
+
+	let openURL = `/API/${API.version}/gateways/Open/gateA`;
+	it.skip(`Open: PUT ${openURL}`, function(done) {
+		testers.putTester(openURL, {}, HTTPStatus.OK, (response) => {
 			done();
 		})
 	});
 
-	it.skip('Move', function(done) {
-		// Not implemented yet.
+	let closeURL = `/API/${API.version}/gateways/Close/gateA`;
+	it.skip(`Close: PUT ${closeURL}`, function(done) {
+		testers.putTester(closeURL, {}, HTTPStatus.OK, (response) => {
+			done();
+		})
 	});
 });

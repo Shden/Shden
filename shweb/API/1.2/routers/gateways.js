@@ -4,38 +4,42 @@ const HTTPStatus = require('http-status-codes').StatusCodes;
 const Gateways = require('../services/gateways');
 
 /**
- *	Returns gateway status for all gateways connected.
+ *	Open gateway.
  *
- *	GET /GetStatus
+ *	:gatewayName - name of the gateway to open.
+ *
+ *	PUT /Open/:gatewayName
  */
-router.get('/GetStatus', async function(req, res) 
-{
-        res.json(await Gateways.GetStatus());
-});
-
-/**
- *	Change selected gateway position.
- *
- *	:gatewayName - name (alias, not physical address) of the gateway to change position.
- *	:newPosition - position to move gateway to.
- *
- *	PUT /Move/:gatewayName/:newPosition
- */
-router.put('/Move/:gatewayName/:newPosition', async function(req, res)
+router.put('/Open/:gatewayName', async function(req, res)
 {
         let gatewayName = req.params.gatewayName;
-        let newPosition = req.params.newPosition;
 
-        if (isNaN(newPosition) || (newPosition != 0 && newPosition != 1)) 
+        if (gatewayName != "gateA") 
         {
-                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid gate postiion requested: (${newPosition}).`);
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid gateway name requested: (${gatewayName}).`);
                 return;
         }
 
-        // Not implemented yet.
-
-        // Finally return new status
-        res.json(await Gateways.GetStatus());
+        res.json(await Gateways.Open(gatewayName));
 });
 
-module.exports = router;
+/**
+ *	Close gateway.
+ *
+ *	:gatewayName - name of the gateway to close.
+ *
+ *	PUT /Close/:gatewayName
+ */
+router.put('/Close/:gatewayName', async function(req, res)
+{
+        let gatewayName = req.params.gatewayName;
+
+        if (gatewayName != "gateA") {
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid gateway name requested: (${gatewayName}).`);
+                return;
+        }
+
+        res.json(await Gateways.Close(gatewayName));
+});
+
+ module.exports = router;

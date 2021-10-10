@@ -13,7 +13,7 @@ async function Open(gatewayName)
                 await houseAPI.updateStatus(updateRequest);
                 //await sleep(GATE_DELAY);
                 updateRequest.zigbee.switches.gateAOpenSignal = 0;
-                return houseAPI.updateStatus(updateRequest);
+                return await houseAPI.updateStatus(updateRequest);
         }
 }
 
@@ -24,7 +24,7 @@ async function Close(gatewayName)
                 await houseAPI.updateStatus(updateRequest);
                 //await sleep(GATE_DELAY);
                 updateRequest.zigbee.switches.gateACloseSignal = 0;
-                return houseAPI.updateStatus(updateRequest);
+                return await houseAPI.updateStatus(updateRequest);
         }
 }
 

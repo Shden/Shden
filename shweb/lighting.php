@@ -186,6 +186,10 @@
 						<td><button id="hall2OverheadsLight" class="btn btn-lg">...</button></td>
 					</tr>
 					<tr>
+						<td>Кабинет Дениса, верхний свет:</td>
+						<td><button id="denisCabinetOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
 						<td>Свет на балконе 2-го этажа:</td>
 						<td><button id="balconyLight" class="btn btn-lg">...</button></td>
 					</tr>

@@ -122,6 +122,7 @@ class HouseState
                 this.updateRequest.zigbee.switches.saunaOverheadsLight = 0;
                 this.updateRequest.zigbee.switches.saunaUnderLight = 0;
                 this.updateRequest.zigbee.switches.bathroom1OverheadsLight = 0;
+                this.updateRequest.zigbee.switches.denisCabinetOverheadsLight = 0;
                 
                 return this;
         }

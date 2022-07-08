@@ -28,7 +28,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "mocha": "^8.2.1",
-    "moment": "^2.18.1",
+    "moment": "^2.29.4",
     "should": "^13.2.3"
   },
   "dependencies": {

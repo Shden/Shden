@@ -194,6 +194,22 @@
 						<td><button id="balconyLight" class="btn btn-lg">...</button></td>
 					</tr>
 				</tbody>
+				<thead class="table-secondary">
+					<th class="floor">Гараж:</th>
+					<th class="floor">
+						<button type="button" onclick="notimplementedyet();" class="btn btn-secondary">Погасить все</button>
+					</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Верхний свет внутри:</td>
+						<td><button id="garageOverheadsLight" class="btn btn-lg">...</button></td>
+					</tr>
+					<tr>
+						<td>Освещение под навесом:</td>
+						<td><button id="garageAwningLight" class="btn btn-lg">...</button></td>
+					</tr>
+				</tbody>
 			</table>
 			<div id="spinner" class="spinner">
 		</div>

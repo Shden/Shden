@@ -31,8 +31,8 @@ async function getStatus()
                         cfg.getConfig(),
                         shutters.getStatus(),
                         esp.getState(),
-                        zigbee.getStatus(),
-                        microart.getStatus()
+                        zigbee.getStatus()//, 18.08.2022 while map isnt operational
+                        //microart.getStatus()
                 ]).then(responces => {
                         var ShWadeStatus = new Object();
                         ShWadeStatus.oneWireStatus = responces[0];
@@ -41,7 +41,7 @@ async function getStatus()
                         ShWadeStatus.shutters = responces[3]; 
                         ShWadeStatus.ESP = responces[4];
                         ShWadeStatus.zigbee = responces[5];
-                        ShWadeStatus.map = responces[6];
+                        //ShWadeStatus.map = responces[6];
                         resolved(ShWadeStatus);
                 });
         });

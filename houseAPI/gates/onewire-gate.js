@@ -1,6 +1,7 @@
 // Onewire file system gateway. Provides async methods to get and update 1-wire network.
 const { rejects } = require('assert');
 var fs = require('fs');
+const mqtt = require('mqtt');
 
 /* Temperature sensors mapping, this should reflect actual 1-wire network devices */
 const temperatureSensors = {
@@ -171,10 +172,21 @@ async function getStatus()
 			RESTContainer.temperatureSensors = containers[0];
 			RESTContainer.switches = containers[1];
 			RESTContainer.humiditySensors = containers[2];
+
+			// Send MQTT status
+			notify1WireStatus(RESTContainer);
 	
 			resolved(RESTContainer);
 		});
 	})
+}
+
+var mapMode = -1;
+
+// Send 1Wire state MQTT messages
+function notify1WireStatus(statusContaier)
+{
+	mqttClient.publish('onewire/status', JSON.stringify(statusContaier));
 }
 
 // Updates 1-wire netowork devices based on the requested new state

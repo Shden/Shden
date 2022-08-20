@@ -2,6 +2,9 @@
 const { rejects } = require('assert');
 var fs = require('fs');
 const mqtt = require('mqtt');
+const config = require('../config/onewire-config.json');
+
+const mqttClient = mqtt.connect(config.mqtt);
 
 /* Temperature sensors mapping, this should reflect actual 1-wire network devices */
 const temperatureSensors = {

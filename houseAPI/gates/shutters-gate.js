@@ -5,26 +5,35 @@ const { log } = require('console');
 // Creates REST object representing all shutters states
 async function getStatus()
 {
-        let bitmask = await readAll();
+        let houseBitask = await getKinconyRelays(
+                config.houseShuttersController.port, config.houseShuttersController.host);
+
+        let garageBitmask = await getKinconyRelays(
+                config.garageShuttersController.port, config.garageShuttersController.host);
+
         var status = require('../models/shutters.json');
 
-        status.F1.W1 = bitmask & Number('0b0000000000000001');
-        status.F1.W2 = (bitmask & Number('0b0000000000000010')) >> 1;
-        status.F1.W3 = (bitmask & Number('0b0000000000000100')) >> 2;
-        status.F1.W4 = (bitmask & Number('0b0000000000001000')) >> 3;
-        status.F1.W5 = (bitmask & Number('0b0000000000010000')) >> 4;
-        status.F1.W6 = (bitmask & Number('0b0000000000100000')) >> 5;
-        status.F1.W7 = (bitmask & Number('0b0000000001000000')) >> 6;
+        status.F1.W1 = houseBitask & Number('0b0000000000000001');
+        status.F1.W2 = (houseBitask & Number('0b0000000000000010')) >> 1;
+        status.F1.W3 = (houseBitask & Number('0b0000000000000100')) >> 2;
+        status.F1.W4 = (houseBitask & Number('0b0000000000001000')) >> 3;
+        status.F1.W5 = (houseBitask & Number('0b0000000000010000')) >> 4;
+        status.F1.W6 = (houseBitask & Number('0b0000000000100000')) >> 5;
+        status.F1.W7 = (houseBitask & Number('0b0000000001000000')) >> 6;
 
-        status.F2.W1 = (bitmask & Number('0b0000000010000000')) >> 7;
-        status.F2.W2 = (bitmask & Number('0b0000000100000000')) >> 8;
-        status.F2.W3 = (bitmask & Number('0b0000001000000000')) >> 9;
-        status.F2.W4 = (bitmask & Number('0b0000010000000000')) >> 10;
-        status.F2.W5 = (bitmask & Number('0b0000100000000000')) >> 11;
-        status.F2.W6 = (bitmask & Number('0b0001000000000000')) >> 12;
-        status.F2.W7 = (bitmask & Number('0b0010000000000000')) >> 13;
-        status.F2.W8 = (bitmask & Number('0b0100000000000000')) >> 14;
-        status.F2.W9 = (bitmask & Number('0b1000000000000000')) >> 15;
+        status.F2.W1 = (houseBitask & Number('0b0000000010000000')) >> 7;
+        status.F2.W2 = (houseBitask & Number('0b0000000100000000')) >> 8;
+        status.F2.W3 = (houseBitask & Number('0b0000001000000000')) >> 9;
+        status.F2.W4 = (houseBitask & Number('0b0000010000000000')) >> 10;
+        status.F2.W5 = (houseBitask & Number('0b0000100000000000')) >> 11;
+        status.F2.W6 = (houseBitask & Number('0b0001000000000000')) >> 12;
+        status.F2.W7 = (houseBitask & Number('0b0010000000000000')) >> 13;
+        status.F2.W8 = (houseBitask & Number('0b0100000000000000')) >> 14;
+        status.F2.W9 = (houseBitask & Number('0b1000000000000000')) >> 15;
+
+        status.Garage.W1 = garageBitmask & Number('0b0000000000000001');           // Window 1: SW1 (1)
+        status.Garage.W2 = (garageBitmask & Number('0b0000000000000100')) >> 2;    // Window 2: SW3 (3)
+        status.Garage.W3 = (garageBitmask & Number('0b0000000000010000')) >> 4;    // Windos 3: SW5 (5)
 
         return status;
 }
@@ -33,12 +42,14 @@ async function getStatus()
 // status Update may have a subset of items
 async function updateStatus(statusUpdate)
 {
-        // combine all items from current and updated (as setAll() needs all bits)
+        // combine all items from current and updated (as setKinconyRelays() needs all bits)
         let newStatus = await getStatus();
         if (statusUpdate.F1 !== undefined)
                 newStatus.F1 = { ...newStatus.F1, ...statusUpdate.F1 };
         if (statusUpdate.F2 !== undefined)
                 newStatus.F2 = { ...newStatus.F2, ...statusUpdate.F2 };
+        if (statusUpdate.Garage !== undefined)
+                newStatus.Garage = { ...newStatus.Garage, ...statusUpdate.Garage };
 
         if (
                 isNaN(newStatus.F2.W9) || (newStatus.F2.W9 != 0 && newStatus.F2.W9 != 1) ||
@@ -57,11 +68,15 @@ async function updateStatus(statusUpdate)
                 isNaN(newStatus.F1.W4) || (newStatus.F1.W4 != 0 && newStatus.F1.W4 != 1) ||
                 isNaN(newStatus.F1.W3) || (newStatus.F1.W3 != 0 && newStatus.F1.W3 != 1) ||
                 isNaN(newStatus.F1.W2) || (newStatus.F1.W2 != 0 && newStatus.F1.W2 != 1) ||
-                isNaN(newStatus.F1.W1) || (newStatus.F1.W1 != 0 && newStatus.F1.W1 != 1)
+                isNaN(newStatus.F1.W1) || (newStatus.F1.W1 != 0 && newStatus.F1.W1 != 1) ||
+
+                isNaN(newStatus.Garage.W1) || (newStatus.Garage.W1 != 0 && newStatus.Garage.W1 !=1) ||
+                isNaN(newStatus.Garage.W2) || (newStatus.Garage.W2 != 0 && newStatus.Garage.W2 !=1) ||
+                isNaN(newStatus.Garage.W3) || (newStatus.Garage.W3 != 0 && newStatus.Garage.W3 !=1)
         )
                 return Promise.reject('Invalid status requested.');
 
-        let bitmask =
+        let houseBitmask =
                 newStatus.F2.W9 << 15 |
                 newStatus.F2.W8 << 14 |
                 newStatus.F2.W7 << 13 |
@@ -80,14 +95,22 @@ async function updateStatus(statusUpdate)
                 newStatus.F1.W2 << 1 |
                 newStatus.F1.W1;
 
-        return setAll(bitmask);
+        let garageBitmask =
+                newStatus.Garage.W3 << 4 |      // Window 3: SW5 (5)
+                newStatus.Garage.W2 << 2 |      // Window 2: SW3 (3)
+                newStatus.Garage.W1             // Window 1: SW1 (1)
+
+        return Promise.all([
+                setKinconyRelays(config.houseShuttersController.port, config.houseShuttersController.host, houseBitmask),
+                setKinconyRelays(config.garageShuttersController.port, config.garageShuttersController.host, garageBitmask)
+        ]);
 }
 
-// Read all Relays' status
-async function readAll()
+// Read all Relays' states
+async function getKinconyRelays(kinconyPort, kinconyHost)
 {
         return new Promise((resolved, rejected) => {
-                let client = net.createConnection(config.port, config.host, () => {
+                let client = net.createConnection(kinconyPort, kinconyHost, () => {
                         client.write('RELAY-STATE-255');
 
                         let result = '';
@@ -98,7 +121,7 @@ async function readAll()
                                 // relay board will send 0 at the end of the responce
                                 if (data[data.length-1] == 0)
                                 {
-                                        client.end();
+                                        client.destroy();
                                         // Successful result looks like: RELAY-STATE-255,0,2,OK
                                         let list = result.split(',');
                                         if (list[0] == 'RELAY-STATE-255' && list[3].startsWith('OK'))
@@ -112,14 +135,14 @@ async function readAll()
 }
 
 // Set multiple relays
-async function setAll(bitmask)
+async function setKinconyRelays(kinconyPort, kinconyHost, bitmask)
 {
         // first, validate input
         if (isNaN(bitmask) || bitmask < 0 || bitmask > Number('0xFFFF'))
                 return Promise.reject('Invalid status requested.');
 
         return new Promise((resolved, rejected) => {
-                let client = net.createConnection(config.port, config.host, () => {
+                let client = net.createConnection(kinconyPort, kinconyHost, () => {
                         let h = (bitmask & Number('0xFF00')) >> 8;
                         let l = bitmask & Number('0xFF');
                         client.write(`RELAY-SET_ALL-255,${h},${l}`);
@@ -134,7 +157,7 @@ async function setAll(bitmask)
                         // relay board will send 0 at the end of the responce
                         if (data[data.length-1] == 0)
                         {
-                                client.end();
+                                client.destroy();
                                 // Successful result looks like: RELAY-SET_ALL-255,D1,D0,OK
                                 // console.log(result);
                                 let list = result.split(',');

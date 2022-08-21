@@ -14,37 +14,53 @@ describe('Shutters gate tests:', function() {
               };
 
         let partialUpdate = {
-                F1: { W3: 1}
+                F2: { W5: 1},
+                Garage: { W1: 1, W2: 1, W3: 1}
         };
 
         // it('test', function() {
         //         return s.setAll(Number('0xFF00'));
         // })
         
-        function canSetTo(status)
+        function canSetTo(update)
         {
-                return s.updateStatus(status).then(() => {
-                        s.getStatus().then((actual) => { 
-                                actual.F1.W1.should.be.equal(status.F1.W1);
-                                actual.F1.W2.should.be.equal(status.F1.W2);
-                                actual.F1.W3.should.be.equal(status.F1.W3);
-                                actual.F1.W4.should.be.equal(status.F1.W4);
-                                actual.F1.W5.should.be.equal(status.F1.W5);
-                                actual.F1.W6.should.be.equal(status.F1.W6);
-                                actual.F1.W7.should.be.equal(status.F1.W7);
+                function checkBit(currentBit, updateBit)
+                {
+                        if (updateBit !== undefined)
+                                currentBit.should.be.equal(updateBit)
+                }
 
-                                actual.F2.W1.should.be.equal(status.F2.W1);
-                                actual.F2.W2.should.be.equal(status.F2.W2);
-                                actual.F2.W3.should.be.equal(status.F2.W3);
-                                actual.F2.W4.should.be.equal(status.F2.W4);
-                                actual.F2.W5.should.be.equal(status.F2.W5);
-                                actual.F2.W6.should.be.equal(status.F2.W6);
-                                actual.F2.W7.should.be.equal(status.F2.W7);
-                                actual.F2.W8.should.be.equal(status.F2.W8);
-                                actual.F2.W9.should.be.equal(status.F2.W9);
+                return s.updateStatus(update).then(() => {
+                        s.getStatus().then((current) => { 
+
+                                if (update.F1 !== undefined) {
+                                        checkBit(current.F1.W1, update.F1.W1);
+                                        checkBit(current.F1.W2, update.F1.W2);
+                                        checkBit(current.F1.W3, update.F1.W3);
+                                        checkBit(current.F1.W4, update.F1.W4);
+                                        checkBit(current.F1.W5, update.F1.W5);
+                                        checkBit(current.F1.W6, update.F1.W6);
+                                        checkBit(current.F1.W7, update.F1.W7);
+                                }
+
+                                if (update.F2 !== undefined) {
+                                        checkBit(current.F2.W1, update.F2.W1);
+                                        checkBit(current.F2.W2, update.F2.W2);
+                                        checkBit(current.F2.W3, update.F2.W3);
+                                        checkBit(current.F2.W4, update.F2.W4);
+                                        checkBit(current.F2.W5, update.F2.W5);
+                                        checkBit(current.F2.W6, update.F2.W6);
+                                        checkBit(current.F2.W7, update.F2.W7);
+                                        checkBit(current.F2.W8, update.F2.W8);
+                                        checkBit(current.F2.W9, update.F2.W9);
+                                }
                         });
                 })
         }
+
+        it('Can get shutters state', function() {
+                return s.getStatus().then((res) => { console.log(res)});
+        });
 
         it.skip('Can update all', function() {
                 return canSetTo(x5555H);

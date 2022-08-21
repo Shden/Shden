@@ -51,7 +51,7 @@ class HouseState
 
                                 this.updateRequest.config.heating.saunaFloorTemp = 28.0;
 
-                                this.openShutters(1).openShutters(2);
+                                this.homeOpenShutters(1).homeOpenShutters(2).garageOpenShutters();
 
                                 break;
         
@@ -67,7 +67,7 @@ class HouseState
 
                                 this.updateRequest.config.heating.saunaFloorTemp = 5.0;
 
-                                this.allLightsOff().closeShutters(1).closeShutters(2);
+                                this.allLightsOff().homeCloseShutters(1).homeCloseShutters(2).garageCloseShutters();
 
                                 break;
         
@@ -82,7 +82,7 @@ class HouseState
 
                                 this.updateRequest.config.heating.saunaFloorTemp = 20.0;
 
-                                this.allLightsOff().closeShutters(1);
+                                this.allLightsOff().homeCloseShutters(1).garageCloseShutters();
                                 break;
                 }
 
@@ -129,19 +129,31 @@ class HouseState
                 return this;
         }
 
-        closeShutters(floor)
+        homeCloseShutters(floor)
         {
-                this.changeShutters(floor, 0);
+                this.changeHomeShutters(floor, 0);
                 return this;
         }
 
-        openShutters(floor)
+        homeOpenShutters(floor)
         {
-                this.changeShutters(floor, 1);
+                this.changeHomeShutters(floor, 1);
                 return this;
         }
 
-        changeShutters(floor, state)
+        garageCloseShutters()
+        {
+                this.changeGarageShutters(0);
+                return this;
+        }
+
+        garageOpenShutters()
+        {
+                this.changeGarageShutters(0);
+                return this;
+        }
+
+        changeHomeShutters(floor, state)
         {
                 if (floor == 1 || floor == 2)
                 {
@@ -183,7 +195,23 @@ class HouseState
                 }
                 return this;
         }
+
+        changeGarageShutters(state)
+        {
+                if (this.updateRequest.shutters === undefined)
+                        this.updateRequest.shutters = new Object();
+
+                if (this.updateRequest.shutters.Garage === undefined)
+                        this.updateRequest.shutters.Garage = new Object();
+
+                this.updateRequest.shutters.Garage.W1 = state;
+                this.updateRequest.shutters.Garage.W2 = state;
+                this.updateRequest.shutters.Garage.W3 = state;
+
+                return this;
+        }
 };
+
 
 if (typeof exports !== 'undefined')
 {

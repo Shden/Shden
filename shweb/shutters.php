@@ -133,6 +133,27 @@
 						</td>
 					</tr>
 				</tbody>
+				<thead class="table-secondary">
+					<th class="floor">Гараж:</th>
+					<th class="floor">
+						<button type="button" onclick="moveFloor('garage',0);" class="btn btn-dark">Спустить все</button>
+						<button type="button" onclick="moveFloor('garage',1);" class="btn btn-warning">Поднять все</button>
+					</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="where">Дальнее окно:</td>
+						<td><button id="GarageW1" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Среднее окно:</td>
+						<td><button id="GarageW2" class="btn">...</button></td>
+					</tr>
+					<tr>
+						<td class="where">Ближнее окно:</td>
+						<td><button id="GarageW3" class="btn">...</button></td>
+					</tr>
+				</tbody>
 			</table>
 			<div id="spinner" class="spinner">
 		</div>
@@ -193,7 +214,7 @@
 			callAPI(req);
 		}
 
-			function moveFloor(floor, newState)
+		function moveFloor(floor, newState)
 		{
 			let req = { shutters: { }};
 			if (floor == 1)
@@ -220,12 +241,19 @@
 				req.shutters.F2.W8 = newState;
 				req.shutters.F2.W9 = newState;
 			}
+			if (floor == 'garage')
+			{
+				req.shutters.Garage = new Object();
+				req.shutters.Garage.W1 = newState;
+				req.shutters.Garage.W2 = newState;
+				req.shutters.Garage.W3 = newState;
+			}
 			callAPI(req);
 		}
 
 		function moveAll(newState)
 		{
-			let req = { shutters: { F1: {}, F2: {}}};
+			let req = { shutters: { F1: {}, F2: {}, Garage: {}}};
 
 			req.shutters.F1.W1 = newState;
 			req.shutters.F1.W2 = newState;
@@ -244,6 +272,10 @@
 			req.shutters.F2.W7 = newState;
 			req.shutters.F2.W8 = newState;
 			req.shutters.F2.W9 = newState;
+
+			req.shutters.Garage.W1 = newState;
+			req.shutters.Garage.W2 = newState;
+			req.shutters.Garage.W3 = newState;
 
 			callAPI(req);
 		}

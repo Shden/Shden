@@ -149,7 +149,7 @@ class HouseState
 
         garageOpenShutters()
         {
-                this.changeGarageShutters(0);
+                this.changeGarageShutters(1);
                 return this;
         }
 

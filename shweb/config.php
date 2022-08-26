@@ -24,22 +24,60 @@
 			<div class="container col-sm-8">
 				<form>
 					<h2>Настройка теплых полов</h2>
-					<div class="form-group row">
-						<label class="col-sm-6 control-label" for="saunaFloorTemp">
-							Температура теплого пола в сауне:</label>
-						<div class="input-group col-sm-2">
-							<input type="text" class="form-control"
-								id="saunaFloorTemp"
-								format="0.0"
-								style="text-align:right;"/>
-							<div class="input-group-append">
-								<span class="input-group-text" id="basic-addon2">&deg;С</span>
-							</div>
-						</div>
-						<label class="control-label col-sm-3" id="saunaFloorTempAlert">
-							<strong></strong>
-						</label>
-					</div>
+					<table>
+						<tr>
+							<th></th>
+							<th>Присутствие</th>
+							<th>Краткосрочное ожидание</th>
+							<th>Долгосрочное ожидание</th>
+						</tr>
+						<tr>
+							<td>Теплый пол в сауне:</td>
+							<td>
+								<div class="input-group">
+									<input type="text" class="form-control"
+										id="saunaFloorTemp"
+										format="0.0"
+										style="text-align:right;"/>
+									<div class="input-group-append">
+										<span class="input-group-text" id="basic-addon2">&deg;С</span>
+									</div>
+								</div>
+								<label class="control-label col-sm-3" id="saunaFloorTempAlert">
+									<strong></strong>
+								</label>
+							</td>
+							<td>
+								<div class="input-group">
+									<input type="text" class="form-control"
+										id="saunaFloorTempShortStandBy"
+										format="0.0"
+										style="text-align:right;"/>
+									<div class="input-group-append">
+										<span class="input-group-text" id="basic-addon2">&deg;С</span>
+									</div>
+								</div>
+								<label class="control-label col-sm-3" id="saunaFloorTempShortStandByAlert">
+									<strong></strong>
+								</label>
+							</td>
+							<td>
+								<div class="input-group">
+									<input type="text" class="form-control"
+										id="saunaFloorTempLongStandBy"
+										format="0.0"
+										style="text-align:right;"/>
+									<div class="input-group-append">
+										<span class="input-group-text" id="basic-addon2">&deg;С</span>
+									</div>
+								</div>
+								<label class="control-label col-sm-3" id="saunaFloorTempLongStandByAlert">
+									<strong></strong>
+								</label>
+							</td>
+						</tr>
+					</table>
+
 					<div class="form-group row">
 						<label class="col-sm-6 control-label" for="house1FloorTemp">
 							Температура теплых полов в холле первого этажа:</label>

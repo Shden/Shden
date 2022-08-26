@@ -3,6 +3,7 @@ const numeral = require('numeral');
 const pad = require('pad');
 const config = require('./config/API-config.json');
 const houseAPI = require('../houseAPI/shwadeAPI');
+const HouseState = require('../shweb/API/1.2/services/house').HouseState;
 
 const EXIT_OK		= 0;
 const EXIT_FAILURE	= 1;
@@ -42,7 +43,7 @@ let thingAPI = new houseAPI(config.APIOrigin);
 thingAPI.getStatus().then(results => {
 	let saunaFloorTemp = results.oneWireStatus.temperatureSensors.bathroom_1_floor_1;
 	let consumption = results.powerStatus.P.sum;
-	let targetTemp = results.config.heating.saunaFloorTemp;
+	let targetTemp = getSetPoint(results.config);
 
 	printOutKV('Target temperature', numeral(targetTemp).format('0.00'), CELCIUS);
 	printOutKV('Floor temperature', numeral(saunaFloorTemp).format('0.00'), CELCIUS);
@@ -122,3 +123,18 @@ function OnOff(value)
 {
 	return value ? "ON" : "OFF";
 }
+
+function getSetPoint(config)
+{
+	switch (config.modeId)
+	{
+		case HouseState.PRESENCE_MODE:
+			return config.saunaFloorTemp;
+		case HouseState.SHORTTERM_STANDBY:
+			return config.saunaFloorTempShortStandBy;
+		case HouseState.LONGTERM_STANDBY:
+			return config.saunaFloorTempLongStandBy;
+	}
+}
+
+let targetTemp = results.config.heating.saunaFloorTemp;

@@ -129,10 +129,10 @@ function getSetPoint(config)
 	switch (config.modeId)
 	{
 		case HouseState.PRESENCE_MODE:
-			return config.saunaFloorTemp;
+			return config.heating.saunaFloorTemp;
 		case HouseState.SHORTTERM_STANDBY:
-			return config.saunaFloorTempShortStandBy;
+			return config.heating.saunaFloorTempShortStandBy;
 		case HouseState.LONGTERM_STANDBY:
-			return config.saunaFloorTempLongStandBy;
+			return config.heating.saunaFloorTempLongStandBy;
 	}
 }

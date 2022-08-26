@@ -3,7 +3,7 @@ const numeral = require('numeral');
 const pad = require('pad');
 const config = require('./config/API-config.json');
 const houseAPI = require('../houseAPI/shwadeAPI');
-const HouseState = require('../shweb/API/1.2/services/house').HouseState;
+const HouseMode = require('../shweb/API/1.2/services/house').HouseMode;
 
 const EXIT_OK		= 0;
 const EXIT_FAILURE	= 1;
@@ -128,11 +128,11 @@ function getSetPoint(config)
 {
 	switch (config.modeId)
 	{
-		case HouseState.PRESENCE_MODE:
+		case HouseMode.PRESENCE_MODE:
 			return config.heating.saunaFloorTemp;
-		case HouseState.SHORTTERM_STANDBY:
+		case HouseMode.SHORTTERM_STANDBY:
 			return config.heating.saunaFloorTempShortStandBy;
-		case HouseState.LONGTERM_STANDBY:
+		case HouseMode.LONGTERM_STANDBY:
 			return config.heating.saunaFloorTempLongStandBy;
 	}
 }

@@ -136,5 +136,3 @@ function getSetPoint(config)
 			return config.saunaFloorTempLongStandBy;
 	}
 }
-
-let targetTemp = results.config.heating.saunaFloorTemp;

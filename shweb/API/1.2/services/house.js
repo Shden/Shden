@@ -49,8 +49,6 @@ class HouseState
                                 this.updateRequest.oneWireStatus.switches.ultrasonicSwitch = 0;
                                 this.updateRequest.oneWireStatus.switches.mainsSwitch = 1;
 
-                                this.updateRequest.config.heating.saunaFloorTemp = 28.0;
-
                                 this.homeOpenShutters(1).homeOpenShutters(2).garageOpenShutters();
 
                                 break;
@@ -65,8 +63,6 @@ class HouseState
                                 this.updateRequest.oneWireStatus.switches.mainsSwitch = 0;
                                 this.updateRequest.oneWireStatus.switches.fenceLight = 0;
 
-                                this.updateRequest.config.heating.saunaFloorTemp = 5.0;
-
                                 this.allLightsOff().homeCloseShutters(1).homeCloseShutters(2).garageCloseShutters();
 
                                 break;
@@ -79,8 +75,6 @@ class HouseState
                                 this.updateRequest.oneWireStatus.switches.streetLight250 = 0;
                                 this.updateRequest.oneWireStatus.switches.ultrasonicSwitch = 1;
                                 this.updateRequest.oneWireStatus.switches.mainsSwitch = 1;
-
-                                this.updateRequest.config.heating.saunaFloorTemp = 20.0;
 
                                 this.allLightsOff().homeCloseShutters(1).garageCloseShutters();
                                 break;

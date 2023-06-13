@@ -88,8 +88,9 @@
 			<div id="chart"></div>
 		</div>
 		<div class="page-header">
-			<a href="temperature.php">В доме:</a> <span id="inside" class="temp-big">--.--</span>
-			<a href="temperature.php">На улице:</a> <span id="outside" class="temp-big">--.--</span>
+			В доме: <span id="inside" class="temp-big">--.--</span>
+			На улице: <span id="outside" class="temp-big">--.--</span>
+			<a href="temperature.php">Панель мониторинга</a>
 		</div>
 	</div>
 	<div id="spinner" class="spinner"></div>

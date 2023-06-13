@@ -43,6 +43,15 @@
 						<a class="dropdown-item" href="power-monitor.php">Монитор</a>
 					</div>
 				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Полив
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="watering-dashboard.php">Монитор системы полива</a>
+						<a class="dropdown-item" href="https://app.hydrawise.com/config/dashboard">Hydrawise</a>
+					</div>
+				</li>			
 			</ul>
 		</div>
 	</div>

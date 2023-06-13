@@ -90,6 +90,8 @@
 		<div class="page-header">
 			В доме: <span id="inside" class="temp-big">--.--</span>
 			На улице: <span id="outside" class="temp-big">--.--</span>
+		</div>
+		<div>
 			<a href="temperature.php">Панель мониторинга</a>
 		</div>
 	</div>

@@ -1,12 +1,13 @@
 # copy this file to /lib/systemd/system/
 # note: check all directores layout first!
+# also please make sure houseAPI/shwade-thing.service.d/restart.conf drop-in is copied to the subdirectory
+# in order to restart the service endlessly in case of failure
 
 [Unit]
 Description=ShWade Thing Service
 After=network-online.target
 
 [Service]
-Restart=on-failure
 WorkingDirectory=/home/den/Shden/houseAPI
 ExecStart=/usr/bin/node shwade-thing.js
 

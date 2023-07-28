@@ -21,7 +21,7 @@
 				class="embed-responsive-item" 
 				width="100%" height="760"
 				allowfullscreen 
-				src="https://ec2-18-184-115-169.eu-central-1.compute.amazonaws.com/grafana/d/X8fZOHLMk/panel-monitoringa?orgId=1&refresh=1h&viewPanel=4">
+				src="https://3.123.61.187/grafana/d/X8fZOHLMk/panel-monitoringa?orgId=1&refresh=1h&viewPanel=4">
 			</iframe>
 		</div>
 	</div>

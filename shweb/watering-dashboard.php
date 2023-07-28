@@ -21,7 +21,7 @@
 				class="embed-responsive-item" 
 				width="100%" height="760"
 				allowfullscreen 
-				src="https://ec2-3-68-66-142.eu-central-1.compute.amazonaws.com/grafana/d/-1W4-rlVz/poliv?orgId=1&from=now-12h&to=now">
+				src="https://3.123.61.187/grafana/d/-1W4-rlVz/poliv?orgId=1&from=now-12h&to=now">
 			</iframe>
 		</div>
 	</div>

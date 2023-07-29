@@ -33,7 +33,7 @@ function persistHeatingData(dbConnectionPool, dataPoint)
         return new Promise((resolved, rejected) => {
                 dbConnectionPool.getConnection().then(dbConnection => {
                         dbConnectionPool.query(
-                                "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
+                                "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
                                 [
                                                                                                         // SP_ADD_HEATING_RECORD params:
                                         null,                                                           // 1 - heater (not used)
@@ -46,11 +46,7 @@ function persistHeatingData(dbConnectionPool, dataPoint)
                                         dataPoint.oneWireStatus.temperatureSensors.child_bedroom,       // 8 - child_bedroom
                                         dataPoint.oneWireStatus.temperatureSensors.kitchen,             // 9 - kitchen
                                         dataPoint.oneWireStatus.temperatureSensors.sauna_ceiling,       // 10 - bathroom_1
-                                        dataPoint.oneWireStatus.temperatureSensors.bathroom_1_floor_1,  // 11 - bathroom_1_floor
-                                        null,                                                           // 12 - control (not used)
-                                        dataPoint.ESP.hall_floor_1,                                     // 13 - 1st segment to windows
-                                        dataPoint.ESP.hall_floor_1,                                     // 14 - 2nd segment in the middle
-                                        dataPoint.ESP.hall_floor_1                                      // 15 - 3rd small segment
+                                        dataPoint.oneWireStatus.temperatureSensors.bathroom_1_floor_1   // 11 - bathroom_1_floor
                                 ]
                         ).then(() => {
                                 dbConnection.end();

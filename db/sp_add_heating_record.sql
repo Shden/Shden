@@ -14,22 +14,16 @@ CREATE PROCEDURE SP_ADD_HEATING_RECORD(
 	child_bedroom		DECIMAL(5,2),	-- 8 kids bedroom temperature
 	kitchen			DECIMAL(5,2),	-- 9 kitchen temperature
 	bathroom_1		DECIMAL(5,2),	-- 10 sauna temperature
-	bathroom_1_floor	DECIMAL(5,2),	-- 11 sauna floor temperature
-	control			DECIMAL(5,2),	-- 12 control temperature
-	hall_floor_1		DECIMAL(5,2),	-- 13 1st segment to windows
-	hall_floor_2		DECIMAL(5,2),	-- 14 2nd segment in the middle
-	hall_floor_3		DECIMAL(5,2)	-- 15 3rd small segment
+	bathroom_1_floor	DECIMAL(5,2)	-- 11 sauna floor temperature
 )
 BEGIN
 	INSERT INTO heating
 	(time, heater, fluid_in, fluid_out, external,
 	am_bedroom, bedroom, cabinet, sasha_bedroom,
-	kitchen, bathroom, sauna_floor, control,
-	hall_floor_1, hall_floor_2, hall_floor_3)
+	kitchen, bathroom, sauna_floor, control)
 	VALUES (NOW(),
 	heater, fluid_in, fluid_out, external,
 	am_bedroom, bedroom, cabinet, child_bedroom,
-	kitchen, bathroom_1, bathroom_1_floor, control,
-	hall_floor_1, hall_floor_2, hall_floor_3);
+	kitchen, bathroom_1, bathroom_1_floor, control);
 END//
 DELIMITER ;

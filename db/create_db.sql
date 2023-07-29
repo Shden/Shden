@@ -10,11 +10,7 @@ CREATE TABLE IF NOT EXISTS heating (
 	sasha_bedroom 	DECIMAL(5,2),
 	kitchen 	DECIMAL(5,2),
 	bathroom 	DECIMAL(5,2),
-	control 	DECIMAL(5,2),
-	sauna_floor	DECIMAL(5,2),
-	hall_floor_1	DECIMAL(5,2),	/* 1st segment to windows */
-	hall_floor_2	DECIMAL(5,2),	/* 2nd segment in the middle */
-	hall_floor_3	DECIMAL(5,2)	/* 3rd small segment */
+	sauna_floor	DECIMAL(5,2)
 	PRIMARY KEY(time));
 
 CREATE TABLE IF NOT EXISTS tariff (

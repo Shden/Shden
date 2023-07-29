@@ -20,10 +20,10 @@ BEGIN
 	INSERT INTO heating
 	(time, heater, fluid_in, fluid_out, external,
 	am_bedroom, bedroom, cabinet, sasha_bedroom,
-	kitchen, bathroom, sauna_floor, control)
+	kitchen, bathroom, sauna_floor)
 	VALUES (NOW(),
 	heater, fluid_in, fluid_out, external,
 	am_bedroom, bedroom, cabinet, child_bedroom,
-	kitchen, bathroom_1, bathroom_1_floor, control);
+	kitchen, bathroom_1, bathroom_1_floor);
 END//
 DELIMITER ;

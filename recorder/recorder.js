@@ -17,7 +17,8 @@ setInterval(() => {
                 Promise.all([
                         persistHeatingData(DBConnectionPool, dataPoint),
                         persistHumidityData(DBConnectionPool, dataPoint.oneWireStatus),
-                        persistPowerData(DBConnectionPool, dataPoint.powerStatus)
+                        persistPowerData(DBConnectionPool, dataPoint.powerStatus),
+                        persistNetworkData(DBConnectionPool, dataPoint)
                 ])
                 .then(() => {
                         console.info('updated.');
@@ -27,6 +28,7 @@ setInterval(() => {
                 })
         })
 }, config.RecordingIntervalSec * 1000);
+
 
 function persistHeatingData(dbConnectionPool, dataPoint)
 {
@@ -119,12 +121,38 @@ function persistPowerData(dbConnectionPool, dataPoint)
         });
 }
 
+function persistNetworkData(dbConnectionPool, dataPoint)
+{
+        return new Promise((resolved, rejected) => {
+                dbConnectionPool.getConnection().then(dbConnection => {
+                        dbConnectionPool.query(
+                                "CALL SP_ADD_NETWORK_RECORD(?, ?, ?, ?);", 
+                                [
+                                        dataPoint.network.ping.google,
+                                        dataPoint.network.ping.yandex,
+                                        dataPoint.network.ping.EC2.SHWADE,
+                                        dataPoint.network.ping.EC2.VPN
+                                ]
+                        ).then(() => {
+                                dbConnection.end();
+                                resolved();              
+                        }).catch(err => {
+                                //handle error
+                                console.log(err); 
+                                dbConnection.end();
+                                rejected(err);
+                        });
+                });
+        });       
+}
+
 if (typeof exports !== 'undefined')
 {
         // check methods
         exports.persistHeatingData = persistHeatingData;
         exports.persistPowerData = persistPowerData;
         exports.persistHumidityData = persistHumidityData;
+        exports.persistNetworkData = persistNetworkData;
 
         // check properties for testing
         exports.thingAPI = thingAPI;

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS heating (
 	sasha_bedroom 	DECIMAL(5,2),
 	kitchen 	DECIMAL(5,2),
 	bathroom 	DECIMAL(5,2),
-	sauna_floor	DECIMAL(5,2)
+	sauna_floor	DECIMAL(5,2),
 	PRIMARY KEY(time));
 
 CREATE TABLE IF NOT EXISTS tariff (
@@ -45,7 +45,15 @@ CREATE TABLE IF NOT EXISTS power (
 	S2		DECIMAL(7,2),
 	S3		DECIMAL(7,2),
 	SS		DECIMAL(7,2),
-	mainsstatus	TINYINT
+	mainsstatus	TINYINT,
+	PRIMARY KEY(time));
+
+CREATE TABLE IF NOT EXISTS network (
+	time		DATETIME,
+	google		INT,
+	yandex		INT,
+	SHWADE		INT,
+	VPN		INT,
 	PRIMARY KEY(time));
 
 /* Create DB users and grant access */

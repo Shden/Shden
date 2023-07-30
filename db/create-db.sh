@@ -9,3 +9,4 @@ mysql -u root -p -D SHDEN < sp_heating_consumption.sql
 mysql -u root -p -D SHDEN < sp_add_heating_record.sql
 mysql -u root -p -D SHDEN < sp_add_humidity_record.sql
 mysql -u root -p -D SHDEN < sp_add_power_record.sql
+mysql -u root -p -D SHDEN < sp_add_network_record.sql

@@ -18,7 +18,7 @@ setInterval(() => {
                         persistHeatingData(DBConnectionPool, dataPoint),
                         persistHumidityData(DBConnectionPool, dataPoint.oneWireStatus),
                         persistPowerData(DBConnectionPool, dataPoint.powerStatus),
-                        persistNetworkData(DBConnectionPool, dataPoint)
+                        persistNetworkData(DBConnectionPool, dataPoint.network)
                 ])
                 .then(() => {
                         console.info('updated.');
@@ -128,10 +128,10 @@ function persistNetworkData(dbConnectionPool, dataPoint)
                         dbConnectionPool.query(
                                 "CALL SP_ADD_NETWORK_RECORD(?, ?, ?, ?);", 
                                 [
-                                        dataPoint.network.ping.google,
-                                        dataPoint.network.ping.yandex,
-                                        dataPoint.network.ping.EC2.SHWADE,
-                                        dataPoint.network.ping.EC2.VPN
+                                        dataPoint.ping.google,
+                                        dataPoint.ping.yandex,
+                                        dataPoint.ping.EC2.SHWADE,
+                                        dataPoint.ping.EC2.VPN
                                 ]
                         ).then(() => {
                                 dbConnection.end();

@@ -49,7 +49,7 @@ describe('Recorder tests', function() {
 
                 it('persistNetworkData() check', function(done) {
                         R.thingAPI.getStatus().then(dataPoint => {
-                                R.persistNetworkData(R.DBConnectionPool, dataPoint.powerStatus).then(() => {
+                                R.persistNetworkData(R.DBConnectionPool, dataPoint.network).then(() => {
                                         done();
                                 })
                         });

@@ -29,6 +29,11 @@ setInterval(() => {
         })
 }, config.RecordingIntervalSec * 1000);
 
+// replace undefied with null, ohter values not changed
+function U2N(value)
+{
+        return (value === undefined) ? null : value;
+}
 
 function persistHeatingData(dbConnectionPool, dataPoint)
 {
@@ -37,18 +42,18 @@ function persistHeatingData(dbConnectionPool, dataPoint)
                         dbConnectionPool.query(
                                 "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
                                 [
-                                                                                                        // SP_ADD_HEATING_RECORD params:
-                                        null,                                                           // 1 - heater (not used)
-                                        dataPoint.oneWireStatus.temperatureSensors.fluid_in,            // 2 - fluid_in
-                                        dataPoint.oneWireStatus.temperatureSensors.fluid_out,           // 3 - fluid_out
-                                        dataPoint.oneWireStatus.temperatureSensors.outsideTemp,         // 4 - external
-                                        dataPoint.oneWireStatus.temperatureSensors.am_bedroom,          // 5 - am_bedroom
-                                        dataPoint.oneWireStatus.temperatureSensors.bedroom,             // 6 - bedroom
-                                        dataPoint.zigbee.temperatureSensors.cabinet,                    // 7 - cabinet
-                                        dataPoint.oneWireStatus.temperatureSensors.child_bedroom,       // 8 - child_bedroom
-                                        dataPoint.oneWireStatus.temperatureSensors.kitchen,             // 9 - kitchen
-                                        dataPoint.oneWireStatus.temperatureSensors.sauna_ceiling,       // 10 - bathroom_1
-                                        dataPoint.oneWireStatus.temperatureSensors.bathroom_1_floor_1   // 11 - bathroom_1_floor
+                                                                                                                // SP_ADD_HEATING_RECORD params:
+                                        null,                                                                   // 1 - heater (not used)
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.fluid_in),               // 2 - fluid_in
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.fluid_out),              // 3 - fluid_out
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.outsideTemp),            // 4 - external
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.am_bedroom),             // 5 - am_bedroom
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.bedroom),                // 6 - bedroom
+                                        U2N(dataPoint.zigbee.temperatureSensors.cabinet),                       // 7 - cabinet
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.child_bedroom),          // 8 - child_bedroom
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.kitchen),                // 9 - kitchen
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.sauna_ceiling),          // 10 - bathroom_1
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.bathroom_1_floor_1)      // 11 - bathroom_1_floor
                                 ]
                         ).then(() => {
                                 dbConnection.end();

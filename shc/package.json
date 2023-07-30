@@ -7,6 +7,7 @@
     "test": "test"
   },
   "dependencies": {
+    "hydrawise-api": "^1.2.1",
     "numeral": "^1.5.3",
     "pad": "^1.0.2",
     "should": "^11.1.0"

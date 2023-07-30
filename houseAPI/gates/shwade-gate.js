@@ -2,7 +2,6 @@
  *      - onewire-gate
  *      - config-gate
  *      - mercury236-gate
- *      - esp8266-gate
  *      - shutters-gate
  *      - zigbee-gate
  *      - mapmicroart-gate
@@ -12,7 +11,6 @@ const owg = require('./onewire-gate');
 const cfg = require('./config-gate');
 const mercury236 = require('../gates/mercury236-gate');
 const shutters = require('./shutters-gate');
-const esp = require('./esp-gate');
 const zigbee = require('./zigbee-gate');
 const microart = require('./mapmicroart-gate');
 const network = require('./network-gate');
@@ -31,7 +29,6 @@ async function getStatus()
                         mercury236.getStatus(),
                         cfg.getConfig(),
                         shutters.getStatus(),
-                        esp.getState(),
                         zigbee.getStatus(),
                         microart.getStatus(),
                         network.getStatus()
@@ -41,10 +38,9 @@ async function getStatus()
                         ShWadeStatus.powerStatus = responces[1];
                         ShWadeStatus.config = responces[2];
                         ShWadeStatus.shutters = responces[3]; 
-                        ShWadeStatus.ESP = responces[4];
-                        ShWadeStatus.zigbee = responces[5];
-                        ShWadeStatus.map = responces[6];
-                        ShWadeStatus.network = responces[7];
+                        ShWadeStatus.zigbee = responces[4];
+                        ShWadeStatus.map = responces[5];
+                        ShWadeStatus.network = responces[6];
                         resolved(ShWadeStatus);
                 });
         });
@@ -61,8 +57,6 @@ async function updateStatus(newStatus)
                 await cfg.updateConfig(newStatus.config);
         if (newStatus.shutters != null)
                 await shutters.updateStatus(newStatus.shutters);
-        if (newStatus.ESP != null)
-                await esp.updateCachedState(newStatus.ESP);
         if (newStatus.zigbee != null)
                 await zigbee.updateStatus(newStatus.zigbee);
 

@@ -90,22 +90,6 @@ ShWadeThing
                                 ShWadeThing.publish('$aws/things/ShWade/shadow/update', reportingBack);
                         })
                 };
-
-                // -- update message => thing was updated
-                if (topic == '$aws/things/ShWade/shadow/update')
-                {
-                        let update = JSON.parse(payload);
-                        if (update.state.reported != null && update.state.reported.ESP != null)
-                        {
-                                // we only interested in ESP updates 
-                                let espUpdate = { ESP: update.state.reported.ESP };
-                                        console.log('Thing update received:', JSON.stringify(espUpdate));
-                                ShWadeGate.updateStatus(espUpdate).then((updatedStatus) => {
-                                        // update cache
-                                        thingCache = updatedStatus;
-                                });
-                        }
-                }
          });
 
 // this reports IoT thing state each config.AWSShadowUpdateInteral milliseconds to update AWS shadow.

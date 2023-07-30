@@ -7,7 +7,6 @@
     "test": "test"
   },
   "dependencies": {
-    "net-ping": "^1.2.3",
     "numeral": "^1.5.3",
     "pad": "^1.0.2",
     "should": "^11.1.0"

@@ -15,6 +15,7 @@ const shutters = require('./shutters-gate');
 const esp = require('./esp-gate');
 const zigbee = require('./zigbee-gate');
 const microart = require('./mapmicroart-gate');
+const network = require('./network-gate');
 const { response } = require('express');
 
 async function getStatus()
@@ -32,7 +33,8 @@ async function getStatus()
                         shutters.getStatus(),
                         esp.getState(),
                         zigbee.getStatus(),
-                        microart.getStatus()
+                        microart.getStatus(),
+                        network.getStatus()
                 ]).then(responces => {
                         var ShWadeStatus = new Object();
                         ShWadeStatus.oneWireStatus = responces[0];
@@ -42,6 +44,7 @@ async function getStatus()
                         ShWadeStatus.ESP = responces[4];
                         ShWadeStatus.zigbee = responces[5];
                         ShWadeStatus.map = responces[6];
+                        ShWadeStatus.network = responces[7];
                         resolved(ShWadeStatus);
                 });
         });

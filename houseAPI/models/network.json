@@ -1,0 +1,10 @@
+{
+        "ping" : {
+                "google" : 0,
+                "yandex" : 0,
+                "EC2" : {
+                        "SHWADE" : 0,
+                        "VPN" : 0
+                }
+        }
+}

@@ -63,6 +63,7 @@ var ShWadeThing = awsIot.device({
 
 ShWadeThing
         .on('connect', function() {
+                console.log('Connected.');
                 ShWadeThing.subscribe('$aws/things/ShWade/shadow/update/delta');
                 ShWadeThing.subscribe('$aws/things/ShWade/shadow/update');
         });

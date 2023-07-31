@@ -47,7 +47,7 @@ async function pingHost(hostIP)
         return new Promise((resolved, rejected) => {
                 session.pingHost(hostIP, function (error, target, sent, received) {         
                     if (error)
-                        resolved(null);
+                        resolved(-1);
                     else
                         resolved(received - sent);
                 });

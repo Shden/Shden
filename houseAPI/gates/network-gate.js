@@ -6,7 +6,17 @@ const SHWADE2 = '3.74.4.26';            // EC2 instance where web server runs
 const VPN_PPTP = '3.78.173.59';         // VPN EC2 instance
 // const deadIP = '192.168.10.100';
 
-let session = ping.createSession();
+
+var pingOptions = {
+        networkProtocol: ping.NetworkProtocol.IPv4,     // default
+        packetSize: 16,                                 // default
+        retries: 0,                                     // default is 1
+        sessionId: (process.pid % 65535),               // default
+        timeout: 2000,                                  // default
+        ttl: 128                                        // default
+};
+
+let session = ping.createSession(pingOptions);
 
 // Creates REST object representing current network status
 async function getStatus()
@@ -35,7 +45,7 @@ async function getStatus()
 async function pingHost(hostIP)
 {
         return new Promise((resolved, rejected) => {
-                session.pingHost (hostIP, function (error, target, sent, received) {         
+                session.pingHost(hostIP, function (error, target, sent, received) {         
                     if (error)
                         resolved(null);
                     else

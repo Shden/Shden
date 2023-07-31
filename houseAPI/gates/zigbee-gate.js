@@ -13,7 +13,7 @@ const temperatureSensors = new Object();
 
 mqttClient.on('connect', () => 
 {
-        console.log('Connected!');
+        console.log('Connected to zigbee mqtt broker:', config.mqtt);
 
         // -- switches subscriptions:
         for (var switchAlias in config.devices.switches)

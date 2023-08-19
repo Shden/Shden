@@ -43,8 +43,8 @@ const switches = {
 	streetLight250		: { "address" : "3A.B8380D000000", "channel" : "PIO.A" },	// уличный фонарь
 	ultrasonicSwitch	: { "address" : "3A.C19703000000", "channel" : "PIO.B" },	// ключ ультразвук от грызунов
 	
-	childrenSmallSwitch    	: { "address" : "3A.CB9703000000", "channel" : "PIO.A" }	// не используется
-	
+	childrenSmallSwitch    	: { "address" : "3A.CB9703000000", "channel" : "PIO.A" },	// не используется
+	heatingPressureValve	: { "address" : "3A.3E9403000000", "channel" : "PIO.A" }	// клапан подкачки воды в систему отопления
 };
 
 // Creates stubnet with all sensor and switches if not yet created.

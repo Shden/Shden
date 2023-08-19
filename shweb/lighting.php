@@ -210,6 +210,18 @@
 						<td><button id="garageAwningLight" class="btn btn-lg">...</button></td>
 					</tr>
 				</tbody>
+				<thead class="table-secondary">
+					<th class="floor">Переключатели:</th>
+					<th class="floor">
+						<button type="button" onclick="notimplementedyet();" class="btn btn-secondary">Выключить все</button>
+					</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Клапан подкачки воды в систему отопления:</td>
+						<td><button id="heatingPressureValve" class="btn btn-lg">...</button></td>
+					</tr>
+				</tbody>
 			</table>
 			<div id="spinner" class="spinner">
 		</div>

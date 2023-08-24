@@ -5,7 +5,7 @@ const { log } = require('console');
 // Creates REST object representing all shutters states
 async function getStatus()
 {
-        let houseBitask = await getKinconyRelays(
+        let houseBitmask = await getKinconyRelays(
                 config.houseShuttersController.port, config.houseShuttersController.host);
 
         let garageBitmask = await getKinconyRelays(
@@ -13,23 +13,23 @@ async function getStatus()
 
         var status = require('../models/shutters.json');
 
-        status.F1.W1 = houseBitask & Number('0b0000000000000001');
-        status.F1.W2 = (houseBitask & Number('0b0000000000000010')) >> 1;
-        status.F1.W3 = (houseBitask & Number('0b0000000000000100')) >> 2;
-        status.F1.W4 = (houseBitask & Number('0b0000000000001000')) >> 3;
-        status.F1.W5 = (houseBitask & Number('0b0000000000010000')) >> 4;
-        status.F1.W6 = (houseBitask & Number('0b0000000000100000')) >> 5;
-        status.F1.W7 = (houseBitask & Number('0b0000000001000000')) >> 6;
+        status.F1.W1 = houseBitmask & Number('0b0000000000000001');
+        status.F1.W2 = (houseBitmask & Number('0b0000000000000010')) >> 1;
+        status.F1.W3 = (houseBitmask & Number('0b0000000000000100')) >> 2;
+        status.F1.W4 = (houseBitmask & Number('0b0000000000001000')) >> 3;
+        status.F1.W5 = (houseBitmask & Number('0b0000000000010000')) >> 4;
+        status.F1.W6 = (houseBitmask & Number('0b0000000000100000')) >> 5;
+        status.F1.W7 = (houseBitmask & Number('0b0000000001000000')) >> 6;
 
-        status.F2.W1 = (houseBitask & Number('0b0000000010000000')) >> 7;
-        status.F2.W2 = (houseBitask & Number('0b0000000100000000')) >> 8;
-        status.F2.W3 = (houseBitask & Number('0b0000001000000000')) >> 9;
-        status.F2.W4 = (houseBitask & Number('0b0000010000000000')) >> 10;
-        status.F2.W5 = (houseBitask & Number('0b0000100000000000')) >> 11;
-        status.F2.W6 = (houseBitask & Number('0b0001000000000000')) >> 12;
-        status.F2.W7 = (houseBitask & Number('0b0010000000000000')) >> 13;
-        status.F2.W8 = (houseBitask & Number('0b0100000000000000')) >> 14;
-        status.F2.W9 = (houseBitask & Number('0b1000000000000000')) >> 15;
+        status.F2.W1 = (houseBitmask & Number('0b0000000010000000')) >> 7;
+        status.F2.W2 = (houseBitmask & Number('0b0000000100000000')) >> 8;
+        status.F2.W3 = (houseBitmask & Number('0b0000001000000000')) >> 9;
+        status.F2.W4 = (houseBitmask & Number('0b0000010000000000')) >> 10;
+        status.F2.W5 = (houseBitmask & Number('0b0000100000000000')) >> 11;
+        status.F2.W6 = (houseBitmask & Number('0b0001000000000000')) >> 12;
+        status.F2.W7 = (houseBitmask & Number('0b0010000000000000')) >> 13;
+        status.F2.W8 = (houseBitmask & Number('0b0100000000000000')) >> 14;
+        status.F2.W9 = (houseBitmask & Number('0b1000000000000000')) >> 15;
 
         status.Garage.W1 = garageBitmask & Number('0b0000000000000001');           // Window 1: SW1 (1)
         status.Garage.W2 = (garageBitmask & Number('0b0000000000000100')) >> 2;    // Window 2: SW3 (3)

@@ -1,4 +1,4 @@
-const s = require('../gates/shutters-gate');
+const s = require('../gates/kincony-relays-gate');
 const should = require('should');
 
 describe('Shutters gate tests:', function() {

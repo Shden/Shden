@@ -7,14 +7,14 @@ let houseAPI = new ShWadeAPI(config.houseAPIorigin);
 async function GetShuttersState() 
 {
         let houseStatus = await houseAPI.getStatus();
-        return houseStatus.shutters;
+        return houseStatus.kinconyRelays.Shutters;
 }
 
 // Update shutters state
 async function UpdateShuttersState(shuttersUpdate)
 {
         let houseStatus = await houseAPI.updateStatus(shuttersUpdate);
-        return houseStatus.shutters;
+        return houseStatus.kinconyRelays.Shutters;
 }
 
 if (typeof exports !== 'undefined')

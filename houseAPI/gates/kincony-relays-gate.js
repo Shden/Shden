@@ -1,17 +1,17 @@
-const config = require('../config/shutters-config.json');
+const config = require('../config/kincony-relays-config.json');
 const net = require('net');
 const { log } = require('console');
 
-// Creates REST object representing all shutters states
+// Creates REST object representing all kincony relya states
 async function getStatus()
 {
         let houseBitmask = await getKinconyRelays(
                 config.houseShuttersController.port, config.houseShuttersController.host);
 
         let garageBitmask = await getKinconyRelays(
-                config.garageShuttersController.port, config.garageShuttersController.host);
+                config.garageController.port, config.garageController.host);
 
-        var status = require('../models/shutters.json');
+        var status = require('../models/kincony-relays.json');
 
         status.F1.W1 = houseBitmask & Number('0b0000000000000001');
         status.F1.W2 = (houseBitmask & Number('0b0000000000000010')) >> 1;
@@ -38,7 +38,7 @@ async function getStatus()
         return status;
 }
 
-// Updates shutters states to the requested new state.
+// Updates kincony relay states to the requested new state.
 // status Update may have a subset of items
 async function updateStatus(statusUpdate)
 {
@@ -102,7 +102,7 @@ async function updateStatus(statusUpdate)
 
         return Promise.all([
                 setKinconyRelays(config.houseShuttersController.port, config.houseShuttersController.host, houseBitmask),
-                setKinconyRelays(config.garageShuttersController.port, config.garageShuttersController.host, garageBitmask)
+                setKinconyRelays(config.garageController.port, config.garageController.host, garageBitmask)
         ]);
 }
 

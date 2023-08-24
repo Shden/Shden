@@ -2,7 +2,7 @@
  *      - onewire-gate
  *      - config-gate
  *      - mercury236-gate
- *      - shutters-gate
+ *      - kincony-relays-gate
  *      - zigbee-gate
  *      - mapmicroart-gate
  *      - etc.
@@ -10,7 +10,7 @@
 const owg = require('./onewire-gate');
 const cfg = require('./config-gate');
 const mercury236 = require('../gates/mercury236-gate');
-const shutters = require('./shutters-gate');
+const kinconyRelays = require('./kincony-relays-gate');
 const zigbee = require('./zigbee-gate');
 const microart = require('./mapmicroart-gate');
 const network = require('./network-gate');
@@ -28,7 +28,7 @@ async function getStatus()
                         owg.getStatus(),
                         mercury236.getStatus(),
                         cfg.getConfig(),
-                        shutters.getStatus(),
+                        kinconyRelays.getStatus(),
                         zigbee.getStatus(),
                         microart.getStatus(),
                         network.getStatus()
@@ -37,7 +37,7 @@ async function getStatus()
                         ShWadeStatus.oneWireStatus = responces[0];
                         ShWadeStatus.powerStatus = responces[1];
                         ShWadeStatus.config = responces[2];
-                        ShWadeStatus.shutters = responces[3]; 
+                        ShWadeStatus.kinconyRelays = responces[3]; 
                         ShWadeStatus.zigbee = responces[4];
                         ShWadeStatus.map = responces[5];
                         ShWadeStatus.network = responces[6];
@@ -55,8 +55,8 @@ async function updateStatus(newStatus)
                 await owg.updateStatus(newStatus.oneWireStatus);
         if (newStatus.config != null)
                 await cfg.updateConfig(newStatus.config);
-        if (newStatus.shutters != null)
-                await shutters.updateStatus(newStatus.shutters);
+        if (newStatus.kinconyRelays != null)
+                await kinconyRelays.updateStatus(newStatus.kinconyRelays);
         if (newStatus.zigbee != null)
                 await zigbee.updateStatus(newStatus.zigbee);
 

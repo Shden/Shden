@@ -1,0 +1,62 @@
+const express = require('express');
+const router = express.Router();
+const Relays = require('../services/relays');
+const HTTPStatus = require('http-status-codes').StatusCodes;
+
+/**
+ *	Return complete relays state information.
+ *
+ *	GET /State
+ */
+router.get('/State', async function(req, res) {
+
+        let shuttersStatus = await Relays.GetRelaysState();
+        res.json(shuttersStatus);
+});
+
+/**
+ *	Return shutters state information.
+ *
+ *	GET /State/Shutters
+ */
+ router.get('/State/Shutters', async function(req, res) {
+
+        let shuttersStatus = await Relays.GetShuttersState();
+        res.json(shuttersStatus);
+});
+
+/**
+ *	Update relays state.
+ *
+ *	PUT /State
+ */
+router.put('/State', async function(req, res) {
+
+        let stateUpdate = req.body;
+        if (stateUpdate.shutters === undefined) 
+        {
+                res.status(HTTPStatus.BAD_REQUEST).send('Invalid state requested.');
+                return;
+        }
+
+        res.json(await Relays.UpdateRelaysState(stateUpdate));
+});
+
+/**
+ *	Update shutters state.
+ *
+ *	PUT /State/Shutters
+ */
+ router.put('/State/Shutters', async function(req, res) {
+
+        let stateUpdate = req.body;
+        if (stateUpdate.shutters === undefined) 
+        {
+                res.status(HTTPStatus.BAD_REQUEST).send('Invalid state requested.');
+                return;
+        }
+
+        res.json(await Relays.UpdateShuttersState(stateUpdate));
+});
+
+module.exports = router;

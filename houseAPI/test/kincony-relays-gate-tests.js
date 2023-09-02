@@ -4,18 +4,30 @@ const should = require('should');
 describe('Shutters gate tests:', function() {
 
         let x5555H = {
-                F1: { W1: 0, W2: 1, W3: 0, W4: 1, W5: 0, W6: 1, W7: 0 },
-                F2: { W1: 1, W2: 0, W3: 1, W4: 0, W5: 1, W6: 0, W7: 1, W8: 0, W9: 1 }
-              };
+            Shutters : {
+                House : {
+                    F1: { W1: 0, W2: 1, W3: 0, W4: 1, W5: 0, W6: 1, W7: 0 },
+                    F2: { W1: 1, W2: 0, W3: 1, W4: 0, W5: 1, W6: 0, W7: 1, W8: 0, W9: 1 }
+                }
+            }
+        };
         
         let xAAAAH = {
-                F1: { W1: 1, W2: 0, W3: 1, W4: 0, W5: 1, W6: 0, W7: 1 },
-                F2: { W1: 0, W2: 1, W3: 0, W4: 1, W5: 0, W6: 1, W7: 0, W8: 1, W9: 0 }
-              };
+            Shutters : {
+                House : {
+                    F1: { W1: 1, W2: 0, W3: 1, W4: 0, W5: 1, W6: 0, W7: 1 },
+                    F2: { W1: 0, W2: 1, W3: 0, W4: 1, W5: 0, W6: 1, W7: 0, W8: 1, W9: 0 }
+                }
+            }
+        };
 
         let partialUpdate = {
-                F2: { W5: 1},
-                Garage: { W1: 1, W2: 1, W3: 1}
+            Shutters : {
+                House : {
+                    F2: { W5: 1 }
+                },
+                Garage: { W1: 1, W2: 1, W3: 1 }
+            }
         };
 
         // it('test', function() {

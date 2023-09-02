@@ -45,70 +45,70 @@ async function updateStatus(statusUpdate)
 {
         // combine all items from current and updated (as setKinconyRelays() needs all bits)
         let newStatus = await getStatus();
-        if (statusUpdate.House !== undefined && statusUpdate.House.Shutters !== undefined) {
+        if (statusUpdate.Shutters !== undefined && statusUpdate.Shutters.House !== undefined) {
 
-                if (statusUpdate.House.Shutters.F1 !== undefined)
-                        newStatus.House.Shutters.F1 = { ...newStatus.House.Shutters.F1, ...statusUpdate.House.Shutters.F1 };
+                if (statusUpdate.Shutters.House.F1 !== undefined)
+                        newStatus.Shutters.House.F1 = { ...newStatus.Shutters.House.F1, ...statusUpdate.Shutters.House.F1 };
 
-                if (statusUpdate.House.Shutters.F2 !== undefined)
-                        newStatus.House.Shutters.F2 = { ...newStatus.House.Shutters.F2, ...statusUpdate.House.Shutters.F2 };
+                if (statusUpdate.Shutters.House.F2 !== undefined)
+                        newStatus.Shutters.House.F2 = { ...newStatus.Shutters.House.F2, ...statusUpdate.Shutters.House.F2 };
         }
 
-        if (statusUpdate.Garage !== undefined) {
+        if (statusUpdate.Shutters !== undefined && statusUpdate.Shutters.Garage !== undefined) {
                 
-                if (statusUpdate.Garage.Shutters !== undefined)
-                        newStatus.Garage.Shutters = { ...newStatus.Garage.Shutters, ...statusUpdate.Garage.Shutters };
+                if (statusUpdate.Shutters.Garage !== undefined)
+                        newStatus.Shutters.Garage = { ...newStatus.Shutters.Garage, ...statusUpdate.Shutters.Garage };
 
         }
 
         if (
-                isNaN(newStatus.House.Shutters.F2.W9) || (newStatus.House.Shutters.F2.W9 != 0 && newStatus.House.Shutters.F2.W9 != 1) ||
-                isNaN(newStatus.House.Shutters.F2.W8) || (newStatus.House.Shutters.F2.W8 != 0 && newStatus.House.Shutters.F2.W8 != 1) ||
-                isNaN(newStatus.House.Shutters.F2.W7) || (newStatus.House.Shutters.F2.W7 != 0 && newStatus.House.Shutters.F2.W7 != 1) ||
-                isNaN(newStatus.House.Shutters.F2.W6) || (newStatus.House.Shutters.F2.W6 != 0 && newStatus.House.Shutters.F2.W6 != 1) ||
-                isNaN(newStatus.House.Shutters.F2.W5) || (newStatus.House.Shutters.F2.W5 != 0 && newStatus.House.Shutters.F2.W5 != 1) ||
-                isNaN(newStatus.House.Shutters.F2.W4) || (newStatus.House.Shutters.F2.W4 != 0 && newStatus.House.Shutters.F2.W4 != 1) ||
-                isNaN(newStatus.House.Shutters.F2.W3) || (newStatus.House.Shutters.F2.W3 != 0 && newStatus.House.Shutters.F2.W3 != 1) ||
-                isNaN(newStatus.House.Shutters.F2.W2) || (newStatus.House.Shutters.F2.W2 != 0 && newStatus.House.Shutters.F2.W2 != 1) ||
-                isNaN(newStatus.House.Shutters.F2.W1) || (newStatus.House.Shutters.F2.W1 != 0 && newStatus.House.Shutters.F2.W1 != 1) ||
+                isNaN(newStatus.Shutters.House.F2.W9) || (newStatus.Shutters.House.F2.W9 != 0 && newStatus.Shutters.House.F2.W9 != 1) ||
+                isNaN(newStatus.Shutters.House.F2.W8) || (newStatus.Shutters.House.F2.W8 != 0 && newStatus.Shutters.House.F2.W8 != 1) ||
+                isNaN(newStatus.Shutters.House.F2.W7) || (newStatus.Shutters.House.F2.W7 != 0 && newStatus.Shutters.House.F2.W7 != 1) ||
+                isNaN(newStatus.Shutters.House.F2.W6) || (newStatus.Shutters.House.F2.W6 != 0 && newStatus.Shutters.House.F2.W6 != 1) ||
+                isNaN(newStatus.Shutters.House.F2.W5) || (newStatus.Shutters.House.F2.W5 != 0 && newStatus.Shutters.House.F2.W5 != 1) ||
+                isNaN(newStatus.Shutters.House.F2.W4) || (newStatus.Shutters.House.F2.W4 != 0 && newStatus.Shutters.House.F2.W4 != 1) ||
+                isNaN(newStatus.Shutters.House.F2.W3) || (newStatus.Shutters.House.F2.W3 != 0 && newStatus.Shutters.House.F2.W3 != 1) ||
+                isNaN(newStatus.Shutters.House.F2.W2) || (newStatus.Shutters.House.F2.W2 != 0 && newStatus.Shutters.House.F2.W2 != 1) ||
+                isNaN(newStatus.Shutters.House.F2.W1) || (newStatus.Shutters.House.F2.W1 != 0 && newStatus.Shutters.House.F2.W1 != 1) ||
 
-                isNaN(newStatus.House.Shutters.F1.W7) || (newStatus.House.Shutters.F1.W7 != 0 && newStatus.House.Shutters.F1.W7 != 1) ||
-                isNaN(newStatus.House.Shutters.F1.W6) || (newStatus.House.Shutters.F1.W6 != 0 && newStatus.House.Shutters.F1.W6 != 1) ||
-                isNaN(newStatus.House.Shutters.F1.W5) || (newStatus.House.Shutters.F1.W5 != 0 && newStatus.House.Shutters.F1.W5 != 1) ||
-                isNaN(newStatus.House.Shutters.F1.W4) || (newStatus.House.Shutters.F1.W4 != 0 && newStatus.House.Shutters.F1.W4 != 1) ||
-                isNaN(newStatus.House.Shutters.F1.W3) || (newStatus.House.Shutters.F1.W3 != 0 && newStatus.House.Shutters.F1.W3 != 1) ||
-                isNaN(newStatus.House.Shutters.F1.W2) || (newStatus.House.Shutters.F1.W2 != 0 && newStatus.House.Shutters.F1.W2 != 1) ||
-                isNaN(newStatus.House.Shutters.F1.W1) || (newStatus.House.Shutters.F1.W1 != 0 && newStatus.House.Shutters.F1.W1 != 1) ||
+                isNaN(newStatus.Shutters.House.F1.W7) || (newStatus.Shutters.House.F1.W7 != 0 && newStatus.Shutters.House.F1.W7 != 1) ||
+                isNaN(newStatus.Shutters.House.F1.W6) || (newStatus.Shutters.House.F1.W6 != 0 && newStatus.Shutters.House.F1.W6 != 1) ||
+                isNaN(newStatus.Shutters.House.F1.W5) || (newStatus.Shutters.House.F1.W5 != 0 && newStatus.Shutters.House.F1.W5 != 1) ||
+                isNaN(newStatus.Shutters.House.F1.W4) || (newStatus.Shutters.House.F1.W4 != 0 && newStatus.Shutters.House.F1.W4 != 1) ||
+                isNaN(newStatus.Shutters.House.F1.W3) || (newStatus.Shutters.House.F1.W3 != 0 && newStatus.Shutters.House.F1.W3 != 1) ||
+                isNaN(newStatus.Shutters.House.F1.W2) || (newStatus.Shutters.House.F1.W2 != 0 && newStatus.Shutters.House.F1.W2 != 1) ||
+                isNaN(newStatus.Shutters.House.F1.W1) || (newStatus.Shutters.House.F1.W1 != 0 && newStatus.Shutters.House.F1.W1 != 1) ||
 
-                isNaN(newStatus.Garage.W1) || (newStatus.Garage.W1 != 0 && newStatus.Garage.W1 !=1) ||
-                isNaN(newStatus.Garage.W2) || (newStatus.Garage.W2 != 0 && newStatus.Garage.W2 !=1) ||
-                isNaN(newStatus.Garage.W3) || (newStatus.Garage.W3 != 0 && newStatus.Garage.W3 !=1)
+                isNaN(newStatus.Shutters.Garage.W1) || (newStatus.Shutters.Garage.W1 != 0 && newStatus.Shutters.Garage.W1 !=1) ||
+                isNaN(newStatus.Shutters.Garage.W2) || (newStatus.Shutters.Garage.W2 != 0 && newStatus.Shutters.Garage.W2 !=1) ||
+                isNaN(newStatus.Shutters.Garage.W3) || (newStatus.Shutters.Garage.W3 != 0 && newStatus.Shutters.Garage.W3 !=1)
         )
                 return Promise.reject('Invalid status requested.');
 
         let houseBitmask =
-                newStatus.House.Shutters.F2.W9 << 15 |
-                newStatus.House.Shutters.F2.W8 << 14 |
-                newStatus.House.Shutters.F2.W7 << 13 |
-                newStatus.House.Shutters.F2.W6 << 12 |
-                newStatus.House.Shutters.F2.W5 << 11 |
-                newStatus.House.Shutters.F2.W4 << 10 |
-                newStatus.House.Shutters.F2.W3 << 9 |
-                newStatus.House.Shutters.F2.W2 << 8 |
-                newStatus.House.Shutters.F2.W1 << 7 |
+                newStatus.Shutters.House.F2.W9 << 15 |
+                newStatus.Shutters.House.F2.W8 << 14 |
+                newStatus.Shutters.House.F2.W7 << 13 |
+                newStatus.Shutters.House.F2.W6 << 12 |
+                newStatus.Shutters.House.F2.W5 << 11 |
+                newStatus.Shutters.House.F2.W4 << 10 |
+                newStatus.Shutters.House.F2.W3 << 9 |
+                newStatus.Shutters.House.F2.W2 << 8 |
+                newStatus.Shutters.House.F2.W1 << 7 |
 
-                newStatus.House.Shutters.F1.W7 << 6 |
-                newStatus.House.Shutters.F1.W6 << 5 |
-                newStatus.House.Shutters.F1.W5 << 4 |
-                newStatus.House.Shutters.F1.W4 << 3 |
-                newStatus.House.Shutters.F1.W3 << 2 |
-                newStatus.House.Shutters.F1.W2 << 1 |
-                newStatus.House.Shutters.F1.W1;
+                newStatus.Shutters.House.F1.W7 << 6 |
+                newStatus.Shutters.House.F1.W6 << 5 |
+                newStatus.Shutters.House.F1.W5 << 4 |
+                newStatus.Shutters.House.F1.W4 << 3 |
+                newStatus.Shutters.House.F1.W3 << 2 |
+                newStatus.Shutters.House.F1.W2 << 1 |
+                newStatus.Shutters.House.F1.W1;
 
         let garageBitmask =
-                newStatus.Garage.W3 << 4 |      // Window 3: SW5 (5)
-                newStatus.Garage.W2 << 2 |      // Window 2: SW3 (3)
-                newStatus.Garage.W1             // Window 1: SW1 (1)
+                newStatus.Shutters.Garage.W3 << 4 |      // Window 3: SW5 (5)
+                newStatus.Shutters.Garage.W2 << 2 |      // Window 2: SW3 (3)
+                newStatus.Shutters.Garage.W1             // Window 1: SW1 (1)
 
         return Promise.all([
                 setKinconyRelays(config.houseShuttersController.port, config.houseShuttersController.host, houseBitmask),

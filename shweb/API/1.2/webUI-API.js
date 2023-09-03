@@ -13,6 +13,7 @@ app.use('/API/1.2/lighting', require('./routers/lighting'));
 app.use('/API/1.2/consumption/electricity', require('./routers/electricity'));
 app.use('/API/1.2/gateways', require('./routers/gateways'));
 app.use('/API/1.2/repellers', require('./routers/repellers'));
+app.use('/API/1.2/shutters', require('./routers/shutters'));
 app.use('/API/1.2/relays', require('./routers/relays'));
 
 app.listen(config.port, (err) => {

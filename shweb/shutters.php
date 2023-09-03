@@ -310,7 +310,7 @@
 				success: function(data) {
 
 					console.log(data);
-					refreshButtons(data);
+					refreshButtons(data.Shutters);
 
 					spinner.stop();
 					$('#spinner').hide();

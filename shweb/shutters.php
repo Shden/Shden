@@ -186,12 +186,14 @@
 		function refreshButtons(data)
 		{
                         console.log(data);
-			for (var floor in data.House)
-				for (var window in data.House[floor])
-					refreshButtonView('House', floor, window, data.House[floor][window]);
+                        if (data.House !== undefined)
+                                for (var floor in data.House)
+                                        for (var window in data.House[floor])
+                                                refreshButtonView('House', floor, window, data.House[floor][window]);
 
-                        for (var window in data.Garage)
-                                refreshButtonView('Garage', 'GF1', window, data.Garage[window]);
+                        if (data.Garage !== undefined)
+                                for (var window in data.Garage)
+                                        refreshButtonView('Garage', 'GF1', window, data.Garage[window]);
 		}
 
 		function refreshButtonView(building, floor, window, state)

@@ -189,6 +189,9 @@
 			for (var floor in data.House)
 				for (var window in data.House[floor])
 					refreshButtonView(floor, window, data.House[floor][window]);
+
+                        for (var window in data.Garage)
+                                refreshButtonView('Garage', window, date.Garage[window]);
 		}
 
 		function refreshButtonView(floor, window, state)

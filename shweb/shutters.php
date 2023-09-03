@@ -216,9 +216,9 @@
 		{
 			let req = { Shutters: { }};
                         if (event.data.builing === 'House')
-			        req.Shutters: { House: {[event.data.floor]: { [event.data.window]: event.data.newStatus }}};
+			        req.Shutters.House = {[event.data.floor]: { [event.data.window]: event.data.newStatus }};
                         if (event.data.building === 'Garage')
-                                req.Shutters: { Garage: { [event.data.window]: event.data.newStatus }};
+                                req.Shutters.Garage = { [event.data.window]: event.data.newStatus };
 			callAPI(req);
 		}
 

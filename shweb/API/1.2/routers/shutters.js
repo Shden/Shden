@@ -28,7 +28,7 @@ const HTTPStatus = require('http-status-codes').StatusCodes;
                 return;
         }
 
-        res.json(await Relays.UpdateState(stateUpdate));
+        res.json(await Relays.UpdateState(stateUpdate).Shutters);
 });
 
 module.exports = router;

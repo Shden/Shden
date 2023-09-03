@@ -28,7 +28,7 @@ router.put('/State', async function(req, res) {
                 return;
         }
 
-        res.json(await Relays.UpdateState(stateUpdate));
+        res.json(await Relays.UpdateState(stateUpdate).Relays);
 });
 
 module.exports = router;

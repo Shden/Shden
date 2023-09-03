@@ -1,7 +1,7 @@
 const s = require('../gates/kincony-relays-gate');
 const should = require('should');
 
-describe('Shutters gate tests:', function() {
+describe('Kincony gate tests:', function() {
 
         let houseShutters01 = {
                 Shutters: {
@@ -42,11 +42,7 @@ describe('Shutters gate tests:', function() {
             }
         };
 
-        // it('test', function() {
-        //         return s.setAll(Number('0xFF00'));
-        // })
-        
-        function canSetTo(update)
+        function canSetTo(requestedState)
         {
                 function checkBit(currentBit, updateBit)
                 {
@@ -54,56 +50,63 @@ describe('Shutters gate tests:', function() {
                                 currentBit.should.be.equal(updateBit)
                 }
 
-                return s.updateStatus(update).then(() => {
-                        s.getStatus().then((current) => { 
+                return s.updateStatus(requestedState).then((updatedState) => {
 
-                                if (update.F1 !== undefined) {
-                                        checkBit(current.F1.W1, update.F1.W1);
-                                        checkBit(current.F1.W2, update.F1.W2);
-                                        checkBit(current.F1.W3, update.F1.W3);
-                                        checkBit(current.F1.W4, update.F1.W4);
-                                        checkBit(current.F1.W5, update.F1.W5);
-                                        checkBit(current.F1.W6, update.F1.W6);
-                                        checkBit(current.F1.W7, update.F1.W7);
-                                }
+                        if (requestedState.F1 !== undefined) {
+                                checkBit(updatedState.F1.W1, requestedState.F1.W1);
+                                checkBit(updatedState.F1.W2, requestedState.F1.W2);
+                                checkBit(updatedState.F1.W3, requestedState.F1.W3);
+                                checkBit(updatedState.F1.W4, requestedState.F1.W4);
+                                checkBit(updatedState.F1.W5, requestedState.F1.W5);
+                                checkBit(updatedState.F1.W6, requestedState.F1.W6);
+                                checkBit(updatedState.F1.W7, requestedState.F1.W7);
+                        }
 
-                                if (update.F2 !== undefined) {
-                                        checkBit(current.F2.W1, update.F2.W1);
-                                        checkBit(current.F2.W2, update.F2.W2);
-                                        checkBit(current.F2.W3, update.F2.W3);
-                                        checkBit(current.F2.W4, update.F2.W4);
-                                        checkBit(current.F2.W5, update.F2.W5);
-                                        checkBit(current.F2.W6, update.F2.W6);
-                                        checkBit(current.F2.W7, update.F2.W7);
-                                        checkBit(current.F2.W8, update.F2.W8);
-                                        checkBit(current.F2.W9, update.F2.W9);
-                                }
-                        });
-                })
+                        if (requestedState.F2 !== undefined) {
+                                checkBit(updatedState.F2.W1, requestedState.F2.W1);
+                                checkBit(updatedState.F2.W2, requestedState.F2.W2);
+                                checkBit(updatedState.F2.W3, requestedState.F2.W3);
+                                checkBit(updatedState.F2.W4, requestedState.F2.W4);
+                                checkBit(updatedState.F2.W5, requestedState.F2.W5);
+                                checkBit(updatedState.F2.W6, requestedState.F2.W6);
+                                checkBit(updatedState.F2.W7, requestedState.F2.W7);
+                                checkBit(updatedState.F2.W8, requestedState.F2.W8);
+                                checkBit(updatedState.F2.W9, requestedState.F2.W9);
+                        }
+                });
         }
 
-        it('Can get shutters state', function() {
-                return s.getStatus().then((res) => { console.log(res)});
+        it('Can get kincony relays state', function() {
+                return s.getStatus().then((res) => { 
+                        //console.log(res);
+                        res.should.have.property("Shutters").which.is.an.Object();
+                        res.should.have.property("Relays").which.is.an.Object();
+                });
         });
 
-        it.skip('Can update house shutters to 0101010...', function() {
-                return canSetTo(houseShutters01);
+        describe('Shutter lines tests:', function() {
+
+                it('Can update house shutters to 0101010...', function() {
+                        return canSetTo(houseShutters01);
+                });
+
+                it('Can update house shutters to 1010101...', function() {
+                        return canSetTo(houseShutters10);
+                });
+
+                it.skip('Can update shutters parially', function() {
+                        return canSetTo(shutters_partialUpdate);
+                });
         });
 
-        it.skip('Can update house shutters to 1010101...', function() {
-                return canSetTo(houseShutters10);
-        });
+        describe('Relay lines tests:', function() {
 
-        it.skip('Can update garage relays to 0101010...', function() {
-                return canSetTo(garageRelays01);
-        });
+                it.skip('Can update garage relays to 0101010...', function() {
+                        return canSetTo(garageRelays01);
+                });
 
-        it.skip('Can update garage relays to 1010101...', function() {
-                return canSetTo(garageRelays10);
+                it.skip('Can update garage relays to 1010101...', function() {
+                        return canSetTo(garageRelays10);
+                });
         });
-
-        it.skip('Can update shutters parially', function() {
-                return canSetTo(shutters_partialUpdate);
-        });
-
 });

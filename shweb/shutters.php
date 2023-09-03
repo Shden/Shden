@@ -187,8 +187,8 @@
 		{
                         console.log(data);
 			for (var floor in data.House)
-				for (var window in data[floor])
-					refreshButtonView(floor, window, data[floor][window]);
+				for (var window in data.House[floor])
+					refreshButtonView(floor, window, data.House[floor][window]);
 		}
 
 		function refreshButtonView(floor, window, state)

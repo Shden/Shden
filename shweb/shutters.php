@@ -185,7 +185,7 @@
 
 		function refreshButtons(data)
 		{
-			for (var floor in data)
+			for (var floor in data.Shutters.Home)
 				for (var window in data[floor])
 					refreshButtonView(floor, window, data[floor][window]);
 		}

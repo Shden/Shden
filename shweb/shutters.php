@@ -215,7 +215,7 @@
 		function moveSingleShutter(event)
 		{
 			let req = { Shutters: { }};
-                        if (event.data.builing === 'House')
+                        if (event.data.building === 'House')
 			        req.Shutters.House = {[event.data.floor]: { [event.data.window]: event.data.newStatus }};
                         if (event.data.building === 'Garage')
                                 req.Shutters.Garage = { [event.data.window]: event.data.newStatus };

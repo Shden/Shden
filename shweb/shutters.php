@@ -143,15 +143,15 @@
 				<tbody>
 					<tr>
 						<td class="where">Дальнее окно:</td>
-						<td><button id="GarageW1" class="btn">...</button></td>
+						<td><button id="GF1W1" class="btn">...</button></td>
 					</tr>
 					<tr>
 						<td class="where">Среднее окно:</td>
-						<td><button id="GarageW2" class="btn">...</button></td>
+						<td><button id="GF1W2" class="btn">...</button></td>
 					</tr>
 					<tr>
 						<td class="where">Ближнее окно:</td>
-						<td><button id="GarageW3" class="btn">...</button></td>
+						<td><button id="GF1W3" class="btn">...</button></td>
 					</tr>
 				</tbody>
 			</table>

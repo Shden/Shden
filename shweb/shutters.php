@@ -188,13 +188,13 @@
                         console.log(data);
 			for (var floor in data.House)
 				for (var window in data.House[floor])
-					refreshButtonView(floor, window, data.House[floor][window]);
+					refreshButtonView('House', floor, window, data.House[floor][window]);
 
                         for (var window in data.Garage)
-                                refreshButtonView('Garage', window, data.Garage[window]);
+                                refreshButtonView('Garage', 'GF1', window, data.Garage[window]);
 		}
 
-		function refreshButtonView(floor, window, state)
+		function refreshButtonView(building, floor, window, state)
 		{
 			var button = $('#' + floor + window);
 			button.off('click');
@@ -202,84 +202,93 @@
 			{
 				button.addClass('btn-warning').removeClass('btn-dark');
 				button.html('Поднять');
-				button.click({ floor: floor, window: window, newStatus: 1 }, moveSingleShutter);
+				button.click({ building: building, floor: floor, window: window, newStatus: 1 }, moveSingleShutter);
 			}
 			else if (state == 1)
 			{
 				button.addClass('btn-dark').removeClass('btn-warning');
 				button.html('Спустить');
-				button.click({ floor: floor, window: window, newStatus: 0 }, moveSingleShutter);
+				button.click({ building: building, floor: floor, window: window, newStatus: 0 }, moveSingleShutter);
 			}
 		}
 
 		function moveSingleShutter(event)
 		{
-			let req = { shutters: { [event.data.floor]: { [event.data.window]: event.data.newStatus }}};
+			let req = { Shutters: { }};
+                        if (event.data.builing === 'House')
+			        req.Shutters: { House: {[event.data.floor]: { [event.data.window]: event.data.newStatus }}};
+                        if (event.data.building === 'Garage')
+                                req.Shutters: { Garage: { [event.data.window]: event.data.newStatus }};
 			callAPI(req);
 		}
 
 		function moveFloor(floor, newState)
 		{
-			let req = { shutters: { }};
+			let req = { Shutters: { }};
 			if (floor == 1)
 			{
-				req.shutters.F1 = new Object();
-				req.shutters.F1.W1 = newState;
-				req.shutters.F1.W2 = newState;
-				req.shutters.F1.W3 = newState;
-				req.shutters.F1.W4 = newState;
-				req.shutters.F1.W5 = newState;
-				req.shutters.F1.W6 = newState;
-				req.shutters.F1.W7 = newState;
+				req.Shutters.House.F1 = new Object();
+				req.Shutters.House.F1.W1 = newState;
+				req.Shutters.House.F1.W2 = newState;
+				req.Shutters.House.F1.W3 = newState;
+				req.Shutters.House.F1.W4 = newState;
+				req.Shutters.House.F1.W5 = newState;
+				req.Shutters.House.F1.W6 = newState;
+				req.Shutters.House.F1.W7 = newState;
 			}
 			if (floor == 2)
 			{
-				req.shutters.F2 = new Object();
-				req.shutters.F2.W1 = newState;
-				req.shutters.F2.W2 = newState;
-				req.shutters.F2.W3 = newState;
-				req.shutters.F2.W4 = newState;
-				req.shutters.F2.W5 = newState;
-				req.shutters.F2.W6 = newState;
-				req.shutters.F2.W7 = newState;
-				req.shutters.F2.W8 = newState;
-				req.shutters.F2.W9 = newState;
+				req.Shutters.House.F2 = new Object();
+				req.Shutters.House.F2.W1 = newState;
+				req.Shutters.House.F2.W2 = newState;
+				req.Shutters.House.F2.W3 = newState;
+				req.Shutters.House.F2.W4 = newState;
+				req.Shutters.House.F2.W5 = newState;
+				req.Shutters.House.F2.W6 = newState;
+				req.Shutters.House.F2.W7 = newState;
+				req.Shutters.House.F2.W8 = newState;
+				req.Shutters.House.F2.W9 = newState;
 			}
 			if (floor == 'garage')
 			{
-				req.shutters.Garage = new Object();
-				req.shutters.Garage.W1 = newState;
-				req.shutters.Garage.W2 = newState;
-				req.shutters.Garage.W3 = newState;
+				req.Shutters.Garage = new Object();
+				req.Shutters.Garage.W1 = newState;
+				req.Shutters.Garage.W2 = newState;
+				req.Shutters.Garage.W3 = newState;
 			}
 			callAPI(req);
 		}
 
 		function moveAll(newState)
 		{
-			let req = { shutters: { F1: {}, F2: {}, Garage: {}}};
+			let req = { Shutters: { 
+                                House: {
+                                        F1: {}, 
+                                        F2: {}
+                                }, 
+                                Garage: {}}};
 
-			req.shutters.F1.W1 = newState;
-			req.shutters.F1.W2 = newState;
-			req.shutters.F1.W3 = newState;
-			req.shutters.F1.W4 = newState;
-			req.shutters.F1.W5 = newState;
-			req.shutters.F1.W6 = newState;
-			req.shutters.F1.W7 = newState;
+			req.Shutters.House.F1.W1 = newState;
+			req.Shutters.House.F1.W2 = newState;
+			req.Shutters.House.F1.W3 = newState;
+			req.Shutters.House.F1.W4 = newState;
+			req.Shutters.House.F1.W5 = newState;
+			req.Shutters.House.F1.W6 = newState;
+			req.Shutters.House.F1.W7 = newState;
 
-			req.shutters.F2.W1 = newState;
-			req.shutters.F2.W2 = newState;
-			req.shutters.F2.W3 = newState;
-			req.shutters.F2.W4 = newState;
-			req.shutters.F2.W5 = newState;
-			req.shutters.F2.W6 = newState;
-			req.shutters.F2.W7 = newState;
-			req.shutters.F2.W8 = newState;
-			req.shutters.F2.W9 = newState;
+			req.Shutters.House.F2.W1 = newState;
+			req.Shutters.House.F2.W2 = newState;
+			req.Shutters.House.F2.W3 = newState;
+			req.Shutters.House.F2.W4 = newState;
+			req.Shutters.House.F2.W5 = newState;
+			req.Shutters.House.F2.W6 = newState;
+			req.Shutters.House.F2.W7 = newState;
+			req.Shutters.House.F2.W8 = newState;
+			req.Shutters.House.F2.W9 = newState;
 
-			req.shutters.Garage.W1 = newState;
-			req.shutters.Garage.W2 = newState;
-			req.shutters.Garage.W3 = newState;
+			req.Shutters.Garage.W1 = newState;
+			req.Shutters.Garage.W2 = newState;
+			req.Shutters.Garage.W3 = newState;
 
 			callAPI(req);
 		}

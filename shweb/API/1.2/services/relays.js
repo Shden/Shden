@@ -3,38 +3,31 @@ const ShWadeAPI = require('../../../../houseAPI/shwadeAPI');
 
 let houseAPI = new ShWadeAPI(config.houseAPIorigin);
 
-// Returns complete current relays state REST object
+// Returns current relays state REST object
 async function GetRelaysState() 
 {
         let houseStatus = await houseAPI.getStatus();
-        return houseStatus.kinconyRelays;
+        return houseStatus.kinconyRelays.Relays;
 }
 
-// Returns current shutters state, which is a subset of relays data
+// Returns current shutters state
 async function GetShuttersState() 
 {
         let houseStatus = await houseAPI.getStatus();
         return houseStatus.kinconyRelays.Shutters;
 }
 
-// Update relays state
-async function UpdateRelaysState(relaysUpdate)
+// Update relays or shutters state
+async function UpdateState(relaysUpdate)
 {
-        let houseStatus = await houseAPI.updateStatus(relaysUpdate);
+        let kinconyUpdate = { kinconyRelays : relaysUpdate }; 
+        let houseStatus = await houseAPI.updateStatus(kinconyUpdate);
         return houseStatus.kinconyRelays;
-}
-
-// Update shutters state
-async function UpdateShuttersState(shuttersUpdate)
-{
-        let relaysUpdate = { kinconyRelays : shuttersUpdate };
-        return this.UpdateRelaysState(relaysUpdate);
 }
 
 if (typeof exports !== 'undefined')
 {
         exports.GetRelaysState = GetRelaysState;
         exports.GetShuttersState = GetShuttersState;
-        exports.UpdateRelaysState = UpdateRelaysState;
-        exports.UpdateShuttersState = UpdateShuttersState;
+        exports.UpdateState = UpdateState;
 }

@@ -311,6 +311,7 @@
 				data: JSON.stringify(req),
 				success: function(data) {
 
+                                        console.log('-----------');
 					console.log(data);
 					refreshButtons(data.Shutters);
 

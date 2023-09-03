@@ -174,6 +174,7 @@ async function updateStatus(statusUpdate)
 }
 
 // Read all Relays' states
+// see https://www.kincony.com/download/KC868-Hx-Smart-Controller-Protocol-V20.0.1.pdf
 async function getKinconyRelays(kinconyPort, kinconyHost)
 {
         return new Promise((resolved, rejected) => {

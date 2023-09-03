@@ -311,8 +311,7 @@
 				data: JSON.stringify(req),
 				success: function(data) {
 
-                                        console.log('-----------');
-					console.log(data);
+					// console.log(data);
 					refreshButtons(data);
 
 					spinner.stop();

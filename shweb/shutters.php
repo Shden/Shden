@@ -219,6 +219,7 @@
 			        req.Shutters.House = {[event.data.floor]: { [event.data.window]: event.data.newStatus }};
                         if (event.data.building === 'Garage')
                                 req.Shutters.Garage = { [event.data.window]: event.data.newStatus };
+                        console.log(req);
 			callAPI(req);
 		}
 

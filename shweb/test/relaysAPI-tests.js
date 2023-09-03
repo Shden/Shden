@@ -33,7 +33,7 @@ describe(`/API/${API.version}/relays testing:`, function () {
         this.timeout(15000);
         testers.putTester(stateURL, request, HTTPStatus.OK, (response) => {
             var relaysStatus = JSON.parse(response);
-            relaysStatus.Relays.Garage.R3.should.be.equal(SET_TO);
+            relaysStatus.Garage.R3.should.be.equal(SET_TO);
             done();
         })
     });

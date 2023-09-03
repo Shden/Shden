@@ -19,8 +19,8 @@ const HTTPStatus = require('http-status-codes').StatusCodes;
  *
  *	PUT /State
  */
- router.put('/State', async function(req, res) {
-
+ router.put('/State', async function(req, res) 
+ {
         let stateUpdate = req.body;
         if (stateUpdate.Shutters === undefined) 
         {
@@ -28,7 +28,8 @@ const HTTPStatus = require('http-status-codes').StatusCodes;
                 return;
         }
 
-        res.json(await Relays.UpdateState(stateUpdate).Shutters);
+        let updateResult = await (Relays.UpdateState(stateUpdate));
+        res.json(updateResult.Shutters);
 });
 
 module.exports = router;

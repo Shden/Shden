@@ -34,7 +34,7 @@ describe(`/API/${API.version}/shutters testing:`, function () {
         this.timeout(15000);
         testers.putTester(stateURL, request, HTTPStatus.OK, (response) => {
             var shuttersStatus = JSON.parse(response);
-            shuttersStatus.Shutters.House.F1.W2.should.be.equal(SET_TO);
+            shuttersStatus.House.F1.W2.should.be.equal(SET_TO);
             done();
         })
     });

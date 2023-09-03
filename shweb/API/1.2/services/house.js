@@ -61,7 +61,7 @@ class HouseState
                                 this.updateRequest.oneWireStatus.switches.streetLight250 = 0;
                                 this.updateRequest.oneWireStatus.switches.ultrasonicSwitch = 1;
                                 this.updateRequest.oneWireStatus.switches.mainsSwitch = 0;
-                                this.updateRequest.oneWireStatus.switches.fenceLight = 0;
+                                // this.updateRequest.oneWireStatus.switches.fenceLight = 0;
 
                                 this.allLightsOff().homeCloseShutters(1).homeCloseShutters(2).garageCloseShutters();
 
@@ -151,38 +151,42 @@ class HouseState
         {
                 if (floor == 1 || floor == 2)
                 {
-                        if (this.updateRequest.shutters === undefined)
-                                this.updateRequest.shutters = new Object();
+                        if (this.updateRequest.kinconyRelays === undefined)
+                                this.updateRequest.kinconyRelays = new Object();
+                        if (this.updateRequest.kinconyRelays.Shutters === undefined)
+                                this.updateRequest.kinconyRelays.Shutters = new Object();
+                        if (this.updateRequest.kinconyRelays.Shutters.House === undefined)
+                                this.updateRequest.kinconyRelays.Shutters.House = new Object();
 
                         switch(floor)
                         {
                                 case 1:
-                                        if (this.updateRequest.shutters.F1 === undefined)
-                                                this.updateRequest.shutters.F1 = new Object();
+                                        if (this.updateRequest.kinconyRelays.Shutters.House.F1 === undefined)
+                                        this.updateRequest.kinconyRelays.Shutters.House.F1 = new Object();
 
-                                        this.updateRequest.shutters.F1.W1 = state;
-                                        this.updateRequest.shutters.F1.W2 = state;
-                                        this.updateRequest.shutters.F1.W3 = state;
-                                        this.updateRequest.shutters.F1.W4 = state;
-                                        this.updateRequest.shutters.F1.W5 = state;
-                                        this.updateRequest.shutters.F1.W6 = state;
-                                        this.updateRequest.shutters.F1.W7 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F1.W1 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F1.W2 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F1.W3 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F1.W4 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F1.W5 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F1.W6 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F1.W7 = state;
 
                                         break;
 
                                 case 2:
-                                        if (this.updateRequest.shutters.F2 === undefined)
-                                                this.updateRequest.shutters.F2 = new Object();
+                                        if (this.updateRequest.kinconyRelays.Shutters.House.F2 === undefined)
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2 = new Object();
 
-                                        this.updateRequest.shutters.F2.W1 = state;
-                                        this.updateRequest.shutters.F2.W2 = state;
-                                        this.updateRequest.shutters.F2.W3 = state;
-                                        this.updateRequest.shutters.F2.W4 = state;
-                                        this.updateRequest.shutters.F2.W5 = state;
-                                        this.updateRequest.shutters.F2.W6 = state;
-                                        this.updateRequest.shutters.F2.W7 = state;
-                                        this.updateRequest.shutters.F2.W8 = state;
-                                        this.updateRequest.shutters.F2.W9 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2.W1 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2.W2 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2.W3 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2.W4 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2.W5 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2.W6 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2.W7 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2.W8 = state;
+                                        this.updateRequest.kinconyRelays.Shutters.House.F2.W9 = state;
 
                                         break;
                         }
@@ -192,15 +196,16 @@ class HouseState
 
         changeGarageShutters(state)
         {
-                if (this.updateRequest.shutters === undefined)
-                        this.updateRequest.shutters = new Object();
+                if (this.updateRequest.kinconyRelays === undefined)
+                        this.updateRequest.kinconyRelays = new Object();
+                if (this.updateRequest.kinconyRelays.Shutters === undefined)
+                        this.updateRequest.kinconyRelays.Shutters = new Object();
+                if (this.updateRequest.kinconyRelays.Shutters.Garage === undefined)
+                        this.updateRequest.kinconyRelays.Shutters.Garage = new Object();
 
-                if (this.updateRequest.shutters.Garage === undefined)
-                        this.updateRequest.shutters.Garage = new Object();
-
-                this.updateRequest.shutters.Garage.W1 = state;
-                this.updateRequest.shutters.Garage.W2 = state;
-                this.updateRequest.shutters.Garage.W3 = state;
+                this.updateRequest.kinconyRelays.Shutters.Garage.W1 = state;
+                this.updateRequest.kinconyRelays.Shutters.Garage.W2 = state;
+                this.updateRequest.kinconyRelays.Shutters.GarageW3 = state;
 
                 return this;
         }

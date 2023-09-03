@@ -228,6 +228,7 @@
 			let req = { Shutters: { }};
 			if (floor == 1)
 			{
+                                req.Shutters.House = new Object();
 				req.Shutters.House.F1 = new Object();
 				req.Shutters.House.F1.W1 = newState;
 				req.Shutters.House.F1.W2 = newState;
@@ -239,6 +240,7 @@
 			}
 			if (floor == 2)
 			{
+                                req.Shutters.House = new Object();
 				req.Shutters.House.F2 = new Object();
 				req.Shutters.House.F2.W1 = newState;
 				req.Shutters.House.F2.W2 = newState;

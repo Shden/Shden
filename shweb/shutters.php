@@ -313,7 +313,7 @@
 
                                         console.log('-----------');
 					console.log(data);
-					refreshButtons(data.Shutters);
+					refreshButtons(data);
 
 					spinner.stop();
 					$('#spinner').hide();

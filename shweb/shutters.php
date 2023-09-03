@@ -219,7 +219,6 @@
 			        req.Shutters.House = {[event.data.floor]: { [event.data.window]: event.data.newStatus }};
                         if (event.data.building === 'Garage')
                                 req.Shutters.Garage = { [event.data.window]: event.data.newStatus };
-                        console.log(req);
 			callAPI(req);
 		}
 
@@ -310,7 +309,7 @@
 				data: JSON.stringify(req),
 				success: function(data) {
 
-					// console.log(data);
+					console.log(data);
 					refreshButtons(data);
 
 					spinner.stop();

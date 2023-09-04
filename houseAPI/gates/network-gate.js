@@ -3,7 +3,7 @@ const ping = require ("net-ping");
 const googleIP = '64.233.164.100';      // google.com
 const yandexIP = '5.255.255.70';        // yandex.ru
 const SHWADE2 = '3.74.4.26';            // EC2 instance where web server runs
-const VPN_PPTP = '3.78.173.59';         // VPN EC2 instance
+// const VPN_PPTP = '3.78.173.59';         // VPN EC2 instance
 // const deadIP = '192.168.10.100';
 
 
@@ -28,14 +28,14 @@ async function getStatus()
                 Promise.all([
                         pingHost(googleIP),
                         pingHost(yandexIP),
-                        pingHost(SHWADE2),
-                        pingHost(VPN_PPTP)//,
+                        pingHost(SHWADE2)//,
+                        // pingHost(VPN_PPTP),
                         // pingHost(deadIP)
                 ]).then(res => {
                         status.ping.google = res[0];
                         status.ping.yandex = res[1];
                         status.ping.EC2.SHWADE = res[2];
-                        status.ping.EC2.VPN = res[3];
+                        // status.ping.EC2.VPN = res[3];
 
                         resolved(status);
                 });

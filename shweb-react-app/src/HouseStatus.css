@@ -1,0 +1,40 @@
+.temp-big
+{
+        font-size: 48px;
+        padding-right: 48px;
+        padding-left: 6px;
+}
+
+.temp-warm
+{
+        color: green;
+}
+
+.temp-cold
+{
+        color: blue;
+}
+.mains-on
+{
+        font-size: 24px;
+        color: green;
+}
+.mains-off
+{
+        font-size: 24px;
+        color: red;
+}
+.power-val
+{
+        font-size: 24px;
+        color: black;
+}
+.status-val
+{
+        font-size: 36px;
+        font-weight: normal;
+}
+.c3-chart-arcs-background
+{
+        fill: #e0e0e0;
+} 

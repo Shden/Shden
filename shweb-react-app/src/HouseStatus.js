@@ -3,10 +3,8 @@ import './HouseStatus.css';
 import './Menu';
 import Menu from './Menu';
 import Container from 'react-bootstrap/esm/Container';
-import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Numeral from 'react-numeral';
 import numeral from 'numeral';
 import c3 from 'c3';
@@ -25,7 +23,7 @@ function TemperaturePanel(props)
 
 function MainsStatus(props)
 {
-        const [classSpec, value] = (props.status == 1) ? [ "mains-on", "Вкл." ] : [ "mains-off", "Выкл." ];
+        const [classSpec, value] = (props.status === 1) ? [ "mains-on", "Вкл." ] : [ "mains-off", "Выкл." ];
 
         return (
                 <h2>

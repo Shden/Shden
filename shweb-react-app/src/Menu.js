@@ -13,7 +13,7 @@ function Menu() {
                                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                                 <Navbar.Collapse id="basic-navbar-nav">
                                         <Nav className="me-auto">
-                                                <Nav.Link href="#status">Состояние дома</Nav.Link>
+                                                <Nav.Link href="/">Состояние дома</Nav.Link>
                                                 <NavDropdown title="Климат" id="basic-nav-dropdown">
                                                         <NavDropdown.Item href="#schedule">Таймер отопления</NavDropdown.Item>
                                                         <NavDropdown.Item href="#temperature">Температурный график</NavDropdown.Item>

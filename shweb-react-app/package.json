@@ -15,7 +15,8 @@
     "react-numeral": "^1.1.1",
     "react-scripts": "^5.0.1",
     "react-spinners": "^0.13.8",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-router-dom": "^6.15.0"
   },
   "scripts": {
     "start": "react-scripts start",

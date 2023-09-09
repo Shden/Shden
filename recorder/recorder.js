@@ -40,7 +40,7 @@ function persistHeatingData(dbConnectionPool, dataPoint)
         return new Promise((resolved, rejected) => {
                 dbConnectionPool.getConnection().then(dbConnection => {
                         dbConnectionPool.query(
-                                "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
+                                "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
                                 [
                                                                                                                 // SP_ADD_HEATING_RECORD params:
                                         null,                                                                   // 1 - heater (not used)
@@ -53,7 +53,8 @@ function persistHeatingData(dbConnectionPool, dataPoint)
                                         U2N(dataPoint.oneWireStatus.temperatureSensors.child_bedroom),          // 8 - child_bedroom
                                         U2N(dataPoint.oneWireStatus.temperatureSensors.kitchen),                // 9 - kitchen
                                         U2N(dataPoint.oneWireStatus.temperatureSensors.sauna_ceiling),          // 10 - bathroom_1
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.bathroom_1_floor_1)      // 11 - bathroom_1_floor
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.bathroom_1_floor_1),     // 11 - bathroom_1_floor
+                                        U2N(dataPoint.zigbee.temperatureSensors.hall1Floor)                     // 12 - hall 1st floor
                                 ]
                         ).then(() => {
                                 dbConnection.end();

@@ -19,5 +19,6 @@ export default function MonitorPanel()
                                         </iframe>
                                 </div>
                         </Container>
-                </Container>);
+                </Container>
+        );
 }

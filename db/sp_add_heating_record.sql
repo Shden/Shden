@@ -15,7 +15,7 @@ CREATE PROCEDURE SP_ADD_HEATING_RECORD(
 	kitchen			DECIMAL(5,2),	-- 9 kitchen temperature
 	bathroom_1		DECIMAL(5,2),	-- 10 sauna temperature
 	bathroom_1_floor	DECIMAL(5,2),	-- 11 sauna floor temperature
-        hall_1_floor            DECIMAL(5,2),   -- 12 hall 1st floor temperature
+        hall_1_floor            DECIMAL(5,2)    -- 12 hall 1st floor temperature
 )
 BEGIN
 	INSERT INTO heating

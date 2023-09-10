@@ -78,9 +78,14 @@ describe('Kincony gate tests:', function() {
 
         it('Can get kincony relays state', function() {
                 return s.getStatus().then((res) => { 
-                        //console.log(res);
-                        res.should.have.property("Shutters").which.is.an.Object();
-                        res.should.have.property("Relays").which.is.an.Object();
+                        // console.log(res);
+                        res.should.have.a.property("Shutters").which.is.an.Object();
+                        res.should.have.a.property("Relays").which.is.an.Object();
+
+                        res.Relays.should.have.a.property("Garage").which.is.an.Object();
+                        res.Relays.should.have.a.property("House").which.is.an.Object();
+
+                        res.Relays.House.should.have.a.property("MainFuseBox").which.is.an.Object();
                 });
         });
 

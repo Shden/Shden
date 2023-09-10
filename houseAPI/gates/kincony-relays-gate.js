@@ -6,33 +6,61 @@ const { stat } = require('fs/promises');
 // Creates REST object representing all kincony relay lines
 async function getStatus()
 {
-        let houseBitmask = await getKinconyRelays(
-                config.houseShuttersController.port, config.houseShuttersController.host);
+        let houseShuttersBitmask = await getKinconyRelays(
+                config.houseShuttersController.port, 
+                config.houseShuttersController.host, 
+                config.houseShuttersController.channels);
 
         let garageBitmask = await getKinconyRelays(
-                config.garageController.port, config.garageController.host);
+                config.garageController.port, 
+                config.garageController.host, 
+                config.garageController.channels);
+
+        let houseMainFuseBoxBitmask = await getKinconyRelays(
+                config.houseMainFuseBoxController.port,
+                config.houseMainFuseBoxController.host,
+                config.houseMainFuseBoxController.channels);
 
         // -- get data model for state
         var status = require('../models/kincony-relays.json');
 
         // -- get house shutters
-        status.Shutters.House.F1.W1 = houseBitmask & Number('0b0000000000000001');
-        status.Shutters.House.F1.W2 = (houseBitmask & Number('0b0000000000000010')) >> 1;
-        status.Shutters.House.F1.W3 = (houseBitmask & Number('0b0000000000000100')) >> 2;
-        status.Shutters.House.F1.W4 = (houseBitmask & Number('0b0000000000001000')) >> 3;
-        status.Shutters.House.F1.W5 = (houseBitmask & Number('0b0000000000010000')) >> 4;
-        status.Shutters.House.F1.W6 = (houseBitmask & Number('0b0000000000100000')) >> 5;
-        status.Shutters.House.F1.W7 = (houseBitmask & Number('0b0000000001000000')) >> 6;
+        status.Shutters.House.F1.W1 = houseShuttersBitmask & Number('0b0000000000000001');
+        status.Shutters.House.F1.W2 = (houseShuttersBitmask & Number('0b0000000000000010')) >> 1;
+        status.Shutters.House.F1.W3 = (houseShuttersBitmask & Number('0b0000000000000100')) >> 2;
+        status.Shutters.House.F1.W4 = (houseShuttersBitmask & Number('0b0000000000001000')) >> 3;
+        status.Shutters.House.F1.W5 = (houseShuttersBitmask & Number('0b0000000000010000')) >> 4;
+        status.Shutters.House.F1.W6 = (houseShuttersBitmask & Number('0b0000000000100000')) >> 5;
+        status.Shutters.House.F1.W7 = (houseShuttersBitmask & Number('0b0000000001000000')) >> 6;
 
-        status.Shutters.House.F2.W1 = (houseBitmask & Number('0b0000000010000000')) >> 7;
-        status.Shutters.House.F2.W2 = (houseBitmask & Number('0b0000000100000000')) >> 8;
-        status.Shutters.House.F2.W3 = (houseBitmask & Number('0b0000001000000000')) >> 9;
-        status.Shutters.House.F2.W4 = (houseBitmask & Number('0b0000010000000000')) >> 10;
-        status.Shutters.House.F2.W5 = (houseBitmask & Number('0b0000100000000000')) >> 11;
-        status.Shutters.House.F2.W6 = (houseBitmask & Number('0b0001000000000000')) >> 12;
-        status.Shutters.House.F2.W7 = (houseBitmask & Number('0b0010000000000000')) >> 13;
-        status.Shutters.House.F2.W8 = (houseBitmask & Number('0b0100000000000000')) >> 14;
-        status.Shutters.House.F2.W9 = (houseBitmask & Number('0b1000000000000000')) >> 15;
+        status.Shutters.House.F2.W1 = (houseShuttersBitmask & Number('0b0000000010000000')) >> 7;
+        status.Shutters.House.F2.W2 = (houseShuttersBitmask & Number('0b0000000100000000')) >> 8;
+        status.Shutters.House.F2.W3 = (houseShuttersBitmask & Number('0b0000001000000000')) >> 9;
+        status.Shutters.House.F2.W4 = (houseShuttersBitmask & Number('0b0000010000000000')) >> 10;
+        status.Shutters.House.F2.W5 = (houseShuttersBitmask & Number('0b0000100000000000')) >> 11;
+        status.Shutters.House.F2.W6 = (houseShuttersBitmask & Number('0b0001000000000000')) >> 12;
+        status.Shutters.House.F2.W7 = (houseShuttersBitmask & Number('0b0010000000000000')) >> 13;
+        status.Shutters.House.F2.W8 = (houseShuttersBitmask & Number('0b0100000000000000')) >> 14;
+        status.Shutters.House.F2.W9 = (houseShuttersBitmask & Number('0b1000000000000000')) >> 15;
+
+        // -- get house main fusebox relays
+        status.Relays.House.MainFuseBox.R1 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000001')) >> 0;
+        status.Relays.House.MainFuseBox.R2 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000010')) >> 1;
+        status.Relays.House.MainFuseBox.R3 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000100')) >> 2;
+        status.Relays.House.MainFuseBox.R4 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000001000')) >> 3;
+        status.Relays.House.MainFuseBox.R5 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000010000')) >> 4;
+        status.Relays.House.MainFuseBox.R6 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000100000')) >> 5;
+        status.Relays.House.MainFuseBox.R7 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000001000000')) >> 6;
+        status.Relays.House.MainFuseBox.R8 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000010000000')) >> 7;
+        status.Relays.House.MainFuseBox.R9 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000100000000')) >> 8;
+        status.Relays.House.MainFuseBox.R10 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000010000000000')) >> 9;
+        status.Relays.House.MainFuseBox.R11 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000100000000000')) >> 10;
+        status.Relays.House.MainFuseBox.R12 = (houseMainFuseBoxBitmask & Number('0b00000000000000000001000000000000')) >> 11;
+        status.Relays.House.MainFuseBox.R13 = (houseMainFuseBoxBitmask & Number('0b00000000000000000010000000000000')) >> 12;
+        status.Relays.House.MainFuseBox.R14 = (houseMainFuseBoxBitmask & Number('0b00000000000000000100000000000000')) >> 13;
+        status.Relays.House.MainFuseBox.R15 = (houseMainFuseBoxBitmask & Number('0b00000000000000001000000000000000')) >> 14;
+        status.Relays.House.MainFuseBox.R16 = (houseMainFuseBoxBitmask & Number('0b00000000000000010000000000000000')) >> 15;
+        status.Relays.House.MainFuseBox.R17 = (houseMainFuseBoxBitmask & Number('0b00000000000000100000000000000000')) >> 16;
 
         // -- get garage shutters
         status.Shutters.Garage.W1 = garageBitmask & Number('0b0000000000000001');           // Window 1: SW1 (1)
@@ -74,15 +102,17 @@ async function updateStatus(statusUpdate)
                                 newStatus.Shutters.House.F2 = { ...newStatus.Shutters.House.F2, ...statusUpdate.Shutters.House.F2 };
                 }
 
-                if (statusUpdate.Shutters.Garage !== undefined) {
+                if (statusUpdate.Shutters.Garage !== undefined) 
                         newStatus.Shutters.Garage = { ...newStatus.Shutters.Garage, ...statusUpdate.Shutters.Garage };
-                }
         }
 
         if (statusUpdate.Relays !== undefined) {
 
                 if (statusUpdate.Relays.Garage !== undefined)
                         newStatus.Relays.Garage = { ...newStatus.Relays.Garage, ...statusUpdate.Relays.Garage};
+
+                if (statusUpdate.Relays.House !== undefined && statusUpdate.Relays.House.MainFuseBox !== undefined)
+                        newStatus.Relays.House.MainFuseBox = { ...newStatus.Relays.House.MainFuseBox, ...statusUpdate.Relays.House.MainFuseBox}
         } 
 
         const isInvalid = (value) => isNaN(value) || (value != 0 && value != 1);
@@ -106,28 +136,45 @@ async function updateStatus(statusUpdate)
                 isInvalid(newStatus.Shutters.House.F1.W2) || 
                 isInvalid(newStatus.Shutters.House.F1.W1) || 
 
-                // -- left old way to see if above ^^^ works well, to be replaced after testing
-                isNaN(newStatus.Shutters.Garage.W1) || (newStatus.Shutters.Garage.W1 != 0 && newStatus.Shutters.Garage.W1 != 1) ||
-                isNaN(newStatus.Shutters.Garage.W2) || (newStatus.Shutters.Garage.W2 != 0 && newStatus.Shutters.Garage.W2 != 1) ||
-                isNaN(newStatus.Shutters.Garage.W3) || (newStatus.Shutters.Garage.W3 != 0 && newStatus.Shutters.Garage.W3 != 1) ||
+                isInvalid(newStatus.Shutters.Garage.W1) || 
+                isInvalid(newStatus.Shutters.Garage.W2) || 
+                isInvalid(newStatus.Shutters.Garage.W3) || 
 
-                isNaN(newStatus.Relays.Garage.R1) || (newStatus.Relays.Garage.R1 != 0 && newStatus.Relays.Garage.R1 != 1) ||
-                isNaN(newStatus.Relays.Garage.R2) || (newStatus.Relays.Garage.R2 != 0 && newStatus.Relays.Garage.R2 != 1) ||
-                isNaN(newStatus.Relays.Garage.R3) || (newStatus.Relays.Garage.R3 != 0 && newStatus.Relays.Garage.R3 != 1) ||
-                isNaN(newStatus.Relays.Garage.R4) || (newStatus.Relays.Garage.R4 != 0 && newStatus.Relays.Garage.R4 != 1) ||
-                isNaN(newStatus.Relays.Garage.R5) || (newStatus.Relays.Garage.R5 != 0 && newStatus.Relays.Garage.R5 != 1) ||
-                isNaN(newStatus.Relays.Garage.R6) || (newStatus.Relays.Garage.R6 != 0 && newStatus.Relays.Garage.R6 != 1) ||
-                isNaN(newStatus.Relays.Garage.R7) || (newStatus.Relays.Garage.R7 != 0 && newStatus.Relays.Garage.R7 != 1) ||
-                isNaN(newStatus.Relays.Garage.R8) || (newStatus.Relays.Garage.R8 != 0 && newStatus.Relays.Garage.R8 != 1) ||
-                isNaN(newStatus.Relays.Garage.R9) || (newStatus.Relays.Garage.R9 != 0 && newStatus.Relays.Garage.R9 != 1) ||
-                isNaN(newStatus.Relays.Garage.R10) || (newStatus.Relays.Garage.R10 != 0 && newStatus.Relays.Garage.R10 != 1) ||
-                isNaN(newStatus.Relays.Garage.R11) || (newStatus.Relays.Garage.R11 != 0 && newStatus.Relays.Garage.R11 != 1) ||
-                isNaN(newStatus.Relays.Garage.R12) || (newStatus.Relays.Garage.R12 != 0 && newStatus.Relays.Garage.R12 != 1) ||
-                isNaN(newStatus.Relays.Garage.R13) || (newStatus.Relays.Garage.R13 != 0 && newStatus.Relays.Garage.R13 != 1)
+                isInvalid(newStatus.Relays.Garage.R1) ||
+                isInvalid(newStatus.Relays.Garage.R2) ||
+                isInvalid(newStatus.Relays.Garage.R3) ||
+                isInvalid(newStatus.Relays.Garage.R4) ||
+                isInvalid(newStatus.Relays.Garage.R5) ||
+                isInvalid(newStatus.Relays.Garage.R6) ||
+                isInvalid(newStatus.Relays.Garage.R7) ||
+                isInvalid(newStatus.Relays.Garage.R8) ||
+                isInvalid(newStatus.Relays.Garage.R9) ||
+                isInvalid(newStatus.Relays.Garage.R10) ||
+                isInvalid(newStatus.Relays.Garage.R11) ||
+                isInvalid(newStatus.Relays.Garage.R12) ||
+                isInvalid(newStatus.Relays.Garage.R13) ||
+
+                isInvalid(newStatus.Relays.House.MainFuseBox.R1) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R2) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R3) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R4) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R5) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R6) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R7) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R8) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R9) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R10) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R11) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R12) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R13) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R14) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R15) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R16) ||
+                isInvalid(newStatus.Relays.House.MainFuseBox.R17)
         )
                 return Promise.reject('Invalid status requested.');
 
-        let houseBitmask =
+        let houseShuttersBitmask =
                 newStatus.Shutters.House.F2.W9 << 15 |
                 newStatus.Shutters.House.F2.W8 << 14 |
                 newStatus.Shutters.House.F2.W7 << 13 |
@@ -166,17 +213,42 @@ async function updateStatus(statusUpdate)
                 newStatus.Relays.Garage.R12 << 14 |     // Relay 12: SW15 (15)
                 newStatus.Relays.Garage.R13 << 15;      // Relay 13: SW16 (16)
 
+        let houseMainFuseBoxBitmask =
+                newStatus.Relays.House.MainFuseBox.R1 |
+                newStatus.Relays.House.MainFuseBox.R2 << 1 |
+                newStatus.Relays.House.MainFuseBox.R3 << 2 |
+                newStatus.Relays.House.MainFuseBox.R4 << 3 |
+                newStatus.Relays.House.MainFuseBox.R5 << 4 |
+                newStatus.Relays.House.MainFuseBox.R6 << 5 |
+                newStatus.Relays.House.MainFuseBox.R7 << 6 |
+                newStatus.Relays.House.MainFuseBox.R8 << 7 |
+                newStatus.Relays.House.MainFuseBox.R9 << 8 |
+                newStatus.Relays.House.MainFuseBox.R10 << 9 |
+                newStatus.Relays.House.MainFuseBox.R11 << 10 |
+                newStatus.Relays.House.MainFuseBox.R12 << 11 |
+                newStatus.Relays.House.MainFuseBox.R13 << 12 |
+                newStatus.Relays.House.MainFuseBox.R14 << 13 |
+                newStatus.Relays.House.MainFuseBox.R15 << 14 |
+                newStatus.Relays.House.MainFuseBox.R16 << 15 |
+                newStatus.Relays.House.MainFuseBox.R17 << 16;
 
         return Promise.all([
-                setKinconyRelays(config.houseShuttersController.port, config.houseShuttersController.host, houseBitmask),
-                setKinconyRelays(config.garageController.port, config.garageController.host, garageBitmask)
+                setKinconyRelays(config.houseShuttersController.port, 
+                        config.houseShuttersController.host, config.houseShuttersController.channels, houseShuttersBitmask),
+                setKinconyRelays(config.garageController.port, 
+                        config.garageController.host, config.garageController.channels, garageBitmask),
+                setKinconyRelays(config.houseMainFuseBoxController.port,
+                        config.houseMainFuseBoxController.host, config.houseMainFuseBoxController.channels, houseMainFuseBoxBitmask)
         ]);
 }
 
 // Read all Relays' states
 // see https://www.kincony.com/download/KC868-Hx-Smart-Controller-Protocol-V20.0.1.pdf
-async function getKinconyRelays(kinconyPort, kinconyHost)
+async function getKinconyRelays(kinconyPort, kinconyHost, kinconyChannels)
 {
+        if (kinconyChannels !== 16 && kinconyChannels !== 32)
+                return Promise.reject(`Invalid channels number: ${kinconyChannels}`);
+
         return new Promise((resolved, rejected) => {
                 let client = net.createConnection(kinconyPort, kinconyHost, () => {
                         client.write('RELAY-STATE-255');
@@ -190,12 +262,28 @@ async function getKinconyRelays(kinconyPort, kinconyHost)
                                 if (data[data.length-1] == 0)
                                 {
                                         client.destroy();
-                                        // Successful result looks like: RELAY-STATE-255,0,2,OK
                                         let list = result.split(',');
-                                        if (list[0] == 'RELAY-STATE-255' && list[3].startsWith('OK'))
-                                                resolved((list[1] << 8) | list[2]);
-                                        else
-                                                rejected(result);
+
+                                        switch (kinconyChannels) {
+                                                case 16:
+                                                        // Successful result looks like: RELAY-STATE-255,0,2,OK
+                                                        if (list[0] == 'RELAY-STATE-255' && list[3].startsWith('OK'))
+                                                                resolved((list[1] << 8) | list[2]);
+                                                        else 
+                                                                rejected(result);
+                                                        break;
+                                        
+                                                case 32:
+                                                        /* Successful result looks like: 
+                                                                RELAY-STATE-255,D3,D2,D1,D0,OK - Read successed
+                                                                RELAY-STATE-255,D3,D2,D1,D0,ERROR - Read failed
+                                                        */
+                                                        if (list[0] == 'RELAY-STATE-255' && list[5].startsWith('OK'))
+                                                                resolved((list[1] << 24) | list[2] << 16 | list[3] << 8 | list[4]);
+                                                        else
+                                                                rejected(result);
+                                                        break;
+                                        }
                                 }
                         });
                 });
@@ -203,17 +291,34 @@ async function getKinconyRelays(kinconyPort, kinconyHost)
 }
 
 // Set multiple relays
-async function setKinconyRelays(kinconyPort, kinconyHost, bitmask)
+async function setKinconyRelays(kinconyPort, kinconyHost, kinconyChannels, bitmask)
 {
         // first, validate input
-        if (isNaN(bitmask) || bitmask < 0 || bitmask > Number('0xFFFF'))
+        if (isNaN(bitmask))
                 return Promise.reject('Invalid status requested.');
+
+        if (kinconyChannels !== 16 && kinconyChannels !== 32)
+                return Promise.reject(`Invalid channels number: ${kinconyChannels}`);
 
         return new Promise((resolved, rejected) => {
                 let client = net.createConnection(kinconyPort, kinconyHost, () => {
-                        let h = (bitmask & Number('0xFF00')) >> 8;
-                        let l = bitmask & Number('0xFF');
-                        client.write(`RELAY-SET_ALL-255,${h},${l}`);
+                        switch (kinconyChannels) {
+                                case 16:
+                                        // RELAY-SET_ALL-255,D1,D0
+                                        let h = (bitmask & Number('0xFF00')) >> 8;
+                                        let l = bitmask & Number('0xFF');
+                                        client.write(`RELAY-SET_ALL-255,${h},${l}`);
+                                        break;
+
+                                case 32:
+                                        // RELAY-SET_ALL-255,D3,D2,D1,D0
+                                        let hh = (bitmask & Number('0xFF000000')) >> 24;
+                                        let lh = (bitmask & Number('0x00FF0000')) >> 16;
+                                        let hl = (bitmask & Number('0xFF00')) >> 8;
+                                        let ll = bitmask & Number('0xFF');
+                                        client.write(`RELAY-SET_ALL-255,${hh},${lh},${hl},${ll}`);
+                                        break;
+                        }
                 });
 
                 let result = '';

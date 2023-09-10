@@ -106,12 +106,40 @@ describe('Kincony gate tests:', function() {
 
         describe('Relay lines tests:', function() {
 
+                let houseRelays01 = {
+                        Relays: {
+                                House: { 
+                                        MainFuseBox: { 
+                                                R1: 0, R2: 1, R3: 0, R4: 1, R5: 0, R6: 1, R7: 0, R8: 1, R9: 0, R10: 1, R11: 0, R12: 1, R13: 0, R14: 1, R15: 0, R16: 1, R17: 0 
+                                        }
+                                }
+                        }
+                };
+
+                let houseRelays10 = {
+                        Relays: {
+                                House: { 
+                                        MainFuseBox: { 
+                                                R1: 1, R2: 0, R3: 1, R4: 0, R5: 1, R6: 0, R7: 1, R8: 0, R9: 1, R10: 0, R11: 1, R12: 0, R13: 1, R14: 0, R15: 1, R16: 0, R17: 1 
+                                        }
+                                }
+                        }
+                };
+
                 it.skip('Can update garage relays to 0101010...', function() {
                         return canSetTo(garageRelays01);
                 });
 
                 it.skip('Can update garage relays to 1010101...', function() {
                         return canSetTo(garageRelays10);
+                });
+
+                it.skip('Can update house main fusebox to 010101...', function() {
+                        return canSetTo(houseRelays01);
+                });
+
+                it.skip('Can update house main fusebox to 101010...', function() {
+                        return canSetTo(houseRelays10);
                 });
         });
 });

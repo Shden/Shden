@@ -334,10 +334,21 @@ async function setKinconyRelays(kinconyPort, kinconyHost, kinconyChannels, bitma
                                 // Successful result looks like: RELAY-SET_ALL-255,D1,D0,OK
                                 // console.log(result);
                                 let list = result.split(',');
-                                if (list[0] == 'RELAY-SET_ALL-255' && list[3].startsWith('OK'))
-                                        resolved();
-                                else
-                                        rejected(result);
+                                switch (kinconyChannels) {
+                                        case 16:
+                                                if (list[0] == 'RELAY-SET_ALL-255' && list[3].startsWith('OK'))
+                                                        resolved();
+                                                else
+                                                        rejected(result);
+                                                break;
+                                
+                                        case 32:
+                                                if (list[0] == 'RELAY-SET_ALL-255' && list[5].startsWith('OK'))
+                                                        resolved();
+                                                else
+                                                        rejected(result);
+                                                break;
+                                }
                         }
                 });
         });

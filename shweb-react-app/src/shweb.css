@@ -25,7 +25,7 @@
 .power-val
 {
         font-size: 24px;
-        color: black;
+        color: rgb(255, 162, 0);;
 }
 .status-val
 {
@@ -35,4 +35,16 @@
 .c3-chart-arcs-background
 {
         fill: #e0e0e0;
-} 
+}
+.c3-chart-arc text {
+        fill: rgb(255, 162, 0);
+}
+.c3-chart-arcs-gauge-min {
+        fill: gray;
+}
+.c3-chart-arcs-gauge-max {
+        fill: gray;
+}
+.c3-legend-item {
+        fill: white;
+}

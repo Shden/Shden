@@ -4,6 +4,8 @@ import Menu from './Menu';
 import Container from 'react-bootstrap/esm/Container';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { Link }  from "react-router-dom";
+
 import numeral from 'numeral';
 import c3 from 'c3';
 import RingLoader from 'react-spinners/RingLoader';
@@ -196,7 +198,7 @@ class HouseStatus extends React.Component {
                                                 <TemperaturePanel label="На улице:" temperature={this.state.outsideTemp}/>
                                         </Container>
                                         <Container>
-                                                <a href="/MonitorPanel">Панель мониторинга</a>
+                                                <Link to="MonitorPanel">Панель мониторинга</Link>
                                         </Container>        
                                         <RingLoader color='green' size={100} loading={this.state.loading} cssOverride={spinner}/>                                
                                 </Container>

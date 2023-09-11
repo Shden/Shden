@@ -15,9 +15,8 @@ function Menu() {
                                         <Nav className="me-auto">
                                                 <Nav.Link href="/">Состояние дома</Nav.Link>
                                                 <NavDropdown title="Климат" id="basic-nav-dropdown">
-                                                        <NavDropdown.Item href="#schedule">Таймер отопления</NavDropdown.Item>
-                                                        <NavDropdown.Item href="#temperature">Температурный график</NavDropdown.Item>
-                                                        <NavDropdown.Item href="#humidity">Уровень влажности</NavDropdown.Item>
+                                                        <NavDropdown.Item href="/Temperature">Температурный график</NavDropdown.Item>
+                                                        <NavDropdown.Item href="/Humidity">График уровня влажности</NavDropdown.Item>
                                                         <NavDropdown.Item href="#ventilation">Вентиляция</NavDropdown.Item>
                                                         <NavDropdown.Divider />
                                                         <NavDropdown.Item href="#config">Настройки</NavDropdown.Item>

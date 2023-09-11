@@ -200,7 +200,7 @@ class HouseStatus extends React.Component {
                                         <Container>
                                                 <Link to="MonitorPanel">Панель мониторинга</Link>
                                         </Container>        
-                                        <RingLoader color='green' size={100} loading={this.state.loading} cssOverride={spinner}/>                                
+                                        <RingLoader color='green' size={100} loading={this.state.loading} cssOverride={spinner}/>  
                                 </Container>
                         </Container>
                 );

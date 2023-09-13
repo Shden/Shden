@@ -5,10 +5,11 @@ import Container from 'react-bootstrap/esm/Container';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link }  from "react-router-dom";
+import Spinner from './Spinner';
+import GetAPIURL from './API';
 
 import numeral from 'numeral';
 import c3 from 'c3';
-import RingLoader from 'react-spinners/RingLoader';
 
 function TemperaturePanel(props)
 {
@@ -39,14 +40,14 @@ function PowerGauge(props)
                 bindto: "#chart",
                 data: {
                         columns: [
-                                ['Нагрузка', props.powerConsumption]
+                                ['Расход сейчас', props.powerConsumption]
                         ],
                         type: 'gauge'
                 },
                 gauge: {
                         label: {
                                 format: function(value, ratio) {
-                                        return (value !== undefined) ? numeral(value).format('0.00') + ' кВт' : '--.--';
+                                        return (value !== undefined) ? numeral(value).format('0.00') + ' кВт/ч' : '--.--';
                                 },
                                 show: true // to turn off the min/max labels.
                         },
@@ -79,8 +80,8 @@ class HouseStatus extends React.Component {
                         mode: 1,
                         powerConsumption: 0
                 };
-                this.houseStatusEndpointUrl = 'https://ec2-3-74-4-26.eu-central-1.compute.amazonaws.com/API/1.2/status/HouseStatus';
-                this.houseModeEndopointUrl = 'https://ec2-3-74-4-26.eu-central-1.compute.amazonaws.com/API/1.2/status/HouseMode';
+                this.houseStatusEndpointUrl = GetAPIURL('status/HouseStatus');
+                this.houseModeEndopointUrl = GetAPIURL('status/HouseMode');
                 this.modeMenu = {
                         '1' : {
                                 name: 'Режим присутствия',
@@ -101,14 +102,14 @@ class HouseStatus extends React.Component {
         
         }
 
-        set wheelVisible(_showWheel)
+        set loading(_loading)
         {
-                this.setState({ loading: _showWheel });
+                this.setState({ loading: _loading });
         }
 
-        updateForm()
+        loadFormData()
         {
-                this.wheelVisible = true;
+                this.loading = true;
                 fetch(this.houseStatusEndpointUrl)
                         .then((response) => response.json())
                         .then((houseStatus) => {
@@ -120,7 +121,7 @@ class HouseStatus extends React.Component {
                                         powerConsumption: houseStatus.powerStatus.S.sum/1000,
                                         todayConsumption: houseStatus.powerStatus.PT.ap
                                 });
-                                this.wheelVisible = false;
+                                this.loading = false;
                         });
         }
 
@@ -129,7 +130,7 @@ class HouseStatus extends React.Component {
                 if (!window.confirm('Меняем режим?')) return;
                 
                 console.log(newMode);
-                this.wheelVisible = true;
+                this.loading = true;
                 fetch(this.houseModeEndopointUrl, { 
                         method: 'PUT',
                         body: JSON.stringify({ mode: newMode}),
@@ -139,9 +140,9 @@ class HouseStatus extends React.Component {
                 })
                         .then(response => response.json())
                         .then(data => {
-                                this.wheelVisible = false;
+                                this.loading = false;
                                 console.log(data);
-                                if (data.config.modeId == newMode)
+                                if (data.config.modeId === newMode)
                                 {
                                         alert(`Помняли режим на: ${data.config.modeDescription}.`);
                                 }
@@ -155,23 +156,13 @@ class HouseStatus extends React.Component {
 
         componentDidMount() 
         {
-                this.updateForm();
+                this.loadFormData();
                 var t = this;
-                setInterval(function(){t.updateForm()}, 30000);
+                setInterval(function(){t.loadFormData()}, 30000);
         }
 
         render() 
         {
-                const spinner = {
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        width: "100px",
-                        height: "100px",
-                        marginTop: "-50px", /*set to a negative number 1/2 of your height*/
-                        marginLeft: "-50px" /*set to a negative number 1/2 of your width*/
-                };
-
                 return (
                         <Container>
 
@@ -182,7 +173,7 @@ class HouseStatus extends React.Component {
                                                 <DropdownButton title={this.modeMenu[this.state.mode].name} variant={this.modeMenu[this.state.mode].variant} size="lg">
                                                 {
                                                         [1, 0, 2].map(item => {
-                                                                if (item != this.state.mode) return (
+                                                                if (item !== this.state.mode) return (
                                                                         <Dropdown.Item key={item} eventKey={item} onClick={() => this.setHouseMode(item)}>
                                                                                 {this.modeMenu[item].transitionName}
                                                                         </Dropdown.Item>);
@@ -190,7 +181,7 @@ class HouseStatus extends React.Component {
                                                 }
                                                 </DropdownButton>
                                                 <MainsStatus status={this.state.mainsSwitch}/>
-                                                Расход сегодня: <span id="power_today" className="power-val">{numeral(this.state.todayConsumption).format('0.0') + ' кВт/ч'}</span>
+                                                Расход сегодня: <span className="power-val">{numeral(this.state.todayConsumption).format('0.0') + ' кВт/ч'}</span>
                                                 <PowerGauge powerConsumption={this.state.powerConsumption}/>
                                         </Container>
                                         <Container>
@@ -199,8 +190,8 @@ class HouseStatus extends React.Component {
                                         </Container>
                                         <Container>
                                                 <Link to="MonitorPanel">Панель мониторинга</Link>
-                                        </Container>        
-                                        <RingLoader color='green' size={100} loading={this.state.loading} cssOverride={spinner}/>  
+                                        </Container>
+                                        <Spinner loading={this.state.loading}/>  
                                 </Container>
                         </Container>
                 );

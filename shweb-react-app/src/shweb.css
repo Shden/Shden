@@ -48,3 +48,11 @@
 .c3-legend-item {
         fill: white;
 }
+.config-row {
+        padding-top: 4px;
+        padding-bottom: 4px;
+}
+.config-row-header {
+        padding-top: 6px;
+        text-align: right;
+}

@@ -19,7 +19,7 @@ function Menu() {
                                                         <NavDropdown.Item href="/Humidity">График уровня влажности</NavDropdown.Item>
                                                         <NavDropdown.Item href="#ventilation">Вентиляция</NavDropdown.Item>
                                                         <NavDropdown.Divider />
-                                                        <NavDropdown.Item href="#config">Настройки</NavDropdown.Item>
+                                                        <NavDropdown.Item href="/ClimateConfig">Настройки</NavDropdown.Item>
                                                 </NavDropdown>
                                                 <Nav.Link href="#lighting">Освещение</Nav.Link>
                                                 <Nav.Link href="#lighting">Роллеты</Nav.Link>

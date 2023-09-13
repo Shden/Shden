@@ -33,6 +33,7 @@ function Menu() {
                                                         <NavDropdown.Item href="#schedule">Монитор системы полива</NavDropdown.Item>
                                                         <NavDropdown.Item href="https://app.hydrawise.com/config/dashboard">Hydrawise</NavDropdown.Item>
                                                 </NavDropdown>
+                                                <Nav.Link href="https://ec2-3-74-4-26.eu-central-1.compute.amazonaws.com/API/1.2/status/HouseStatus">House API</Nav.Link>
                                         </Nav>
                                 </Navbar.Collapse>
                         </Container>

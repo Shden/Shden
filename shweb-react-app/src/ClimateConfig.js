@@ -3,9 +3,9 @@ import './shweb.css';
 import Menu from './Menu';
 import Container from 'react-bootstrap/esm/Container';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from './Spinner';
@@ -52,65 +52,69 @@ export default class ClimateConfig extends React.Component {
                 return (
                         <Container>
                                 <Menu/>
-                                <h1>Настройка климата</h1>
-                                <Alert variant='success' hidden={!(this.state.validated && this.state.valid)}>Настройки климата сохранены.</Alert>
-                                <Alert variant='danger' hidden={!(this.state.validated && !this.state.valid)}>Невозможно сохранить настройки климата.</Alert>
-                                <Form noValidate validated={this.state.validated} onSubmit={e => this.updateConfiguration(e)}>
-                                        <Container>
-                                                <Row className='config-row'>
-                                                        <Col md="3"></Col>
-                                                        <Col>Присутствие</Col>
-                                                        <Col>Краткосрочное ожидание</Col>
-                                                        <Col>Долгосрочное ожидание</Col>
-                                                </Row>
-                                                <Row className='config-row'>
-                                                        <Col className='config-row-header' md="3">Пол в сауне</Col>
-                                                        <Col>
-                                                                <TemperatureInput
-                                                                        value={this.state.saunaFloorTemp}
-                                                                        onChange={e => this.setState({ saunaFloorTemp: e.target.value })}/>
-                                                        </Col>
-                                                        <Col>
-                                                                <TemperatureInput
-                                                                        value={this.state.saunaFloorTempShortStandBy}
-                                                                        onChange={e => this.setState({ saunaFloorTempShortStandBy: e.target.value })}/>
-                                                        </Col>
-                                                        <Col>
-                                                                <TemperatureInput
-                                                                        value={this.state.saunaFloorTempLongStandBy}
-                                                                        onChange={e => this.setState({ saunaFloorTempLongStandBy: e.target.value })}/>
-                                                        </Col>
-                                                </Row>
-                                                <Row className='config-row'>
-                                                        <Col className='config-row-header' md="3">Пол в холле первого этажа</Col>
-                                                        <Col>
-                                                                <TemperatureInput 
-                                                                        value={this.state.house1FloorTemp}
-                                                                        onChange={(e) => this.setState({ house1FloorTemp: e.target.value })}/>
-                                                        </Col>
-                                                        <Col>
-                                                                <TemperatureInput defaultValue="0"/>
-                                                        </Col>
-                                                        <Col>
-                                                                <TemperatureInput defaultValue="0"/>
-                                                        </Col>
-                                                </Row>
-                                                <Row className='config-row'>
-                                                        <Col className='config-row-header' md="3">Система отопления</Col>
-                                                        <Col>
-                                                                <TemperatureInput defaultValue="0"/>
-                                                        </Col>
-                                                        <Col>
-                                                                <TemperatureInput defaultValue="0"/>
-                                                        </Col>
-                                                        <Col>
-                                                                <TemperatureInput defaultValue="0"/>
-                                                        </Col>
-                                                </Row>
-                                        </Container>
-                                        <Button type='submit'>Сохранить настройки</Button>
-                                </Form>
-                                <Spinner loading={this.state.loading}/>
+                                <Row className="justify-content-md-center">
+                                        <Col md='10'>
+                                                <h1>Настройка климата</h1>
+                                                <Alert variant='success' hidden={!(this.state.validated && this.state.valid)}>Настройки климата сохранены.</Alert>
+                                                <Alert variant='danger' hidden={!(this.state.validated && !this.state.valid)}>Невозможно сохранить настройки климата.</Alert>
+                                                <Form noValidate validated={this.state.validated} onSubmit={e => this.updateConfiguration(e)}>
+                                                        <Container>
+                                                                <Row className='config-row'>
+                                                                        <Col md="3"></Col>
+                                                                        <Col>Присутствие</Col>
+                                                                        <Col>Краткосрочное ожидание</Col>
+                                                                        <Col>Долгосрочное ожидание</Col>
+                                                                </Row>
+                                                                <Row className='config-row'>
+                                                                        <Col className='config-row-header' md="3">Пол в сауне</Col>
+                                                                        <Col>
+                                                                                <TemperatureInput
+                                                                                        value={this.state.saunaFloorTemp}
+                                                                                        onChange={e => this.setState({ saunaFloorTemp: e.target.value })}/>
+                                                                        </Col>
+                                                                        <Col>
+                                                                                <TemperatureInput
+                                                                                        value={this.state.saunaFloorTempShortStandBy}
+                                                                                        onChange={e => this.setState({ saunaFloorTempShortStandBy: e.target.value })}/>
+                                                                        </Col>
+                                                                        <Col>
+                                                                                <TemperatureInput
+                                                                                        value={this.state.saunaFloorTempLongStandBy}
+                                                                                        onChange={e => this.setState({ saunaFloorTempLongStandBy: e.target.value })}/>
+                                                                        </Col>
+                                                                </Row>
+                                                                <Row className='config-row'>
+                                                                        <Col className='config-row-header' md="3">Пол в холле первого этажа</Col>
+                                                                        <Col>
+                                                                                <TemperatureInput
+                                                                                        value={this.state.house1FloorTemp}
+                                                                                        onChange={(e) => this.setState({ house1FloorTemp: e.target.value })}/>
+                                                                        </Col>
+                                                                        <Col>
+                                                                                <TemperatureInput defaultValue="0"/>
+                                                                        </Col>
+                                                                        <Col>
+                                                                                <TemperatureInput defaultValue="0"/>
+                                                                        </Col>
+                                                                </Row>
+                                                                <Row className='config-row'>
+                                                                        <Col className='config-row-header' md="3">Система отопления</Col>
+                                                                        <Col>
+                                                                                <TemperatureInput defaultValue="0"/>
+                                                                        </Col>
+                                                                        <Col>
+                                                                                <TemperatureInput defaultValue="0"/>
+                                                                        </Col>
+                                                                        <Col>
+                                                                                <TemperatureInput defaultValue="0"/>
+                                                                        </Col>
+                                                                </Row>
+                                                        </Container>
+                                                        <Button type='submit'>Сохранить настройки</Button>
+                                                </Form>
+                                                <Spinner loading={this.state.loading}/>
+                                        </Col>
+                                </Row>
                         </Container>
                 );
         }

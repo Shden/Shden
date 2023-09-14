@@ -6,6 +6,7 @@ import HouseStatus from './HouseStatus';
 import MonitorPanel from './MonitorPanel';
 import ClimateConfig from './ClimateConfig';
 import PowerMeter from './PowerMeter';
+import Lighting from './Lighting';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -18,6 +19,7 @@ export default function App() {
                                 <Route path="/Temperature" element={<MonitorPanel src="https://ec2-3-74-4-26.eu-central-1.compute.amazonaws.com/grafana/d/X8fZOHLMk/panel--monitoringa?orgId=1&refresh=1h&from=now-1d&to=now&viewPanel=2"/>}/>
                                 <Route path="/Humidity" element={<MonitorPanel src="https://ec2-3-74-4-26.eu-central-1.compute.amazonaws.com/grafana/d/X8fZOHLMk/panel--monitoringa?orgId=1&refresh=1h&from=now-1d&to=now&viewPanel=10"/>}/>
                                 <Route path="/ClimateConfig" element={<ClimateConfig/>}/>
+                                <Route path="/Lighting" element={<Lighting/>}/>
                                 <Route path="/PowerMeter" element={<PowerMeter/>}/>
                                 <Route path="/PowerMonitor" element={<MonitorPanel src="https://ec2-3-74-4-26.eu-central-1.compute.amazonaws.com/grafana/d/X8fZOHLMk/panel--monitoringa?orgId=1&refresh=1h&viewPanel=4&from=now-1d&to=now"/>}/>
                         </Routes>

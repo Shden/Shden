@@ -165,12 +165,10 @@ class HouseStatus extends React.Component {
         {
                 return (
                         <Container>
-
                                 <Menu/>
-                                <br/>
                                 <Container align="center">
                                         <Container>
-                                                <DropdownButton title={this.modeMenu[this.state.mode].name} variant={this.modeMenu[this.state.mode].variant} size="lg">
+                                                <DropdownButton title={this.modeMenu[this.state.mode].name} variant={this.modeMenu[this.state.mode].variant} size="lg" className='padding-after-32'>
                                                 {
                                                         [1, 0, 2].map(item => {
                                                                 if (item !== this.state.mode) return (

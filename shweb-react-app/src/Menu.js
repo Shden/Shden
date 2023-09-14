@@ -7,7 +7,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 function Menu() {
         return (
                 // <!-- Static navbar -->
-                <Navbar className="navbar navbar-expand-lg navbar-dark bg-dark">
+                <Navbar className="navbar navbar-expand-lg navbar-dark bg-dark padding-after-32">
                         <Container>
                                 <Navbar.Brand href="#">Брод</Navbar.Brand>
                                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -25,7 +25,7 @@ function Menu() {
                                                 <Nav.Link href="#lighting">Роллеты</Nav.Link>
                                                 <Nav.Link href="#lighting">Ворота</Nav.Link>
                                                 <NavDropdown title="Электроэнергия" id="basic-nav-dropdown">
-                                                        <NavDropdown.Item href="#schedule">Электросчетчик</NavDropdown.Item>
+                                                        <NavDropdown.Item href="/PowerMeter">Электросчетчик</NavDropdown.Item>
                                                         <NavDropdown.Item href="#temperature">Статистика</NavDropdown.Item>
                                                         <NavDropdown.Item href="#humidity">Монитор</NavDropdown.Item>
                                                 </NavDropdown>

@@ -30,6 +30,7 @@ function TemperatureInput(props)
                 </InputGroup>
         );
 }
+
 export default class ClimateConfig extends React.Component {
 
         constructor(props) 
@@ -51,8 +52,7 @@ export default class ClimateConfig extends React.Component {
                 return (
                         <Container>
                                 <Menu/>
-                                <br/>
-                                <h3>Настройка климата</h3>
+                                <h1>Настройка климата</h1>
                                 <Alert variant='success' hidden={!(this.state.validated && this.state.valid)}>Настройки климата сохранены.</Alert>
                                 <Alert variant='danger' hidden={!(this.state.validated && !this.state.valid)}>Невозможно сохранить настройки климата.</Alert>
                                 <Form noValidate validated={this.state.validated} onSubmit={e => this.updateConfiguration(e)}>

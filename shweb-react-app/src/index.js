@@ -19,6 +19,7 @@ export default function App() {
                                 <Route path="/Humidity" element={<MonitorPanel src="https://ec2-3-74-4-26.eu-central-1.compute.amazonaws.com/grafana/d/X8fZOHLMk/panel--monitoringa?orgId=1&refresh=1h&from=now-1d&to=now&viewPanel=10"/>}/>
                                 <Route path="/ClimateConfig" element={<ClimateConfig/>}/>
                                 <Route path="/PowerMeter" element={<PowerMeter/>}/>
+                                <Route path="/PowerMonitor" element={<MonitorPanel src="https://ec2-3-74-4-26.eu-central-1.compute.amazonaws.com/grafana/d/X8fZOHLMk/panel--monitoringa?orgId=1&refresh=1h&viewPanel=4&from=now-1d&to=now"/>}/>
                         </Routes>
                 </BrowserRouter>
         );

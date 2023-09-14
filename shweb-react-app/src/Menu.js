@@ -27,7 +27,7 @@ function Menu() {
                                                 <NavDropdown title="Электроэнергия" id="basic-nav-dropdown">
                                                         <NavDropdown.Item href="/PowerMeter">Электросчетчик</NavDropdown.Item>
                                                         <NavDropdown.Item href="#temperature">Статистика</NavDropdown.Item>
-                                                        <NavDropdown.Item href="#humidity">Монитор</NavDropdown.Item>
+                                                        <NavDropdown.Item href="/PowerMonitor">Монитор</NavDropdown.Item>
                                                 </NavDropdown>
                                                 <NavDropdown title="Полив" id="basic-nav-dropdown">
                                                         <NavDropdown.Item href="#schedule">Монитор системы полива</NavDropdown.Item>

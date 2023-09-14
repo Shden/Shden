@@ -3,12 +3,9 @@ import './shweb.css';
 import Menu from './Menu';
 import Container from 'react-bootstrap/esm/Container';
 import Table from 'react-bootstrap/Table';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import Numeral from 'react-numeral';
 import Spinner from './Spinner';
 import GetAPIURL from './API';
 
@@ -41,14 +38,8 @@ export default class PowerMeter extends React.Component {
                 fetch(this.powerMeterDataEndPointURL)
                         .then((response) => response.json())
                         .then((powerData) => {
-                                // this.setState({
-                                //         outsideTemp: houseStatus.oneWireStatus.temperatureSensors.outsideTemp,
-                                //         insideTemp: houseStatus.oneWireStatus.temperatureSensors.bedroom,
-                                //         mainsSwitch: houseStatus.oneWireStatus.switches.mainsSwitch,
-                                //         mode: houseStatus.config.modeId,
-                                //         powerConsumption: houseStatus.powerStatus.S.sum/1000,
-                                //         todayConsumption: houseStatus.powerStatus.PT.ap
-                                // });
+                                this.setState(powerData);
+                                console.log(this.state);
                                 this.loading = false;
                         });
         }
@@ -59,6 +50,8 @@ export default class PowerMeter extends React.Component {
                         <Container>
                                 <Menu/>
                                 <h1>Данные электросчетчика</h1>
+                                <Alert variant='success' hidden={!(this.state.mainsStatus === 1)}>Все в порядке: работает внешнее сетевое электропитание.</Alert>
+                                <Alert variant='danger' hidden={!(this.state.mainsStatus !== 1)}>Сбой: работает источник резервного электропитания, сетевое электропитание отсутвует.</Alert>
                                 <h3>Мгновенные значения:</h3>
                                 <Table striped bordered hover>
                                         <thead>
@@ -72,54 +65,50 @@ export default class PowerMeter extends React.Component {
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td className="first">Внешнее электропитание:</td>
-                                                        <td id="mainsStatus" colSpan="4"/>
-                                                </tr>
-                                                <tr>
                                                         <td className="first">Напряжение сети (В):</td>
-                                                        <td id="U-p1"/>
-                                                        <td id="U-p2"/>
-                                                        <td id="U-p3"/>
+                                                        <td align='right'><Numeral value={this.state?.U?.p1} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.U?.p2} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.U?.p3} format={'0.00'}/></td>
                                                         <td></td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">Ток потребления (А):</td>
-                                                        <td id="I-p1"/>
-                                                        <td id="I-p2"/>
-                                                        <td id="I-p3"/>
+                                                        <td align='right'><Numeral value={this.state?.I?.p1} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.I?.p2} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.I?.p3} format={'0.00'}/></td>
                                                         <td></td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">Коэффициент мощности (cos(f)):</td>
-                                                        <td id="CosF-p1"/>
-                                                        <td id="CosF-p2"/>
-                                                        <td id="CosF-p3"/>
-                                                        <td id="CosF-sum"/>
+                                                        <td align='right'><Numeral value={this.state?.CosF?.p1} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.CosF?.p2} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.CosF?.p3} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.CosF?.sum} format={'0.00'}/></td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">Угол сдвига фаз:</td>
-                                                        <td id="A-p1"/>
-                                                        <td id="A-p2"/>
-                                                        <td id="A-p3"/>
+                                                        <td align='right'><Numeral value={this.state?.A?.p1} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.A?.p2} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.A?.p3} format={'0.00'}/></td>
                                                         <td></td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">Текущая активная мощность (Вт):</td>
-                                                        <td id="P-p1"/>
-                                                        <td id="P-p2"/>
-                                                        <td id="P-p3"/>
-                                                        <td id="P-sum"/>
+                                                        <td align='right'><Numeral value={this.state?.P?.p1} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.P?.p2} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.P?.p3} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.P?.sum} format={'0.00'}/></td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">Текущая реактивная мощность (Вт):</td>
-                                                        <td id="S-p1"/>
-                                                        <td id="S-p2"/>
-                                                        <td id="S-p3"/>
-                                                        <td id="S-sum"/>
+                                                        <td align='right'><Numeral value={this.state?.S?.p1} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.S?.p2} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.S?.p3} format={'0.00'}/></td>
+                                                        <td align='right'><Numeral value={this.state?.S?.sum} format={'0.00'}/></td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">Частота сети (Гц):</td>
-                                                        <td colSpan="4" id="F"/>
+                                                        <td colSpan="4" align='right'><Numeral value={this.state?.F} format={'0.00'}/></td>
                                                 </tr>
                                         </tbody>
                                 </Table>
@@ -135,28 +124,28 @@ export default class PowerMeter extends React.Component {
                                         <tbody>
                                                 <tr>
                                                         <td className="first">Всего:</td>
-                                                        <td><span id="PR-ap">...</span>&nbsp;кВт</td>
+                                                        <td align='right'><Numeral value={this.state?.PR?.ap} format={'0,0.00'}/>&nbsp;кВт</td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">&nbsp;&nbsp;из них по дневному тарифу:</td>
-                                                        <td><span id="PR-day-ap">...</span>&nbsp;кВт</td>
+                                                        <td align='right'><Numeral value={this.state?.['PR-day']?.ap} format={'0,0.00'}/>&nbsp;кВт</td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">&nbsp;&nbsp;из них по ночному тарифу:</td>
-                                                        <td><span id="PR-night-ap">...</span>&nbsp;кВт</td>
+                                                        <td align='right'><Numeral value={this.state?.['PR-night']?.ap} format={'0,0.00'}/>&nbsp;кВт</td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">Вчера:</td>
-                                                        <td><span id="PY-ap">...</span>&nbsp;кВт</td>
+                                                        <td align='right'><Numeral value={this.state?.PY?.ap} format={'0,0.00'}/>&nbsp;кВт</td>
                                                 </tr>
                                                 <tr>
                                                         <td className="first">Сегодня:</td>
-                                                        <td><span id="PT-ap">...</span>&nbsp;кВт</td>
+                                                        <td align='right'><Numeral value={this.state?.PT?.ap} format={'0,0.00'}/>&nbsp;кВт</td>
                                                 </tr>
                                         </tbody>
                                 </Table>
                                 <br/>
-                                <Button onClick={this.loadFormData}>Обновить</Button>
+                                <Button onClick={() => this.loadFormData()}>Обновить</Button>
                                 <Spinner loading={this.state.loading}/> 
                         </Container>
                 )

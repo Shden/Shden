@@ -75,40 +75,6 @@ async function GetTempStatistics(days)
         }
 }
 
-async function GetHeatingSchedule()
-{
-        function getConfigDate(status, name)
-        {
-                if (status !== undefined && status.config !== undefined && status.config.schedule !== undefined)
-                        return status.config.schedule[name];
-                return new Date(0);
-        }
-
-        let houseStatus = await houseAPI.getStatus();
-        let schedule = require('../models/heatingSchedule.json');
-
-        schedule.from = getConfigDate(houseStatus, 'arrival');
-        schedule.to = getConfigDate(houseStatus, 'departure');
-        schedule.active = (new Date(schedule.to) > new Date()) ? 1 : 0;
-
-        return schedule;
-}
-
-async function SetHeatingSchedlue(arrival, departure)
-{
-        let configUpdate = {
-                config: {
-                        schedule: {
-                                arrival: arrival,
-                                departure: departure
-                        }
-                }
-        };
-
-        await houseAPI.updateStatus(configUpdate);
-        return await GetHeatingSchedule();
-}
-
 async function GetConfiguration()
 {
         let houseStatus = await houseAPI.getStatus();
@@ -142,8 +108,6 @@ async function SetBathVentilationOn(duration)
 exports.GetTempHistory = GetTempHistory;
 exports.GetHumidityHistory = GetHumidityHistory;
 exports.GetTempStatistics = GetTempStatistics;
-exports.GetHeatingSchedule = GetHeatingSchedule;
-exports.SetHeatingSchedlue = SetHeatingSchedlue;
 exports.GetConfiguration = GetConfiguration;
 exports.UpdateConfiguration = UpdateConfiguration;
 exports.SetBathVentilationOn = SetBathVentilationOn;

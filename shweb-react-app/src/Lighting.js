@@ -368,9 +368,28 @@ export default class Lighting extends React.Component {
                 )
         }
 
-        applianceStatusUpdate(d)
+        applianceStatusUpdate(event)
         {
-                console.log(d);    
+                console.log(event);     
+                var changeStatusURL = GetAPIURL("lighting/ChangeStatus") + "/" + event.applianceId + "/" + event.newState;
+
+                console.log(this.state);
+
+                this.loading = true;
+                console.log(222);
+
+                fetch(changeStatusURL, { 
+                        method: 'PUT',
+                        // headers: {
+                        //         "Content-type": "application/json; charset=UTF-8"
+                        // }
+                })
+                        .then(() => {
+                                this.loading = false;
+                                //this.setState({ [event.applianceId]: event.newState });
+                        })
+                        .catch(error => alert('Ошибка: ' + error));
+
         }
 }
 

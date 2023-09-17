@@ -1,7 +1,7 @@
 const config = require('../config/api-config.json');
 const ShWadeAPI = require('../../../../houseAPI/shwadeAPI');
 const climateService = require('./climate');
-const HouseMode = require('./id');
+const HouseMode = require('./id').HouseMode;
 
 let houseAPI = new ShWadeAPI(config.houseAPIorigin);
 

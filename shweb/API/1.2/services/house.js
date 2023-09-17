@@ -16,7 +16,7 @@ async function SetMode(newMode)
 {
         let updateRequest = new HouseState().gotoMode(newMode).updateRequest;
         // climate changes goes from climate service - apply the same pattern elsewhere
-        updateRequest.config = (await climateService.GetModeChangeUpdate(newMode)).config;
+        updateRequest.config.heating = (await climateService.GetModeChangeUpdate(newMode)).config.heating;
         return houseAPI.updateStatus(updateRequest);
 }
 

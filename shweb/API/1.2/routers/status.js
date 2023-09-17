@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const House = require('../services/house');
+const HouseMode = require('../services/id').HouseMode;
 const HTTPStatus = require('http-status-codes').StatusCodes;
 
 /**
@@ -28,9 +29,9 @@ router.put('/HouseMode', async function(req, res) {
 
         let changeStatusRequest = req.body;
         if (changeStatusRequest.mode === undefined || (
-                changeStatusRequest.mode != House.HouseMode.PRESENCE_MODE && 
-                changeStatusRequest.mode != House.HouseMode.SHORTTERM_STANDBY && 
-                changeStatusRequest.mode != House.HouseMode.LONGTERM_STANDBY))
+                changeStatusRequest.mode != HouseMode.PRESENCE_MODE && 
+                changeStatusRequest.mode != HouseMode.SHORTTERM_STANDBY && 
+                changeStatusRequest.mode != HouseMode.LONGTERM_STANDBY))
         {
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid mode request (${JSON.stringify(changeStatusRequest)}).`);
                 return;

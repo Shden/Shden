@@ -1,5 +1,5 @@
 const HouseState = require('../API/1.2/services/house').HouseState;
-const HouseMode = require('../API/1.2/services/house').HouseMode;
+const HouseMode = require('../API/1.2/services/id').HouseMode;
 
 describe('HouseState tests', function() {
 
@@ -7,12 +7,12 @@ describe('HouseState tests', function() {
                 console.log(new HouseState().allLightsOff().updateRequest);
         });
 
-        it('closeShutters(1)', function() {
-                console.log(new HouseState().closeShutters(1).updateRequest);
+        it('homeCloseShutters(1)', function() {
+                console.log(new HouseState().homeCloseShutters(1).updateRequest);
         });
 
-        it('closeShutters(2)', function() {
-                console.log(new HouseState().closeShutters(2).updateRequest);
+        it('homeCloseShutters(2)', function() {
+                console.log(new HouseState().homeCloseShutters(2).updateRequest);
         });
 
         it('goto PRESENCE_MODE', function() {

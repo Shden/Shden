@@ -1,6 +1,7 @@
 const DB = require('mariadb');
 const config = require('../config/api-config.json');
 const ShWadeAPI = require('../../../../houseAPI/shwadeAPI');
+const HouseMode = require('./id').HouseMode;
 
 let dbConnectionPool = DB.createPool(config.DBConnection);
 let houseAPI = new ShWadeAPI(config.houseAPIorigin);
@@ -91,6 +92,73 @@ async function UpdateConfiguration(config)
         return await houseAPI.updateStatus(updateRequest);
 }
 
+// Returns climate settings change object as required for house mode given.
+// Currently includes floor temperature setpoint updates (sauna and hall).
+async function GetModeChangeUpdate(newMode)
+{
+        // "config": {
+        //         "mode": "presence",
+        //         "heating": {
+        //           "saunaFloorTemp": 28,
+        //           "saunaFloorTempShortStandBy": 25,
+        //           "saunaFloorTempLongStandBy": 5,
+        //           "house1FloorTemp": 23,
+        //           "saunaFloor": {
+        //             "setPoint": 28,
+        //             "settings": {
+        //               "presence": 28,
+        //               "shortTermStandby": 18,
+        //               "longTermStandby": 5
+        //             }
+        //           },
+        //           "hallFloor": {
+        //             "setPoint": 23,
+        //             "settings": {
+        //               "presence": 23,
+        //               "shortTermStandby": 18,
+        //               "longTermStandby": 5
+        //             }
+        //           }
+        //         },
+        //         "modeDescription": "Presence mode",
+        //         "modeId": 1
+        //       },
+
+        let config = await GetConfiguration();
+
+        const zoneModeSetPoint =  (mode, zone) => {
+
+                switch(mode) {
+                        case HouseMode.PRESENCE_MODE:
+                                return config.heating[zone]?.settings?.presence ?? 22;
+
+                        case HouseMode.SHORTTERM_STANDBY:
+                                return config.heating[zone]?.settings?.shortTermStandby ?? 15;
+
+                        case HouseMode.LONGTERM_STANDBY:
+                                return config.heating[zone]?.settings?.longTermStandby ?? 5;
+
+                        default:
+                                throw(`Invalid mode requested: ${mode}.`);
+                }
+        }
+        
+        let updateRequest = {
+                config: {
+                        heating: {
+                                saunaFloor: {
+                                        setPoint: zoneModeSetPoint(newMode, 'saunaFloor')
+                                },
+                                hallFloor: {
+                                        setPoint: zoneModeSetPoint(newMode, 'hallFloor')
+                                }
+                        }
+                }
+        }
+
+        return updateRequest;
+}
+
 async function SetBathVentilationOn(duration)
 {
         // just turns on -- temporary implementation
@@ -111,3 +179,4 @@ exports.GetTempStatistics = GetTempStatistics;
 exports.GetConfiguration = GetConfiguration;
 exports.UpdateConfiguration = UpdateConfiguration;
 exports.SetBathVentilationOn = SetBathVentilationOn;
+exports.GetModeChangeUpdate = GetModeChangeUpdate;

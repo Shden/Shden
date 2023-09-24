@@ -22,7 +22,7 @@ function Menu() {
                                                         <NavDropdown.Item href="/ClimateConfig">Настройки</NavDropdown.Item>
                                                 </NavDropdown>
                                                 <Nav.Link href="/Lighting">Освещение</Nav.Link>
-                                                <Nav.Link href="#lighting">Роллеты</Nav.Link>
+                                                <Nav.Link href="/Shutters">Роллеты</Nav.Link>
                                                 <Nav.Link href="#lighting">Ворота</Nav.Link>
                                                 <NavDropdown title="Электроэнергия" id="basic-nav-dropdown">
                                                         <NavDropdown.Item href="/PowerMeter">Электросчетчик</NavDropdown.Item>

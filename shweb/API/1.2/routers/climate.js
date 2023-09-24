@@ -146,6 +146,10 @@ router.get('/Configuration', async function(req, res)
 /**
  *      Update house configuration data.
  *      Note: this probably should be moved to Status(?).
+ * 
+ *      Note 2: instead of bulk updating the whole 'configuration' 
+ *      which can lead to issues, this method should be replaced
+ *      with more granular calls e.g. update setting x to a.
  *
  *      PUT /Configuration
  */

@@ -6,9 +6,6 @@ import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Button from 'react-bootstrap/Button';
-import Badge from 'react-bootstrap/Badge';
-import Alert from 'react-bootstrap/Alert';
-import Numeral from 'react-numeral';
 import Spinner from './Spinner';
 import GetAPIURL from './API';
 
@@ -18,13 +15,16 @@ export default class Lighting extends React.Component {
         {
                 super(props);
                 this.lightingDataEndPointURL = GetAPIURL("lighting/GetStatus");
+
+                // applianceStatusUpdate will have access to this.
+                this.applianceStatusUpdate = this.applianceStatusUpdate.bind(this);
         }
 
         componentDidMount() 
         {
                 this.loadFormData();
                 var t = this;
-                // setInterval(function(){t.loadFormData()}, 30000);
+                setInterval(function(){t.loadFormData()}, 30000);
         }
 
         set loading(_loading)
@@ -57,7 +57,8 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <th className="bg-secondary">Уличное освещение:</th>
                                                                         <th className="bg-secondary">
-                                                                                <Button onClick="moveAll(0);" variant="warning">Погасить все</Button>
+                                                                                {/* API for group operations needed first
+                                                                                <Button onClick="moveAll(0);" variant="warning">Погасить все</Button> */}
                                                                         </th>
                                                                 </tr>
                                                         </thead>
@@ -99,7 +100,8 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <th className="bg-secondary">Дом:</th>
                                                                         <th className="bg-secondary">
-                                                                                <Button onClick="moveAll(0);" variant="warning">Погасить все</Button>
+                                                                                {/* API for group operations needed first
+                                                                                <Button onClick="moveAll(0);" variant="warning">Погасить все</Button> */}
                                                                         </th>
                                                                 </tr>
                                                         </thead>
@@ -107,7 +109,8 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <th className="bg-secondary">Первый этаж:</th>
                                                                         <th className="bg-secondary">
-                                                                                <Button onClick="moveFloor(1,0);" variant="warning">Погасить все</Button>
+                                                                                {/* API for group operations needed first
+                                                                                <Button onClick="moveFloor(1,0);" variant="warning">Погасить все</Button> */}
                                                                         </th>
                                                                 </tr>
                                                         </thead>
@@ -219,7 +222,8 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <th className="bg-secondary">Второй этаж:</th>
                                                                         <th className="bg-secondary">
-                                                                                <Button onClick="moveFloor(1,0);" variant="warning">Погасить все</Button>
+                                                                                {/* API for group operations needed first
+                                                                                <Button onClick="moveFloor(1,0);" variant="warning">Погасить все</Button> */}
                                                                         </th>
                                                                 </tr>
                                                         </thead>
@@ -322,7 +326,8 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <th className="bg-secondary">Гараж:</th>
                                                                         <th className="bg-secondary">
-                                                                                <Button onClick="notimplementedyet();" variant="warning">Погасить все</Button>
+                                                                                {/* API for group operations needed first
+                                                                                <Button onClick="notimplementedyet();" variant="warning">Погасить все</Button> */}
                                                                         </th>
                                                                 </tr>
                                                         </thead>
@@ -372,11 +377,8 @@ export default class Lighting extends React.Component {
         {
                 console.log(event);     
                 var changeStatusURL = GetAPIURL("lighting/ChangeStatus") + "/" + event.applianceId + "/" + event.newState;
-
-                console.log(this.state);
-
+                // console.log(this.state);
                 this.loading = true;
-                console.log(222);
 
                 fetch(changeStatusURL, { 
                         method: 'PUT',
@@ -386,7 +388,7 @@ export default class Lighting extends React.Component {
                 })
                         .then(() => {
                                 this.loading = false;
-                                //this.setState({ [event.applianceId]: event.newState });
+                                this.setState({ [event.applianceId]: event.newState });
                         })
                         .catch(error => alert('Ошибка: ' + error));
 

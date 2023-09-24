@@ -38,8 +38,8 @@ export default class Lighting extends React.Component {
                 fetch(this.lightingDataEndPointURL)
                         .then((response) => response.json())
                         .then((lightingData) => {
+                                console.log(lightingData);
                                 this.setState(lightingData);
-                                console.log(this.state);
                                 this.loading = false;
                         });
         }

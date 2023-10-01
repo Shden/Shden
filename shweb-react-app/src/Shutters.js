@@ -16,15 +16,18 @@ export default class Lighting extends React.Component {
                 super(props);
                 this.shuttersDataEndPointURL = GetAPIURL("shutters/State");
 
-                // // applianceStatusUpdate will have access to this.
-                // this.applianceStatusUpdate = this.applianceStatusUpdate.bind(this);
+                // shutterStatusUpdate will have access to this.
+                this.shutterStatusUpdate = this.shutterStatusUpdate.bind(this);
+                // this.moveAll = this.moveAll.bind(this);
+                // this.moveFloor = this.moveFloor.bind(this);
+                // this.callAPI = this.callAPI.bind(this);
         }
 
         componentDidMount() 
         {
                 this.loadFormData();
                 var t = this;
-                // setInterval(function(){t.loadFormData()}, 30000);
+                setInterval(function(){t.loadFormData()}, 15000);
         }
 
         set loading(_loading)
@@ -57,8 +60,8 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <th className="bg-secondary">Дом:</th>
                                                                         <th className="bg-secondary">
-                                                                                <button type="button" onClick={this.moveAllTo0} className="btn btn-dark">Спустить все</button>
-                                                                                <button type="button" onClick={this.moveAllTo1} className="btn btn-warning">Поднять все</button>
+                                                                                <button type="button" onClick={() => this.moveAll(0)} className="btn btn-dark">Спустить все</button>
+                                                                                <button type="button" onClick={() => this.moveAll(1)} className="btn btn-warning">Поднять все</button>
                                                                         </th>
                                                                 </tr>
                                                         </thead>
@@ -66,8 +69,8 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <th className="bg-secondary">Первый этаж:</th>
                                                                         <th className="bg-secondary">
-                                                                                <button type="button" onClick={this.moveFloor1to0} className="btn btn-dark">Спустить все</button>
-                                                                                <button type="button" onClick={this.moveFloor1to1} className="btn btn-warning">Поднять все</button>
+                                                                                <button type="button" onClick={() => this.moveFloor(1, 0)} className="btn btn-dark">Спустить все</button>
+                                                                                <button type="button" onClick={() => this.moveFloor(1, 1)} className="btn btn-warning">Поднять все</button>
                                                                         </th>
                                                                 </tr>
                                                         </thead>
@@ -76,6 +79,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Гардеробная:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F1.W1}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F1" window="W1"/>
                                                                         </td>
                                                                 </tr>
@@ -83,6 +87,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Кухня:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F1.W2}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F1" window="W2"/>
                                                                         </td>
                                                                 </tr>
@@ -90,6 +95,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Кладовая около кухни:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F1.W3}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F1" window="W3"/>
                                                                         </td>
                                                                 </tr>
@@ -97,6 +103,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Кабинет Али:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F1.W4}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F1" window="W4"/>
                                                                         </td>
                                                                 </tr>
@@ -105,9 +112,11 @@ export default class Lighting extends React.Component {
                                                                         <td>
                                                                                 <ShutterButton
                                                                                         value={this.state?.House?.F1.W5}
+                                                                                        shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                         building="House" floor="F1" window="W5"/>
                                                                                 <ShutterButton
                                                                                         value={this.state?.House?.F1.W6}
+                                                                                        shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                         building="House" floor="F1" window="W6"/>
                                                                         </td>
                                                                 </tr>
@@ -115,6 +124,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Прихожая:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F1.W7}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F1" window="W7"/>
                                                                         </td>
                                                                 </tr>
@@ -123,8 +133,8 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <th className="bg-secondary">Второй этаж:</th>
                                                                         <th className="bg-secondary">
-                                                                                <button type="button" onClick={this.moveFloor2to0} className="btn btn-dark">Спустить все</button>
-                                                                                <button type="button" onClick={this.moveFloor2to1} className="btn btn-warning">Поднять все</button>
+                                                                                <button type="button" onClick={() => this.moveFloor(2, 0)} className="btn btn-dark">Спустить все</button>
+                                                                                <button type="button" onClick={() => this.moveFloor(2, 1)} className="btn btn-warning">Поднять все</button>
                                                                         </th>
                                                                 </tr>
                                                         </thead>
@@ -133,6 +143,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Ко-ливинг:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F2.W1}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F2" window="W1"/>
                                                                         </td>
                                                                 </tr>
@@ -140,6 +151,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Большая детская комната:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F2.W2}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F2" window="W2"/>
                                                                         </td>
                                                                 </tr>
@@ -147,6 +159,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Сашина комната:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F2.W3}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F2" window="W3"/>
                                                                         </td>
                                                                 </tr>
@@ -154,6 +167,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Холл:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F2.W4}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F2" window="W4"/>
                                                                         </td>
                                                                 </tr>
@@ -161,6 +175,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Кабинет:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F2.W5}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F2" window="W5"/>
                                                                         </td>
                                                                 </tr>
@@ -168,6 +183,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Маленькая детская:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.House?.F2.W6}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="House" floor="F2" window="W6"/>
                                                                         </td>
                                                                 </tr>
@@ -176,12 +192,15 @@ export default class Lighting extends React.Component {
                                                                         <td>
                                                                                 <ShutterButton
                                                                                         value={this.state?.House?.F2.W7}
+                                                                                        shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                         building="House" floor="F2" window="W7"/>
                                                                                 <ShutterButton
                                                                                         value={this.state?.House?.F2.W8}
+                                                                                        shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                         building="House" floor="F2" window="W8"/>
                                                                                 <ShutterButton
                                                                                         value={this.state?.House?.F2.W9}
+                                                                                        shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                         building="House" floor="F2" window="W9"/>
                                                                         </td>
                                                                 </tr>
@@ -190,8 +209,8 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <th className="bg-secondary">Гараж:</th>
                                                                         <th className="bg-secondary">
-                                                                                <button type="button" onClick={this.moveGarageTo0} className="btn btn-dark">Спустить все</button>
-                                                                                <button type="button" onClick={this.moveGarageTo1} className="btn btn-warning">Поднять все</button>
+                                                                                <button type="button" onClick={ () => this.moveFloor('garage', 0) } className="btn btn-dark">Спустить все</button>
+                                                                                <button type="button" onClick={ () => this.moveFloor('garage', 1) } className="btn btn-warning">Поднять все</button>
                                                                         </th>
                                                                 </tr>
                                                         </thead>
@@ -200,6 +219,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Дальнее окно:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.Garage?.W1}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="Garage" window="W1"/>
                                                                         </td>
                                                                 </tr>
@@ -207,6 +227,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Среднее окно:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.Garage?.W2}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="Garage" window="W2"/>
                                                                         </td>
                                                                 </tr>
@@ -214,6 +235,7 @@ export default class Lighting extends React.Component {
                                                                         <td>Ближнее окно:</td>
                                                                         <td><ShutterButton
                                                                                 value={this.state?.Garage?.W3}
+                                                                                shutterStatusUpdateCallback={this.shutterStatusUpdate}
                                                                                 building="Garage" window="W3"/>
                                                                         </td>
                                                                 </tr>
@@ -226,65 +248,131 @@ export default class Lighting extends React.Component {
                 )
         }
 
-        // applianceStatusUpdate(event)
-        // {
-        //         console.log(event);     
-        //         var changeStatusURL = GetAPIURL("lighting/ChangeStatus") + "/" + event.applianceId + "/" + event.newState;
-        //         // console.log(this.state);
-        //         this.loading = true;
-
-        //         fetch(changeStatusURL, { 
-        //                 method: 'PUT',
-        //                 // headers: {
-        //                 //         "Content-type": "application/json; charset=UTF-8"
-        //                 // }
-        //         })
-        //                 .then(() => {
-        //                         this.loading = false;
-        //                         this.setState({ [event.applianceId]: event.newState });
-        //                 })
-        //                 .catch(error => alert('Ошибка: ' + error));
-
-        // }
-
-        moveAllTo0()
+        shutterStatusUpdate(event)
         {
-
+                console.log(event);   
+                let req = { Shutters: { }};
+                if (event.building === 'House')
+                        req.Shutters.House = {[event.floor]: { [event.window]: event.newState }};
+                if (event.building === 'Garage')
+                        req.Shutters.Garage = { [event.window]: event.newState };
+                this.callAPI(req);
         }
 
-        moveAllTo1()
+        moveFloor(floor, newState)
         {
-
+                let req = { Shutters: { }};
+                if (floor === 1)
+                {
+                        req.Shutters.House = {};
+                        req.Shutters.House.F1 = {};
+                        req.Shutters.House.F1.W1 = newState;
+                        req.Shutters.House.F1.W2 = newState;
+                        req.Shutters.House.F1.W3 = newState;
+                        req.Shutters.House.F1.W4 = newState;
+                        req.Shutters.House.F1.W5 = newState;
+                        req.Shutters.House.F1.W6 = newState;
+                        req.Shutters.House.F1.W7 = newState;
+                }
+                if (floor === 2)
+                {
+                        req.Shutters.House = {};
+                        req.Shutters.House.F2 = {};
+                        req.Shutters.House.F2.W1 = newState;
+                        req.Shutters.House.F2.W2 = newState;
+                        req.Shutters.House.F2.W3 = newState;
+                        req.Shutters.House.F2.W4 = newState;
+                        req.Shutters.House.F2.W5 = newState;
+                        req.Shutters.House.F2.W6 = newState;
+                        req.Shutters.House.F2.W7 = newState;
+                        req.Shutters.House.F2.W8 = newState;
+                        req.Shutters.House.F2.W9 = newState;
+                }
+                if (floor === 'garage')
+                {
+                        req.Shutters.Garage = {};
+                        req.Shutters.Garage.W1 = newState;
+                        req.Shutters.Garage.W2 = newState;
+                        req.Shutters.Garage.W3 = newState;
+                }
+                this.callAPI(req);
         }
 
-        moveFloor1to0()
+        moveAll(newState)
         {
+                let req = { Shutters: { 
+                        House: {
+                                F1: {}, 
+                                F2: {}
+                        }, 
+                        Garage: {}}};
 
+                req.Shutters.House.F1.W1 = newState;
+                req.Shutters.House.F1.W2 = newState;
+                req.Shutters.House.F1.W3 = newState;
+                req.Shutters.House.F1.W4 = newState;
+                req.Shutters.House.F1.W5 = newState;
+                req.Shutters.House.F1.W6 = newState;
+                req.Shutters.House.F1.W7 = newState;
+
+                req.Shutters.House.F2.W1 = newState;
+                req.Shutters.House.F2.W2 = newState;
+                req.Shutters.House.F2.W3 = newState;
+                req.Shutters.House.F2.W4 = newState;
+                req.Shutters.House.F2.W5 = newState;
+                req.Shutters.House.F2.W6 = newState;
+                req.Shutters.House.F2.W7 = newState;
+                req.Shutters.House.F2.W8 = newState;
+                req.Shutters.House.F2.W9 = newState;
+
+                req.Shutters.Garage.W1 = newState;
+                req.Shutters.Garage.W2 = newState;
+                req.Shutters.Garage.W3 = newState;
+
+                this.callAPI(req);
         }
 
-        moveFloor1to1()
+        callAPI(req)
         {
+                console.log(req);
+                
+                var changeStatusURL = GetAPIURL("shutters/State");
+                // console.log(this.state);
+                this.loading = true;
 
-        }
+                fetch(changeStatusURL, { 
+                        method: 'PUT',
+                        body: JSON.stringify(req),
+                        headers: { "Content-type": "application/json; charset=UTF-8" }
+                })
+                .then(response => response.json())
+                .then(updatedStatus => {
+                        console.log('updated result:', updatedStatus);
+                        this.setState(updatedStatus);
+                })
+                .then(() => new Promise((resolve) => setTimeout(resolve, 15000)))
+                .then(() => this.loadFormData())
+                .then(() => this.loading = false)
+                .catch(error => alert('Ошибка: ' + error));
 
-        moveFloor2to0()
-        {
 
-        }
+                // $('#spinner').show();
+                // var spinner = createSpinner('spinner');
 
-        moveFloor2to1()
-        {
+                // $.ajax({
+                //         url: endpoint,
+                //         type: 'PUT',
+                //         contentType: 'application/json',
+                //         data: JSON.stringify(req),
+                //         success: function(data) {
 
-        }
+                //                 // console.log(data);
+                //                 refreshButtons(data);
 
-        moveGarageTo0()
-        {
-
-        }
-
-        moveGarageTo1()
-        {
-
+                //                 spinner.stop();
+                //                 $('#spinner').hide();
+                //         }
+                // });
         }
 }
 
@@ -294,7 +382,12 @@ function ShutterButton(props)
                 <Button 
                         variant={(props.value === 1) ? 'secondary' : 'warning'} 
                         size="lg" 
-                        onClick={(e) => props.applianceStatusUpdate({ applianceId: props.applianceId, newState: (props.value === 1) ? 0 : 1 })}> 
+                        onClick={(e) => props.shutterStatusUpdateCallback({ 
+                                building: props.building,
+                                floor: props.floor,
+                                window: props.window,
+                                newState: (props.value === 1) ? 0 : 1 
+                        })}> 
                         {(props.value === 1) ? 'Опустить' : 'Поднять'}
                 </Button>
         );

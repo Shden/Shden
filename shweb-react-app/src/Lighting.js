@@ -386,11 +386,11 @@ export default class Lighting extends React.Component {
                         //         "Content-type": "application/json; charset=UTF-8"
                         // }
                 })
-                        .then(() => {
-                                this.loading = false;
-                                this.setState({ [event.applianceId]: event.newState });
-                        })
-                        .catch(error => alert('Ошибка: ' + error));
+                .then(() => {
+                        this.loading = false;
+                        this.setState({ [event.applianceId]: event.newState });
+                })
+                .catch(error => alert('Ошибка: ' + error));
 
         }
 }

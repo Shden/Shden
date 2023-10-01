@@ -70,13 +70,41 @@ router.get('/Configuration', async function(req, res)
 
 /**
  *      Update house configuration data.
- *      Note: this probably should be moved to Status(?).
- *
+ * 
+ *      Note: this is deprecating method. UpdateHeatingSetting should be used
+ *      moving forward.
+ * 
  *      PUT /Configuration
  */
 router.put('/Configuration', async function(req, res)
 {
         res.json(await Climate.UpdateConfiguration(req.body));
+});
+
+router.put('/UpdateHeatingSetting/:heatingApplianceName/:modeName/:newTemperatureSetting', async function(req, res)
+{
+        let heatingApplianceName = req.params.heatingApplianceName;
+        if (heatingApplianceName !== "saunaFloor" && heatingApplianceName !== "hallFloor")
+        {
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid appliance name requested: (${heatingApplianceName})`);
+                return;
+        }
+
+        let heatingModeName = req.params.modeName;
+        if (heatingModeName !== "presence" && heatingModeName !== "shortTermStandby" && heatingModeName !== "longTermStandby")
+        {
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid mode name requested: (${heatingModeName})`);
+                return;
+        }
+
+        let newTemperatureSetting = req.params.newTemperatureSetting;
+        if (isNaN(newTemperatureSetting) || newTemperatureSetting < 0 || newTemperatureSetting > 50)
+        {
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid temperature setting requested: (${newTemperatureSetting})`);
+                return;
+        }
+
+        res.json(await Climate.UpdateHeatingSetting(heatingApplianceName, heatingModeName, newTemperatureSetting));
 });
 
 /**

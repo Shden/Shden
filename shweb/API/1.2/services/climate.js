@@ -159,6 +159,27 @@ async function GetModeChangeUpdate(newMode)
         return updateRequest;
 }
 
+/**
+ * Update temperature setting for specifc appliance and mode of house.
+ * Example: set hallFloor temperature for presence mode to 24 celsius.
+ */
+async function UpdateHeatingSetting(forApplianceName, forHouseMode, newTemperatureSetting)
+{
+        let updateRequest = {
+                config: {
+                        heating: {
+                                [forApplianceName]: {
+                                        settings: {
+                                                [forHouseMode]: Number(newTemperatureSetting)
+                                        }
+                                }
+                        }
+                }
+        };
+
+        return await houseAPI.updateStatus(updateRequest);
+}
+
 async function SetBathVentilationOn(duration)
 {
         // just turns on -- temporary implementation
@@ -180,3 +201,4 @@ exports.GetConfiguration = GetConfiguration;
 exports.UpdateConfiguration = UpdateConfiguration;
 exports.SetBathVentilationOn = SetBathVentilationOn;
 exports.GetModeChangeUpdate = GetModeChangeUpdate;
+exports.UpdateHeatingSetting = UpdateHeatingSetting;

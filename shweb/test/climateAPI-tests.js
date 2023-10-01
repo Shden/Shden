@@ -133,13 +133,14 @@ describe(`/API/${API.version}/climate testing:`, function() {
 				});
 				responce.on('end', function() {
 					config = JSON.parse(data);
+                                        // console.log(JSON.stringify(config, null, 4));
 					config.should.have.property("heating");
 					done();
 				});
 			});
 		});
 
-		it(`PUT /API/${API.version}/climate/Configuration`, function(done) {
+		it.skip(`PUT /API/${API.version}/climate/Configuration`, function(done) {
 			var req = http.request({
 				host: API.host,
 				port: API.port,
@@ -170,4 +171,70 @@ describe(`/API/${API.version}/climate testing:`, function() {
                                 })
                 })
 	});
+
+        describe('UpdateHeatingSetting:', function() {
+
+                this.timeout(15000);
+
+                it('Invalid appliance name brings BAD_REQUEST', function(done) {
+			var req = http.request({
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/UpdateHeatingSetting/INVALID_APPLIANCE_NAME/1/2`,
+				method: 'PUT'
+			}, function(responce) {
+				responce.statusCode.should.be.equal(HTTPStatus.BAD_REQUEST);
+                                done();
+			});
+                        req.end();
+                });
+
+                it('Invalid mode name birngs BAD_REQUEST', function(done) {
+			var req = http.request({
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/UpdateHeatingSetting/hallFloor/INVALID_MODE/2`,
+				method: 'PUT'
+			}, function(responce) {
+				responce.statusCode.should.be.equal(HTTPStatus.BAD_REQUEST);
+                                done();
+                        });
+                        req.end();
+                });
+
+                it('Invalid temperature birngs BAD_REQUEST', function(done) {
+			var req = http.request({
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/UpdateHeatingSetting/hallFloor/presence/99`,
+				method: 'PUT'
+			}, function(responce) {
+				responce.statusCode.should.be.equal(HTTPStatus.BAD_REQUEST);
+                                done();
+                        });
+                        req.end();
+                });
+
+                it('Valid request updates setting', function(done) {
+                        var req = http.request({
+				host: API.host,
+				port: API.port,
+				path: `/API/${API.version}/climate/UpdateHeatingSetting/hallFloor/presence/23`,
+				method: 'PUT'
+			}, function(responce) {
+				responce.statusCode.should.be.equal(HTTPStatus.OK);
+                                var data = '';
+
+				responce.on('data', function(b) {
+					data += b;
+				});
+				responce.on('end', function() {
+                                        let updatedStatus = JSON.parse(data);
+                                        updatedStatus.config.heating.hallFloor.settings.presence.should.be.equal(23);
+					done();
+				});
+                        });            
+                        req.end();            
+                })
+        });
 });

@@ -92,8 +92,12 @@ async function UpdateConfiguration(config)
         return await houseAPI.updateStatus(updateRequest);
 }
 
-// Returns climate settings change object as required for house mode given.
-// Currently includes floor temperature setpoint updates (sauna and hall).
+/**
+ * Returns climate setpoint change object as required to set house into the mode given.
+ * Currently includes floor temperature setpoint updates (sauna and hall).
+ * @param {*} newMode mode house will be set into.
+ * @returns house shadow update object to change house configuration as requested.
+ */
 async function GetModeChangeUpdate(newMode)
 {
         // "config": {
@@ -143,7 +147,7 @@ async function GetModeChangeUpdate(newMode)
                 }
         }
         
-        let updateRequest = {
+        let houseShadowUpdateRequest = {
                 config: {
                         heating: {
                                 saunaFloor: {
@@ -156,16 +160,24 @@ async function GetModeChangeUpdate(newMode)
                 }
         }
 
-        return updateRequest;
+        return houseShadowUpdateRequest;
 }
 
 /**
  * Update temperature setting for specifc appliance and mode of house.
  * Example: set hallFloor temperature for presence mode to 24 celsius.
+ * 
+ * @param {*} forApplianceName heating appliance name to update, currently
+ * only saunaFloor and hallFloor are availabla and supported.
+ * @param {*} forHouseMode mode name to update, one of "presence",
+ * "shortTermStandby" or "longTermStandby".
+ * @param {*} newTemperatureSetting temperature setting for given appliance
+ * and mode.
+ * @returns house shadow updated.
  */
 async function UpdateHeatingSetting(forApplianceName, forHouseMode, newTemperatureSetting)
 {
-        let updateRequest = {
+        let configUpdateRequest = {
                 config: {
                         heating: {
                                 [forApplianceName]: {
@@ -177,7 +189,7 @@ async function UpdateHeatingSetting(forApplianceName, forHouseMode, newTemperatu
                 }
         };
 
-        return await houseAPI.updateStatus(updateRequest);
+        return await houseAPI.updateStatus(configUpdateRequest);
 }
 
 async function SetBathVentilationOn(duration)

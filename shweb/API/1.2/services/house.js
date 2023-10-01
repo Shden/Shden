@@ -201,7 +201,7 @@ class HouseState
 
                 this.updateRequest.kinconyRelays.Shutters.Garage.W1 = state;
                 this.updateRequest.kinconyRelays.Shutters.Garage.W2 = state;
-                this.updateRequest.kinconyRelays.Shutters.GarageW3 = state;
+                this.updateRequest.kinconyRelays.Shutters.Garage.W3 = state;
 
                 return this;
         }

@@ -23,3 +23,20 @@ If calls to API/1.1 return 404, make sure:
 
 Check if http://localhost/API/1.1/status/GetStatus is working. If not, make sure
 MySQL is installed and SHDEN DB is available. More on MySQL in ../db/BUILD
+
+# API tests run
+
+## Testing configuration
+
+Edit `/Users/den/Shden/shweb/test/api-config.js` to configure whether local or cloud
+house shadow is used to run API tests agiainst. Simply, from Brod home I use local,
+from any other locations I use cloud.
+
+For cloud: "houseAPIorigin" : { "thingAPI": false }
+For local: "houseAPIorigin" : { "thingAPI": true }
+
+## Run specific test sute
+
+cd Shweb
+npm run test_1.2 [path to test sute] ## to run specific test suite
+example: npm run test_1.2 test/climateAPI-tests.js

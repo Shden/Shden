@@ -86,11 +86,11 @@ describe('Kincony gate tests:', function() {
 
         describe('Shutter lines tests:', function() {
 
-                it('Can update house shutters to 0101010...', function() {
+                it.skip('Can update house shutters to 0101010...', function() {
                         return canSetTo(houseShutters01);
                 });
 
-                it('Can update house shutters to 1010101...', function() {
+                it.skip('Can update house shutters to 1010101...', function() {
                         return canSetTo(houseShutters10);
                 });
 

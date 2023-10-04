@@ -70,8 +70,9 @@ mqttClient.on('message', (topic, message) =>
                 let s = config.devices.sensors[sensorAlias];
                 if (s.topic === topic)
                 {
-                        temperatureSensors[sensorAlias] = msg.temperature;
-                        console.log('Temperature update:', topic, msg.temperature);
+                        const temperatureUpdate = msg[s.field];
+                        temperatureSensors[sensorAlias] = temperatureUpdate;
+                        console.log('Temperature update:', topic, temperatureUpdate);
                 }
         }
 });

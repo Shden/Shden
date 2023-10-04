@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS heating (
 	kitchen 	DECIMAL(5,2),
 	bathroom 	DECIMAL(5,2),
 	sauna_floor	DECIMAL(5,2),
+        hall_1_floor    DECIMAL(5,2)
 	PRIMARY KEY(time));
 
 CREATE TABLE IF NOT EXISTS tariff (

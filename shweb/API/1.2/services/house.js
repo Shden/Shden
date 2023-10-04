@@ -1,14 +1,9 @@
 const config = require('../config/api-config.json');
 const ShWadeAPI = require('../../../../houseAPI/shwadeAPI');
+const climateService = require('./climate');
+const HouseMode = require('./id').HouseMode;
 
 let houseAPI = new ShWadeAPI(config.houseAPIorigin);
-
-// house modes enumeration
-const HouseMode = Object.freeze({ 
-        LONGTERM_STANDBY : 0,
-        PRESENCE_MODE : 1, 
-        SHORTTERM_STANDBY : 2
-});
 
 // Returns current house status
 async function GetHouseStatus() 
@@ -20,6 +15,8 @@ async function GetHouseStatus()
 async function SetMode(newMode)
 {
         let updateRequest = new HouseState().gotoMode(newMode).updateRequest;
+        // climate changes goes from climate service - apply the same pattern elsewhere
+        updateRequest.config.heating = (await climateService.GetModeChangeUpdate(newMode)).config.heating;
         return houseAPI.updateStatus(updateRequest);
 }
 
@@ -61,7 +58,6 @@ class HouseState
                                 this.updateRequest.oneWireStatus.switches.streetLight250 = 0;
                                 this.updateRequest.oneWireStatus.switches.ultrasonicSwitch = 1;
                                 this.updateRequest.oneWireStatus.switches.mainsSwitch = 0;
-                                // this.updateRequest.oneWireStatus.switches.fenceLight = 0;
 
                                 this.allLightsOff().homeCloseShutters(1).homeCloseShutters(2).garageCloseShutters();
 
@@ -205,7 +201,7 @@ class HouseState
 
                 this.updateRequest.kinconyRelays.Shutters.Garage.W1 = state;
                 this.updateRequest.kinconyRelays.Shutters.Garage.W2 = state;
-                this.updateRequest.kinconyRelays.Shutters.GarageW3 = state;
+                this.updateRequest.kinconyRelays.Shutters.Garage.W3 = state;
 
                 return this;
         }
@@ -216,6 +212,5 @@ if (typeof exports !== 'undefined')
 {
         exports.GetHouseStatus = GetHouseStatus;
         exports.SetMode = SetMode;
-        exports.HouseMode = HouseMode;
         exports.HouseState = HouseState;
 }

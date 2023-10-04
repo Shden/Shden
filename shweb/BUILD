@@ -28,7 +28,7 @@ MySQL is installed and SHDEN DB is available. More on MySQL in ../db/BUILD
 
 ## Testing configuration
 
-Edit /Users/den/Shden/shweb/test/api-config.js to configure whether local or cloud
+Edit `/Users/den/Shden/shweb/test/api-config.js` to configure whether local or cloud
 house shadow is used to run API tests agiainst. Simply, from Brod home I use local,
 from any other locations I use cloud.
 

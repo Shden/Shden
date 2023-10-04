@@ -81,10 +81,18 @@ router.put('/Configuration', async function(req, res)
         res.json(await Climate.UpdateConfiguration(req.body));
 });
 
+/**
+ *      Update temperature setting for specifc appliance and mode of house.
+ *      Example: set hallFloor temperature for presence mode to 24 celsius.
+ * 
+ *      :heatingApplianceName - heating appliance name to update.
+ *      :modeName - mode name to update, one of "presence", "shortTermStandby" or "longTermStandby".
+ *      :newTemperatureSetting - temperature setting for given appliance and mode.
+ */
 router.put('/UpdateHeatingSetting/:heatingApplianceName/:modeName/:newTemperatureSetting', async function(req, res)
 {
         let heatingApplianceName = req.params.heatingApplianceName;
-        if (heatingApplianceName !== "saunaFloor" && heatingApplianceName !== "hallFloor")
+        if (heatingApplianceName !== Climate.HeatingAppliance.SAUNA_FLOOR && heatingApplianceName !== Climate.HeatingAppliance.HALL_FLOOR)
         {
                 res.status(HTTPStatus.BAD_REQUEST).send(`Invalid appliance name requested: (${heatingApplianceName})`);
                 return;

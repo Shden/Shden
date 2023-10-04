@@ -6,6 +6,12 @@ const HouseMode = require('./id').HouseMode;
 let dbConnectionPool = DB.createPool(config.DBConnection);
 let houseAPI = new ShWadeAPI(config.houseAPIorigin);
 
+// Static names for heating appliances:
+const HeatingAppliance = Object.freeze({
+        SAUNA_FLOOR: "saunaFloor",
+        HALL_FLOOR: "hallFloor"
+});
+
 async function GetTempHistory(days)
 {
         let dbConnection = await dbConnectionPool.getConnection();
@@ -151,10 +157,10 @@ async function GetModeChangeUpdate(newMode)
                 config: {
                         heating: {
                                 saunaFloor: {
-                                        setPoint: zoneModeSetPoint(newMode, 'saunaFloor')
+                                        setPoint: zoneModeSetPoint(newMode, HeatingAppliance.SAUNA_FLOOR)
                                 },
                                 hallFloor: {
-                                        setPoint: zoneModeSetPoint(newMode, 'hallFloor')
+                                        setPoint: zoneModeSetPoint(newMode, HeatingAppliance.HALL_FLOOR)
                                 }
                         }
                 }
@@ -214,3 +220,4 @@ exports.UpdateConfiguration = UpdateConfiguration;
 exports.SetBathVentilationOn = SetBathVentilationOn;
 exports.GetModeChangeUpdate = GetModeChangeUpdate;
 exports.UpdateHeatingSetting = UpdateHeatingSetting;
+exports.HeatingAppliance = HeatingAppliance;

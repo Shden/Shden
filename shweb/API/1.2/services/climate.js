@@ -12,76 +12,6 @@ const HeatingAppliance = Object.freeze({
         HALL_FLOOR: "hallFloor"
 });
 
-async function GetTempHistory(days)
-{
-        let dbConnection = await dbConnectionPool.getConnection();
-        try
-        {
-                return await dbConnection.query(`\
-                        SELECT DATE_FORMAT(time, "%Y-%m-%d %H:00:00") as date, \
-                        AVG(external) as outTemp, (AVG(bedroom) + AVG(kitchen)) / 2 as inTemp, \
-                        AVG(bedroom) as bedroom, AVG(kitchen) as kitchen, \
-                        AVG(fluid_in) as heaterIn, AVG(fluid_out) as heaterOut, \
-                        AVG(sauna_floor) as saunaFloor, \
-                        AVG(hall_floor_1) as hall_floor_1, \
-                        AVG(hall_floor_2) as hall_floor_2, \
-                        AVG(hall_floor_3) as hall_floor_3 \
-                        FROM heating \
-                        WHERE time > DATE_ADD(NOW(), INTERVAL -${days} DAY) \
-                        GROUP BY HOUR(time), DATE(time) \ 
-                        ORDER BY DATE(time), HOUR(time);`);
-        }
-        finally
-        {
-                dbConnection.end();
-        }
-}
-
-async function GetHumidityHistory(days)
-{
-        let dbConnection = await dbConnectionPool.getConnection();
-        try
-        {
-                return await dbConnection.query(
-                        (days < 2)
-                        ?
-                                // all datapoints for shorter time periods
-                                `SELECT DATE_FORMAT(time, "%Y-%m-%d %H:%i:00") as date, bathroom \
-                                FROM humidity \
-                                WHERE time > DATE_ADD(NOW(), INTERVAL -${days} DAY) \
-                                ORDER BY time;`
-                        :
-                                // avg by hours for longer time periods
-                                `SELECT DATE_FORMAT(time, "%Y-%m-%d %H:%i:00") as date, AVG(bathroom) as bathroom \
-                                FROM humidity \
-                                WHERE time > DATE_ADD(NOW(), INTERVAL -${days} DAY) \
-                                GROUP BY HOUR(time), DATE(time) \
-                                ORDER BY DATE(time), HOUR(time);`
-
-                );
-        }
-        finally
-        {
-                dbConnection.end();
-        }
-}
-
-async function GetTempStatistics(days)
-{
-        let dbConnection = await dbConnectionPool.getConnection();
-        try
-        {
-                return await dbConnection.query(`\
-                        SELECT MIN(external), AVG(external), MAX(external), \
-                        MIN(control), AVG(control), MAX(control) \
-                        FROM heating WHERE time > DATE_SUB(NOW(), INTERVAL ${days} DAY);`);
-        }
-        finally
-        {
-                dbConnection.end();
-        }
-}
-
 async function GetConfiguration()
 {
         let houseStatus = await houseAPI.getStatus();
@@ -212,9 +142,6 @@ async function SetBathVentilationOn(duration)
         return await houseAPI.updateStatus(updateRequest);
 }
 
-exports.GetTempHistory = GetTempHistory;
-exports.GetHumidityHistory = GetHumidityHistory;
-exports.GetTempStatistics = GetTempStatistics;
 exports.GetConfiguration = GetConfiguration;
 exports.UpdateConfiguration = UpdateConfiguration;
 exports.SetBathVentilationOn = SetBathVentilationOn;

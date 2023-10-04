@@ -4,60 +4,6 @@ const HTTPStatus = require('http-status-codes').StatusCodes;
 const Climate = require('../services/climate');
 
 /**
- *	Return heating history hourly for the depth specified.
- *
- *	:days - history depth in days
- *
- *	GET /GetTempHistory/:days
- */
-router.get('/GetTempHistory/:days', async function(req, res) 
-{
-        let days = req.params.days;
-        if (isNaN(days) || days < 1 || days > 300) 
-        {
-                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid request parameter: (${days}).`);
-                return;
-        }
-        res.json(await Climate.GetTempHistory(Number(days)));
-});
-
-/**
- *	Return humidity history hourly for the depth specified.
- *
- *	:days - history depth in days
- *
- *	GET /GetHumidityHistory/:days
- */
-router.get('/GetHumidityHistory/:days', async function(req, res)
-{
-        let days = req.params.days;
-        if (isNaN(days) || days < 1 || days > 300)
-        {
-                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid request parameter: (${days}).`);
-                return;
-        }
-        res.json(await Climate.GetHumidityHistory(Number(days)));
-});
-
-/**
- *	Returns inside/outside min/avg/max values for the time period requested.
- *
- *	:days - period length from now to the past in days.
- *
- *	GET /GetTempStatistics/:days
- */
-router.get('/GetTempStatistics/:days', async function(req, res)
-{
-        let days = req.params.days;
-        if (isNaN(days) || days < 1 || days > 1000) 
-        {
-                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid request parameter: (${days}).`);
-                return;
-        }
-        res.json(await Climate.GetTempStatistics(Number(days)));
-});
-
-/**
  *      Return house configuration.
  *      Note: this probably should be moved to Status(?).
  *

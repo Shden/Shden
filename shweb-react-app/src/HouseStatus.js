@@ -2,6 +2,8 @@ import React from 'react';
 import './shweb.css';
 import Menu from './Menu';
 import Container from 'react-bootstrap/esm/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link }  from "react-router-dom";
@@ -20,7 +22,7 @@ function TemperaturePanel(props)
         let value = (props.temperature !== undefined) ? numeral(props.temperature).format("+0.0") + "°C" : "--.--";
 
         return  (
-                <span>{props.label}<span id="outside" className={classSpec}>{value}</span></span>);
+                <Col xs lg="4">{props.label}&nbsp;<span className={classSpec}>{value}</span></Col>);
 }
 
 function MainsStatus(props)
@@ -28,9 +30,9 @@ function MainsStatus(props)
         const [classSpec, value] = (props.status === 1) ? [ "mains-on", "Вкл." ] : [ "mains-off", "Выкл." ];
 
         return (
-                <h2>
+                <h1>
                         Электропитание: <span id="mains" className={classSpec}>{value}</span>
-                </h2>
+                </h1>
         );
 }
 
@@ -183,8 +185,10 @@ class HouseStatus extends React.Component {
                                                 <PowerGauge powerConsumption={this.state.powerConsumption}/>
                                         </Container>
                                         <Container>
-                                                <TemperaturePanel label="В&nbsp;доме:" temperature={this.state.insideTemp}/>
-                                                <TemperaturePanel label="На&nbsp;улице:" temperature={this.state.outsideTemp}/>
+                                                <Row className="justify-content-md-center">
+                                                        <TemperaturePanel label="В&nbsp;доме:" temperature={this.state.insideTemp}/>
+                                                        <TemperaturePanel label="На&nbsp;улице:" temperature={this.state.outsideTemp}/>
+                                                </Row>
                                         </Container>
                                         <Container>
                                                 <Link to="MonitorPanel">Панель мониторинга</Link>

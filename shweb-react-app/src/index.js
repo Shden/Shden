@@ -8,6 +8,7 @@ import ClimateConfig from './ClimateConfig';
 import PowerMeter from './PowerMeter';
 import Lighting from './Lighting';
 import Shutters from './Shutters';
+import Relays from './Relays';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -22,6 +23,7 @@ export default function App() {
                                 <Route path="/ClimateConfig" element={<ClimateConfig/>}/>
                                 <Route path="/Lighting" element={<Lighting/>}/>
                                 <Route path="/Shutters" element={<Shutters/>}/>
+                                <Route path="/Relays" element={<Relays/>}/>
                                 <Route path="/PowerMeter" element={<PowerMeter/>}/>
                                 <Route path="/PowerMonitor" element={<MonitorPanel src="https://ec2-3-74-4-26.eu-central-1.compute.amazonaws.com/grafana/d/X8fZOHLMk/panel--monitoringa?orgId=1&refresh=1h&viewPanel=4&from=now-1d&to=now"/>}/>
                         </Routes>

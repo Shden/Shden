@@ -336,11 +336,11 @@ export default class Lighting extends React.Component {
         {
                 console.log(req);
                 
-                var changeStatusURL = GetAPIURL("shutters/State");
+                var shuttersChangeURL = GetAPIURL("shutters/State");
                 // console.log(this.state);
                 this.loading = true;
 
-                fetch(changeStatusURL, { 
+                fetch(shuttersChangeURL, { 
                         method: 'PUT',
                         body: JSON.stringify(req),
                         headers: { "Content-type": "application/json; charset=UTF-8" }
@@ -354,25 +354,6 @@ export default class Lighting extends React.Component {
                 .then(() => this.loadFormData())
                 .then(() => this.loading = false)
                 .catch(error => alert('Ошибка: ' + error));
-
-
-                // $('#spinner').show();
-                // var spinner = createSpinner('spinner');
-
-                // $.ajax({
-                //         url: endpoint,
-                //         type: 'PUT',
-                //         contentType: 'application/json',
-                //         data: JSON.stringify(req),
-                //         success: function(data) {
-
-                //                 // console.log(data);
-                //                 refreshButtons(data);
-
-                //                 spinner.stop();
-                //                 $('#spinner').hide();
-                //         }
-                // });
         }
 }
 

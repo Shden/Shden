@@ -17,7 +17,7 @@ function TemperaturePanel(props)
         if (props.temperature > +2.0) classSpec += " temp-warm";
         if (props.temperature < -2.0) classSpec += " temp-cold";
 
-        let value = (props.temperature !== undefined) ? numeral(props.temperature).format("+0.0") + " °C" : "--.--";
+        let value = (props.temperature !== undefined) ? numeral(props.temperature).format("+0.0") + "°C" : "--.--";
 
         return  (
                 <span>{props.label}<span id="outside" className={classSpec}>{value}</span></span>);
@@ -183,8 +183,8 @@ class HouseStatus extends React.Component {
                                                 <PowerGauge powerConsumption={this.state.powerConsumption}/>
                                         </Container>
                                         <Container>
-                                                <TemperaturePanel label="В доме:" temperature={this.state.insideTemp}/>
-                                                <TemperaturePanel label="На улице:" temperature={this.state.outsideTemp}/>
+                                                <TemperaturePanel label="В&nbsp;доме:" temperature={this.state.insideTemp}/>
+                                                <TemperaturePanel label="На&nbsp;улице:" temperature={this.state.outsideTemp}/>
                                         </Container>
                                         <Container>
                                                 <Link to="MonitorPanel">Панель мониторинга</Link>

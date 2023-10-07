@@ -38,26 +38,34 @@ function getStatus()
                                 data += b;
 			});
 			responce.on('end', () => {
-                                var mapInfo = JSON.parse(data);
+                                try
+                                {
+                                        var mapInfo = JSON.parse(data);
 
-                                // rub the result a bit 
-                                // delete some trash
-                                delete mapInfo.timestamp;
-                                delete mapInfo.time;
-                                delete mapInfo._UID;
+                                        // rub the result a bit 
+                                        // delete some trash
+                                        delete mapInfo.timestamp;
+                                        delete mapInfo.time;
+                                        delete mapInfo._UID;
 
-                                for (val in mapInfo)
-                                        // console.log(val);
-                                        if (val != '_Status_Char')
-						mapInfo[val] = Number(mapInfo[val]);
-						
-				// send notification on map when needed
-				notifyMapStatus(mapInfo);
+                                        for (val in mapInfo)
+                                                // console.log(val);
+                                                if (val != '_Status_Char')
+                                                        mapInfo[val] = Number(mapInfo[val]);
+                                                        
+                                        // send notification on map when needed
+                                        notifyMapStatus(mapInfo);
 
-				resolved(mapInfo);
+                                        resolved(mapInfo);
+                                }
+                                catch(e)
+                                {
+                                        console.error(e);
+                                        rejected(e)
+                                }
 			});
 			responce.on('error', err => {
-				console.log(err);
+				console.error(err);
 				rejected(err);
 			});
 		});

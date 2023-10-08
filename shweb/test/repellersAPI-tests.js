@@ -65,19 +65,4 @@ describe(`/API/${API.version}/repellers testing:`, function() {
 			req.end();
 		});
 	});
-
-	if (API.version == '1.1')
-	{
-		// depreciated in 1.2 and beyond
-		it(`RefreshPulse: GET /API/${API.version}/repellers/RefreshPulse`, function(done) {
-			http.get({
-				host: API.host,
-				port: API.port,
-				path: `/API/${API.version}/repellers/RefreshPulse`
-			}, function(responce) {
-				responce.statusCode.should.be.equal(HTTPStatus.OK);
-				done();
-			});
-		});
-	}
 });

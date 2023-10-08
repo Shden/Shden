@@ -16,11 +16,9 @@ export default class Relays extends React.Component
                 super(props);
                 this.relaysDataEndPointURL = GetAPIURL("relays/State");
 
-                // shutterStatusUpdate will have access to this.
                 this.relayStatusUpdate = this.relayStatusUpdate.bind(this);
-                // this.moveAll = this.moveAll.bind(this);
-                // this.moveFloor = this.moveFloor.bind(this);
                 // this.callAPI = this.callAPI.bind(this);
+                this.generateRelaysControlHTML = this.generateRelaysControlHTML.bind(this);
         }
 
         componentDidMount() 
@@ -70,32 +68,23 @@ export default class Relays extends React.Component
                                                                         </th>
                                                                 </tr>
                                                         </thead>
-                                                        {
-                                                                this.state?.Garage !== undefined ?
-                                                                // JSON.stringify(Object.entries(this.state.Garage))
-                                                                        Object.entries(this.state?.Garage).map(item => {
-                                                                                // return <p>{item[0]} - {item[1]}</p>
-                                                                                return (
-                                                                                        <tbody className="align-middle" key={item[0]}>
-                                                                                                <tr>
-                                                                                                        <td>{item[0]}:</td>
-                                                                                                        <td>
-                                                                                                                <Button
-                                                                                                                        variant={(item[1] === 1) ? 'secondary' : 'warning'} 
-                                                                                                                        onClick={(e) => this.relayStatusUpdate({
-                                                                                                                                building: 'Garage',
-                                                                                                                                module: 'MainFuse',    
-                                                                                                                                relay: item[0],
-                                                                                                                                newState: (item[1] === 1) ? 0 : 1
-                                                                                                                        })}>
-                                                                                                                        {(item[1] === 1) ? 'Выключить' : 'Включить'}
-                                                                                                                </Button>
-                                                                                                        </td>
-                                                                                                </tr>
-                                                                                        </tbody>
-                                                                                )
-                                                                        }) : ''
-                                                        }
+                                                        { this.generateRelaysControlHTML(this.state?.Garage, 'Garage') }
+
+                                                        <thead className="align-middle">
+                                                                <tr>
+                                                                        <th className="bg-secondary">Дом:</th>
+                                                                        <th className="bg-secondary">
+                                                                        </th>
+                                                                </tr>
+                                                        </thead>
+                                                        <thead className="align-middle">
+                                                                <tr>
+                                                                        <th className="bg-secondary">Электрощиток:</th>
+                                                                        <th className="bg-secondary">
+                                                                        </th>
+                                                                </tr>
+                                                        </thead>
+                                                        { this.generateRelaysControlHTML(this.state?.House?.MainFuseBox, 'House', 'MainFuseBox') }
                                                 </Table>
                                                 <Spinner loading={this.state?.loading}/>
                                         </Col>
@@ -104,12 +93,42 @@ export default class Relays extends React.Component
                 )
         }
 
+        generateRelaysControlHTML(relayGroupContainer, building, unit)
+        {
+                return relayGroupContainer !== undefined ?
+                // JSON.stringify(Object.entries(this.state.Garage))
+                        Object.entries(relayGroupContainer).map(item => {
+                                // return <p>{item[0]} - {item[1]}</p>
+                                return (
+                                        <tbody className="align-middle" key={item[0]}>
+                                                <tr>
+                                                        <td>{item[0]}:</td>
+                                                        <td>
+                                                                <Button
+                                                                        variant={(item[1] === 1) ? 'secondary' : 'warning'} 
+                                                                        onClick={(e) => this.relayStatusUpdate({
+                                                                                building: building,
+                                                                                module: unit,    
+                                                                                relay: item[0],
+                                                                                newState: (item[1] === 1) ? 0 : 1
+                                                                        })}>
+                                                                        {(item[1] === 1) ? 'Выключить' : 'Включить'}
+                                                                </Button>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                )
+                        }) : '';
+        }
+
         relayStatusUpdate(event)
         {
-                // console.log(event);   
+                console.log(event);   
                 let req = { Relays: { }};
-                // if (event.building === 'House')
-                //         req.Shutters.House = {[event.floor]: { [event.window]: event.newState }};
+                if (event.building === 'House') {
+                        req.Relays.House = {};
+                        req.Relays.House.MainFuseBox = {[event.relay]: event.newState };
+                }
                 if (event.building === 'Garage')
                         req.Relays.Garage = { [event.relay]: event.newState };
                 this.callAPI(req);

@@ -134,11 +134,11 @@ describe('Kincony gate tests:', function() {
                         return canSetTo(garageRelays10);
                 });
 
-                it.skip('Can update house main fusebox to 010101...', function() {
+                it('Can update house main fusebox to 010101...', function() {
                         return canSetTo(houseRelays01);
                 });
 
-                it.skip('Can update house main fusebox to 101010...', function() {
+                it('Can update house main fusebox to 101010...', function() {
                         return canSetTo(houseRelays10);
                 });
         });

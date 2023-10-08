@@ -44,23 +44,23 @@ async function getStatus()
         status.Shutters.House.F2.W9 = (houseShuttersBitmask & Number('0b1000000000000000')) >> 15;
 
         // -- get house main fusebox relays
-        status.Relays.House.MainFuseBox.R1 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000001')) >> 0;
-        status.Relays.House.MainFuseBox.R2 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000010')) >> 1;
-        status.Relays.House.MainFuseBox.R3 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000100')) >> 2;
-        status.Relays.House.MainFuseBox.R4 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000001000')) >> 3;
-        status.Relays.House.MainFuseBox.R5 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000010000')) >> 4;
-        status.Relays.House.MainFuseBox.R6 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000100000')) >> 5;
-        status.Relays.House.MainFuseBox.R7 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000001000000')) >> 6;
-        status.Relays.House.MainFuseBox.R8 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000010000000')) >> 7;
-        status.Relays.House.MainFuseBox.R9 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000100000000')) >> 8;
-        status.Relays.House.MainFuseBox.R10 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000010000000000')) >> 9;
-        status.Relays.House.MainFuseBox.R11 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000100000000000')) >> 10;
-        status.Relays.House.MainFuseBox.R12 = (houseMainFuseBoxBitmask & Number('0b00000000000000000001000000000000')) >> 11;
-        status.Relays.House.MainFuseBox.R13 = (houseMainFuseBoxBitmask & Number('0b00000000000000000010000000000000')) >> 12;
-        status.Relays.House.MainFuseBox.R14 = (houseMainFuseBoxBitmask & Number('0b00000000000000000100000000000000')) >> 13;
-        status.Relays.House.MainFuseBox.R15 = (houseMainFuseBoxBitmask & Number('0b00000000000000001000000000000000')) >> 14;
-        status.Relays.House.MainFuseBox.R16 = (houseMainFuseBoxBitmask & Number('0b00000000000000010000000000000000')) >> 15;
-        status.Relays.House.MainFuseBox.R17 = (houseMainFuseBoxBitmask & Number('0b00000000000000100000000000000000')) >> 16;
+        status.Relays.House.MainFuseBox.R1  = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000001')) >> 0;
+        status.Relays.House.MainFuseBox.R2  = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000010')) >> 1;
+        status.Relays.House.MainFuseBox.R3  = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000100')) >> 2;
+        status.Relays.House.MainFuseBox.R4  = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000001000')) >> 3;
+        status.Relays.House.MainFuseBox.R5  = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000010000')) >> 4;
+        status.Relays.House.MainFuseBox.R6  = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000100000')) >> 5;
+        status.Relays.House.MainFuseBox.R7  = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000001000000')) >> 6;
+        status.Relays.House.MainFuseBox.R8  = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000010000000')) >> 7;
+        status.Relays.House.MainFuseBox.R9  = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000100000000')) >> 8;
+        status.Relays.House.MainFuseBox.R10 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000001000000000')) >> 9;
+        status.Relays.House.MainFuseBox.R11 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000010000000000')) >> 10;
+        status.Relays.House.MainFuseBox.R12 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000100000000000')) >> 11;
+        status.Relays.House.MainFuseBox.R13 = (houseMainFuseBoxBitmask & Number('0b00000000000000000001000000000000')) >> 12;
+        status.Relays.House.MainFuseBox.R14 = (houseMainFuseBoxBitmask & Number('0b00000000000000000010000000000000')) >> 13;
+        status.Relays.House.MainFuseBox.R15 = (houseMainFuseBoxBitmask & Number('0b00000000000000000100000000000000')) >> 14;
+        status.Relays.House.MainFuseBox.R16 = (houseMainFuseBoxBitmask & Number('0b00000000000000001000000000000000')) >> 15;
+        status.Relays.House.MainFuseBox.R17 = (houseMainFuseBoxBitmask & Number('0b00000000000000010000000000000000')) >> 16;
 
         // -- get garage shutters
         status.Shutters.Garage.W1 = garageBitmask & Number('0b0000000000000001');           // Window 1: SW1 (1)

@@ -9,8 +9,8 @@ import Button from 'react-bootstrap/Button';
 import Spinner from './Spinner';
 import GetAPIURL from './API';
 
-export default class Lighting extends React.Component {
-
+export default class Lighting extends React.Component 
+{
         constructor(props) 
         {
                 super(props);
@@ -350,6 +350,7 @@ export default class Lighting extends React.Component {
                         console.log('updated result:', updatedStatus);
                         this.setState(updatedStatus);
                 })
+                // -- workaround: shadow update usually delayed so get one more roundtrip after 15 sec
                 .then(() => new Promise((resolve) => setTimeout(resolve, 15000)))
                 .then(() => this.loadFormData())
                 .then(() => this.loading = false)

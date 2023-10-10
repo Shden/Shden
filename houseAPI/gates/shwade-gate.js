@@ -14,13 +14,12 @@ const kinconyRelays = require('./kincony-relays-gate');
 const zigbee = require('./zigbee-gate');
 const microart = require('./mapmicroart-gate');
 const network = require('./network-gate');
-const { response } = require('express');
+const baxiConnect = require('./baxi-connect-gate');
 
 async function getStatus()
 {
         return new Promise((resolved, rejected) => {
-                /* Review needed after a while.
-                 * With .all this raises exception if any promise was rejected.
+                /* Revision needed as .all raises exception if any promise was rejected.
                  * Considering usage .allSettled to provide resuls for resolved and error
                  * reasons for rejected. (?)
                  */
@@ -31,16 +30,18 @@ async function getStatus()
                         kinconyRelays.getStatus(),
                         zigbee.getStatus(),
                         microart.getStatus(),
-                        network.getStatus()
-                ]).then(responces => {
-                        var ShWadeStatus = new Object();
-                        ShWadeStatus.oneWireStatus = responces[0];
-                        ShWadeStatus.powerStatus = responces[1];
-                        ShWadeStatus.config = responces[2];
-                        ShWadeStatus.kinconyRelays = responces[3]; 
-                        ShWadeStatus.zigbee = responces[4];
-                        ShWadeStatus.map = responces[5];
-                        ShWadeStatus.network = responces[6];
+                        network.getStatus(),
+                        baxiConnect.getStatus()
+                ]).then(resutls => {
+                        var ShWadeStatus = {};
+                        ShWadeStatus.oneWireStatus = resutls[0];
+                        ShWadeStatus.powerStatus = resutls[1];
+                        ShWadeStatus.config = resutls[2];
+                        ShWadeStatus.kinconyRelays = resutls[3]; 
+                        ShWadeStatus.zigbee = resutls[4];
+                        ShWadeStatus.map = resutls[5];
+                        ShWadeStatus.network = resutls[6];
+                        ShWadeStatus.baxiConnect = resutls[7];
                         resolved(ShWadeStatus);
                 });
         });
@@ -48,9 +49,6 @@ async function getStatus()
 
 async function updateStatus(newStatus)
 {
-        // console.log('shwade-gate');
-        // console.log(newStatus);
-
         if (newStatus.oneWireStatus != null)
                 await owg.updateStatus(newStatus.oneWireStatus);
         if (newStatus.config != null)

@@ -32,6 +32,10 @@ describe('Baxi-connect gate tests:', function() {
         });
 
         it.skip('Can update target_temp', function() {
-                return b.updateBaxiStatus({ heatingCircut: { target_temp: 23 }});
-        })
+                return b.updateBaxiStatus({ heatingCircut: { target_temp: 20 }});
+        });
+
+        it('Can update current_mode', function() {
+                return b.updateBaxiStatus({ heatingCircut: { current_mode: 9999 }});
+        });
 });

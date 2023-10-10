@@ -125,10 +125,11 @@ function updateBaxiStatus(baxiUpdate)
                 if (
                         baxiUpdate === undefined || 
                         baxiUpdate.heatingCircut === undefined || 
-                        (baxiUpdate.heatingCircut.target_temp === undefined && target_temp.current_mode === undefined)
+                        (baxiUpdate.heatingCircut.target_temp === undefined && baxiUpdate.heatingCircut.current_mode === undefined)
                 )
-                        rejected(new Error('Invalid baxiUpdate parameter'));
+                        rejected(new Error('Invalid or empty baxiUpdate parameter'));
                 
+                // target_temp
                 else if (baxiUpdate.heatingCircut.target_temp !== undefined) { 
                         if (isNaN(baxiUpdate.heatingCircut.target_temp))
                                 rejected(new Error(`Invalid target_temp value: [${baxiUpdate.heatingCircut.target_temp}].`));
@@ -186,9 +187,21 @@ function updateBaxiStatus(baxiUpdate)
                         request.end();                        
                 }
                 
+                // current_mode
                 else if (baxiUpdate.heatingCircut.current_mode !== undefined) {
                         if (isNaN(baxiUpdate.heatingCircut.current_mode))
-                                rejected(new Error(`Invalid current_mode value: [${baxiUpdate.heatingCircut.current_mode}].`));
+                                rejected(new Error(`Invalid current_mode value: ${baxiUpdate.heatingCircut.current_mode}.`));
+
+                        // valid programs:
+                        // 20501 - presence
+                        // 20502 - shortterm standby
+                        // 20503 - longterm standby
+                        if (
+                                baxiUpdate.heatingCircut.current_mode !== 20501 &&
+                                baxiUpdate.heatingCircut.current_mode !== 20502 &&
+                                baxiUpdate.heatingCircut.current_mode !== 20503
+                        )
+                                rejected(new Error(`Unknown current_mode value: ${baxiUpdate.heatingCircut.current_mode}.`));
 
                         // valid current_mode handling:
                 }

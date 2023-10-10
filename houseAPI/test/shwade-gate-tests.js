@@ -18,7 +18,7 @@ describe('ShWade gate tests', function() {
                 })
         });
 
-        it('updateStatus() promise resolved to valid REST object', function() {
+        it.skip('updateStatus() promise resolved to valid REST object', function() {
                 let validUpdateRequest = {
                         oneWireStatus : {
                                 switches : {

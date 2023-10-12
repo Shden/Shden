@@ -2,6 +2,8 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import NavLink from 'react-bootstrap/esm/NavLink';
+//import sss from './static/'
 
 function Menu() {
         return (
@@ -26,6 +28,8 @@ function Menu() {
                                                 <NavDropdown.Item href="/PowerMeter">Электросчетчик</NavDropdown.Item>
                                                 <NavDropdown.Item href="#temperature">Статистика</NavDropdown.Item>
                                                 <NavDropdown.Item href="/PowerMonitor">Монитор</NavDropdown.Item>
+                                                <NavDropdown.Divider />
+                                                <NavDropdown.Item href="/data/Электроснабжение-схема-Дом щиток-схема-12.10.2023.pdf">Схема входного щитка в доме</NavDropdown.Item>
                                         </NavDropdown>
                                         <NavDropdown title="Полив" id="basic-nav-dropdown">
                                                 <NavDropdown.Item href="#schedule">Монитор системы полива</NavDropdown.Item>

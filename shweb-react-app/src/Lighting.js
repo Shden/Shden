@@ -207,14 +207,21 @@ export default class Lighting extends React.Component {
                                                                                 applianceStatusUpdate={this.applianceStatusUpdate}
                                                                                 applianceId="saunaUnderLight"/>
                                                                         </td>
-                                                                </tr>	
-                                                                                        
+                                                                </tr>
                                                                 <tr>
                                                                         <td>Лесница, подсветка:</td>
                                                                         <td><LightingButton 
                                                                                 value={this.state?.stairwayLight}
                                                                                 applianceStatusUpdate={this.applianceStatusUpdate}
                                                                                 applianceId="stairwayLight"/>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>Торшер в холле:</td>
+                                                                        <td><LightingButton 
+                                                                                value={this.state?.hall1FloorLamp}
+                                                                                applianceStatusUpdate={this.applianceStatusUpdate}
+                                                                                applianceId="hall1FloorLamp"/>
                                                                         </td>
                                                                 </tr>
                                                         </tbody>				

@@ -24,7 +24,8 @@ const zigbeeSwitches = [
         'bathroom1OverheadsLight',
         'denisCabinetOverheadsLight',
         'garageOverheadsLight',
-        'garageAwningLight'
+        'garageAwningLight',
+        'hall1FloorLamp'
 ];
 
 async function GetStatus()

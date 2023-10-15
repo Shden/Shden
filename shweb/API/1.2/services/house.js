@@ -115,6 +115,7 @@ class HouseState
                 this.updateRequest.zigbee.switches.denisCabinetOverheadsLight = 0;
                 this.updateRequest.zigbee.switches.garageOverheadsLight = 0;
                 this.updateRequest.zigbee.switches.garageAwningLight = 0;
+                this.updateRequest.zigbee.switches.hall1FloorLamp = 0;
                 
                 return this;
         }

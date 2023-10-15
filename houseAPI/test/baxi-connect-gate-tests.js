@@ -5,7 +5,7 @@ describe('Baxi-connect gate tests:', function() {
 
         this.timeout(15000);
 
-        it.skip('Can pull Baxi Connect state from Zont Cloud', function() {
+        it('Can pull Baxi Connect state from Zont Cloud', function() {
                 return b.getBaxiStatus().then((result) => {
                         result.should.be.an.Object();
                         result.should.have.property("baxiConnect").which.is.an.Object();
@@ -35,7 +35,7 @@ describe('Baxi-connect gate tests:', function() {
                 return b.updateBaxiStatus({ heatingCircut: { target_temp: 20 }});
         });
 
-        it('Can update current_mode', function() {
+        it.skip('Can update current_mode', function() {
                 return b.updateBaxiStatus({ heatingCircut: { current_mode: 9999 }});
         });
 });

@@ -31,7 +31,7 @@ async function getStatus()
                         zigbee.getStatus(),
                         microart.getStatus(),
                         network.getStatus(),
-                        baxiConnect.getStatus()
+                        baxiConnect.getBaxiStatus()
                 ]).then(resutls => {
                         var ShWadeStatus = {};
                         ShWadeStatus.oneWireStatus = resutls[0];

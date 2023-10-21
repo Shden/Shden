@@ -23,7 +23,7 @@ async function getStatus()
                  * Considering usage .allSettled to provide resuls for resolved and error
                  * reasons for rejected. (?)
                  */
-                Promise.all([
+                Promise.allSettled([
                         owg.getStatus(),
                         mercury236.getStatus(),
                         cfg.getConfig(),
@@ -33,18 +33,26 @@ async function getStatus()
                         network.getStatus(),
                         baxiConnect.getBaxiStatus()
                 ]).then(([
-                        oneWireStatus, powerStatus, configStatus, kinconyRelaysStatus, 
-                        zigbeeStatus, mapStatus, networkStatus, baxiConnectStatus
+                        oneWireGateResult, powerGateResult, configGateResult, kinconyGateResult, 
+                        zigbeeGateResult, mapGateResult, networkGateResult, baxiConnectGateResult
                 ]) => {
                         var ShWadeStatus = {};
-                        ShWadeStatus.oneWireStatus = oneWireStatus;
-                        ShWadeStatus.powerStatus = powerStatus;
-                        ShWadeStatus.config = configStatus;
-                        ShWadeStatus.kinconyRelays = kinconyRelaysStatus; 
-                        ShWadeStatus.zigbee = zigbeeStatus;
-                        ShWadeStatus.map = mapStatus;
-                        ShWadeStatus.network = networkStatus;
-                        ShWadeStatus.baxiConnect = baxiConnectStatus;
+                        if (oneWireGateResult.status === 'fulfilled')
+                                ShWadeStatus.oneWireStatus = oneWireGateResult.value;
+                        if (powerGateResult.status === 'fulfilled')
+                                ShWadeStatus.powerStatus = powerGateResult.value;
+                        if (configGateResult.status === 'fulfilled')
+                                ShWadeStatus.config = configGateResult.value;
+                        if (kinconyGateResult.status === 'fulfilled')
+                                ShWadeStatus.kinconyRelays = kinconyGateResult.value; 
+                        if (zigbeeGateResult.status === 'fulfilled')
+                                ShWadeStatus.zigbee = zigbeeGateResult.value;
+                        if (mapGateResult.status === 'fulfilled')
+                                ShWadeStatus.map = mapGateResult.value;
+                        if (networkGateResult.status === 'fulfilled')
+                                ShWadeStatus.network = networkGateResult.value;
+                        if (baxiConnectGateResult.status === 'fulfilled')
+                                ShWadeStatus.baxiConnect = baxiConnectGateResult.value;
                         resolved(ShWadeStatus);
                 });
         });

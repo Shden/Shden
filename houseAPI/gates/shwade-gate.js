@@ -32,16 +32,19 @@ async function getStatus()
                         microart.getStatus(),
                         network.getStatus(),
                         baxiConnect.getBaxiStatus()
-                ]).then(resutls => {
+                ]).then(([
+                        oneWireStatus, powerStatus, configStatus, kinconyRelaysStatus, 
+                        zigbeeStatus, mapStatus, networkStatus, baxiConnectStatus
+                ]) => {
                         var ShWadeStatus = {};
-                        ShWadeStatus.oneWireStatus = resutls[0];
-                        ShWadeStatus.powerStatus = resutls[1];
-                        ShWadeStatus.config = resutls[2];
-                        ShWadeStatus.kinconyRelays = resutls[3]; 
-                        ShWadeStatus.zigbee = resutls[4];
-                        ShWadeStatus.map = resutls[5];
-                        ShWadeStatus.network = resutls[6];
-                        ShWadeStatus.baxiConnect = resutls[7];
+                        ShWadeStatus.oneWireStatus = oneWireStatus;
+                        ShWadeStatus.powerStatus = powerStatus;
+                        ShWadeStatus.config = configStatus;
+                        ShWadeStatus.kinconyRelays = kinconyRelaysStatus; 
+                        ShWadeStatus.zigbee = zigbeeStatus;
+                        ShWadeStatus.map = mapStatus;
+                        ShWadeStatus.network = networkStatus;
+                        ShWadeStatus.baxiConnect = baxiConnectStatus;
                         resolved(ShWadeStatus);
                 });
         });

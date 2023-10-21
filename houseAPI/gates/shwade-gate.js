@@ -22,6 +22,9 @@ async function getStatus()
                 /* Revision needed as .all raises exception if any promise was rejected.
                  * Considering usage .allSettled to provide resuls for resolved and error
                  * reasons for rejected. (?)
+                 * 
+                 * Changed to .allSettled on 21.10.2023, deployed to prod for testing.
+                 * Q: in case of error (status: 'rejected'), should some indication be returned? 
                  */
                 Promise.allSettled([
                         owg.getStatus(),
@@ -37,6 +40,7 @@ async function getStatus()
                         zigbeeGateResult, mapGateResult, networkGateResult, baxiConnectGateResult
                 ]) => {
                         var ShWadeStatus = {};
+                        
                         if (oneWireGateResult.status === 'fulfilled')
                                 ShWadeStatus.oneWireStatus = oneWireGateResult.value;
                         if (powerGateResult.status === 'fulfilled')
@@ -53,6 +57,7 @@ async function getStatus()
                                 ShWadeStatus.network = networkGateResult.value;
                         if (baxiConnectGateResult.status === 'fulfilled')
                                 ShWadeStatus.baxiConnect = baxiConnectGateResult.value;
+
                         resolved(ShWadeStatus);
                 });
         });

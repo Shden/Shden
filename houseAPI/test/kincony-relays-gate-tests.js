@@ -110,7 +110,22 @@ describe('Kincony gate tests:', function() {
                         Relays: {
                                 House: { 
                                         MainFuseBox: { 
-                                                R1: 0, R2: 1, R3: 0, R4: 1, R5: 0, R6: 1, R7: 0, R8: 1, R9: 0, R10: 1, R11: 0, R12: 1, R13: 0, R14: 1, R15: 0, R16: 1, R17: 0 
+                                                R1_1LP: 0,
+                                                R2_1LL: 1,
+                                                R3_1LS: 0,
+                                                R4_1RL: 1,
+                                                R5_1RS: 0,
+                                                R6_2LP: 1,
+                                                R7_2LL: 0,
+                                                R8_2RP: 1,
+                                                R9_2RL: 0,
+                                                R10_2RS: 1,
+                                                R11_Gates: 0,
+                                                R12_fenceLight: 1,
+                                                R13_facadeLight: 0,
+                                                R14_gardenLight: 1,
+                                                R15_streetLight250: 0,
+                                                R16_KM3_Presence: 1
                                         }
                                 }
                         }
@@ -120,7 +135,22 @@ describe('Kincony gate tests:', function() {
                         Relays: {
                                 House: { 
                                         MainFuseBox: { 
-                                                R1: 1, R2: 0, R3: 1, R4: 0, R5: 1, R6: 0, R7: 1, R8: 0, R9: 1, R10: 0, R11: 1, R12: 0, R13: 1, R14: 0, R15: 1, R16: 0, R17: 1 
+                                                R1_1LP: 1,
+                                                R2_1LL: 0,
+                                                R3_1LS: 1,
+                                                R4_1RL: 0,
+                                                R5_1RS: 1,
+                                                R6_2LP: 0,
+                                                R7_2LL: 1,
+                                                R8_2RP: 0,
+                                                R9_2RL: 1,
+                                                R10_2RS: 0,
+                                                R11_Gates: 1,
+                                                R12_fenceLight: 0,
+                                                R13_facadeLight: 1,
+                                                R14_gardenLight: 0,
+                                                R15_streetLight250: 1,
+                                                R16_KM3_Presence: 0
                                         }
                                 }
                         }

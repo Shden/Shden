@@ -5,6 +5,7 @@
  *      - kincony-relays-gate
  *      - zigbee-gate
  *      - mapmicroart-gate
+ *      - baxi-connect-gate
  *      - etc.
  */ 
 const owg = require('./onewire-gate');
@@ -40,7 +41,7 @@ async function getStatus()
                         zigbeeGateResult, mapGateResult, networkGateResult, baxiConnectGateResult
                 ]) => {
                         var ShWadeStatus = {};
-                        
+
                         if (oneWireGateResult.status === 'fulfilled')
                                 ShWadeStatus.oneWireStatus = oneWireGateResult.value;
                         if (powerGateResult.status === 'fulfilled')

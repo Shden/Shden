@@ -3,7 +3,7 @@ const ShWadeAPI = require('../../../../houseAPI/shwadeAPI');
 
 let houseAPI = new ShWadeAPI(config.houseAPIorigin);
 
-const oneWireSwitches = ['streetLight250', 'fenceLight', 'heatingPressureValve'];
+const oneWireSwitches = ['heatingPressureValve'];
 const zigbeeSwitches = [
         'streetLight150', 'balconyLight', 'kitchenOverheadsLight', 'stairwayLight',
         'pantryOverheadsLight', 'hallwayOverheadsLight', 'hallwayTambourOverheadsLight', 'porchOverheadsLight',
@@ -27,6 +27,7 @@ const zigbeeSwitches = [
         'garageAwningLight',
         'hall1FloorLamp'
 ];
+const houseMainFuseBoxSwitches = ['R12_fenceLight', 'R13_facadeLight', 'R15_streetLight250'];
 
 async function GetStatus()
 {
@@ -43,6 +44,10 @@ async function GetStatus()
         for (z in zigbeeSwitches)
                 lightingStatusResp[zigbeeSwitches[z]] = houseStatus.zigbee.switches[zigbeeSwitches[z]];
 
+        // HouseMainFuseBoxSwitches
+        for (h in houseMainFuseBoxSwitches)
+                lightingStatusResp[houseMainFuseBoxSwitches[h]] = houseStatus.kinconyRelays.Relays.House.MainFuseBox[houseMainFuseBoxSwitches[h]];
+        
         return lightingStatusResp;
 }
 

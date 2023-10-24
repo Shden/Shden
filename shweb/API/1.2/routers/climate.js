@@ -15,50 +15,32 @@ router.get('/Configuration', async function(req, res)
 });
 
 /**
- *      Update house configuration data.
+ *      Update temperature setting for specifc appliance for all hous modes.
  * 
- *      Note: this is deprecating method. UpdateHeatingSetting should be used
- *      moving forward.
- * 
- *      PUT /Configuration
+ *      body format:
+ *      {
+ *              "applianceName" : (SAUNA_FLOOR | HALL_FLOOR),
+ *              "presence": [numeric value],
+ *              "shortTermStandby": [numeric value],
+ *              "longTermStandby": [numeric value]
+ *      }
  */
-router.put('/Configuration', async function(req, res)
+router.put('/UpdateHeatingSetting', async function(req, res)
 {
-        res.json(await Climate.UpdateConfiguration(req.body));
-});
-
-/**
- *      Update temperature setting for specifc appliance and mode of house.
- *      Example: set hallFloor temperature for presence mode to 24 celsius.
- * 
- *      :heatingApplianceName - heating appliance name to update.
- *      :modeName - mode name to update, one of "presence", "shortTermStandby" or "longTermStandby".
- *      :newTemperatureSetting - temperature setting for given appliance and mode.
- */
-router.put('/UpdateHeatingSetting/:heatingApplianceName/:modeName/:newTemperatureSetting', async function(req, res)
-{
-        let heatingApplianceName = req.params.heatingApplianceName;
-        if (heatingApplianceName !== Climate.HeatingAppliance.SAUNA_FLOOR && heatingApplianceName !== Climate.HeatingAppliance.HALL_FLOOR)
+        let updateRequest = req.body;
+        // console.log(updateRequest);
+        if (
+                (updateRequest.applianceName !== Climate.HeatingAppliance.SAUNA_FLOOR && updateRequest.applianceName !== Climate.HeatingAppliance.HALL_FLOOR) ||
+                isNaN(updateRequest.presence) || isNaN(updateRequest.shortTermStandby) || isNaN(updateRequest.longTermStandby)
+        )
         {
-                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid appliance name requested: (${heatingApplianceName})`);
+                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid request: (${updateRequest})`);
                 return;
         }
 
-        let heatingModeName = req.params.modeName;
-        if (heatingModeName !== "presence" && heatingModeName !== "shortTermStandby" && heatingModeName !== "longTermStandby")
-        {
-                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid mode name requested: (${heatingModeName})`);
-                return;
-        }
-
-        let newTemperatureSetting = req.params.newTemperatureSetting;
-        if (isNaN(newTemperatureSetting) || newTemperatureSetting < 0 || newTemperatureSetting > 50)
-        {
-                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid temperature setting requested: (${newTemperatureSetting})`);
-                return;
-        }
-
-        res.json(await Climate.UpdateHeatingSetting(heatingApplianceName, heatingModeName, newTemperatureSetting));
+        res.json(await Climate.UpdateHeatingSetting(
+                updateRequest.applianceName, 
+                updateRequest.presence, updateRequest.shortTermStandby, updateRequest.longTermStandby));
 });
 
 /**

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test_1.1": "mocha --API_version=1.1",
-    "test_1.2": "mocha --API_version=1.2"
+    "test": "mocha --API_version=1.2"
   },
   "repository": {
     "type": "git",

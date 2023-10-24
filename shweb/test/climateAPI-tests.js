@@ -4,6 +4,7 @@ const moment = require('moment');
 const { log } = require('console');
 const API = require('./api-config').config;
 const climateService = require('../API/1.2/services/climate');
+const { HouseMode } = require('../API/1.2/services/id');
 const HTTPStatus = require('http-status-codes').StatusCodes;
 
 describe(`/API/${API.version}/climate testing:`, function() {
@@ -34,33 +35,11 @@ describe(`/API/${API.version}/climate testing:`, function() {
 			});
 		});
 
-		it.skip(`PUT /API/${API.version}/climate/Configuration`, function(done) {
-			var req = http.request({
-				host: API.host,
-				port: API.port,
-				path: `/API/${API.version}/climate/Configuration`,
-				method: 'PUT'
-			}, function(responce) {
-				responce.statusCode.should.be.equal(HTTPStatus.OK);
-				var data = '';
-
-				responce.on('data', function(b) {
-					data += b;
-				});
-				responce.on('end', function() {
-					done();
-				});
-			});
-			req.setHeader('Content-Type', 'application/json');
-			req.write(JSON.stringify(config, null, 4), encoding='utf8');
-			req.end();
-		});
-
-                it.skip('GetModeChangeUpdate()', function(done) {
+                it('GetModeChangeUpdate()', function(done) {
                         this.timeout(15000);
-                        climateService.GetModeChangeUpdate(1)
+                        climateService.GetModeChangeUpdate(HouseMode.SHORTTERM_STANDBY)
                                 .then((res) => {
-                                        console.log(res);
+                                        // console.log(res);
                                         done();
                                 })
                 })
@@ -70,65 +49,36 @@ describe(`/API/${API.version}/climate testing:`, function() {
 
                 this.timeout(15000);
 
-                it('Invalid appliance name brings BAD_REQUEST', function(done) {
+                function RequestGetsStatusCode(done, updateRequest, statusCode) {
 			var req = http.request({
 				host: API.host,
 				port: API.port,
-				path: `/API/${API.version}/climate/UpdateHeatingSetting/INVALID_APPLIANCE_NAME/1/2`,
-				method: 'PUT'
+				path: `/API/${API.version}/climate/UpdateHeatingSetting`,
+				method: 'PUT',
+                                headers: {
+                                        'Content-type': 'application/json; charset=UTF-8',
+                                }
 			}, function(responce) {
-				responce.statusCode.should.be.equal(HTTPStatus.BAD_REQUEST);
+				responce.statusCode.should.be.equal(statusCode);
                                 done();
 			});
+                        if (updateRequest !== undefined)
+                                req.write(JSON.stringify(updateRequest));
                         req.end();
-                });
+                }
 
-                it('Invalid mode name birngs BAD_REQUEST', function(done) {
-			var req = http.request({
-				host: API.host,
-				port: API.port,
-				path: `/API/${API.version}/climate/UpdateHeatingSetting/hallFloor/INVALID_MODE/2`,
-				method: 'PUT'
-			}, function(responce) {
-				responce.statusCode.should.be.equal(HTTPStatus.BAD_REQUEST);
-                                done();
-                        });
-                        req.end();
-                });
+                const InvalidRequestGetsBadRequest = (done, updateRequest) => 
+                        RequestGetsStatusCode(done, updateRequest, HTTPStatus.BAD_REQUEST);
+                const ValidRequestGetsOK = (done, updateRequest) =>
+                        RequestGetsStatusCode(done, updateRequest, HTTPStatus.OK);
 
-                it('Invalid temperature birngs BAD_REQUEST', function(done) {
-			var req = http.request({
-				host: API.host,
-				port: API.port,
-				path: `/API/${API.version}/climate/UpdateHeatingSetting/hallFloor/presence/99`,
-				method: 'PUT'
-			}, function(responce) {
-				responce.statusCode.should.be.equal(HTTPStatus.BAD_REQUEST);
-                                done();
-                        });
-                        req.end();
-                });
+                it('No request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done));
+                it('Empty request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, {}));
+                it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { applianceName: 'applianceName' }));
+                it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { applianceName: 'applianceName', presence: 0 }));
+                it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { applianceName: 'applianceName', presence: 0, shortTermStandby: 0 }));
 
-                it('Valid request updates setting', function(done) {
-                        var req = http.request({
-				host: API.host,
-				port: API.port,
-				path: `/API/${API.version}/climate/UpdateHeatingSetting/hallFloor/presence/23`,
-				method: 'PUT'
-			}, function(responce) {
-				responce.statusCode.should.be.equal(HTTPStatus.OK);
-                                var data = '';
+                it('Valid request gets OK', done => ValidRequestGetsOK(done, { applianceName: 'saunaFloor', presence: 28, shortTermStandby: 18, longTermStandby: 5 }));
 
-				responce.on('data', function(b) {
-					data += b;
-				});
-				responce.on('end', function() {
-                                        let updatedStatus = JSON.parse(data);
-                                        updatedStatus.config.heating.hallFloor.settings.presence.should.be.equal(23);
-					done();
-				});
-                        });            
-                        req.end();            
-                })
         });
 });

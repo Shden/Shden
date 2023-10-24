@@ -20,14 +20,6 @@ async function GetConfiguration()
         return houseStatus.config;
 }
 
-async function UpdateConfiguration(config)
-{
-        // also as in GetHeatingConfiguration(), this will not separate 'heating' of
-        // the whole configuration.
-        let updateRequest = { config: config };
-        return await houseAPI.updateStatus(updateRequest);
-}
-
 /**
  * Returns climate setpoint change object as required to set house into the mode given.
  * Currently includes floor temperature setpoint updates (sauna and hall).
@@ -36,47 +28,19 @@ async function UpdateConfiguration(config)
  */
 async function GetModeChangeUpdate(newMode)
 {
-        // "config": {
-        //         "mode": "presence",
-        //         "heating": {
-        //           "saunaFloorTemp": 28,
-        //           "saunaFloorTempShortStandBy": 25,
-        //           "saunaFloorTempLongStandBy": 5,
-        //           "house1FloorTemp": 23,
-        //           "saunaFloor": {
-        //             "setPoint": 28,
-        //             "settings": {
-        //               "presence": 28,
-        //               "shortTermStandby": 18,
-        //               "longTermStandby": 5
-        //             }
-        //           },
-        //           "hallFloor": {
-        //             "setPoint": 23,
-        //             "settings": {
-        //               "presence": 23,
-        //               "shortTermStandby": 18,
-        //               "longTermStandby": 5
-        //             }
-        //           }
-        //         },
-        //         "modeDescription": "Presence mode",
-        //         "modeId": 1
-        //       },
-
         let config = await GetConfiguration();
 
-        const zoneModeSetPoint =  (mode, zone) => {
+        const getSetPoint =  (mode, applianceName) => {
 
                 switch(mode) {
                         case HouseMode.PRESENCE_MODE:
-                                return config.heating[zone]?.settings?.presence ?? 22;
+                                return config.heating[applianceName]?.settings?.presence ?? 22;
 
                         case HouseMode.SHORTTERM_STANDBY:
-                                return config.heating[zone]?.settings?.shortTermStandby ?? 15;
+                                return config.heating[applianceName]?.settings?.shortTermStandby ?? 15;
 
                         case HouseMode.LONGTERM_STANDBY:
-                                return config.heating[zone]?.settings?.longTermStandby ?? 5;
+                                return config.heating[applianceName]?.settings?.longTermStandby ?? 5;
 
                         default:
                                 throw(`Invalid mode requested: ${mode}.`);
@@ -86,11 +50,11 @@ async function GetModeChangeUpdate(newMode)
         let houseShadowUpdateRequest = {
                 config: {
                         heating: {
-                                saunaFloor: {
-                                        setPoint: zoneModeSetPoint(newMode, HeatingAppliance.SAUNA_FLOOR)
+                                [HeatingAppliance.SAUNA_FLOOR]: {
+                                        setPoint: getSetPoint(newMode, HeatingAppliance.SAUNA_FLOOR)
                                 },
-                                hallFloor: {
-                                        setPoint: zoneModeSetPoint(newMode, HeatingAppliance.HALL_FLOOR)
+                                [HeatingAppliance.HALL_FLOOR]: {
+                                        setPoint: getSetPoint(newMode, HeatingAppliance.HALL_FLOOR)
                                 }
                         }
                 }
@@ -100,25 +64,25 @@ async function GetModeChangeUpdate(newMode)
 }
 
 /**
- * Update temperature setting for specifc appliance and mode of house.
- * Example: set hallFloor temperature for presence mode to 24 celsius.
+ * Update specified appliance temperature settings various house modes.
  * 
- * @param {*} forApplianceName heating appliance name to update, currently
- * only saunaFloor and hallFloor are availabla and supported.
- * @param {*} forHouseMode mode name to update, one of "presence",
- * "shortTermStandby" or "longTermStandby".
- * @param {*} newTemperatureSetting temperature setting for given appliance
- * and mode.
+ * @param {*} forApplianceName heating appliance name to update. Currently
+ * only saunaFloor and hallFloor are supported.
+ * @param {*} presenceSetPoint appliance set point for presence mode.
+ * @param {*} shortTermStandbySetPoint appliance set point for short term standby mode.
+ * @param {*} longTermStandbySetPoint appliance set point for long term standby mode.
  * @returns house shadow updated.
  */
-async function UpdateHeatingSetting(forApplianceName, forHouseMode, newTemperatureSetting)
+async function UpdateHeatingSetting(forApplianceName, presenceSetPoint, shortTermStandbySetPoint, longTermStandbySetPoint)
 {
         let configUpdateRequest = {
                 config: {
                         heating: {
                                 [forApplianceName]: {
                                         settings: {
-                                                [forHouseMode]: Number(newTemperatureSetting)
+                                                presence: Number(presenceSetPoint),
+                                                shortTermStandby: Number(shortTermStandbySetPoint),
+                                                longTermStandby: Number(longTermStandbySetPoint)
                                         }
                                 }
                         }
@@ -143,7 +107,6 @@ async function SetBathVentilationOn(duration)
 }
 
 exports.GetConfiguration = GetConfiguration;
-exports.UpdateConfiguration = UpdateConfiguration;
 exports.SetBathVentilationOn = SetBathVentilationOn;
 exports.GetModeChangeUpdate = GetModeChangeUpdate;
 exports.UpdateHeatingSetting = UpdateHeatingSetting;

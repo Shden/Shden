@@ -47,11 +47,11 @@ async function GetStatus()
         // HouseMainFuseBoxSwitches
         for (h in houseMainFuseBoxSwitches)
                 lightingStatusResp[houseMainFuseBoxSwitches[h]] = houseStatus.kinconyRelays.Relays.House.MainFuseBox[houseMainFuseBoxSwitches[h]];
-        
+
         return lightingStatusResp;
 }
 
-async function UpdateStatus(applianceName, newStatus)
+async function ChangeStatus(applianceName, newStatus)
 {
         var updateRequest;
 
@@ -60,6 +60,8 @@ async function UpdateStatus(applianceName, newStatus)
                 updateRequest = { oneWireStatus : { switches : { [applianceName]: newStatus }}};
         else if (zigbeeSwitches.includes(applianceName))
                 updateRequest = { zigbee : { switches : { [applianceName]: newStatus }}};
+        else if (houseMainFuseBoxSwitches.includes(applianceName))
+                updateRequest = { kinconyRelays : { Relays : { House : { MainFuseBox : { [applianceName]: newStatus }}}}};
 
         if (updateRequest !== undefined)
                 await houseAPI.updateStatus(updateRequest);
@@ -71,4 +73,4 @@ async function UpdateStatus(applianceName, newStatus)
 }
 
 exports.GetStatus = GetStatus;
-exports.UpdateStatus = UpdateStatus;
+exports.ChangeStatus = ChangeStatus;

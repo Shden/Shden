@@ -39,7 +39,7 @@ router.put('/ChangeStatus/:applianceName/:newStatus', async function(req, res)
                 return;
         }
 
-        let updatedStatus = await Lighting.UpdateStatus(applianceName, newStatus);
+        let updatedStatus = await Lighting.ChangeStatus(applianceName, newStatus);
         res.json(updatedStatus);
 });
 

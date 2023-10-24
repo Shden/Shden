@@ -66,9 +66,9 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <td>Уличный фонарь около дороги (250W):</td>
                                                                         <td><LightingButton 
-                                                                                value={this.state?.streetLight250} 
+                                                                                value={this.state?.R15_streetLight250} 
                                                                                 applianceStatusUpdate={this.applianceStatusUpdate}
-                                                                                applianceId="streetLight250"/>
+                                                                                applianceId="R15_streetLight250"/>
                                                                         </td>
                                                                 </tr>
                                                                 <tr>
@@ -82,9 +82,17 @@ export default class Lighting extends React.Component {
                                                                 <tr>
                                                                         <td>Подсветка забора и парковки:</td>
                                                                         <td><LightingButton 
-                                                                                value={this.state?.fenceLight}
+                                                                                value={this.state?.R12_fenceLight}
                                                                                 applianceStatusUpdate={this.applianceStatusUpdate}
-                                                                                applianceId="fenceLight"/>
+                                                                                applianceId="R12_fenceLight"/>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>Фасадные огни:</td>
+                                                                        <td><LightingButton 
+                                                                                value={this.state?.R13_facadeLight}
+                                                                                applianceStatusUpdate={this.applianceStatusUpdate}
+                                                                                applianceId="R13_facadeLight"/>
                                                                         </td>
                                                                 </tr>
                                                                 <tr>

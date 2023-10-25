@@ -10,7 +10,7 @@ CREATE PROCEDURE SP_ADD_HEATING_RECORD(
         fluid_out_b             DECIMAL(5,2),   -- 4: boiler outgoing fluid temperature from boiler built-in sensor
 	external		DECIMAL(5,2),	-- 5: outside temperature from 1-wire sensor
         external_b              DECIMAL(5,2),   -- 6: outside temperature from boiler sensor
-	am_bedroom		DECIMAL(5,2),	-- 7: co-living temperature
+	coliving		DECIMAL(5,2),	-- 7: co-living temperature
 	bedroom			DECIMAL(5,2),	-- 8: our bedroom temperature
 	cabinet			DECIMAL(5,2),	-- 9: office temperature
 	child_bedroom		DECIMAL(5,2),	-- 10: small kids bedroom temperature
@@ -23,11 +23,11 @@ CREATE PROCEDURE SP_ADD_HEATING_RECORD(
 BEGIN
 	INSERT INTO heating
 	(time, fluid_in, fluid_in_b, fluid_out, fluid_out_b 
-        external, external_b, am_bedroom, bedroom, cabinet, child_bedroom,
+        external, external_b, coliving, bedroom, cabinet, child_bedroom,
 	kitchen, bathroom, sauna_floor, hall_1_floor, pressure_b)
 	VALUES (NOW(),
 	fluid_in, fluid_in_b, fluid_out, fluid_out_b, 
-        external, external_b, am_bedroom, bedroom, cabinet, child_bedroom,
+        external, external_b, coliving, bedroom, cabinet, child_bedroom,
 	kitchen, bathroom_1, bathroom_1_floor, hall_1_floor, pressure_b);
 END//
 DELIMITER ;

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS heating (
         fluid_out_b     DECIMAL(5,2),
 	external 	DECIMAL(5,2),
         external_b      DECIMAL(5,2),
-	am_bedroom 	DECIMAL(5,2),
+	coliving 	DECIMAL(5,2),
 	bedroom 	DECIMAL(5,2),
 	cabinet 	DECIMAL(5,2),
 	child_bedroom 	DECIMAL(5,2),

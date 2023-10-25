@@ -7,8 +7,6 @@
 /shc/node_modules
 
 /shweb/firmware
-/shweb/API/1.2/config
-/shweb/include/api.js
 
 /houseAPI/node_modules
 /houseAPI/.keys
@@ -17,4 +15,3 @@
 /recorder/node_modules
 /recorder/config
 
-/shweb-react-app/public/data

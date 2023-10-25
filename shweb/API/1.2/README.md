@@ -1,7 +1,4 @@
-# House API
 # ShWade WebUI API Service
-ReadMe WIP
-
 
 # Installation
 
@@ -46,6 +43,17 @@ To disable the service (prevent it from loading on boot):
 
 # Testing
 
-From shweb directory run:
+## Testing configuration
 
-```$ npm run test_1.2 [test/gatewaysAPI-tests.js]```
+Edit `/Users/den/Shden/shweb/test/api-config.js` to configure whether local or cloud
+house shadow is used to run API tests agiainst. Simply, from Brod home I use local,
+from any other locations I use cloud.
+
+For cloud: "houseAPIorigin" : { "thingAPI": false }
+For local: "houseAPIorigin" : { "thingAPI": true }
+
+## Run specific test sute
+
+cd shweb/API/1.2
+npm run test [path to test sute] ## to run specific test suite
+example: npm run test test/climateAPI-tests.js

@@ -3,8 +3,8 @@ const http = require('http');
 const moment = require('moment');
 const { log } = require('console');
 const API = require('./api-config').config;
-const climateService = require('../API/1.2/services/climate');
-const { HouseMode } = require('../API/1.2/services/id');
+const climateService = require('../services/climate');
+const { HouseMode } = require('../services/id');
 const HTTPStatus = require('http-status-codes').StatusCodes;
 
 describe(`/API/${API.version}/climate testing:`, function() {

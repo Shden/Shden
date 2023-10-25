@@ -140,7 +140,10 @@ class HouseState
 
         garageOpenShutters()
         {
-                this.changeGarageShutters(1);
+                let month = new Date().getMonth();
+                // Only open garage shutters from April to October
+                if (month > 2 && month < 10)
+                        this.changeGarageShutters(1);
                 return this;
         }
 

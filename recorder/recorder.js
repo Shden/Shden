@@ -40,7 +40,7 @@ function persistHeatingData(dbConnectionPool, dataPoint)
         return new Promise((resolved, rejected) => {
                 dbConnectionPool.getConnection().then(dbConnection => {
                         dbConnectionPool.query(
-                                "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
+                                "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
                                 [
                                                                                                                 // SP_ADD_HEATING_RECORD params:
                                         U2N(dataPoint.oneWireStatus.temperatureSensors.fluid_in),               // 1: boiler incoming fluid temperature from 1-wire sensor

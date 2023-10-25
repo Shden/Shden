@@ -30,6 +30,7 @@ function Menu() {
                                                 <NavDropdown.Item href="/PowerMonitor">Монитор</NavDropdown.Item>
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item href="/data/electricity/Электроснабжение-схема-Дом щиток-схема-12.10.2023.pdf">Схема входного щитка в доме</NavDropdown.Item>
+                                                <NavDropdown.Item href="/data/electricity/Электроснабжение-схема-Гараж щиток-схема-25.10.2023.pdf">Схема входного щитка в гараже</NavDropdown.Item>
                                         </NavDropdown>
                                         <NavDropdown title="Полив" id="basic-nav-dropdown">
                                                 <NavDropdown.Item href="#schedule">Монитор системы полива</NavDropdown.Item>

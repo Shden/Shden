@@ -43,42 +43,43 @@ describe(`/API/${API.version}/climate testing:`, function() {
                                         done();
                                 })
                 })
-	});
 
-        describe('UpdateHeatingSetting:', function() {
+                describe('UpdateHeatingSetting:', function() {
 
-                this.timeout(15000);
+                        this.timeout(15000);
 
-                function RequestGetsStatusCode(done, updateRequest, statusCode) {
-			var req = http.request({
-				host: API.host,
-				port: API.port,
-				path: `/API/${API.version}/climate/UpdateHeatingSetting`,
-				method: 'PUT',
-                                headers: {
-                                        'Content-type': 'application/json; charset=UTF-8',
-                                }
-			}, function(responce) {
-				responce.statusCode.should.be.equal(statusCode);
-                                done();
-			});
-                        if (updateRequest !== undefined)
-                                req.write(JSON.stringify(updateRequest));
-                        req.end();
-                }
+                        function RequestGetsStatusCode(done, updateRequest, statusCode) {
+                                var req = http.request({
+                                        host: API.host,
+                                        port: API.port,
+                                        path: `/API/${API.version}/climate/UpdateHeatingSetting`,
+                                        method: 'PUT',
+                                        headers: {
+                                                'Content-type': 'application/json; charset=UTF-8',
+                                        }
+                                }, function(responce) {
+                                        responce.statusCode.should.be.equal(statusCode);
+                                        done();
+                                });
+                                if (updateRequest !== undefined)
+                                        req.write(JSON.stringify(updateRequest));
+                                req.end();
+                        }
 
-                const InvalidRequestGetsBadRequest = (done, updateRequest) => 
-                        RequestGetsStatusCode(done, updateRequest, HTTPStatus.BAD_REQUEST);
-                const ValidRequestGetsOK = (done, updateRequest) =>
-                        RequestGetsStatusCode(done, updateRequest, HTTPStatus.OK);
+                        const InvalidRequestGetsBadRequest = (done, updateRequest) => 
+                                RequestGetsStatusCode(done, updateRequest, HTTPStatus.BAD_REQUEST);
+                        const ValidRequestGetsOK = (done, updateRequest) =>
+                                RequestGetsStatusCode(done, updateRequest, HTTPStatus.OK);
 
-                it('No request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done));
-                it('Empty request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, {}));
-                it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { applianceName: 'applianceName' }));
-                it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { applianceName: 'applianceName', presence: 0 }));
-                it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { applianceName: 'applianceName', presence: 0, shortTermStandby: 0 }));
+                        it('No request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done));
+                        it('Empty request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, {}));
+                        it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { saunaFloor: {} }));
+                        it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { saunaFloor: { settings: {} } }));
+                        it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { saunaFloor: { settings: { presence: 0 } } }));
+                        it('Incomplete request gets BAD_REQUEST', done => InvalidRequestGetsBadRequest(done, { saunaFloor: { settings: { presence: 0, shortTermStandby: 0 } } }));
 
-                it('Valid request gets OK', done => ValidRequestGetsOK(done, { applianceName: 'saunaFloor', presence: 28, shortTermStandby: 18, longTermStandby: 5 }));
+                        it('Valid request gets OK', done => ValidRequestGetsOK(done, { nanaoBoiler: { settings: { presence: 22, shortTermStandby: 18, longTermStandby: 15 } } }));
 
+                });
         });
 });

@@ -9,7 +9,8 @@ let houseAPI = new ShWadeAPI(config.houseAPIorigin);
 // Static names for heating appliances:
 const HeatingAppliance = Object.freeze({
         SAUNA_FLOOR: "saunaFloor",
-        HALL_FLOOR: "hallFloor"
+        HALL_FLOOR: "hallFloor",
+        NANAO_BOILER: "nanaoBoiler"
 });
 
 async function GetConfiguration()
@@ -55,6 +56,9 @@ async function GetModeChangeUpdate(newMode)
                                 },
                                 [HeatingAppliance.HALL_FLOOR]: {
                                         setPoint: getSetPoint(newMode, HeatingAppliance.HALL_FLOOR)
+                                },
+                                [HeatingAppliance.NANAO_BOILER]: {
+                                        setPoint: getSetPoint(newMode, HeatingAppliance.NANAO_BOILER)
                                 }
                         }
                 }
@@ -64,30 +68,19 @@ async function GetModeChangeUpdate(newMode)
 }
 
 /**
- * Update specified appliance temperature settings various house modes.
+ * Update climate configuration for appliances and various house modes requested.
  * 
- * @param {*} forApplianceName heating appliance name to update. Currently
- * only saunaFloor and hallFloor are supported.
- * @param {*} presenceSetPoint appliance set point for presence mode.
- * @param {*} shortTermStandbySetPoint appliance set point for short term standby mode.
- * @param {*} longTermStandbySetPoint appliance set point for long term standby mode.
+ * @param {*} updateReqiest contains one or more heating appliances to update. 
+ * Currently only saunaFloor and hallFloor are supported.
  * @returns house shadow updated.
  */
-async function UpdateHeatingSetting(forApplianceName, presenceSetPoint, shortTermStandbySetPoint, longTermStandbySetPoint)
+async function UpdateHeatingSetting(updateReqiest)
 {
         let configUpdateRequest = {
                 config: {
-                        heating: {
-                                [forApplianceName]: {
-                                        settings: {
-                                                presence: Number(presenceSetPoint),
-                                                shortTermStandby: Number(shortTermStandbySetPoint),
-                                                longTermStandby: Number(longTermStandbySetPoint)
-                                        }
-                                }
-                        }
+                        heating: updateReqiest
                 }
-        };
+        }
 
         return await houseAPI.updateStatus(configUpdateRequest);
 }

@@ -15,32 +15,52 @@ router.get('/Configuration', async function(req, res)
 });
 
 /**
- *      Update temperature setting for specifc appliance for all hous modes.
+ *      Update temperature setting for specified appliance(s) for all house modes.
  * 
  *      body format:
  *      {
- *              "applianceName" : (SAUNA_FLOOR | HALL_FLOOR),
- *              "presence": [numeric value],
- *              "shortTermStandby": [numeric value],
- *              "longTermStandby": [numeric value]
+ *              ("saunaFloor" | "hallFloor") : {
+ *                      "settings" : {
+ *                              "presence": [numeric value],
+ *                              "shortTermStandby": [numeric value],
+ *                              "longTermStandby": [numeric value]
+ *                      }
+ *              }
+ *              [, (more appliances)]
  *      }
  */
 router.put('/UpdateHeatingSetting', async function(req, res)
 {
-        let updateRequest = req.body;
-        // console.log(updateRequest);
-        if (
-                (updateRequest.applianceName !== Climate.HeatingAppliance.SAUNA_FLOOR && updateRequest.applianceName !== Climate.HeatingAppliance.HALL_FLOOR) ||
-                isNaN(updateRequest.presence) || isNaN(updateRequest.shortTermStandby) || isNaN(updateRequest.longTermStandby)
-        )
+        let updateRequest = {};
+
+        // build clean updateReqiest object from request
+        for (a in Climate.HeatingAppliance)
         {
-                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid request: (${updateRequest})`);
+                let applianceName = Climate.HeatingAppliance[a];
+                if (applianceName !== undefined && req.body[applianceName]?.settings !== undefined)
+                {
+                        if (isNaN(req.body[applianceName].settings.presence) || isNaN(req.body[applianceName].settings.shortTermStandby) || isNaN(req.body[applianceName].settings.longTermStandby))
+                        {
+                                res.status(HTTPStatus.BAD_REQUEST).send(`Invalid ${applianceName} settings: (${req.body})`);
+                                return;
+                        }
+                        updateRequest[applianceName] = {};
+                        updateRequest[applianceName].settings = {};
+                        updateRequest[applianceName].settings.presence = Number(req.body[applianceName].settings.presence);
+                        updateRequest[applianceName].settings.shortTermStandby = Number(req.body[applianceName].settings.shortTermStandby);
+                        updateRequest[applianceName].settings.longTermStandby = Number(req.body[applianceName].settings.longTermStandby);
+                }
+        }
+
+        // check if there is something to update
+        if (Object.keys(updateRequest).length === 0)
+        {
+                res.status(HTTPStatus.BAD_REQUEST).send(`No appliances to update: (${req.body})`);
                 return;
         }
 
-        res.json(await Climate.UpdateHeatingSetting(
-                updateRequest.applianceName, 
-                updateRequest.presence, updateRequest.shortTermStandby, updateRequest.longTermStandby));
+        // console.log(updateRequest);
+        res.json(await Climate.UpdateHeatingSetting(updateRequest));
 });
 
 /**

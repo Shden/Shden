@@ -43,25 +43,28 @@ function persistHeatingData(dbConnectionPool, dataPoint)
                                 "CALL SP_ADD_HEATING_RECORD(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
                                 [
                                                                                                                 // SP_ADD_HEATING_RECORD params:
-                                        null,                                                                   // 1 - heater (not used)
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.fluid_in),               // 2 - fluid_in
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.fluid_out),              // 3 - fluid_out
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.outsideTemp),            // 4 - external
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.am_bedroom),             // 5 - am_bedroom
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.bedroom),                // 6 - bedroom
-                                        U2N(dataPoint.zigbee.temperatureSensors.cabinet),                       // 7 - cabinet
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.child_bedroom),          // 8 - child_bedroom
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.kitchen),                // 9 - kitchen
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.sauna_ceiling),          // 10 - bathroom_1
-                                        U2N(dataPoint.oneWireStatus.temperatureSensors.bathroom_1_floor_1),     // 11 - bathroom_1_floor
-                                        U2N(dataPoint.zigbee.temperatureSensors.hall1Floor)                     // 12 - hall 1st floor
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.fluid_in),               // 1: boiler incoming fluid temperature from 1-wire sensor
+                                        U2N(dataPoint.baxiConnect.ot_sensors.fluidIn),                          // 2: boiler incoming fluid temperature from boiler built-in sensor
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.fluid_out),              // 3: boiler outgoing fluid temperature from 1-wire sensor
+                                        U2N(dataPoint.baxiConnect.ot_sensors.fluidOut),                         // 4: boiler outgoing fluid temperature from boiler built-in sensor
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.outsideTemp),            // 5: outside temperature from 1-wire sensor
+                                        U2N(dataPoint.baxiConnect.ot_sensors.outside),                          // 6: outside temperature from boiler sensor
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.am_bedroom),             // 7: co-living temperature
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.bedroom),                // 8: our bedroom temperature
+                                        U2N(dataPoint.zigbee.temperatureSensors.cabinet),                       // 9: office temperature
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.child_bedroom),          // 10: small kids bedroom temperature
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.kitchen),                // 11: kitchen temperature
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.sauna_ceiling),          // 12: 1st floor bathroom temperature
+                                        U2N(dataPoint.oneWireStatus.temperatureSensors.bathroom_1_floor_1),     // 13: 1st floor bathroom floor temperature
+                                        U2N(dataPoint.zigbee.temperatureSensors.hall1Floor),                    // 14: 1st floor hall floor temperature
+                                        U2N(dataPoint.baxiConnect.ot_sensors.pressure)                          // 15: boiler circuit pressure
                                 ]
                         ).then(() => {
                                 dbConnection.end();
                                 resolved();              
                         }).catch(err => {
                                 //handle error
-                                console.log(err); 
+                                console.error(err); 
                                 dbConnection.end();
                                 rejected(err);
                         });

@@ -1,17 +1,20 @@
 CREATE TABLE IF NOT EXISTS heating (
 	time 		DATETIME,
-	heater 		DECIMAL(5,2),
 	fluid_in 	DECIMAL(5,2),
+        fluid_in_b      DECIMAL(5,2),
 	fluid_out 	DECIMAL(5,2),
+        fluid_out_b     DECIMAL(5,2),
 	external 	DECIMAL(5,2),
+        external_b      DECIMAL(5,2),
 	am_bedroom 	DECIMAL(5,2),
 	bedroom 	DECIMAL(5,2),
 	cabinet 	DECIMAL(5,2),
-	sasha_bedroom 	DECIMAL(5,2),
+	child_bedroom 	DECIMAL(5,2),
 	kitchen 	DECIMAL(5,2),
 	bathroom 	DECIMAL(5,2),
 	sauna_floor	DECIMAL(5,2),
-        hall_1_floor    DECIMAL(5,2)
+        hall_1_floor    DECIMAL(5,2),
+        pressure_b      DECIMAL(5,2),
 	PRIMARY KEY(time));
 
 CREATE TABLE IF NOT EXISTS tariff (

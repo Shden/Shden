@@ -4,27 +4,30 @@
 DELIMITER //
 DROP PROCEDURE IF EXISTS SP_ADD_HEATING_RECORD;
 CREATE PROCEDURE SP_ADD_HEATING_RECORD(
-	heater 			DECIMAL(5,2),	-- 1 heater temperature
-	fluid_in		DECIMAL(5,2),	-- 2 heater incoming fluid temperature
-	fluid_out		DECIMAL(5,2),	-- 3 heater outgoing fluid temperature
-	external		DECIMAL(5,2),	-- 4 street temperature
-	am_bedroom		DECIMAL(5,2),	-- 5 AM bedroom temperature
-	bedroom			DECIMAL(5,2),	-- 6 bedroom temperature
-	cabinet			DECIMAL(5,2),	-- 7 office temperature
-	child_bedroom		DECIMAL(5,2),	-- 8 kids bedroom temperature
-	kitchen			DECIMAL(5,2),	-- 9 kitchen temperature
-	bathroom_1		DECIMAL(5,2),	-- 10 sauna temperature
-	bathroom_1_floor	DECIMAL(5,2),	-- 11 sauna floor temperature
-        hall_1_floor            DECIMAL(5,2)    -- 12 hall 1st floor temperature
+	fluid_in		DECIMAL(5,2),	-- 1: boiler incoming fluid temperature from 1-wire sensor
+        fluid_in_b              DECIMAL(5,2),   -- 2: boiler incoming fluid temperature from boiler built-in sensor
+	fluid_out		DECIMAL(5,2),	-- 3: boiler outgoing fluid temperature from 1-wire sensor
+        fluid_out_b             DECIMAL(5,2),   -- 4: boiler outgoing fluid temperature from boiler built-in sensor
+	external		DECIMAL(5,2),	-- 5: outside temperature from 1-wire sensor
+        external_b              DECIMAL(5,2),   -- 6: outside temperature from boiler sensor
+	am_bedroom		DECIMAL(5,2),	-- 7: co-living temperature
+	bedroom			DECIMAL(5,2),	-- 8: our bedroom temperature
+	cabinet			DECIMAL(5,2),	-- 9: office temperature
+	child_bedroom		DECIMAL(5,2),	-- 10: small kids bedroom temperature
+	kitchen			DECIMAL(5,2),	-- 11: kitchen temperature
+	bathroom_1		DECIMAL(5,2),	-- 12: 1st floor bathroom temperature
+	bathroom_1_floor	DECIMAL(5,2),	-- 13: 1st floor bathroom floor temperature
+        hall_1_floor            DECIMAL(5,2),   -- 14: 1st floor hall floor temperature
+        pressure_b              DECIMAL(5,2)    -- 15: boiler circuit pressure
 )
 BEGIN
 	INSERT INTO heating
-	(time, heater, fluid_in, fluid_out, external,
-	am_bedroom, bedroom, cabinet, sasha_bedroom,
-	kitchen, bathroom, sauna_floor, hall_1_floor)
+	(time, fluid_in, fluid_in_b, fluid_out, fluid_out_b 
+        external, external_b, am_bedroom, bedroom, cabinet, child_bedroom,
+	kitchen, bathroom, sauna_floor, hall_1_floor, pressure_b)
 	VALUES (NOW(),
-	heater, fluid_in, fluid_out, external,
-	am_bedroom, bedroom, cabinet, child_bedroom,
-	kitchen, bathroom_1, bathroom_1_floor, hall_1_floor);
+	fluid_in, fluid_in_b, fluid_out, fluid_out_b, 
+        external, external_b, am_bedroom, bedroom, cabinet, child_bedroom,
+	kitchen, bathroom_1, bathroom_1_floor, hall_1_floor, pressure_b);
 END//
 DELIMITER ;

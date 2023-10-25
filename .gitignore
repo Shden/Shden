@@ -1,8 +1,6 @@
 .htaccess
 .DS_Store
 
-/node_modules
-
 /shc/config
 /shc/node_modules
 

@@ -22,7 +22,7 @@ CREATE PROCEDURE SP_ADD_HEATING_RECORD(
 )
 BEGIN
 	INSERT INTO heating
-	(time, fluid_in, fluid_in_b, fluid_out, fluid_out_b 
+	(time, fluid_in, fluid_in_b, fluid_out, fluid_out_b, 
         external, external_b, coliving, bedroom, cabinet, child_bedroom,
 	kitchen, bathroom, sauna_floor, hall_1_floor, pressure_b)
 	VALUES (NOW(),

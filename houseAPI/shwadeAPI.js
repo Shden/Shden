@@ -137,8 +137,8 @@ class ShWadeAPI {
                                                 // 26.20.23 - returning o.state.desired doesn't work 
                                                 // as it only has updated properties and not the whole object!
 
-                                                // this.getStatus().then(status => { resolved(status); });
-                                                resolved(m.mergeDeep(o.state.reported, o.state.desired));
+                                                this.getStatus().then(status => { resolved(m.mergeDeep(status, o.state.desired)); });
+                                                // resolved(m.mergeDeep(o.state.reported, o.state.desired));
                                         } 
                                 });
                         };

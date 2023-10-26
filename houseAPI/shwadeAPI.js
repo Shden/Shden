@@ -1,6 +1,7 @@
 const { response } = require('express');
 const http = require('http');
 const aws = require('aws-sdk');
+const m = require('./mergeDeep');
 
 const config = require('./config/shwade-API-config.json');
 
@@ -132,10 +133,12 @@ class ShWadeAPI {
                                         {
                                                 var o = JSON.parse(data.payload);
                                                 // console.log(data);
-                                                
-                                                // 26.20.23 - instead of this.getStatus(), return o.state.desired
+
+                                                // 26.20.23 - returning o.state.desired doesn't work 
+                                                // as it only has updated properties and not the whole object!
+
                                                 // this.getStatus().then(status => { resolved(status); });
-                                                resolved(o.state.desired);
+                                                resolved(m.mergeDeep(o.state.reported, o.state.desired));
                                         } 
                                 });
                         };

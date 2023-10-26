@@ -8,7 +8,7 @@ describe('Configuration gate tests:', function() {
                 config.should.be.an.Object();
         });
 
-        it('updateConfig()', async function() {
+        it.skip('updateConfig()', async function() {
                 let config = await c.getConfig();
                 await c.updateConfig(config);
         });

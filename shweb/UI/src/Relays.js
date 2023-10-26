@@ -24,8 +24,8 @@ export default class Relays extends React.Component
         componentDidMount() 
         {
                 this.loadFormData();
-                var t = this;
-                setInterval(function(){t.loadFormData()}, 15000);
+                // var t = this;
+                // setInterval(function(){t.loadFormData()}, 15000);
         }
 
         set loading(_loading)
@@ -152,9 +152,9 @@ export default class Relays extends React.Component
                         console.log('updated result:', updatedStatus);
                         this.setState(updatedStatus);
                 })
-                // -- workaround: shadow update usually delayed so get one more roundtrip after 15 sec
-                .then(() => new Promise((resolve) => setTimeout(resolve, 15000)))
-                .then(() => this.loadFormData())
+                // // -- workaround: shadow update usually delayed so get one more roundtrip after 15 sec
+                // .then(() => new Promise((resolve) => setTimeout(resolve, 15000)))
+                // .then(() => this.loadFormData())
                 .then(() => this.loading = false)
                 .catch(error => alert('Ошибка: ' + error));
         }

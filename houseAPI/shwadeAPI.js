@@ -132,8 +132,10 @@ class ShWadeAPI {
                                         {
                                                 var o = JSON.parse(data.payload);
                                                 // console.log(data);
-                                                this.getStatus().then(status => { resolved(status); });
-                                                // resolved(o.state.reported);
+                                                
+                                                // 26.20.23 - instead of this.getStatus(), return o.state.desired
+                                                // this.getStatus().then(status => { resolved(status); });
+                                                resolved(o.state.desired);
                                         } 
                                 });
                         };

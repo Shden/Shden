@@ -20,7 +20,13 @@ async function SetMode(newMode)
         return houseAPI.updateStatus(updateRequest);
 }
 
-// Creates update request for typical house statuses or actions
+/** 
+ * Creates update request for typical house statuses or actions.
+ * 
+ * Note: code structure is inconsistent here as HouseState is actually doing
+ * some tasks for lighting, shutters etc. These things should go to the respective
+ * services. See cliate changes handling in the SetMode method above.
+ * */ 
 class HouseState  
 {
         updateRequest = new Object();

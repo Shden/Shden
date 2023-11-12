@@ -78,7 +78,7 @@ describe('Kincony gate tests:', function() {
 
         it('Can get kincony relays state', function() {
                 return s.getStatus().then((res) => { 
-                        // console.log(res);
+                        console.log(res.Relays.House.MainFuseBox);
                         res.should.have.a.property("Shutters").which.is.an.Object();
                         res.should.have.a.property("Relays").which.is.an.Object();
 
@@ -164,11 +164,11 @@ describe('Kincony gate tests:', function() {
                         return canSetTo(garageRelays10);
                 });
 
-                it('Can update house main fusebox to 010101...', function() {
+                it.skip('Can update house main fusebox to 010101...', function() {
                         return canSetTo(houseRelays01);
                 });
 
-                it('Can update house main fusebox to 101010...', function() {
+                it.skip('Can update house main fusebox to 101010...', function() {
                         return canSetTo(houseRelays10);
                 });
         });

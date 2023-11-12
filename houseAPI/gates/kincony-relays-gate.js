@@ -44,23 +44,42 @@ async function getStatus()
         status.Shutters.House.F2.W9 = (houseShuttersBitmask & Number('0b1000000000000000')) >> 15;
 
         // -- get house main fusebox relays:
-        /* R1 --------------> */ status.Relays.House.MainFuseBox.R1_1LP = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000001')) >> 0;
-        /* R2 --------------> */ status.Relays.House.MainFuseBox.R2_1LL = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000010')) >> 1;
-        /* R3 --------------> */ status.Relays.House.MainFuseBox.R3_1LS = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000100')) >> 2;
-        /* R4 --------------> */ status.Relays.House.MainFuseBox.R4_1RL = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000001000')) >> 3;
-        /* R5 --------------> */ status.Relays.House.MainFuseBox.R5_1RS = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000010000')) >> 4;
-        /* R6 --------------> */ status.Relays.House.MainFuseBox.R6_2LP = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000100000')) >> 5;
-        /* R7 --------------> */ status.Relays.House.MainFuseBox.R7_2LL = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000001000000')) >> 6;
-        /* R8 --------------> */ status.Relays.House.MainFuseBox.R8_2RP = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000010000000')) >> 7;
-        /* R9 --------------> */ status.Relays.House.MainFuseBox.R9_2RL = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000100000000')) >> 8;
-        /* R10 ------------> */ status.Relays.House.MainFuseBox.R10_2RS = (houseMainFuseBoxBitmask & Number('0b00000000000000000000001000000000')) >> 9;
-        /* R11 ----------> */ status.Relays.House.MainFuseBox.R11_Gates = (houseMainFuseBoxBitmask & Number('0b00000000000000000000010000000000')) >> 10;
-        /* R12 -----> */ status.Relays.House.MainFuseBox.R12_fenceLight = (houseMainFuseBoxBitmask & Number('0b00000000000000000000100000000000')) >> 11;
-        /* R13 ----> */ status.Relays.House.MainFuseBox.R13_facadeLight = (houseMainFuseBoxBitmask & Number('0b00000000000000000001000000000000')) >> 12;
-        /* R14 ----> */ status.Relays.House.MainFuseBox.R14_gardenLight = (houseMainFuseBoxBitmask & Number('0b00000000000000000010000000000000')) >> 13;
-        /* R15 -> */ status.Relays.House.MainFuseBox.R15_streetLight250 = (houseMainFuseBoxBitmask & Number('0b00000000000000000100000000000000')) >> 14;
-        /* R16 ---> */ status.Relays.House.MainFuseBox.R16_KM3_Presence = (houseMainFuseBoxBitmask & Number('0b00000000000000001000000000000000')) >> 15;
-        // status.Relays.House.MainFuseBox.R17 = (houseMainFuseBoxBitmask & Number('0b00000000000000010000000000000000')) >> 16;
+        // As it should be before failure 11.11:
+        // /* R1 --------------> */ status.Relays.House.MainFuseBox.R1_1LP = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000001')) >> 0;
+        // /* R2 --------------> */ status.Relays.House.MainFuseBox.R2_1LL = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000010')) >> 1;
+        // /* R3 --------------> */ status.Relays.House.MainFuseBox.R3_1LS = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000100')) >> 2;
+        // /* R4 --------------> */ status.Relays.House.MainFuseBox.R4_1RL = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000001000')) >> 3;
+        // /* R5 --------------> */ status.Relays.House.MainFuseBox.R5_1RS = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000010000')) >> 4;
+        // /* R6 --------------> */ status.Relays.House.MainFuseBox.R6_2LP = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000100000')) >> 5;
+        // /* R7 --------------> */ status.Relays.House.MainFuseBox.R7_2LL = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000001000000')) >> 6;
+        // /* R8 --------------> */ status.Relays.House.MainFuseBox.R8_2RP = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000010000000')) >> 7;
+        // /* R9 --------------> */ status.Relays.House.MainFuseBox.R9_2RL = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000100000000')) >> 8;
+        // /* R10 ------------> */ status.Relays.House.MainFuseBox.R10_2RS = (houseMainFuseBoxBitmask & Number('0b00000000000000000000001000000000')) >> 9;
+        // /* R11 ----------> */ status.Relays.House.MainFuseBox.R11_Gates = (houseMainFuseBoxBitmask & Number('0b00000000000000000000010000000000')) >> 10;
+        // /* R12 -----> */ status.Relays.House.MainFuseBox.R12_fenceLight = (houseMainFuseBoxBitmask & Number('0b00000000000000000000100000000000')) >> 11;
+        // /* R13 ----> */ status.Relays.House.MainFuseBox.R13_facadeLight = (houseMainFuseBoxBitmask & Number('0b00000000000000000001000000000000')) >> 12;
+        // /* R14 ----> */ status.Relays.House.MainFuseBox.R14_gardenLight = (houseMainFuseBoxBitmask & Number('0b00000000000000000010000000000000')) >> 13;
+        // /* R15 -> */ status.Relays.House.MainFuseBox.R15_streetLight250 = (houseMainFuseBoxBitmask & Number('0b00000000000000000100000000000000')) >> 14;
+        // /* R16 ---> */ status.Relays.House.MainFuseBox.R16_KM3_Presence = (houseMainFuseBoxBitmask & Number('0b00000000000000001000000000000000')) >> 15;
+        // // status.Relays.House.MainFuseBox.R17 = (houseMainFuseBoxBitmask & Number('0b00000000000000010000000000000000')) >> 16;
+
+        // After failure 11.11 and before relay module is fixed:
+        /* R1 --------------> */ status.Relays.House.MainFuseBox.R1_1LP = (houseMainFuseBoxBitmask & Number('0b00000000000000010000000000000000')) >> 16;
+        /* R2 --------------> */ status.Relays.House.MainFuseBox.R2_1LL = (houseMainFuseBoxBitmask & Number('0b00000000000000100000000000000000')) >> 17;
+        /* R3 --------------> */ status.Relays.House.MainFuseBox.R3_1LS = (houseMainFuseBoxBitmask & Number('0b00000000000001000000000000000000')) >> 18;
+        /* R4 --------------> */ status.Relays.House.MainFuseBox.R4_1RL = (houseMainFuseBoxBitmask & Number('0b00000000000010000000000000000000')) >> 19;
+        /* R5 --------------> */ status.Relays.House.MainFuseBox.R5_1RS = (houseMainFuseBoxBitmask & Number('0b00000000000100000000000000000000')) >> 20;
+        /* R6 --------------> */ status.Relays.House.MainFuseBox.R6_2LP = (houseMainFuseBoxBitmask & Number('0b00000000001000000000000000000000')) >> 21;
+        /* R7 --------------> */ status.Relays.House.MainFuseBox.R7_2LL = (houseMainFuseBoxBitmask & Number('0b00000000010000000000000000000000')) >> 22;
+        /* R8 --------------> */ status.Relays.House.MainFuseBox.R8_2RP = (houseMainFuseBoxBitmask & Number('0b00000000100000000000000000000000')) >> 23;
+        /* R9 --------------> */ status.Relays.House.MainFuseBox.R9_2RL = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000001')) >> 0;
+        /* R10 ------------> */ status.Relays.House.MainFuseBox.R10_2RS = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000010')) >> 1;
+        /* R11 ----------> */ status.Relays.House.MainFuseBox.R11_Gates = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000000100')) >> 2;
+        /* R12 -----> */ status.Relays.House.MainFuseBox.R12_fenceLight = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000001000')) >> 3;
+        /* R13 ----> */ status.Relays.House.MainFuseBox.R13_facadeLight = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000010000')) >> 4;
+        /* R14 ----> */ status.Relays.House.MainFuseBox.R14_gardenLight = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000000100000')) >> 5;
+        /* R15 -> */ status.Relays.House.MainFuseBox.R15_streetLight250 = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000001000000')) >> 6;
+        /* R16 ---> */ status.Relays.House.MainFuseBox.R16_KM3_Presence = (houseMainFuseBoxBitmask & Number('0b00000000000000000000000010000000')) >> 7;
 
         // -- get garage shutters
         status.Shutters.Garage.W1 = garageBitmask & Number('0b0000000000000001');           // Window 1: SW1 (1)
@@ -213,24 +232,44 @@ async function updateStatus(statusUpdate)
                 newStatus.Relays.Garage.R12 << 14 |     // Relay 12: SW15 (15)
                 newStatus.Relays.Garage.R13 << 15;      // Relay 13: SW16 (16)
 
+        // As it should be before failure 11.11:
+        // let houseMainFuseBoxBitmask =
+        //         newStatus.Relays.House.MainFuseBox.R1_1LP /* <----------------- */ |
+        //         newStatus.Relays.House.MainFuseBox.R2_1LL /* <----------------- */ << 1 |
+        //         newStatus.Relays.House.MainFuseBox.R3_1LS /* <----------------- */ << 2 |
+        //         newStatus.Relays.House.MainFuseBox.R4_1RL /* <----------------- */ << 3 |
+        //         newStatus.Relays.House.MainFuseBox.R5_1RS /* <----------------- */ << 4 |
+        //         newStatus.Relays.House.MainFuseBox.R6_2LP /* <----------------- */ << 5 |
+        //         newStatus.Relays.House.MainFuseBox.R7_2LL /* <----------------- */ << 6 |
+        //         newStatus.Relays.House.MainFuseBox.R8_2RP /* <----------------- */ << 7 |
+        //         newStatus.Relays.House.MainFuseBox.R9_2RL /* <----------------- */ << 8 |
+        //         newStatus.Relays.House.MainFuseBox.R10_2RS /* <---------------- */ << 9 |
+        //         newStatus.Relays.House.MainFuseBox.R11_Gates /* <-------------- */ << 10 |
+        //         newStatus.Relays.House.MainFuseBox.R12_fenceLight /* <--------- */ << 11 |
+        //         newStatus.Relays.House.MainFuseBox.R13_facadeLight /* <-------- */ << 12 |
+        //         newStatus.Relays.House.MainFuseBox.R14_gardenLight /* <-------- */ << 13 |
+        //         newStatus.Relays.House.MainFuseBox.R15_streetLight250 /* <----- */ << 14 |
+        //         newStatus.Relays.House.MainFuseBox.R16_KM3_Presence /* <------- */ << 15; //|
+        //         // newStatus.Relays.House.MainFuseBox.R17 << 16;
+
+        // After failure 11.11 and before relay module is fixed:
         let houseMainFuseBoxBitmask =
-                newStatus.Relays.House.MainFuseBox.R1_1LP /* <----------------- */ |
-                newStatus.Relays.House.MainFuseBox.R2_1LL /* <----------------- */ << 1 |
-                newStatus.Relays.House.MainFuseBox.R3_1LS /* <----------------- */ << 2 |
-                newStatus.Relays.House.MainFuseBox.R4_1RL /* <----------------- */ << 3 |
-                newStatus.Relays.House.MainFuseBox.R5_1RS /* <----------------- */ << 4 |
-                newStatus.Relays.House.MainFuseBox.R6_2LP /* <----------------- */ << 5 |
-                newStatus.Relays.House.MainFuseBox.R7_2LL /* <----------------- */ << 6 |
-                newStatus.Relays.House.MainFuseBox.R8_2RP /* <----------------- */ << 7 |
-                newStatus.Relays.House.MainFuseBox.R9_2RL /* <----------------- */ << 8 |
-                newStatus.Relays.House.MainFuseBox.R10_2RS /* <---------------- */ << 9 |
-                newStatus.Relays.House.MainFuseBox.R11_Gates /* <-------------- */ << 10 |
-                newStatus.Relays.House.MainFuseBox.R12_fenceLight /* <--------- */ << 11 |
-                newStatus.Relays.House.MainFuseBox.R13_facadeLight /* <-------- */ << 12 |
-                newStatus.Relays.House.MainFuseBox.R14_gardenLight /* <-------- */ << 13 |
-                newStatus.Relays.House.MainFuseBox.R15_streetLight250 /* <----- */ << 14 |
-                newStatus.Relays.House.MainFuseBox.R16_KM3_Presence /* <------- */ << 15; //|
-                // newStatus.Relays.House.MainFuseBox.R17 << 16;
+                newStatus.Relays.House.MainFuseBox.R1_1LP /* <----------------- */ << 16 |
+                newStatus.Relays.House.MainFuseBox.R2_1LL /* <----------------- */ << 17 |
+                newStatus.Relays.House.MainFuseBox.R3_1LS /* <----------------- */ << 18 |
+                newStatus.Relays.House.MainFuseBox.R4_1RL /* <----------------- */ << 19 |
+                newStatus.Relays.House.MainFuseBox.R5_1RS /* <----------------- */ << 20 |
+                newStatus.Relays.House.MainFuseBox.R6_2LP /* <----------------- */ << 21 |
+                newStatus.Relays.House.MainFuseBox.R7_2LL /* <----------------- */ << 22 |
+                newStatus.Relays.House.MainFuseBox.R8_2RP /* <----------------- */ << 23 |
+                newStatus.Relays.House.MainFuseBox.R9_2RL /* <----------------- */ << 0 |
+                newStatus.Relays.House.MainFuseBox.R10_2RS /* <---------------- */ << 1 |
+                newStatus.Relays.House.MainFuseBox.R11_Gates /* <-------------- */ << 2 |
+                newStatus.Relays.House.MainFuseBox.R12_fenceLight /* <--------- */ << 3 |
+                newStatus.Relays.House.MainFuseBox.R13_facadeLight /* <-------- */ << 4 |
+                newStatus.Relays.House.MainFuseBox.R14_gardenLight /* <-------- */ << 5 |
+                newStatus.Relays.House.MainFuseBox.R15_streetLight250 /* <----- */ << 6 |
+                newStatus.Relays.House.MainFuseBox.R16_KM3_Presence /* <------- */ << 7; 
 
         return Promise.all([
                 setKinconyRelays(config.houseShuttersController.port, 

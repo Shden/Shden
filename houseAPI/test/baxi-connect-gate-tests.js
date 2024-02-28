@@ -10,12 +10,12 @@ describe('Baxi-connect gate tests:', function() {
                         result.should.be.an.Object();
                         result.should.have.property("baxiConnect").which.is.an.Object();
                         result.should.have.property("heatingCircut").which.is.an.Object();
-                        result.should.have.property("hotWaterCircut").which.is.an.Object();
+                        // result.should.have.property("hotWaterCircut").which.is.an.Object();
                         result.should.have.property("nanaoBoiler").which.is.an.Object();
                         result.should.have.property("backupBoiler").which.is.an.Object();
                         result.should.have.property("sensors").which.is.an.Object();
                         result.should.have.property("ot_sensors").which.is.an.Object();
-                        // console.log(result);
+                        console.log(result);
                 });
         });
 

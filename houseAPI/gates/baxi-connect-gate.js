@@ -37,10 +37,10 @@ function getBaxiStatus()
                                         let devicesPayload = JSON.parse(data);
 
                                         // baxi connect device, container for: heating_circuits, boiler_circuits, heating_modes, sensors, ot_sensors
-                                        let baxiConnect = devicesPayload.devices.find(device => device.id === 335339);
+                                        let baxiConnect = devicesPayload.devices.find(device => device.id === 439629);
 
                                         let heatingCircut = baxiConnect.heating_circuits.find(c => c.id === 20496);
-                                        let hotWaterCircut = baxiConnect.heating_circuits.find(c => c.id === 20603);
+                                        // let hotWaterCircut = baxiConnect.heating_circuits.find(c => c.id === 20603);
 
                                         let nanaoBoiler = baxiConnect.boiler_circuits.find(b => b.id === 20494);
                                         let backupBoiler = baxiConnect.boiler_circuits.find(b => b.id === 20604);
@@ -68,7 +68,7 @@ function getBaxiStatus()
                                                         online: baxiConnect.online
                                                 },
                                                 heatingCircut: pickCircut(heatingCircut),
-                                                hotWaterCircut: pickCircut(hotWaterCircut),
+                                                // hotWaterCircut: pickCircut(hotWaterCircut),
                                                 nanaoBoiler: pickBoiler(nanaoBoiler),
                                                 backupBoiler: pickBoiler(backupBoiler),
                                                 sensors: {
@@ -82,9 +82,9 @@ function getBaxiStatus()
                                                         modulation: modulation.value,
                                                         fluidIn: revFluidTemperature.value,
                                                         pressure: THPressure.value,
-                                                        hotWater: hotWaterTemperature.value,
+                                                        // hotWater: hotWaterTemperature.value,
                                                         outside: outsideTemperature.value,
-                                                        hotWaterConsumption: hotWaterConsumption.value
+                                                        // hotWaterConsumption: hotWaterConsumption.value
                                                 }
                                         });
                                 }

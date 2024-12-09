@@ -7,7 +7,7 @@
 /shweb/firmware
 
 /houseAPI/node_modules
-/houseAPI/.keys
+/houseAPI/keys
 /houseAPI/config
 
 /recorder/node_modules
